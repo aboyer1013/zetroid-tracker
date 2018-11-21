@@ -1,5 +1,27 @@
 {
-	"name": "Zetroid Tracker",
-	"description": "An item tracker for Zelda: A Link to the Past + Super Metroid Randomizer.",
-	"tags": "rom hacks, emulation, utilities, map, zelda, super metroid"
+  "name": "zetroid-tracker",
+  "description": "An item tracker for Zelda: A Link to the Past + Super Metroid Randomizer.",
+  "tags": "rom hacks, emulation, utilities, map, zelda, super metroid",
+  "main": "src/index.js",
+  "dependencies": {
+    "mobx": "5.6.0",
+    "mobx-react": "5.4.2",
+    "mobx-state-tree": "3.8.1",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "react-scripts": "2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
