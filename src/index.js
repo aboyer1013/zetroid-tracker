@@ -11,27 +11,27 @@ import itemsData from './data/items';
 import * as serviceWorker from './serviceWorker';
 
 const appStore = AppStore.create({
-    id: randomId(),
-    games: {},
-    items: {},
+	id: randomId(),
+	games: {},
+	items: {},
 });
 
 unprotect(appStore);
 gamesData.forEach((game) => {
-    appStore.games.put(Game.create({
-        id: randomId(),
-        name: game.name,
-        longName: game.longName,
-    })); 
+	appStore.games.put(Game.create({
+		id: randomId(),
+		name: game.name,
+		longName: game.longName,
+	}));
 });
 itemsData.forEach((item) => {
-    // console.log(appStore.getGameByName(item.game));
-    appStore.items.put(Item.create({
-        id: randomId(),
-        name: item.name,
-        longName: item.longName,
-        game: appStore.getGameByName(item.game),
-    }));
+	// console.log(appStore.getGameByName(item.game));
+	appStore.items.put(Item.create({
+		id: randomId(),
+		name: item.name,
+		longName: item.longName,
+		game: appStore.getGameByName(item.game),
+	}));
 });
 appStore.selectGame('zelda3');
 // appStore.games.set(zelda1.id, zelda1);

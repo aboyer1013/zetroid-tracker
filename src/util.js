@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
 
 export const randomId = () => {
-    return v4();
+	return v4();
 }
