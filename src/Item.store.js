@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import Game from './Game.store';
+import Game from 'Game.store';
 
 const Item = types.model({
 	id: types.identifier,

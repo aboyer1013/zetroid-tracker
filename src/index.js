@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from 'App';
 import { unprotect } from 'mobx-state-tree';
 import { randomId } from './util';
-import AppStore from './App.store';
-import Game from './Game.store';
-import gamesData from './data/data';
-import Item from './Item.store';
-import itemsData from './data/items';
-import * as serviceWorker from './serviceWorker';
+import AppStore from 'App.store';
+import Game from 'Game.store';
+import gamesData from 'data/data';
+import Item from 'Item.store';
+import itemsData from 'data/items';
+import * as serviceWorker from 'serviceWorker';
 
 const appStore = AppStore.create({
 	id: randomId(),

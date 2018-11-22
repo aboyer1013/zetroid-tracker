@@ -13,7 +13,7 @@ const AppStore = types
 		getGameByName: (name) => {
 			return find([...self.games.values()], { name });
 		},
-		selectedGame: () => {
+		get selectedGame() {
 			return find([...self.games.values()], { selected: true });
 		}
 	}))
