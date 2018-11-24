@@ -3,3 +3,16 @@
 $family-sans-serif: Roboto, sans-serif;
 @import '../../node_modules/bulma/bulma';
 @import '../../node_modules/bulmaswatch/slate/overrides';
+
+#map-container {
+	//width: 256px;
+	//height: 224px;
+	width: 4096px;
+	height: 4256px;
+
+	//width: 1000px;
+	//height: 500px;
+	//img {
+	//	max-height: none;
+	//}
+}
