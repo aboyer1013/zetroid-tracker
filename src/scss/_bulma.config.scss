@@ -1,5 +1,17 @@
-@import '../../node_modules/bulmaswatch/slate/variables';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+//@import '../../node_modules/bulmaswatch/slate/variables';
 // Variable overrides
+$zeldaBlue: #4068AE;
+$zeldaSlateBlue: #3F6684;
+$zeldaTan: #DCDDD6;
+$zeldaGreen: #3B5D37;
+$zeldaOlive: #857842;
+
 $family-sans-serif: Roboto, sans-serif;
+$primary: $zeldaBlue;
+$success: $zeldaGreen;
+$warning: $zeldaOlive;
+$dark: $zeldaSlateBlue;
+$light: $zeldaTan;
 @import '../../node_modules/bulma/bulma';
-@import '../../node_modules/bulmaswatch/slate/overrides';
+//@import '../../node_modules/bulmaswatch/slate/overrides';

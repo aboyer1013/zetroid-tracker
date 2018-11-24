@@ -1,18 +1,14 @@
-@import '../../node_modules/bulmaswatch/slate/variables';
-// Variable overrides
-$family-sans-serif: Roboto, sans-serif;
-@import '../../node_modules/bulma/bulma';
-@import '../../node_modules/bulmaswatch/slate/overrides';
+@import 'fontawesome-config.scss';
+@import 'bulma.config';
 
-#map-container {
-	//width: 256px;
-	//height: 224px;
-	width: 4096px;
-	height: 4256px;
-
-	//width: 1000px;
-	//height: 500px;
-	//img {
-	//	max-height: none;
-	//}
+button {
+	cursor: pointer;
+}
+.map-container {
+	min-width: 565px;
+	width: 565px;
+}
+.map {
+	width: 100%;
+	height: 100%
 }
