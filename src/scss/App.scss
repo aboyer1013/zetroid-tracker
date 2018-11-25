@@ -8,6 +8,11 @@ html, body {
 button {
 	cursor: pointer;
 }
+.message-container {
+	position: absolute;
+}
+.map-info {
+}
 .map-container {
 	min-width: 565px;
 	position: absolute;

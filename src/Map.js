@@ -1,9 +1,10 @@
 import React, { Component, createRef } from 'react';
 import { reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
+import LocationDetail from 'LocationDetail';
 import Draggable from 'gsap/Draggable';
 import classNames from 'classnames';
-import { debounce, has } from 'lodash';
+import { debounce } from 'lodash';
 
 const L = window.L;
 const Map = inject('store')(observer(class Map extends Component {
@@ -35,10 +36,10 @@ const Map = inject('store')(observer(class Map extends Component {
 		mapHeight: 532,
 	};
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		console.log(prevProps, prevState, snapshot);
-		
-	}
+	// componentDidUpdate(prevProps, prevState, snapshot) {
+	// 	console.log(prevProps, prevState, snapshot);
+	//
+	// }
 	componentDidMount() {
 		const self = this;
 
@@ -125,9 +126,21 @@ const Map = inject('store')(observer(class Map extends Component {
 		this.resize();
 	}
 	addMarker(loc) {
-		this.markers[loc.id] = L.marker(loc.coords).addTo(this.map);
+		const self = this;
+
+		this.markers[loc.id] = L
+			.marker(loc.coords)
+			.on('mouseover', (event) => {
+				const marker = self.markers[loc.id];
+				const mapStoreLocation = self.props.mapStore.locations.get(loc.id);
+
+				this.props.mapStore.setSelectedLocation(event, marker, mapStoreLocation)
+			})
+			.addTo(this.map)
+		;
 	}
 	removeMarker(markerId) {
+		this.markers[markerId].off('click');
 		this.map.removeLayer(this.markers[markerId]);
 		delete this.markers[markerId];
 	}
@@ -142,38 +155,41 @@ const Map = inject('store')(observer(class Map extends Component {
 		})
 
 		return (
-			<div
-				style={{
-					width: this.state.containerWidth + 'px',
-					height: this.state.containerHeight + 'px'
-				}}
-				className="message is-primary map-container has-background-grey-darker is-unselectable"
-				ref={this.draggableRef}
-			>
-				<header className="message-header" ref={this.draggableTarget}>
-					<div className="buttons has-addons is-marginless">
-						<button onClick={this.zoomOut} className="button"><span className="icon"><i className="fas fa-search-minus" /></span></button>
-						<button onClick={this.zoomIn} className="button"><span className="icon"><i className="fas fa-search-plus" /></span></button>
-						<button title="Reset zoom and center" onClick={this.resetToCenter} className="button"><span className="icon"><i className="fas fa-compress" /></span></button>
-						{/*<button onClick={this.toggleSnap} className={snapClasses}><span className="icon"><i className="fas fa-th" /></span></button>*/}
-						<div className="size-controls">
-							<div>
-								<label htmlFor="width">Width </label>
-								<input type="range" id="width" min="565" max="2000" step={20} onChange={this.onChangeWidth} />
-							</div>
-							<div>
-								<label htmlFor="height">Height </label>
-								<input type="range" id="height" min="640" max="2000" step={20} onChange={this.onChangeHeight} />
+			<div ref={this.draggableRef} className="message-container">
+				<div
+					style={{
+						width: this.state.containerWidth + 'px',
+						height: this.state.containerHeight + 'px'
+					}}
+					className="message is-primary map-container has-background-grey-darker is-unselectable"
+				>
+					<header className="message-header" ref={this.draggableTarget}>
+						<div className="buttons has-addons is-marginless">
+							<button onClick={this.zoomOut} className="button"><span className="icon"><i className="fas fa-search-minus" /></span></button>
+							<button onClick={this.zoomIn} className="button"><span className="icon"><i className="fas fa-search-plus" /></span></button>
+							<button title="Reset zoom and center" onClick={this.resetToCenter} className="button"><span className="icon"><i className="fas fa-compress" /></span></button>
+							{/*<button onClick={this.toggleSnap} className={snapClasses}><span className="icon"><i className="fas fa-th" /></span></button>*/}
+							<div className="size-controls">
+								<div>
+									<label htmlFor="width" className="is-unselectable">Width </label>
+									<input type="range" id="width" min="565" max="2000" step={20} onChange={this.onChangeWidth} />
+								</div>
+								<div>
+									<label htmlFor="height" className="is-unselectable">Height </label>
+									<input type="range" id="height" min="640" max="2000" step={20} onChange={this.onChangeHeight} />
+								</div>
 							</div>
 						</div>
+						<div className="buttons has-addons is-marginless">
+							<button onClick={this.props.mapStore.showHelp} className="button"><span className="icon"><i className="fas fa-question" /></span></button>
+							<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
+						</div>
+					</header>
+					<div className="message-body map-body">
+						<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
+
 					</div>
-					<div className="buttons has-addons is-marginless">
-						<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
-					</div>
-				</header>
-				<div className="message-body map-body">
-					<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
-					{/*<div className="content"></div>*/}
+					<LocationDetail mapStore={this.props.mapStore} />
 				</div>
 			</div>
 		);

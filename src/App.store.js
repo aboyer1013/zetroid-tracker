@@ -18,6 +18,9 @@ const AppStore = types
 		getMapByName: (name) => {
 			return find([...self.maps.values()], { name });
 		},
+		getItemByName: (name) => {
+			return find([...self.items.values()], { name });
+		},
 		get selectedGame() {
 			return find([...self.games.values()], { selected: true });
 		}

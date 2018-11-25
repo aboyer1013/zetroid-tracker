@@ -9,6 +9,7 @@ import Game from 'Game.store';
 import { gamesData, locationsData } from 'data/data';
 import Item from 'Item.store';
 import itemsData from 'data/items';
+import Location from 'Location.store';
 import * as serviceWorker from 'serviceWorker';
 
 const appStore = AppStore.create({
@@ -19,6 +20,7 @@ const appStore = AppStore.create({
 });
 
 unprotect(appStore);
+// Create game models
 gamesData.forEach((game) => {
 	appStore.games.put(Game.create({
 		id: randomId(),
@@ -26,14 +28,15 @@ gamesData.forEach((game) => {
 		longName: game.longName,
 	}));
 });
+// Create map models.
 appStore.maps.put(MapStore.create({
 	id: randomId(),
 	name: 'zelda3-lw',
 	game: appStore.getGameByName('zelda3'),
 	locations: {}
 }));
+// Create item models.
 itemsData.forEach((item) => {
-	// console.log(appStore.getGameByName(item.game));
 	appStore.items.put(Item.create({
 		id: randomId(),
 		name: item.name,
@@ -41,19 +44,23 @@ itemsData.forEach((item) => {
 		game: appStore.getGameByName(item.game),
 	}));
 });
-locationsData.forEach(l => {
-	const selectedMap = appStore.getMapByName(l.map);
+// Create location models.
+locationsData.forEach(loc => {
+	const selectedMap = appStore.getMapByName(loc.map);
 
-	selectedMap.locations.put({
+	selectedMap.locations.put(Location.create({
 		id: `loc-${randomId()}`,
-		name: l.name,
-		longName: l.longName,
-		coords: l.coords,
-		game: appStore.getGameByName(l.game),
-	});
+		name: loc.name,
+		longName: loc.longName,
+		coords: loc.coords,
+		game: appStore.getGameByName(loc.game),
+		itemRequirements: loc.itemRequirements,
+	}));
 
 });
+// Select the game.
 appStore.selectGame('zelda3');
+// Globals to help with debugging.
 // appStore.games.set(zelda1.id, zelda1);
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');

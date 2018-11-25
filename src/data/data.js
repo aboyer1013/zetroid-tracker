@@ -10,7 +10,8 @@ const locationsData = [
 		longName: 'Link’s House',
 		coords: [-2825,2240],
 		game: 'zelda3',
-		map: 'zelda3-lw'
+		map: 'zelda3-lw',
+		itemRequirements: ['bomb', 'arrow'],
 	},
 	{
 		name: 'hyrule-castle',
@@ -18,6 +19,7 @@ const locationsData = [
 		coords: [-1800,2050],
 		game: 'zelda3',
 		map: 'zelda3-lw',
+		itemRequirements: ['boots', 'hookshot'],
 	}
 ];
 

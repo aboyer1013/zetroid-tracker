@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, getRoot } from 'mobx-state-tree';
 import Game from 'Game.store';
 
 const Location = types
@@ -9,14 +9,22 @@ const Location = types
 		image: '',
 		game: types.reference(Game),
 		coords: types.array(types.integer),
+		itemRequirements: types.array(types.string),
 	})
-	.actions((self) => {
-		const setCoords = (newCoords) => self.coords = newCoords;
+	.views((self) => ({
+		get details() {
+			let itemRequirements;
 
-		return {
-			setCoords,
-		};
-	})
+			if (self.itemRequirements) {
+				itemRequirements = self.itemRequirements.map(req => getRoot(self).getItemByName(req))
+			}
+
+			return {
+				longName: self.longName,
+				itemRequirements,
+			};
+		}
+	}))
 ;
 
 export default Location;
