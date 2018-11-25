@@ -10,7 +10,25 @@ button {
 }
 .map-container {
 	min-width: 565px;
-	width: 565px;
+	position: absolute;
+}
+.map-body {
+	height: calc(100% - 70px);
+	overflow: hidden;
+}
+.size-controls {
+	display: flex;
+	margin: 0 0 0 10px;
+	padding: 0;
+	> div {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		margin: 0 0 0 25px;
+	}
+	label {
+		margin: 0 5px 0 0;
+	}
 }
 .map {
 	width: 100%;
