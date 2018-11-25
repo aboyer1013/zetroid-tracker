@@ -14,7 +14,14 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<Map id={randomId()} />
+				<Map
+					id={randomId()}
+					tileLayerTemplate={`${process.env.PUBLIC_URL}/img/maps/zelda3/lw/{z}/zelda3-lw.{x}.{y}.png`}
+				/>
+				<Map
+					id={randomId()}
+					tileLayerTemplate={`${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`}
+				/>
 			</div>
 		);
 	}

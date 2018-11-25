@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import Draggable from 'gsap/Draggable';
+import classNames from 'classnames';
 
 const L = window.L;
 class Map extends Component {
@@ -11,10 +12,20 @@ class Map extends Component {
 		this.resize = this.resize.bind(this);
 		this.zoomIn = this.zoomIn.bind(this);
 		this.zoomOut = this.zoomOut.bind(this);
+		this.toggleSnap = this.toggleSnap.bind(this);
+		this.toggleWindowLock = this.toggleWindowLock.bind(this);
+		this.resetToCenter = this.resetToCenter.bind(this);
 	}
 
+	state = {
+		toggleSnap: false,
+		toggleWindowLock: false,
+	};
+
 	componentDidMount() {
-		this.map = L.map(`map-${this.props.id}`, {
+		const self = this;
+
+		this.map = L.map(`map-${this.props.id}`, Object.assign({}, this.props.mapOptions, {
 			crs: L.CRS.Simple,
 			center: [-2128,2048],
 			zoom: -3,
@@ -22,15 +33,15 @@ class Map extends Component {
 			maxBoundsViscosity: 1,
 			attributionControl: false,
 			zoomControl: false,
-		});
+		}));
 		window.map = this.map;
-		L.tileLayer(`${process.env.PUBLIC_URL}/img/maps/zelda3/lw/{z}/zelda3-lw.{x}.{y}.png`, {
+		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, this.props.tileLayerOptions, {
 			minZoom: -3,
 			maxZoom: 2,
 			nativeZooms: [0],
 			// errorTileUrl: `${process.env.PUBLIC_URL}/img/maps/notfound.gif`,
 			tileSize: L.point(256, 224),
-		}).addTo(this.map);
+		})).addTo(this.map);
 		// L.marker([-2825,2240]).bindTooltip('Magic mirror required').addTo(this.map);
 		// L.popup().setLatLng([-1256, 1256]).setContent('<h1>Ohai</h1> <p> This is an example popup.</p>').openOn(this.map);
 
@@ -38,6 +49,8 @@ class Map extends Component {
 		this.resize();
 		this.draggable = new Draggable(this.draggableRef.current, {
 			trigger: this.draggableTarget.current,
+			bounds: document.querySelector('body'),
+			liveSnap: (value) => self.state.toggleSnap ? Math.round(value / 50) * 50 : value,
 		});
 	}
 
@@ -53,13 +66,37 @@ class Map extends Component {
 	zoomOut() {
 		this.map.zoomOut();
 	}
+	toggleSnap() {
+		this.setState({ toggleSnap: !this.state.toggleSnap });
+	}
+	toggleWindowLock() {
+		this.setState({ toggleWindowLock: !this.state.toggleWindowLock });
+		this.draggable.enabled(this.state.toggleWindowLock);
+	}
+	resetToCenter() {
+		this.map.setView([0,0], -3);
+	}
 	render() {
+		// const snapClasses = classNames('button', {
+		// 	'is-selected': this.state.toggleSnap,
+		// 	'is-success': this.state.toggleSnap,
+		// });
+		const lockClasses = classNames('fas', {
+			'fa-lock-open': !this.state.toggleWindowLock,
+			'fa-lock': this.state.toggleWindowLock
+		})
+
 		return (
 			<div className="message is-primary map-container has-background-grey-darker" ref={this.draggableRef}>
 				<header className="message-header" ref={this.draggableTarget}>
-					<div className="buttons">
-						<button onClick={this.zoomIn} className="button"><span className="icon"><i className="fas fa-search-plus" /></span></button>
+					<div className="buttons has-addons is-marginless">
 						<button onClick={this.zoomOut} className="button"><span className="icon"><i className="fas fa-search-minus" /></span></button>
+						<button onClick={this.zoomIn} className="button"><span className="icon"><i className="fas fa-search-plus" /></span></button>
+						<button title="Reset zoom and center" onClick={this.resetToCenter} className="button"><span className="icon"><i className="fas fa-compress" /></span></button>
+						{/*<button onClick={this.toggleSnap} className={snapClasses}><span className="icon"><i className="fas fa-th" /></span></button>*/}
+					</div>
+					<div className="buttons has-addons is-marginless">
+						<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
 					</div>
 				</header>
 				<div className="message-body">

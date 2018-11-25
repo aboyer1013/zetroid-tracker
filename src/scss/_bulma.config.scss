@@ -15,3 +15,7 @@ $dark: $zeldaSlateBlue;
 $light: $zeldaTan;
 @import '../../node_modules/bulma/bulma';
 //@import '../../node_modules/bulmaswatch/slate/overrides';
+
+body {
+	background: $light;
+}
