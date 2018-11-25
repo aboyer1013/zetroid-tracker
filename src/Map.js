@@ -114,7 +114,14 @@ class Map extends Component {
 		})
 
 		return (
-			<div style={{width: this.state.containerWidth + 'px', height: this.state.containerHeight + 'px'}} className="message is-primary map-container has-background-grey-darker" ref={this.draggableRef}>
+			<div
+				style={{
+					width: this.state.containerWidth + 'px',
+					height: this.state.containerHeight + 'px'
+				}}
+				className="message is-primary map-container has-background-grey-darker is-unselectable"
+				ref={this.draggableRef}
+			>
 				<header className="message-header" ref={this.draggableTarget}>
 					<div className="buttons has-addons is-marginless">
 						<button onClick={this.zoomOut} className="button"><span className="icon"><i className="fas fa-search-minus" /></span></button>

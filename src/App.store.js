@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import Game from './Game.store';
 import Item from './Item.store';
+import MapStore from 'Map.store';
 import { find } from 'lodash';
 
 const AppStore = types
@@ -8,10 +9,14 @@ const AppStore = types
 		id: types.identifier,
 		games: types.map(Game),
 		items: types.map(Item),
+		maps: types.map(MapStore),
 	})
 	.views((self) => ({
 		getGameByName: (name) => {
 			return find([...self.games.values()], { name });
+		},
+		getMapByName: (name) => {
+			return find([...self.maps.values()], { name });
 		},
 		get selectedGame() {
 			return find([...self.games.values()], { selected: true });

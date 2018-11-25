@@ -22,7 +22,7 @@ class App extends Component {
 					id={randomId()}
 					tileLayerTemplate={`${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`}
 				/>
-				<Map
+				{/*<Map
 					id={randomId()}
 					mapOptions={{
 						center: [-560,640],
@@ -36,7 +36,7 @@ class App extends Component {
 					}}
 					mapWidth={1280}
 					mapHeight={1120}
-				/>
+				/>*/}
 			</div>
 		);
 	}

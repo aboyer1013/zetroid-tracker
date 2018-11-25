@@ -4,8 +4,9 @@ import App from 'App';
 import { unprotect } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
+import MapStore from 'Map.store';
 import Game from 'Game.store';
-import gamesData from 'data/data';
+import { gamesData, locationsData } from 'data/data';
 import Item from 'Item.store';
 import itemsData from 'data/items';
 import * as serviceWorker from 'serviceWorker';
@@ -14,6 +15,7 @@ const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
 	items: {},
+	maps: {},
 });
 
 unprotect(appStore);
@@ -24,6 +26,12 @@ gamesData.forEach((game) => {
 		longName: game.longName,
 	}));
 });
+appStore.maps.put(MapStore.create({
+	id: randomId(),
+	name: 'zelda3-lw',
+	game: appStore.getGameByName('zelda3'),
+	locations: {}
+}));
 itemsData.forEach((item) => {
 	// console.log(appStore.getGameByName(item.game));
 	appStore.items.put(Item.create({
@@ -32,6 +40,17 @@ itemsData.forEach((item) => {
 		longName: item.longName,
 		game: appStore.getGameByName(item.game),
 	}));
+});
+locationsData.forEach(l => {
+	const selectedMap = appStore.getMapByName(l.map);
+
+	selectedMap.locations.put({
+		id: randomId(),
+		name: l.name,
+		longName: l.longName,
+		coords: l.coords,
+		game: appStore.getGameByName(l.game),
+	});
 });
 appStore.selectGame('zelda3');
 // appStore.games.set(zelda1.id, zelda1);
