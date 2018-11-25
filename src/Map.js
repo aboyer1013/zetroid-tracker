@@ -1,10 +1,12 @@
 import React, { Component, createRef } from 'react';
+import { reaction } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import Draggable from 'gsap/Draggable';
 import classNames from 'classnames';
-import { debounce } from 'lodash';
+import { debounce, has } from 'lodash';
 
 const L = window.L;
-class Map extends Component {
+const Map = inject('store')(observer(class Map extends Component {
 	constructor() {
 		super();
 		this.mapRef = createRef();
@@ -18,8 +20,10 @@ class Map extends Component {
 		this.resetToCenter = this.resetToCenter.bind(this);
 		this.onChangeWidth = this.onChangeWidth.bind(this);
 		this.onChangeHeight = this.onChangeHeight.bind(this);
+		this.addMarker = this.addMarker.bind(this);
 	}
 
+	markers = {};
 	offsetWidth = 53;
 	offsetHeight = 108;
 	state = {
@@ -32,12 +36,13 @@ class Map extends Component {
 	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		// console.log(prevProps, prevState, snapshot);
+		console.log(prevProps, prevState, snapshot);
 		
 	}
 	componentDidMount() {
 		const self = this;
 
+		this.props.mapStore.setComponent(this);
 		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
 			crs: L.CRS.Simple,
 			center: [-2128,2048],
@@ -47,7 +52,10 @@ class Map extends Component {
 			attributionControl: false,
 			zoomControl: false,
 		}, this.props.mapOptions));
-		// window.map = this.map;
+		window.map = this.map;
+		this.props.locations.forEach(loc => {
+			this.addMarker(loc);
+		});
 		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, {
 			minZoom: -3,
 			maxZoom: 2,
@@ -55,7 +63,6 @@ class Map extends Component {
 			// errorTileUrl: `${process.env.PUBLIC_URL}/img/maps/notfound.gif`,
 			tileSize: L.point(256, 224),
 		}, this.props.tileLayerOptions)).addTo(this.map);
-		// L.marker([-2825,2240]).bindTooltip('Magic mirror required').addTo(this.map);
 		// L.popup().setLatLng([-1256, 1256]).setContent('<h1>Ohai</h1> <p> This is an example popup.</p>').openOn(this.map);
 
 		this.map.setZoom(-3);
@@ -64,6 +71,20 @@ class Map extends Component {
 			trigger: this.draggableTarget.current,
 			bounds: document.querySelector('body'),
 			liveSnap: (value) => self.state.toggleSnap ? Math.round(value / 50) * 50 : value,
+		});
+		reaction(() => {
+			return self.props.locations.length;
+		}, () => {
+			self.props.locations.forEach((loc) => {
+				if (!self.markers[loc.id]) {
+					self.addMarker(loc);
+				}
+			});
+			Object.keys(self.markers).forEach((markerId) => {
+				if (!self.props.mapStore.locations.get(markerId)) {
+					self.removeMarker(markerId);
+				}
+			});
 		});
 	}
 
@@ -102,6 +123,13 @@ class Map extends Component {
 			mapWidth: evt.target.value - this.offsetWidth,
 		});
 		this.resize();
+	}
+	addMarker(loc) {
+		this.markers[loc.id] = L.marker(loc.coords).addTo(this.map);
+	}
+	removeMarker(markerId) {
+		this.map.removeLayer(this.markers[markerId]);
+		delete this.markers[markerId];
 	}
 	render() {
 		// const snapClasses = classNames('button', {
@@ -150,6 +178,6 @@ class Map extends Component {
 			</div>
 		);
 	}
-}
+}));
 
 export default Map;

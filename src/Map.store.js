@@ -9,6 +9,18 @@ const MapStore = types
 		game: types.reference(Game),
 		locations: types.map(Location),
 	})
+	.volatile(() => ({
+		component: {},
+	}))
+	.actions((self) => {
+		const setComponent = (component) => {
+			self.component = component;
+		};
+
+		return {
+			setComponent,
+		};
+	})
 ;
 
 export default MapStore;

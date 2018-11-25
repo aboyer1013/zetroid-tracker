@@ -45,16 +45,18 @@ locationsData.forEach(l => {
 	const selectedMap = appStore.getMapByName(l.map);
 
 	selectedMap.locations.put({
-		id: randomId(),
+		id: `loc-${randomId()}`,
 		name: l.name,
 		longName: l.longName,
 		coords: l.coords,
 		game: appStore.getGameByName(l.game),
 	});
+
 });
 appStore.selectGame('zelda3');
 // appStore.games.set(zelda1.id, zelda1);
 window.appStore = appStore;
+window.mapStore = appStore.getMapByName('zelda3-lw');
 
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
 
