@@ -1,13 +1,13 @@
 import { types } from 'mobx-state-tree';
-import Game from 'Game.store';
+import GameStore from 'Game.store';
 
-const Item = types.model({
+const ItemStore = types.model({
 	id: types.identifier,
 	name: types.string,
 	longName: types.string,
 	active: false,
 	image: '',
-	game: types.reference(Game),
+	game: types.reference(GameStore),
 });
 
-export default Item;
+export default ItemStore;

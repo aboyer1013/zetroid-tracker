@@ -16,6 +16,7 @@ class App extends Component {
 		return (
 			<Provider store={this.props.store}>
 				<div>
+					{[...this.props.store.items.values()].map(item => <img src={item.image} />)}
 					<Map
 						mapStore={this.props.store.getMapByName('zelda3-lw')}
 						locations={[...this.props.store.getMapByName('zelda3-lw').locations.values()]}

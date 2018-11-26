@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ItemIconList from 'ItemIconList';
 import { get } from 'lodash';
 import { observer, inject } from 'mobx-react';
 
@@ -14,7 +15,6 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
-		let reqText = ['None'];
 
 		if (!details || displayHelp) {
 			return (
@@ -33,12 +33,13 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			longName = <h1>{longName}</h1>;
 		}
 		if (reqs.length) {
-			reqText = reqs.map(req => req.longName);
+			reqs = <ItemIconList items={reqs} />;
 		}
 		return (
 			<div className="content box map-info">
 				{longName}
-				<p><strong>Requirements:</strong> {reqText.join(', ')}</p>
+				<h6>Requirements:</h6>
+				{reqs}
 			</div>
 		);
 	}

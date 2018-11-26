@@ -5,11 +5,11 @@ import { unprotect } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
-import Game from 'Game.store';
+import GameStore from 'Game.store';
 import { gamesData, locationsData } from 'data/data';
-import Item from 'Item.store';
+import ItemStore from 'Item.store';
 import itemsData from 'data/items';
-import Location from 'Location.store';
+import LocationStore from 'Location.store';
 import * as serviceWorker from 'serviceWorker';
 
 const appStore = AppStore.create({
@@ -22,7 +22,7 @@ const appStore = AppStore.create({
 unprotect(appStore);
 // Create game models
 gamesData.forEach((game) => {
-	appStore.games.put(Game.create({
+	appStore.games.put(GameStore.create({
 		id: randomId(),
 		name: game.name,
 		longName: game.longName,
@@ -37,18 +37,19 @@ appStore.maps.put(MapStore.create({
 }));
 // Create item models.
 itemsData.forEach((item) => {
-	appStore.items.put(Item.create({
+	appStore.items.put(ItemStore.create({
 		id: randomId(),
 		name: item.name,
 		longName: item.longName,
 		game: appStore.getGameByName(item.game),
+		image: `${process.env.PUBLIC_URL}/img/items/zelda3/${item.image}.png`,
 	}));
 });
 // Create location models.
 locationsData.forEach(loc => {
 	const selectedMap = appStore.getMapByName(loc.map);
 
-	selectedMap.locations.put(Location.create({
+	selectedMap.locations.put(LocationStore.create({
 		id: `loc-${randomId()}`,
 		name: loc.name,
 		longName: loc.longName,

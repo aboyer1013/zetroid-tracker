@@ -1,13 +1,13 @@
 import { types, getRoot } from 'mobx-state-tree';
-import Game from 'Game.store';
+import GameStore from 'Game.store';
 
-const Location = types
+const LocationStore = types
 	.model({
 		id: types.identifier,
 		name: types.string,
 		longName: types.string,
 		image: '',
-		game: types.reference(Game),
+		game: types.reference(GameStore),
 		coords: types.array(types.integer),
 		itemRequirements: types.array(types.string),
 	})
@@ -27,4 +27,4 @@ const Location = types
 	}))
 ;
 
-export default Location;
+export default LocationStore;

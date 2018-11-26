@@ -1,14 +1,14 @@
 import { types } from 'mobx-state-tree';
-import Game from 'Game.store';
-import Location from 'Location.store';
+import GameStore from 'Game.store';
+import LocationStore from 'Location.store';
 
 const MapStore = types
 	.model({
 		id: types.identifier,
 		name: types.string,
-		game: types.reference(Game),
-		locations: types.map(Location),
-		selectedLocation: types.maybe(types.reference(Location)),
+		game: types.reference(GameStore),
+		locations: types.map(LocationStore),
+		selectedLocation: types.maybe(types.reference(LocationStore)),
 		displayHelp: true,
 	})
 	.volatile(() => ({

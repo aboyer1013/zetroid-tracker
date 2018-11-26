@@ -1,14 +1,14 @@
 import { types } from 'mobx-state-tree';
-import Game from './Game.store';
-import Item from './Item.store';
+import GameStore from './Game.store';
+import ItemStore from './Item.store';
 import MapStore from 'Map.store';
 import { find } from 'lodash';
 
 const AppStore = types
 	.model({
 		id: types.identifier,
-		games: types.map(Game),
-		items: types.map(Item),
+		games: types.map(GameStore),
+		items: types.map(ItemStore),
 		maps: types.map(MapStore),
 	})
 	.views((self) => ({

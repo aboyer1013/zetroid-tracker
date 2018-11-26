@@ -11,7 +11,7 @@ const locationsData = [
 		coords: [-2825,2240],
 		game: 'zelda3',
 		map: 'zelda3-lw',
-		itemRequirements: ['bomb', 'arrow'],
+		itemRequirements: ['bomb', 'somaria', 'bottle', 'bow', 'net', 'golden-sword', 'cape', 'hammer'],
 	},
 	{
 		name: 'hyrule-castle',

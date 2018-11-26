@@ -13,6 +13,26 @@ button {
 }
 .map-info {
 }
+.item-icon {
+	display: flex;
+	align-items: center;
+	+ * {
+		margin: 0 0 0 10px;
+	}
+	img {
+		margin: 0 10px 0 0;
+		width: 32px;
+	}
+}
+.item-icon-name {
+	margin: 0 10px;
+}
+.item-icon-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 32px 95px);
+	align-items: center;
+	grid-gap: 20px 0;
+}
 .map-container {
 	min-width: 565px;
 	position: absolute;
