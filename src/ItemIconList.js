@@ -16,7 +16,7 @@ class ItemIconList extends Component {
 		const result = [];
 		this.props.items.forEach((item, i) => {
 			icons.push(<span key={`${item.name}-icon-${i}`} className="item-icon"><img src={item.image} alt={get(item, 'longName')} title={get(item, 'image')} /></span>);
-			iconText.push(<span key={`${item.name}-text-${i}`} className="item-icon-name is-size-7">{item.longName}</span>);
+			iconText.push(<span key={`${item.name}-text-${i}`} className="item-icon-name has-text-success is-size-7">{item.longName}</span>);
 		});
 		icons.forEach((icon, i) => {
 			result.push(icons[i], iconText[i]);

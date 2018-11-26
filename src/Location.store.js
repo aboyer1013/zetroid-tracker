@@ -23,6 +23,9 @@ const LocationStore = types
 				longName: self.longName,
 				itemRequirements,
 			};
+		},
+		get isUnavailable() {
+
 		}
 	}))
 ;

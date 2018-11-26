@@ -8,7 +8,10 @@ class ItemIcon extends Component {
 		const image = this.props.item.image;
 
 		return (
-			<span className="item-icon"><img src={image} alt={get(item, 'longName')} title={get(item, 'image')} /> <span>{item.longName}</span></span>
+			<span className="item-icon">
+				<img src={image} alt={get(item, 'longName')} title={get(item, 'image')} />
+				<span>{item.longName}</span>
+			</span>
 		);
 	}
 }

@@ -13,6 +13,26 @@ button {
 }
 .map-info {
 }
+.details-controls {
+	margin: 0 0 20px;
+}
+.leaflet-marker-icon {
+	&.leaflet-marker-icon-green {
+		filter: hue-rotate(240deg) saturate(2.5) contrast(2.5);
+	}
+	&.leaflet-marker-icon-red {
+		filter: hue-rotate(150deg) saturate(1) contrast(3);
+	}
+	&.leaflet-marker-icon-yellow {
+		filter: hue-rotate(210deg) saturate(9) contrast(1) brightness(1.3);
+	}
+	&.leaflet-marker-icon-highlight {
+		filter: contrast(3);
+	}
+}
+.leaflet-marker-pane::after {
+	content: '!';
+}
 .item-icon {
 	display: flex;
 	align-items: center;

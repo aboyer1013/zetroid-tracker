@@ -19,6 +19,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		if (!details || displayHelp) {
 			return (
 				<div className="content box map-info">
+					<h1>Help</h1>
 					<ul>
 						<li><em>Hover over a map marker for more information.</em></li>
 						<li><em>Shift + drag to zoom in on an area.</em></li>
@@ -38,6 +39,31 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		return (
 			<div className="content box map-info">
 				{longName}
+				<div className="details-controls is-clearfix">
+					<div className="is-pulled-left">
+						<div className="buttons">
+							<button className="button is-success">
+								<span className="icon"><i className="fas fa-unlock" /></span>
+								<span>Available</span>
+							</button>
+							<button className="button is-danger">
+								<span className="icon"><i className="fas fa-lock" /></span>
+								<span>Unavailable</span>
+							</button>
+							<button className="button is-dark">
+								<span className="icon"><i className="fas fa-check" /></span>
+								<span>Complete</span>
+							</button>
+						</div>
+					</div>
+					<div className="is-pulled-right">
+						<div className="buttons">
+							<button className="button is-outlined is-warning">
+								<span className="icon"><i className="fas fa-highlighter" /></span>
+							</button>
+						</div>
+					</div>
+				</div>
 				<h6>Requirements:</h6>
 				{reqs}
 			</div>

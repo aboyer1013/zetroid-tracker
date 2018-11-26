@@ -8,6 +8,7 @@ const ItemStore = types.model({
 	active: false,
 	image: '',
 	game: types.reference(GameStore),
+	acquired: false,
 });
 
 export default ItemStore;
