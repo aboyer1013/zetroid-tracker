@@ -13,6 +13,9 @@ const MapStore = types
 		displayHelp: true,
 		isVisible: true,
 		tileLayerTemplate: types.string,
+		offset: 0,
+		x: 0,
+		y: 0,
 	})
 	.volatile(() => ({
 		component: {},
@@ -36,12 +39,17 @@ const MapStore = types
 		const setMapVisibility = (isVisible) => {
 			self.isVisible = isVisible;
 		}
+		const setPos = (newPos) => {
+			self.x = newPos.x;
+			self.y = newPos.y;
+		}
 
 		return {
 			setComponent,
 			setSelectedLocation,
 			showHelp,
 			setMapVisibility,
+			setPos,
 		};
 	})
 ;

@@ -35,17 +35,18 @@ appStore.maps.put(MapStore.create({
 	longName: 'Light World Map',
 	game: appStore.getGameByName('zelda3'),
 	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/lw/{z}/zelda3-lw.{x}.{y}.png`,
-	locations: {}
+	locations: {},
 }));
-appStore.maps.put(MapStore.create({
-	id: randomId(),
-	name: 'zelda3-dw',
-	longName: 'Dark World Map',
-	game: appStore.getGameByName('zelda3'),
-	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
-	isVisible: false,
-	locations: {}
-}));
+// appStore.maps.put(MapStore.create({
+// 	id: randomId(),
+// 	name: 'zelda3-dw',
+// 	longName: 'Dark World Map',
+// 	game: appStore.getGameByName('zelda3'),
+// 	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
+// 	// isVisible: false,
+// 	locations: {},
+// 	offset: 100,
+// }));
 // Create item models.
 itemsData.forEach((item) => {
 	appStore.items.put(ItemStore.create({

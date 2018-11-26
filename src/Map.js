@@ -3,6 +3,7 @@ import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import LocationDetail from 'LocationDetail';
 import Draggable from 'gsap/Draggable';
+import TweenLite from 'gsap/TweenLite';
 import classNames from 'classnames';
 import { debounce, camelCase } from 'lodash';
 
@@ -73,7 +74,11 @@ const Map = inject('store')(observer(class Map extends Component {
 			trigger: this.draggableTarget.current,
 			bounds: document.querySelector('body'),
 			liveSnap: (value) => self.state.toggleSnap ? Math.round(value / 50) * 50 : value,
+			onDragEnd: () => {
+				this.props.mapStore.setPos({ x: this.draggable.endX, y: this.draggable.endY, });
+			}
 		});
+		TweenLite.set(this.draggableRef.current, this.initPosition)
 		autorun(() => {
 			self.props.locations.forEach((loc) => {
 				if (!self.markers[loc.id]) {
@@ -96,7 +101,15 @@ const Map = inject('store')(observer(class Map extends Component {
 		this.mapRef.current.style.height = this.state.mapHeight + 'px';
 		this.map.invalidateSize();
 	}
+	get initPosition() {
+		const windowRect = document.querySelector('body').getBoundingClientRect();
+		const width = this.state.containerWidth;
+		const x = (windowRect.width / 2) - (width / 2) + this.props.mapStore.offset;
+		const y = this.props.mapStore.offset
 
+		this.props.mapStore.setPos({ x, y });
+		return { x, y };
+	}
 	zoomIn() {
 		this.map.zoomIn();
 	}
@@ -203,9 +216,8 @@ const Map = inject('store')(observer(class Map extends Component {
 					</header>
 					<div className="message-body map-body">
 						<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
-
 					</div>
-					<LocationDetail mapStore={this.props.mapStore} />
+					<LocationDetail ref={el => this.mapInfoElem = el} mapStore={this.props.mapStore} />
 				</div>
 			</div>
 		);
