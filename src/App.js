@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
 import Map from 'Map';
+import NavBar from 'NavBar';
 import { randomId } from './util';
 import 'scss/App.scss';
 
@@ -12,17 +13,29 @@ class App extends Component {
 	componentDidMount() {
 	}
 
+	generateMaps() {
+		const maps = [];
+
+		[...this.props.store.maps.values()].forEach(map => {
+			maps.push(
+				<Map
+					key={`map-${map.id}`}
+					mapStore={map}
+					locations={[...map.locations.values()]}
+					id={randomId()}
+					tileLayerTemplate={map.tileLayerTemplate}
+				/>
+			)
+		});
+		return maps;
+	}
 	render() {
 		return (
 			<Provider store={this.props.store}>
 				<div>
-					{[...this.props.store.items.values()].map(item => <img src={item.image} />)}
-					<Map
-						mapStore={this.props.store.getMapByName('zelda3-lw')}
-						locations={[...this.props.store.getMapByName('zelda3-lw').locations.values()]}
-						id={randomId()}
-						tileLayerTemplate={`${process.env.PUBLIC_URL}/img/maps/zelda3/lw/{z}/zelda3-lw.{x}.{y}.png`}
-					/>
+					{/*{[...this.props.store.items.values()].map(item => <img src={item.image} />)}*/}
+					<NavBar />
+					{this.generateMaps()}
 					{/*<Map
 						mapStore={this.props.store.getMapByName('zelda3-dw')}
 						id={randomId()}

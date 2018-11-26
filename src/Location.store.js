@@ -10,6 +10,7 @@ const LocationStore = types
 		game: types.reference(GameStore),
 		coords: types.array(types.integer),
 		itemRequirements: types.array(types.string),
+		markerType: types.optional(types.enumeration('Marker Type', ['UNAVAILABLE', 'AVAILABLE', 'COMPLETE', 'HIGHLIGHT']), 'UNAVAILABLE'),
 	})
 	.views((self) => ({
 		get details() {
@@ -24,10 +25,19 @@ const LocationStore = types
 				itemRequirements,
 			};
 		},
-		get isUnavailable() {
-
-		}
+		get defaultMarkerType() {
+			return 'UNAVAILABLE';
+		},
 	}))
+	.actions((self) => {
+		const setMarkerType = (type) => {
+			self.markerType = type;
+		};
+
+		return {
+			setMarkerType,
+		};
+	})
 ;
 
 export default LocationStore;

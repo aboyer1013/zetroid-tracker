@@ -11,16 +11,35 @@ button {
 .message-container {
 	position: absolute;
 }
+.is-off-screen {
+	position: absolute;
+	z-index: -9999 !important;
+}
 .map-info {
 }
 .details-controls {
 	margin: 0 0 20px;
+	padding: 0 0 20px;
+	border-bottom: 1px solid $grey-lighter;
+}
+.navbar {
+	z-index: 9999;
+}
+.navbar-brand-title {
+	line-height: 1;
+	margin: 0;
+	padding: 0;
+
+}
+.is-not-acquired {
+	opacity: 0.5;
+	filter: saturate(0);
 }
 .leaflet-marker-icon {
-	&.leaflet-marker-icon-green {
+	&.leaflet-marker-icon-available {
 		filter: hue-rotate(240deg) saturate(2.5) contrast(2.5);
 	}
-	&.leaflet-marker-icon-red {
+	&.leaflet-marker-icon-unavailable {
 		filter: hue-rotate(150deg) saturate(1) contrast(3);
 	}
 	&.leaflet-marker-icon-yellow {
@@ -52,6 +71,7 @@ button {
 	grid-template-columns: repeat(auto-fit, 32px 95px);
 	align-items: center;
 	grid-gap: 20px 0;
+	justify-content: space-around;
 }
 .map-container {
 	min-width: 565px;

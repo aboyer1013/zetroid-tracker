@@ -6,10 +6,13 @@ const MapStore = types
 	.model({
 		id: types.identifier,
 		name: types.string,
+		longName: types.string,
 		game: types.reference(GameStore),
 		locations: types.map(LocationStore),
 		selectedLocation: types.maybe(types.reference(LocationStore)),
 		displayHelp: true,
+		isVisible: true,
+		tileLayerTemplate: types.string,
 	})
 	.volatile(() => ({
 		component: {},
@@ -30,11 +33,15 @@ const MapStore = types
 		const showHelp = () => {
 			self.displayHelp = true;
 		}
+		const setMapVisibility = (isVisible) => {
+			self.isVisible = isVisible;
+		}
 
 		return {
 			setComponent,
 			setSelectedLocation,
 			showHelp,
+			setMapVisibility,
 		};
 	})
 ;

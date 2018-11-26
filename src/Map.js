@@ -1,10 +1,10 @@
 import React, { Component, createRef } from 'react';
-import { reaction } from 'mobx';
+import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import LocationDetail from 'LocationDetail';
 import Draggable from 'gsap/Draggable';
 import classNames from 'classnames';
-import { debounce } from 'lodash';
+import { debounce, camelCase } from 'lodash';
 
 const L = window.L;
 const Map = inject('store')(observer(class Map extends Component {
@@ -37,8 +37,8 @@ const Map = inject('store')(observer(class Map extends Component {
 	};
 
 	// componentDidUpdate(prevProps, prevState, snapshot) {
-	// 	console.log(prevProps, prevState, snapshot);
-	//
+		// console.log(prevProps, prevState, snapshot);
+		// delete this.isInitiallyHidden;
 	// }
 	componentDidMount() {
 		const self = this;
@@ -53,7 +53,8 @@ const Map = inject('store')(observer(class Map extends Component {
 			attributionControl: false,
 			zoomControl: false,
 		}, this.props.mapOptions));
-		window.map = this.map;
+		// For debugging.
+		window[camelCase(this.props.mapStore.name)] = this.map;
 		this.props.locations.forEach(loc => {
 			this.addMarker(loc);
 		});
@@ -73,9 +74,7 @@ const Map = inject('store')(observer(class Map extends Component {
 			bounds: document.querySelector('body'),
 			liveSnap: (value) => self.state.toggleSnap ? Math.round(value / 50) * 50 : value,
 		});
-		reaction(() => {
-			return self.props.locations.length;
-		}, () => {
+		autorun(() => {
 			self.props.locations.forEach((loc) => {
 				if (!self.markers[loc.id]) {
 					self.addMarker(loc);
@@ -85,6 +84,9 @@ const Map = inject('store')(observer(class Map extends Component {
 				if (!self.props.mapStore.locations.get(markerId)) {
 					self.removeMarker(markerId);
 				}
+			});
+			self.props.locations.forEach((loc) => {
+				self.setMarkerType(self.markers[loc.id], loc);
 			});
 		});
 	}
@@ -130,7 +132,7 @@ const Map = inject('store')(observer(class Map extends Component {
 
 		this.markers[loc.id] = L
 			.marker(loc.coords)
-			.on('mouseover', (event) => {
+			.on('click', (event) => {
 				const marker = self.markers[loc.id];
 				const mapStoreLocation = self.props.mapStore.locations.get(loc.id);
 
@@ -138,6 +140,19 @@ const Map = inject('store')(observer(class Map extends Component {
 			})
 			.addTo(this.map)
 		;
+		this.setMarkerType(this.markers[loc.id], loc);
+	}
+	setMarkerType(marker, loc) {
+		const typeClasses = {
+			UNAVAILABLE: 'leaflet-marker-icon-unavailable',
+			AVAILABLE: 'leaflet-marker-icon-unavailable',
+			HIGHLIGHT: 'leaflet-marker-icon-highlight',
+		};
+
+		Object.keys(typeClasses).forEach(item => {
+			marker._icon.classList.remove(typeClasses[item]);
+		});
+		marker._icon.classList.add(typeClasses[loc.markerType]);
 	}
 	removeMarker(markerId) {
 		this.markers[markerId].off('click');
@@ -152,10 +167,11 @@ const Map = inject('store')(observer(class Map extends Component {
 		const lockClasses = classNames('fas', {
 			'fa-lock-open': !this.state.toggleWindowLock,
 			'fa-lock': this.state.toggleWindowLock
-		})
+		});
+		const containerClasses = classNames('message-container', {'is-off-screen': !this.props.mapStore.isVisible})
 
 		return (
-			<div ref={this.draggableRef} className="message-container">
+			<div ref={this.draggableRef} className={containerClasses}>
 				<div
 					style={{
 						width: this.state.containerWidth + 'px',

@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import ItemIconList from 'ItemIconList';
 import { get } from 'lodash';
+import classNames from 'classnames';
 import { observer, inject } from 'mobx-react';
 
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
-	// constructor() {
-	// 	super();
-	// }
+	constructor() {
+		super();
+		this.toggleHighlight = this.toggleHighlight.bind(this);
+	}
+	toggleHighlight() {
+		const selectedLocation = get(this, 'props.mapStore.selectedLocation');
 
+		if (selectedLocation.markerType !== 'HIGHLIGHT') {
+			selectedLocation.setMarkerType('HIGHLIGHT');
+		} else {
+			selectedLocation.setMarkerType(selectedLocation.defaultMarkerType);
+		}
+	}
 	render() {
 		const mapStore = this.props.mapStore;
 		const selectedLocation = mapStore.selectedLocation;
@@ -15,13 +25,15 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
+		const markerType = get(selectedLocation, 'markerType');
+		const highlightClasses = classNames('button', 'is-warning', {'is-outlined': markerType !== 'HIGHLIGHT'});
 
 		if (!details || displayHelp) {
 			return (
 				<div className="content box map-info">
 					<h1>Help</h1>
 					<ul>
-						<li><em>Hover over a map marker for more information.</em></li>
+						<li><em>Click map marker for more information.</em></li>
 						<li><em>Shift + drag to zoom in on an area.</em></li>
 						<li><em>Drag on the window title to move map.</em></li>
 						<li><em>Mousewheel or <span className="icon"><i className="fas fa-search-minus" /></span><span className="icon"><i className="fas fa-search-plus" /></span> to zoom in/out.</em></li>
@@ -58,8 +70,8 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					</div>
 					<div className="is-pulled-right">
 						<div className="buttons">
-							<button className="button is-outlined is-warning">
-								<span className="icon"><i className="fas fa-highlighter" /></span>
+							<button onClick={this.toggleHighlight} className={highlightClasses}>
+								<span className="icon"><i className="fas fa-thumbtack" /></span>
 							</button>
 						</div>
 					</div>
