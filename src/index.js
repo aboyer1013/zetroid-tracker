@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect } from 'mobx-state-tree';
+import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, onPatch } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -75,6 +75,9 @@ locationsData.forEach(loc => {
 appStore.selectGame('zelda3');
 // Globals to help with debugging.
 // appStore.games.set(zelda1.id, zelda1);
+window.applySnapshot = applySnapshot;
+window.getSnapshot = getSnapshot;
+window.destroy = destroy;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
 

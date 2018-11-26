@@ -6,7 +6,6 @@ import { find } from 'lodash';
 
 const AppStore = types
 	.model({
-		id: types.identifier,
 		games: types.map(GameStore),
 		items: types.map(ItemStore),
 		maps: types.map(MapStore),

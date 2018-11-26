@@ -5,7 +5,7 @@ import LocationDetail from 'LocationDetail';
 import Draggable from 'gsap/Draggable';
 import TweenLite from 'gsap/TweenLite';
 import classNames from 'classnames';
-import { debounce, camelCase } from 'lodash';
+import { debounce, camelCase, isNull } from 'lodash';
 
 const L = window.L;
 const Map = inject('store')(observer(class Map extends Component {
@@ -14,10 +14,10 @@ const Map = inject('store')(observer(class Map extends Component {
 		this.mapRef = createRef();
 		this.draggableRef = createRef();
 		this.draggableTarget = createRef();
+		// Throttle the expensive map resizing for spaz busting.
 		this.resize = debounce(this.resize, 500);
 		this.zoomIn = this.zoomIn.bind(this);
 		this.zoomOut = this.zoomOut.bind(this);
-		this.toggleSnap = this.toggleSnap.bind(this);
 		this.toggleWindowLock = this.toggleWindowLock.bind(this);
 		this.resetToCenter = this.resetToCenter.bind(this);
 		this.onChangeWidth = this.onChangeWidth.bind(this);
@@ -28,23 +28,24 @@ const Map = inject('store')(observer(class Map extends Component {
 	markers = {};
 	offsetWidth = 53;
 	offsetHeight = 108;
+	// TODO take this out of state
 	state = {
-		toggleSnap: false,
-		toggleWindowLock: false,
 		containerWidth: 565,
 		containerHeight: 640,
 		mapWidth: 512,
 		mapHeight: 532,
 	};
 
-	// componentDidUpdate(prevProps, prevState, snapshot) {
-		// console.log(prevProps, prevState, snapshot);
-		// delete this.isInitiallyHidden;
-	// }
 	componentDidMount() {
 		const self = this;
 
+		// I may not need this.
 		this.props.mapStore.setComponent(this);
+		this.initMap();
+		this.initDraggable();
+		this.initReactions();
+	}
+	initMap() {
 		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
 			crs: L.CRS.Simple,
 			center: [-2128,2048],
@@ -63,13 +64,15 @@ const Map = inject('store')(observer(class Map extends Component {
 			minZoom: -3,
 			maxZoom: 2,
 			nativeZooms: [0],
-			// errorTileUrl: `${process.env.PUBLIC_URL}/img/maps/notfound.gif`,
 			tileSize: L.point(256, 224),
 		}, this.props.tileLayerOptions)).addTo(this.map);
-		// L.popup().setLatLng([-1256, 1256]).setContent('<h1>Ohai</h1> <p> This is an example popup.</p>').openOn(this.map);
 
 		this.map.setZoom(-3);
 		this.resize();
+	}
+	initDraggable() {
+		const self = this;
+
 		this.draggable = new Draggable(this.draggableRef.current, {
 			trigger: this.draggableTarget.current,
 			bounds: document.querySelector('body'),
@@ -78,7 +81,10 @@ const Map = inject('store')(observer(class Map extends Component {
 				this.props.mapStore.setPos({ x: this.draggable.endX, y: this.draggable.endY, });
 			}
 		});
-		TweenLite.set(this.draggableRef.current, this.initPosition)
+	}
+	initReactions() {
+		const self = this;
+
 		autorun(() => {
 			self.props.locations.forEach((loc) => {
 				if (!self.markers[loc.id]) {
@@ -93,10 +99,22 @@ const Map = inject('store')(observer(class Map extends Component {
 			self.props.locations.forEach((loc) => {
 				self.setMarkerType(self.markers[loc.id], loc);
 			});
+			self.draggable.enabled(!self.props.mapStore.isLocked);
+			TweenLite.set(self.draggableRef.current, {x: self.props.mapStore.x, y: self.props.mapStore.y });
+			if (isNull(this.props.mapStore.x)) {
+				TweenLite.set(this.draggableRef.current, this.initPosition);
+			}
 		});
 	}
-
 	resize() {
+		if (!isNull(this.props.mapStore.containerWidth)) {
+			this.setState({
+				containerWidth: this.props.mapStore.containerWidth,
+				containerHeight: this.props.mapStore.containerHeight,
+				mapWidth: this.props.mapStore.containerWidth - this.offsetWidth,
+				mapHeight: this.props.mapStore.containerHeight - this.offsetHeight,
+			});
+		}
 		this.mapRef.current.style.width = this.state.mapWidth + 'px';
 		this.mapRef.current.style.height = this.state.mapHeight + 'px';
 		this.map.invalidateSize();
@@ -105,7 +123,7 @@ const Map = inject('store')(observer(class Map extends Component {
 		const windowRect = document.querySelector('body').getBoundingClientRect();
 		const width = this.state.containerWidth;
 		const x = (windowRect.width / 2) - (width / 2) + this.props.mapStore.offset;
-		const y = this.props.mapStore.offset
+		const y = this.props.mapStore.offset + 50;
 
 		this.props.mapStore.setPos({ x, y });
 		return { x, y };
@@ -120,24 +138,29 @@ const Map = inject('store')(observer(class Map extends Component {
 		this.setState({ toggleSnap: !this.state.toggleSnap });
 	}
 	toggleWindowLock() {
-		this.setState({ toggleWindowLock: !this.state.toggleWindowLock });
-		this.draggable.enabled(this.state.toggleWindowLock);
+		this.props.mapStore.setLocked(!this.props.mapStore.isLocked);
 	}
 	resetToCenter() {
 		this.map.setView([0,0], -3);
 	}
 	onChangeHeight(evt) {
+		const newHeight = parseInt(evt.target.value, 10);
+
 		this.setState({
-			containerHeight: evt.target.value,
-			mapHeight: evt.target.value - this.offsetHeight,
+			containerHeight: newHeight,
+			mapHeight: newHeight - this.offsetHeight,
 		});
+		this.props.mapStore.setHeight(newHeight);
 		this.resize();
 	}
 	onChangeWidth(evt) {
+		const newWidth = parseInt(evt.target.value, 10);
+
 		this.setState({
-			containerWidth: evt.target.value,
-			mapWidth: evt.target.value - this.offsetWidth,
+			containerWidth: newWidth,
+			mapWidth: newWidth - this.offsetWidth,
 		});
+		this.props.mapStore.setWidth(newWidth);
 		this.resize();
 	}
 	addMarker(loc) {
@@ -173,13 +196,9 @@ const Map = inject('store')(observer(class Map extends Component {
 		delete this.markers[markerId];
 	}
 	render() {
-		// const snapClasses = classNames('button', {
-		// 	'is-selected': this.state.toggleSnap,
-		// 	'is-success': this.state.toggleSnap,
-		// });
 		const lockClasses = classNames('fas', {
-			'fa-lock-open': !this.state.toggleWindowLock,
-			'fa-lock': this.state.toggleWindowLock
+			'fa-lock-open': !this.props.mapStore.isLocked,
+			'fa-lock': this.props.mapStore.isLocked
 		});
 		const containerClasses = classNames('message-container', {'is-off-screen': !this.props.mapStore.isVisible})
 
@@ -194,18 +213,23 @@ const Map = inject('store')(observer(class Map extends Component {
 				>
 					<header className="message-header" ref={this.draggableTarget}>
 						<div className="buttons has-addons is-marginless">
-							<button onClick={this.zoomOut} className="button"><span className="icon"><i className="fas fa-search-minus" /></span></button>
-							<button onClick={this.zoomIn} className="button"><span className="icon"><i className="fas fa-search-plus" /></span></button>
-							<button title="Reset zoom and center" onClick={this.resetToCenter} className="button"><span className="icon"><i className="fas fa-compress" /></span></button>
-							{/*<button onClick={this.toggleSnap} className={snapClasses}><span className="icon"><i className="fas fa-th" /></span></button>*/}
+							<button onClick={this.zoomOut} className="button">
+								<span className="icon"><i className="fas fa-search-minus" /></span>
+							</button>
+							<button onClick={this.zoomIn} className="button">
+								<span className="icon"><i className="fas fa-search-plus" /></span>
+							</button>
+							<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
+								<span className="icon"><i className="fas fa-compress" /></span>
+							</button>
 							<div className="size-controls">
 								<div>
 									<label htmlFor="width" className="is-unselectable">Width </label>
-									<input type="range" id="width" min="565" max="2000" step={20} onChange={this.onChangeWidth} />
+									<input value={this.props.mapStore.containerWidth || 565} type="range" id="width" min="565" max="2000" step={20} onChange={this.onChangeWidth} />
 								</div>
 								<div>
 									<label htmlFor="height" className="is-unselectable">Height </label>
-									<input type="range" id="height" min="640" max="2000" step={20} onChange={this.onChangeHeight} />
+									<input value={this.props.mapStore.containerHeight || 640} type="range" id="height" min="640" max="2000" step={20} onChange={this.onChangeHeight} />
 								</div>
 							</div>
 						</div>
@@ -217,7 +241,7 @@ const Map = inject('store')(observer(class Map extends Component {
 					<div className="message-body map-body">
 						<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
 					</div>
-					<LocationDetail ref={el => this.mapInfoElem = el} mapStore={this.props.mapStore} />
+					<LocationDetail mapStore={this.props.mapStore} />
 				</div>
 			</div>
 		);

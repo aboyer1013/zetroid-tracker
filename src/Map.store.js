@@ -14,8 +14,11 @@ const MapStore = types
 		isVisible: true,
 		tileLayerTemplate: types.string,
 		offset: 0,
-		x: 0,
-		y: 0,
+		x: types.optional(types.maybeNull(types.integer), null),
+		y: types.optional(types.maybeNull(types.integer), null),
+		containerWidth: types.optional(types.maybeNull(types.integer), null),
+		containerHeight: types.optional(types.maybeNull(types.integer), null),
+		isLocked: false,
 	})
 	.volatile(() => ({
 		component: {},
@@ -43,6 +46,15 @@ const MapStore = types
 			self.x = newPos.x;
 			self.y = newPos.y;
 		}
+		const setWidth = (newWidth) => {
+			self.containerWidth = newWidth;
+		}
+		const setHeight = (newHeight) => {
+			self.containerHeight = newHeight;
+		}
+		const setLocked = (isLocked) => {
+			self.isLocked = isLocked;
+		};
 
 		return {
 			setComponent,
@@ -50,6 +62,9 @@ const MapStore = types
 			showHelp,
 			setMapVisibility,
 			setPos,
+			setWidth,
+			setHeight,
+			setLocked,
 		};
 	})
 ;
