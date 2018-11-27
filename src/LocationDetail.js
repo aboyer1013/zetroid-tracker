@@ -29,10 +29,11 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const highlightClasses = classNames('button', 'is-outline', {
 			'has-text-warning': markerType === 'HIGHLIGHT',
 		});
+		const mapInfoClasses = classNames('content', 'box', 'map-info', {'is-hidden': !store.isVisible});
 
 		if (!details || displayHelp) {
 			return (
-				<div className="content box map-info">
+				<div className={mapInfoClasses}>
 					<h1>Help</h1>
 					<ul>
 						<li><em>Click map marker for more information.</em></li>
@@ -51,7 +52,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			reqs = <ItemIconList items={reqs} />;
 		}
 		return (
-			<div className="content box map-info">
+			<div className={mapInfoClasses}>
 				{longName}
 				<div className="details-controls is-clearfix">
 					<div className="is-pulled-left">

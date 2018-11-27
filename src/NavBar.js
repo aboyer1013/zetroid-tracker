@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import classNames from 'classnames';
-import {inject, observer} from "mobx-react";
+import {inject, observer} from 'mobx-react';
+import { get } from 'lodash';
 
 const NavBar = inject('store')(observer(class NavBar extends Component {
 	constructor() {
@@ -48,6 +49,11 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 		const burgerClasses = classNames('navbar-burger', 'burger', {'is-active': this.state.isMenuActive});
 		const menuClasses = classNames('navbar-menu', {'is-active': this.state.isMenuActive});
 		const mapVisibilityButtons = this.generateMapVisibilityButtons();
+		const locDetailStore = get(this, 'props.store.locationDetail');
+		const locDetailClasses = classNames('fas', {
+			'fa-eye': !locDetailStore.isVisible,
+			'fa-eye-slash': locDetailStore.isVisible,
+		});
 
 		return (
 			<nav className="navbar" role="navigation" aria-label="main navigation">
@@ -87,6 +93,12 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 
 							<div className="navbar-dropdown">
 								{mapVisibilityButtons}
+								<div className="navbar-item">
+									<button onClick={() => locDetailStore.setVisibility(!locDetailStore.isVisible)} className="button is-fullwidth">
+										<span className="icon"><i className={locDetailClasses} /></span>
+										<span>Location details</span>
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>

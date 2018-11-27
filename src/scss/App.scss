@@ -15,12 +15,16 @@ button {
 }
 .message-container {
 	position: absolute;
+	z-index: 25;
 }
 .is-off-screen {
 	position: absolute;
 	z-index: -9999 !important;
 }
 .map-info {
+	position: fixed;
+	bottom: 0;
+	min-width: 50%;
 }
 .details-controls {
 	margin: 0 0 20px;
@@ -29,6 +33,10 @@ button {
 }
 .navbar {
 	z-index: 9999;
+}
+.navbar-menu.is-active {
+	position: absolute;
+	width: 100%;
 }
 .navbar-brand-title {
 	line-height: 1;
