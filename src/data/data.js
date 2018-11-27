@@ -20,7 +20,15 @@ const locationsData = [
 		game: 'zelda3',
 		map: 'zelda3-lw',
 		itemRequirements: ['boots', 'hookshot'],
-	}
+	},
+	{
+		name: 'pyramid',
+		longName: 'Pyramid',
+		coords: [-1840,2375],
+		game: 'zelda3',
+		map: 'zelda3-dw',
+		itemRequirements: ['boots', 'hookshot'],
+	},
 ];
 
 export {

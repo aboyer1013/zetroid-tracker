@@ -2,6 +2,7 @@ import { types, applySnapshot } from 'mobx-state-tree';
 import GameStore from './Game.store';
 import ItemStore from './Item.store';
 import MapStore from 'Map.store';
+import LocationDetailStore from 'LocationDetail.store';
 import { find } from 'lodash';
 
 const AppStore = types
@@ -9,6 +10,7 @@ const AppStore = types
 		games: types.map(GameStore),
 		items: types.map(ItemStore),
 		maps: types.map(MapStore),
+		locationDetail: LocationDetailStore,
 		isModalOpen: false,
 		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT'])),
 		validationMessages: types.array(types.string),
@@ -65,7 +67,7 @@ const AppStore = types
 			if (window.localStorage) {
 				window.localStorage.removeItem(self.LOCAL_STORAGE_KEY);
 			}
-		}
+		};
 
 		return {
 			selectGame,

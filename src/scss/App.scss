@@ -1,9 +1,14 @@
 @import 'fontawesome-config.scss';
 @import 'bulma.config';
 
-html, body {
-	width: 100%;
-	height: 100%;
+html,
+body,
+#root,
+.main-container,
+.main {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 }
 button {
 	cursor: pointer;
@@ -73,7 +78,7 @@ button {
 	grid-gap: 20px 0;
 }
 .map-container {
-	min-width: 565px;
+	//min-width: 565px;
 	position: absolute;
 }
 .map-body {
@@ -98,4 +103,16 @@ button {
 .map {
 	width: 100%;
 	height: 100%
+}
+.react-resizable-handle {
+	background: none !important;
+	@extend .fas;
+	@extend .fa-expand-arrows-alt;
+	&::before {
+		color: $light;
+		position: absolute;
+		bottom: 5px;
+		right: 7px;
+		font-size: 20px;
+	}
 }

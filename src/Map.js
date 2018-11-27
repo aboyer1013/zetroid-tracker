@@ -1,11 +1,12 @@
 import React, { Component, createRef } from 'react';
 import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import LocationDetail from 'LocationDetail';
 import Draggable from 'gsap/Draggable';
 import TweenLite from 'gsap/TweenLite';
 import classNames from 'classnames';
 import { debounce, camelCase, isNull } from 'lodash';
+import { ResizableBox } from 'react-resizable';
+import '../node_modules/react-resizable/css/styles.css';
 
 const L = window.L;
 const Map = inject('store')(observer(class Map extends Component {
@@ -20,9 +21,8 @@ const Map = inject('store')(observer(class Map extends Component {
 		this.zoomOut = this.zoomOut.bind(this);
 		this.toggleWindowLock = this.toggleWindowLock.bind(this);
 		this.resetToCenter = this.resetToCenter.bind(this);
-		this.onChangeWidth = this.onChangeWidth.bind(this);
-		this.onChangeHeight = this.onChangeHeight.bind(this);
 		this.addMarker = this.addMarker.bind(this);
+		this.onResizeHandler = this.onResizeHandler.bind(this);
 	}
 
 	markers = {};
@@ -71,7 +71,7 @@ const Map = inject('store')(observer(class Map extends Component {
 	initDraggable() {
 		this.draggable = new Draggable(this.draggableRef.current, {
 			trigger: this.draggableTarget.current,
-			bounds: document.querySelector('body'),
+			bounds: document.querySelector('#main'),
 			// No subpixel dragging.
 			liveSnap: (value) => Math.round(value / 1),
 			onDragEnd: () => {
@@ -140,26 +140,6 @@ const Map = inject('store')(observer(class Map extends Component {
 	resetToCenter() {
 		this.map.setView([0,0], -3);
 	}
-	onChangeHeight(evt) {
-		const newHeight = parseInt(evt.target.value, 10);
-
-		this.setState({
-			containerHeight: newHeight,
-			mapHeight: newHeight - this.offsetHeight,
-		});
-		this.props.mapStore.setHeight(newHeight);
-		this.resize();
-	}
-	onChangeWidth(evt) {
-		const newWidth = parseInt(evt.target.value, 10);
-
-		this.setState({
-			containerWidth: newWidth,
-			mapWidth: newWidth - this.offsetWidth,
-		});
-		this.props.mapStore.setWidth(newWidth);
-		this.resize();
-	}
 	addMarker(loc) {
 		const self = this;
 		const theLocation = this.props.mapStore.locations.get(loc.id);
@@ -170,7 +150,7 @@ const Map = inject('store')(observer(class Map extends Component {
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
 
-				this.props.mapStore.setSelectedLocation(event, marker, theLocation);
+				self.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);
 			})
 			.addTo(this.map)
 		;
@@ -188,6 +168,19 @@ const Map = inject('store')(observer(class Map extends Component {
 		});
 		marker._icon.classList.add(typeClasses[loc.markerType]);
 	}
+	onResizeHandler(event, data) {
+		const { width: newWidth, height: newHeight } = data.size;
+
+		this.setState({
+			containerWidth: newWidth,
+			mapWidth: newWidth - this.offsetWidth,
+			containerHeight: newHeight,
+			mapHeight: newHeight - this.offsetHeight,
+		});
+		this.props.mapStore.setWidth(newWidth);
+		this.props.mapStore.setHeight(newHeight);
+		this.resize();
+	}
 	removeMarker(markerId) {
 		this.markers[markerId].off('click');
 		this.map.removeLayer(this.markers[markerId]);
@@ -202,45 +195,40 @@ const Map = inject('store')(observer(class Map extends Component {
 
 		return (
 			<div ref={this.draggableRef} className={containerClasses}>
-				<div
-					style={{
-						width: this.state.containerWidth + 'px',
-						height: this.state.containerHeight + 'px'
-					}}
-					className="message is-primary map-container has-background-grey-darker is-unselectable"
+				<ResizableBox
+					width={this.state.containerWidth}
+					height={this.state.containerHeight}
+					minConstraints={[256, 256]}
+					onResizeStop={this.onResizeHandler}
 				>
-					<header className="message-header" ref={this.draggableTarget}>
-						<div className="buttons has-addons is-marginless">
-							<button onClick={this.zoomOut} className="button">
-								<span className="icon"><i className="fas fa-search-minus" /></span>
-							</button>
-							<button onClick={this.zoomIn} className="button">
-								<span className="icon"><i className="fas fa-search-plus" /></span>
-							</button>
-							<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
-								<span className="icon"><i className="fas fa-compress" /></span>
-							</button>
-							<div className="size-controls">
-								<div>
-									<label htmlFor="width" className="is-unselectable">Width </label>
-									<input value={this.props.mapStore.containerWidth || 565} type="range" id="width" min="565" max="2000" step={20} onChange={this.onChangeWidth} />
-								</div>
-								<div>
-									<label htmlFor="height" className="is-unselectable">Height </label>
-									<input value={this.props.mapStore.containerHeight || 640} type="range" id="height" min="640" max="2000" step={20} onChange={this.onChangeHeight} />
-								</div>
+					<div
+						style={{
+							width: '100%',
+							height: '100%',
+						}}
+						className="message is-primary map-container has-background-grey-darker is-unselectable"
+					>
+						<header className="message-header" ref={this.draggableTarget}>
+							<div className="buttons has-addons is-marginless">
+								<button onClick={this.zoomOut} className="button">
+									<span className="icon"><i className="fas fa-search-minus" /></span>
+								</button>
+								<button onClick={this.zoomIn} className="button">
+									<span className="icon"><i className="fas fa-search-plus" /></span>
+								</button>
+								<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
+									<span className="icon"><i className="fas fa-compress" /></span>
+								</button>
 							</div>
+							<div className="buttons has-addons is-marginless">
+								<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
+							</div>
+						</header>
+						<div className="message-body map-body">
+							<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
 						</div>
-						<div className="buttons has-addons is-marginless">
-							<button onClick={this.props.mapStore.showHelp} className="button"><span className="icon"><i className="fas fa-question" /></span></button>
-							<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
-						</div>
-					</header>
-					<div className="message-body map-body">
-						<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
 					</div>
-					<LocationDetail mapStore={this.props.mapStore} />
-				</div>
+				</ResizableBox>
 			</div>
 		);
 	}

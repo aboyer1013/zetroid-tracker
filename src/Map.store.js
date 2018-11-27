@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import GameStore from 'Game.store';
 import LocationStore from 'Location.store';
+import LocationDetailStore from 'LocationDetail.store';
 
 const MapStore = types
 	.model({
@@ -10,6 +11,7 @@ const MapStore = types
 		game: types.reference(GameStore),
 		locations: types.map(LocationStore),
 		selectedLocation: types.maybe(types.reference(LocationStore)),
+		locationDetail: types.reference(LocationDetailStore),
 		displayHelp: true,
 		isVisible: true,
 		tileLayerTemplate: types.string,
@@ -32,10 +34,6 @@ const MapStore = types
 		const setComponent = (component) => {
 			self.component = component;
 		};
-		const setSelectedLocation = (event, marker, mapStoreLocation) => {
-			self.selectedLocation = mapStoreLocation;
-			self.displayHelp = false;
-		}
 		const showHelp = () => {
 			self.displayHelp = true;
 		}
@@ -54,6 +52,9 @@ const MapStore = types
 		}
 		const setLocked = (isLocked) => {
 			self.isLocked = isLocked;
+		};
+		const setSelectedLocation = (event, marker, mapStoreLocation) => {
+			self.selectedLocation = mapStoreLocation;
 		};
 
 		return {

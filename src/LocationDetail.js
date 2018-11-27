@@ -10,7 +10,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		this.toggleHighlight = this.toggleHighlight.bind(this);
 	}
 	toggleHighlight() {
-		const selectedLocation = get(this, 'props.mapStore.selectedLocation');
+		const selectedLocation = get(this, 'props.store.locationDetail.selectedLocation');
 
 		if (selectedLocation.markerType !== 'HIGHLIGHT') {
 			selectedLocation.setMarkerType('HIGHLIGHT');
@@ -19,9 +19,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 	}
 	render() {
-		const mapStore = this.props.mapStore;
-		const selectedLocation = mapStore.selectedLocation;
-		const displayHelp = mapStore.displayHelp;
+		const store = get(this, 'props.store.locationDetail');
+		const selectedLocation = store.selectedLocation;
+		const displayHelp = store.displayHelp;
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
