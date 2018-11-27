@@ -28,6 +28,8 @@ const Map = inject('store')(observer(class Map extends Component {
 	markers = {};
 	offsetWidth = 53;
 	offsetHeight = 108;
+	fitWidth = 565;
+	fitHeight = 619;
 	// TODO take this out of state
 	state = {
 		containerWidth: 565,
@@ -94,7 +96,7 @@ const Map = inject('store')(observer(class Map extends Component {
 				}
 			});
 			self.props.locations.forEach((loc) => {
-				self.setMarkerType(self.markers[loc.id], loc);
+				self.setProgression(self.markers[loc.id], loc);
 			});
 			self.draggable.enabled(!self.props.mapStore.isLocked);
 			TweenLite.set(self.draggableRef.current, {x: self.props.mapStore.x, y: self.props.mapStore.y });
@@ -139,6 +141,12 @@ const Map = inject('store')(observer(class Map extends Component {
 	}
 	resetToCenter() {
 		this.map.setView([0,0], -3);
+		this.onResizeHandler(null, {
+			size: {
+				width: this.fitWidth,
+				height: this.fitHeight,
+			},
+		});
 	}
 	addMarker(loc) {
 		const self = this;
@@ -154,19 +162,21 @@ const Map = inject('store')(observer(class Map extends Component {
 			})
 			.addTo(this.map)
 		;
-		this.setMarkerType(this.markers[loc.id], loc);
+		this.setProgression(this.markers[loc.id], loc);
 	}
-	setMarkerType(marker, loc) {
+	setProgression(marker, loc) {
 		const typeClasses = {
-			UNAVAILABLE: 'leaflet-marker-icon-unavailable',
-			AVAILABLE: 'leaflet-marker-icon-unavailable',
-			HIGHLIGHT: 'leaflet-marker-icon-highlight',
+			UNAVAILABLE: 'leaflet-marker-icon-UNAVAILABLE',
+			AVAILABLE: 'leaflet-marker-icon-AVAILABLE',
+			COMPLETE: 'leaflet-marker-icon-COMPLETE',
+			FAVORITE: 'leaflet-marker-icon-HIGHLIGHT',
 		};
 
 		Object.keys(typeClasses).forEach(item => {
 			marker._icon.classList.remove(typeClasses[item]);
 		});
-		marker._icon.classList.add(typeClasses[loc.markerType]);
+		const classToUse = loc.isFavorite ? typeClasses.FAVORITE : typeClasses[loc.progression];
+		marker._icon.classList.add(classToUse);
 	}
 	onResizeHandler(event, data) {
 		const { width: newWidth, height: newHeight } = data.size;
@@ -216,11 +226,11 @@ const Map = inject('store')(observer(class Map extends Component {
 								<button onClick={this.zoomIn} className="button">
 									<span className="icon"><i className="fas fa-search-plus" /></span>
 								</button>
+							</div>
+							<div className="buttons has-addons is-marginless">
 								<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
 									<span className="icon"><i className="fas fa-compress" /></span>
 								</button>
-							</div>
-							<div className="buttons has-addons is-marginless">
 								<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
 							</div>
 						</header>

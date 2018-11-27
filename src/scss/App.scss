@@ -25,11 +25,9 @@ button {
 	position: fixed;
 	bottom: 0;
 	min-width: 50%;
+	width: 100%;
 }
 .details-controls {
-	margin: 0 0 20px;
-	padding: 0 0 20px;
-	border-bottom: 1px solid $grey-lighter;
 }
 .navbar {
 	z-index: 9999;
@@ -49,13 +47,16 @@ button {
 	filter: saturate(0);
 }
 .leaflet-marker-icon {
-	&.leaflet-marker-icon-available {
-		filter: hue-rotate(240deg) saturate(2.5) contrast(2.5);
+	&.leaflet-marker-icon-AVAILABLE {
+		filter: hue-rotate(240deg) contrast(2);
 	}
-	&.leaflet-marker-icon-unavailable {
+	&.leaflet-marker-icon-UNAVAILABLE {
 		filter: hue-rotate(150deg) saturate(1) contrast(3);
 	}
-	&.leaflet-marker-icon-highlight {
+	&.leaflet-marker-icon-COMPLETE {
+		filter: saturate(0);
+	}
+	&.leaflet-marker-icon-HIGHLIGHT {
 		filter: hue-rotate(210deg) saturate(9) contrast(1) brightness(1.3);
 	}
 	//&.leaflet-marker-icon-highlight {

@@ -10,7 +10,8 @@ const LocationStore = types
 		game: types.reference(GameStore),
 		coords: types.array(types.integer),
 		itemRequirements: types.array(types.string),
-		markerType: types.optional(types.enumeration('Marker Type', ['UNAVAILABLE', 'AVAILABLE', 'COMPLETE', 'HIGHLIGHT']), 'UNAVAILABLE'),
+		progression: types.optional(types.enumeration('Progression types', ['UNAVAILABLE', 'AVAILABLE', 'COMPLETE']), 'UNAVAILABLE'),
+		isFavorite: false,
 	})
 	.views((self) => ({
 		get details() {
@@ -33,12 +34,16 @@ const LocationStore = types
 		},
 	}))
 	.actions((self) => {
-		const setMarkerType = (type) => {
-			self.markerType = type;
-		};
+		const setProgression = (progression) => {
+			self.progression = progression;
+		}
+		const setFavorite = (newFavorite) => {
+			self.isFavorite = newFavorite;
+		}
 
 		return {
-			setMarkerType,
+			setProgression,
+			setFavorite,
 		};
 	})
 ;

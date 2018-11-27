@@ -7,16 +7,6 @@ import { observer, inject } from 'mobx-react';
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
 	constructor() {
 		super();
-		this.toggleHighlight = this.toggleHighlight.bind(this);
-	}
-	toggleHighlight() {
-		const selectedLocation = get(this, 'props.store.locationDetail.selectedLocation');
-
-		if (selectedLocation.markerType !== 'HIGHLIGHT') {
-			selectedLocation.setMarkerType('HIGHLIGHT');
-		} else {
-			selectedLocation.setMarkerType(selectedLocation.defaultMarkerType);
-		}
 	}
 	render() {
 		const store = get(this, 'props.store.locationDetail');
@@ -25,12 +15,43 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
-		const markerType = get(selectedLocation, 'markerType');
-		const highlightClasses = classNames('button', 'is-outline', {
-			'has-text-warning': markerType === 'HIGHLIGHT',
+		const favoriteClasses = classNames('button', 'is-outline', {
+			'has-text-warning': get(selectedLocation, 'isFavorite'),
 		});
 		const mapInfoClasses = classNames('content', 'box', 'map-info', {'is-hidden': !store.isVisible});
+		let progressionButton;
 
+		if (selectedLocation) {
+
+			switch (selectedLocation.progression) {
+				case 'UNAVAILABLE':
+					progressionButton = (
+						<button onClick={() => store.selectedLocation.setProgression('AVAILABLE')} className="button is-danger">
+							<span className="icon"><i className="fas fa-lock" /></span>
+							<span>Unavailable</span>
+						</button>
+					);
+					break;
+				case 'AVAILABLE':
+					progressionButton = (
+						<button onClick={() => store.selectedLocation.setProgression('COMPLETE')} className="button is-success">
+							<span className="icon"><i className="fas fa-unlock" /></span>
+							<span>Available</span>
+						</button>
+					);
+					break;
+				case 'COMPLETE':
+					progressionButton = (
+						<button onClick={() => store.selectedLocation.setProgression('UNAVAILABLE')} className="button is-dark">
+							<span className="icon"><i className="fas fa-check" /></span>
+							<span>Complete</span>
+						</button>
+					);
+					break;
+				default:
+					break;
+			}
+		}
 		if (!details || displayHelp) {
 			return (
 				<div className={mapInfoClasses}>
@@ -53,34 +74,25 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 		return (
 			<div className={mapInfoClasses}>
-				{longName}
-				<div className="details-controls is-clearfix">
-					<div className="is-pulled-left">
-						<div className="buttons">
-							<button className="button is-success">
-								<span className="icon"><i className="fas fa-unlock" /></span>
-								<span>Available</span>
-							</button>
-							<button className="button is-danger">
-								<span className="icon"><i className="fas fa-lock" /></span>
-								<span>Unavailable</span>
-							</button>
-							<button className="button is-grey">
-								<span className="icon"><i className="fas fa-check" /></span>
-								<span>Complete</span>
-							</button>
+				<div className="details-container columns">
+					<div className="column">
+						{longName}
+						<div className="details-controls">
+							<div className="">
+								<div className="buttons">
+									<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
+										<span className="icon"><i className="fas fa-star" /></span>
+									</button>
+									{progressionButton}
+								</div>
+							</div>
 						</div>
 					</div>
-					<div className="is-pulled-right">
-						<div className="buttons">
-							<button onClick={this.toggleHighlight} className={highlightClasses}>
-								<span className="icon"><i className="fas fa-star" /></span>
-							</button>
-						</div>
+					<div className="column details-requirements">
+						<h6>Requirements:</h6>
+						{reqs}
 					</div>
 				</div>
-				<h6>Requirements:</h6>
-				{reqs}
 			</div>
 		);
 	}
