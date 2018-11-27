@@ -26,7 +26,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
 		const markerType = get(selectedLocation, 'markerType');
-		const highlightClasses = classNames('button', 'is-warning', {'is-outlined': markerType !== 'HIGHLIGHT'});
+		const highlightClasses = classNames('button', 'is-outline', {
+			'has-text-warning': markerType === 'HIGHLIGHT',
+		});
 
 		if (!details || displayHelp) {
 			return (
@@ -62,7 +64,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 								<span className="icon"><i className="fas fa-lock" /></span>
 								<span>Unavailable</span>
 							</button>
-							<button className="button is-dark">
+							<button className="button is-grey">
 								<span className="icon"><i className="fas fa-check" /></span>
 								<span>Complete</span>
 							</button>
@@ -71,7 +73,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					<div className="is-pulled-right">
 						<div className="buttons">
 							<button onClick={this.toggleHighlight} className={highlightClasses}>
-								<span className="icon"><i className="fas fa-thumbtack" /></span>
+								<span className="icon"><i className="fas fa-star" /></span>
 							</button>
 						</div>
 					</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, onPatch } from 'mobx-state-tree';
+import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -81,6 +81,14 @@ window.destroy = destroy;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
 
+onSnapshot(appStore, model => {
+	if (window.localStorage) {
+		window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model))
+	}
+});
+if (window.localStorage && window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)) {
+	applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
+}
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

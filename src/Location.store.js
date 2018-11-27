@@ -28,6 +28,9 @@ const LocationStore = types
 		get defaultMarkerType() {
 			return 'UNAVAILABLE';
 		},
+		get tooltipContent() {
+			return self.longName;
+		},
 	}))
 	.actions((self) => {
 		const setMarkerType = (type) => {

@@ -37,8 +37,6 @@ const Map = inject('store')(observer(class Map extends Component {
 	};
 
 	componentDidMount() {
-		const self = this;
-
 		// I may not need this.
 		this.props.mapStore.setComponent(this);
 		this.initMap();
@@ -71,12 +69,11 @@ const Map = inject('store')(observer(class Map extends Component {
 		this.resize();
 	}
 	initDraggable() {
-		const self = this;
-
 		this.draggable = new Draggable(this.draggableRef.current, {
 			trigger: this.draggableTarget.current,
 			bounds: document.querySelector('body'),
-			liveSnap: (value) => self.state.toggleSnap ? Math.round(value / 50) * 50 : value,
+			// No subpixel dragging.
+			liveSnap: (value) => Math.round(value / 1),
 			onDragEnd: () => {
 				this.props.mapStore.setPos({ x: this.draggable.endX, y: this.draggable.endY, });
 			}
@@ -101,8 +98,8 @@ const Map = inject('store')(observer(class Map extends Component {
 			});
 			self.draggable.enabled(!self.props.mapStore.isLocked);
 			TweenLite.set(self.draggableRef.current, {x: self.props.mapStore.x, y: self.props.mapStore.y });
-			if (isNull(this.props.mapStore.x)) {
-				TweenLite.set(this.draggableRef.current, this.initPosition);
+			if (isNull(self.props.mapStore.x)) {
+				TweenLite.set(self.draggableRef.current, self.initPosition);
 			}
 		});
 	}
@@ -165,14 +162,15 @@ const Map = inject('store')(observer(class Map extends Component {
 	}
 	addMarker(loc) {
 		const self = this;
+		const theLocation = this.props.mapStore.locations.get(loc.id);
 
 		this.markers[loc.id] = L
 			.marker(loc.coords)
+			.bindTooltip(theLocation.longName)
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
-				const mapStoreLocation = self.props.mapStore.locations.get(loc.id);
 
-				this.props.mapStore.setSelectedLocation(event, marker, mapStoreLocation)
+				this.props.mapStore.setSelectedLocation(event, marker, theLocation);
 			})
 			.addTo(this.map)
 		;

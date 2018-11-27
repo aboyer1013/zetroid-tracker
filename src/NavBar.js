@@ -35,7 +35,7 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 
 			buttons.push(
 				<div key={`map-button-${map.id}`} className="navbar-item">
-					<button onClick={() => map.setMapVisibility(!map.isVisible)} className="button">
+					<button onClick={() => map.setMapVisibility(!map.isVisible)} className="button is-fullwidth">
 						<span className="icon"><i className={mapClasses} /></span>
 						<span>{map.longName}</span>
 					</button>
@@ -66,10 +66,20 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 
 				<div ref={this.menu} className={menuClasses}>
 					<div className="navbar-start">
-						<a className="navbar-item">
-							Home
-						</a>
+						<div className="navbar-item has-dropdown is-hoverable">
+							<a className="navbar-link">
+								File
+							</a>
 
+							<div className="navbar-dropdown">
+								<a className="navbar-item" onClick={() => this.props.store.openModal('FILE_IMPORT')}>
+									Import
+								</a>
+								<a className="navbar-item" onClick={() => this.props.store.openModal('FILE_EXPORT')}>
+									Export
+								</a>
+							</div>
+						</div>
 						<div className="navbar-item has-dropdown is-hoverable">
 							<a className="navbar-link">
 								View
@@ -77,30 +87,21 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 
 							<div className="navbar-dropdown">
 								{mapVisibilityButtons}
-								<a className="navbar-item">
-									Jobs
-								</a>
-								<a className="navbar-item">
-									Contact
-								</a>
-								<hr className="navbar-divider" />
-								<a className="navbar-item">
-									Report an issue
-								</a>
 							</div>
 						</div>
 					</div>
 
 					<div className="navbar-end">
 						<div className="navbar-item">
-							<div className="buttons">
-								<a className="button is-primary">
-									<strong>Sign up</strong>
-								</a>
-								<a className="button is-light">
-									Log in
-								</a>
-							</div>
+							<button onClick={this.props.store.flushLocalStorage} className="button is-danger">
+								<span className="icon"><i className="fas fa-broom" /></span>
+								<span>Flush local storage</span>
+							</button>
+						</div>
+						<div className="navbar-item">
+							<button className="button">
+								<span className="icon"><i className="fas fa-cog" /></span>
+							</button>
 						</div>
 					</div>
 				</div>

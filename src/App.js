@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
 import Map from 'Map';
 import NavBar from 'NavBar';
+import Modal from 'Modal';
+import FileImportModal from 'FileImportModal';
+import FileExportModal from 'FileExportModal';
 import { randomId } from './util';
 import 'scss/App.scss';
 
@@ -30,12 +33,30 @@ class App extends Component {
 		return maps;
 	}
 	render() {
+		const store = this.props.store;
+		let modal = null;
+
+		if (store.isModalOpen) {
+			switch (store.activeModal) {
+				case 'FILE_IMPORT':
+					modal = <FileImportModal/>;
+					break;
+				case 'FILE_EXPORT':
+					modal = <FileExportModal/>;
+					break;
+				default:
+					break;
+			}
+		}
 		return (
-			<Provider store={this.props.store}>
+			<Provider store={store}>
 				<div>
 					{/*{[...this.props.store.items.values()].map(item => <img src={item.image} />)}*/}
 					<NavBar />
 					{this.generateMaps()}
+					<Modal>
+						{modal}
+					</Modal>
 					{/*<Map
 						mapStore={this.props.store.getMapByName('zelda3-dw')}
 						id={randomId()}

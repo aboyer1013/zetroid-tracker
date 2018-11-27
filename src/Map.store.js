@@ -14,10 +14,10 @@ const MapStore = types
 		isVisible: true,
 		tileLayerTemplate: types.string,
 		offset: 0,
-		x: types.optional(types.maybeNull(types.integer), null),
-		y: types.optional(types.maybeNull(types.integer), null),
-		containerWidth: types.optional(types.maybeNull(types.integer), null),
-		containerHeight: types.optional(types.maybeNull(types.integer), null),
+		x: types.optional(types.maybeNull(types.number), null),
+		y: types.optional(types.maybeNull(types.number), null),
+		containerWidth: types.optional(types.maybeNull(types.number), null),
+		containerHeight: types.optional(types.maybeNull(types.number), null),
 		isLocked: false,
 	})
 	.volatile(() => ({
@@ -26,7 +26,7 @@ const MapStore = types
 	.views((self) => ({
 		get selectedLocationDetails() {
 			return self.selectedLocation.details;
-		}
+		},
 	}))
 	.actions((self) => {
 		const setComponent = (component) => {

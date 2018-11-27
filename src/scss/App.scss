@@ -49,8 +49,8 @@ button {
 	//	filter: contrast(3);
 	//}
 }
-.leaflet-marker-pane::after {
-	content: '!';
+.modal {
+	z-index: 2000;
 }
 .item-icon {
 	display: flex;
