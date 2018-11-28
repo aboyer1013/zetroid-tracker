@@ -12,6 +12,7 @@
     "classnames": "^2.2.6",
     "gsap": "^2.0.2",
     "lodash": "^4.17.11",
+    "lodash-move": "^1.1.1",
     "mobx": "^5.6.0",
     "mobx-react": "^5.4.2",
     "mobx-state-tree": "^3.8.1",

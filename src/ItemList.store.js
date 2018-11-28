@@ -1,11 +1,13 @@
 import { types } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
 import { find, sortBy } from 'lodash';
+import move from 'lodash-move';
 
 const ItemListStore = types
 	.model({
 		id: types.identifier,
-		items: types.map(ItemStore)
+		items: types.map(ItemStore),
+		sortOrder: types.optional(types.array(types.integer), []),
 	})
 	.views(self => ({
 		getItemByName: (name) => {
@@ -19,12 +21,12 @@ const ItemListStore = types
 
 			return items.some(item => item.acquired);
 		},
-		groupItems: (items) => {
+		get groupedItems() {
 			const result = {
 				none: [],
 			};
 
-			items.forEach(item => {
+			[...self.items.values()].forEach(item => {
 				if (item.group) {
 					if (!result[item.group]) {
 						result[item.group] = [];
@@ -37,10 +39,13 @@ const ItemListStore = types
 			// Sort grouped items by index.
 			for (const groupName of Object.keys(result)) {
 				if (groupName !== 'none') {
-					result[groupName] = sortBy(result[groupName], ['index']);
+					result[groupName] = sortBy(result[groupName], ['groupIndex']);
 				}
 			}
 			return result;
+		},
+		get sortedItems() {
+			return sortBy([...self.items.values()], ['index']);
 		},
 		isVisible: (item) => {
 			let result = false;
@@ -53,8 +58,25 @@ const ItemListStore = types
 				result = true;
 			}
 			return result;
-		}
+		},
 	}))
+	.actions(self => {
+		const updateOrder = (sourceItem, destItem) => {
+			const sourceItemIndex = sourceItem.index;
+			const destItemIndex = destItem.index;
+
+			if (sourceItemIndex === destItemIndex) {
+				return;
+			}
+			const swappedItems = move(self.sortedItems, sourceItemIndex, destItemIndex);
+
+			swappedItems.forEach((item, i) => item.setIndex(i));
+		};
+
+		return {
+			updateOrder,
+		}
+	})
 ;
 
 export default ItemListStore;

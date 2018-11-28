@@ -19,7 +19,8 @@ const appStore = AppStore.create({
 	games: {},
 	itemList: ItemListStore.create({
 		id: randomId(),
-		items: {}
+		items: {},
+		sortOrder: [],
 	}),
 	maps: {},
 	locationDetail: LocationDetailStore.create({
@@ -60,21 +61,27 @@ appStore.maps.put(MapStore.create({
 	offset: 100,
 }));
 // Create item models.
-itemsData.filter(item => item.game === appStore.selectedGame.name).forEach((item) => {
-	const itemData = {
-		id: randomId(),
-		name: item.name,
-		longName: item.longName,
-		group: item.group || null,
-		isDefault: item.isDefault || false,
-		index: item.index || null,
-		maxQty: item.maxQty || 1,
-		game: appStore.getGameByName(item.game),
-		image: `${process.env.PUBLIC_URL}/img/items/zelda3/${item.image}.png`,
-	};
+itemsData
+	.filter(item => item.game === appStore.selectedGame.name)
+	.filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
+	.forEach((item, i) => {
+		appStore.itemList.sortOrder.push(i);
+		const itemData = {
+			id: randomId(),
+			name: item.name,
+			longName: item.longName,
+			group: item.group || null,
+			isDefault: item.isDefault || false,
+			index: i,
+			groupIndex: item.groupIndex || null,
+			maxQty: item.maxQty || 1,
+			game: appStore.getGameByName(item.game),
+			image: `${process.env.PUBLIC_URL}/img/items/zelda3/${item.image}.png`,
+		};
 
-	appStore.itemList.items.put(ItemStore.create(itemData));
-});
+		appStore.itemList.items.put(ItemStore.create(itemData));
+	})
+;
 // Create location models.
 locationsData.forEach(loc => {
 	const selectedMap = appStore.getMapByName(loc.map);

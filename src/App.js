@@ -37,6 +37,7 @@ class App extends Component {
 	render() {
 		const store = this.props.store;
 		let modal = null;
+		const items = store.itemList.items;
 
 		if (store.isModalOpen) {
 			switch (store.activeModal) {
@@ -57,7 +58,7 @@ class App extends Component {
 					<div id="main" className="main">
 						{this.generateMaps()}
 						<LocationDetail />
-						<ItemList />
+						<ItemList items={this.props.store.itemList.sortedItems} />
 					</div>
 					<Modal>
 						{modal}

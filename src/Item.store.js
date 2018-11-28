@@ -9,7 +9,8 @@ const ItemStore = types
 		group: types.maybeNull(types.string),
 		hidden: false,
 		image: '',
-		index: types.maybeNull(types.integer),
+		index: types.integer,
+		groupIndex: types.maybeNull(types.integer),
 		game: types.reference(GameStore),
 		acquired: false,
 		maxQty: types.optional(types.integer, 1),
@@ -27,9 +28,13 @@ const ItemStore = types
 			}
 			self.acquired = newAcquired;
 		};
+		const setIndex = newIndex => {
+			self.index = newIndex;
+		};
 
 		return {
 			acquire,
+			setIndex,
 		};
 	})
 ;
