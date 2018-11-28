@@ -46,6 +46,7 @@ button {
 	opacity: 0.5;
 	filter: saturate(0);
 }
+.navbar-item .button { justify-content: left; }
 .leaflet-marker-icon {
 	&.leaflet-marker-icon-AVAILABLE {
 		filter: hue-rotate(240deg) contrast(2);

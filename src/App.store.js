@@ -15,6 +15,7 @@ const AppStore = types
 		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT'])),
 		validationMessages: types.array(types.string),
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
+		hideCompleted: false,
 	})
 	.views((self) => ({
 		getGameByName: (name) => {
@@ -68,6 +69,9 @@ const AppStore = types
 				window.localStorage.removeItem(self.LOCAL_STORAGE_KEY);
 			}
 		};
+		const setHideCompleted = (isHidden) => {
+			self.hideCompleted = isHidden;
+		};
 
 		return {
 			selectGame,
@@ -75,6 +79,7 @@ const AppStore = types
 			closeModal,
 			loadSnapshot,
 			flushLocalStorage,
+			setHideCompleted,
 		};
 	})
 ;

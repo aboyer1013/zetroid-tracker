@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {inject, observer} from 'mobx-react';
 import { get } from 'lodash';
 
-const NavBar = inject('store')(observer(class NavBar extends Component {
+const NavBar = class NavBar extends Component {
 	constructor() {
 		super();
 		this.toggleMenu = this.toggleMenu.bind(this);
@@ -54,6 +54,10 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 			'fa-eye': !locDetailStore.isVisible,
 			'fa-eye-slash': locDetailStore.isVisible,
 		});
+		const hideCompletedClasses = classNames('fas', {
+			'fa-eye': this.props.store.hideCompleted,
+			'fa-eye-slash': !this.props.store.hideCompleted,
+		});
 
 		return (
 			<nav className="navbar" role="navigation" aria-label="main navigation">
@@ -96,7 +100,13 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 								<div className="navbar-item">
 									<button onClick={() => locDetailStore.setVisibility(!locDetailStore.isVisible)} className="button is-fullwidth">
 										<span className="icon"><i className={locDetailClasses} /></span>
-										<span>Location details</span>
+										<span>Location Details Panel</span>
+									</button>
+								</div>
+								<div className="navbar-item">
+									<button onClick={() => this.props.store.setHideCompleted(!this.props.store.hideCompleted)} className="button is-fullwidth">
+										<span className="icon"><i className={hideCompletedClasses} /></span>
+										<span>Hide Completed Locations</span>
 									</button>
 								</div>
 							</div>
@@ -120,6 +130,6 @@ const NavBar = inject('store')(observer(class NavBar extends Component {
 			</nav>
 		);
 	}
-}));
+};
 
-export default NavBar;
+export default inject('store')(observer(NavBar));

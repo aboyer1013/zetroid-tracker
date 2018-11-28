@@ -87,15 +87,26 @@ const Map = inject('store')(observer(class Map extends Component {
 		autorun(() => {
 			self.props.locations.forEach((loc) => {
 				if (!self.markers[loc.id]) {
-					self.addMarker(loc);
+					if (!loc.hidden) {
+						self.addMarker(loc);
+					}
 				}
 			});
 			Object.keys(self.markers).forEach((markerId) => {
-				if (!self.props.mapStore.locations.get(markerId)) {
+				const loc = self.props.mapStore.locations.get(markerId);
+
+				if (loc && loc.hidden) {
+					self.removeMarker(markerId);
+				} else if (!loc) {
 					self.removeMarker(markerId);
 				}
 			});
 			self.props.locations.forEach((loc) => {
+				const marker = self.markers[loc.id];
+
+				if (!marker) {
+					return;
+				}
 				self.setProgression(self.markers[loc.id], loc);
 			});
 			self.draggable.enabled(!self.props.mapStore.isLocked);

@@ -32,6 +32,12 @@ const LocationStore = types
 		get tooltipContent() {
 			return self.longName;
 		},
+		get hidden() {
+			if (!self.isFavorite && getRoot(self).hideCompleted && self.progression === 'COMPLETE') {
+				return true;
+			}
+			return false;
+		}
 	}))
 	.actions((self) => {
 		const setProgression = (progression) => {
