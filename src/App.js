@@ -7,7 +7,8 @@ import FileImportModal from 'FileImportModal';
 import FileExportModal from 'FileExportModal';
 import { randomId } from './util';
 import 'scss/App.scss';
-import LocationDetail from "./LocationDetail";
+import LocationDetail from 'LocationDetail';
+import ItemList from 'ItemList';
 
 class App extends Component {
 	// constructor() {
@@ -52,11 +53,11 @@ class App extends Component {
 		return (
 			<Provider store={store}>
 				<div className="main-container">
-					{/*{[...this.props.store.items.values()].map(item => <img src={item.image} />)}*/}
 					<NavBar />
 					<div id="main" className="main">
 						{this.generateMaps()}
 						<LocationDetail />
+						<ItemList />
 					</div>
 					<Modal>
 						{modal}

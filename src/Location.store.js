@@ -18,7 +18,7 @@ const LocationStore = types
 			let itemRequirements;
 
 			if (self.itemRequirements) {
-				itemRequirements = self.itemRequirements.map(req => getRoot(self).getItemByName(req))
+				itemRequirements = self.itemRequirements.map(req => getRoot(self).itemList.getItemByName(req))
 			}
 
 			return {

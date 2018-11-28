@@ -9,7 +9,7 @@ import { ResizableBox } from 'react-resizable';
 import '../node_modules/react-resizable/css/styles.css';
 
 const L = window.L;
-const Map = inject('store')(observer(class Map extends Component {
+const Map = class Map extends Component {
 	constructor() {
 		super();
 		this.mapRef = createRef();
@@ -253,6 +253,6 @@ const Map = inject('store')(observer(class Map extends Component {
 			</div>
 		);
 	}
-}));
+};
 
-export default Map;
+export default inject('store')(observer(Map));

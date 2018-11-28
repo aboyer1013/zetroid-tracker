@@ -54,15 +54,18 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 		if (!details || displayHelp) {
 			return (
-				<div className={mapInfoClasses}>
-					<h1>Help</h1>
-					<ul>
-						<li><em>Click map marker for more information.</em></li>
-						<li><em>Shift + drag to zoom in on an area.</em></li>
-						<li><em>Drag on the window title to move map.</em></li>
-						<li><em>Mousewheel or <span className="icon"><i className="fas fa-search-minus" /></span><span className="icon"><i className="fas fa-search-plus" /></span> to zoom in/out.</em></li>
-						<li><em>Click <span className="icon"><i className="fas fa-lock" /></span> in upper right to toggle position lock.</em></li>
-					</ul>
+				<div className="is-background-white">
+					<div className={mapInfoClasses}>
+						<h1>Help</h1>
+						<ul>
+							<li><em>Click map marker for more information.</em></li>
+							<li><em>Shift + drag to zoom in on an area.</em></li>
+							<li><em>Drag on the window title to move map.</em></li>
+							<li><em>Mousewheel or <span className="icon"><i className="fas fa-search-minus" /></span><span className="icon"><i className="fas fa-search-plus" /></span> to zoom in/out.</em></li>
+							<li><em>Click <span className="icon"><i className="fas fa-lock" /></span> in upper right to toggle position lock.</em></li>
+						</ul>
+
+					</div>
 				</div>
 			);
 		}
@@ -73,24 +76,26 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			reqs = <ItemIconList items={reqs} />;
 		}
 		return (
-			<div className={mapInfoClasses}>
-				<div className="details-container columns">
-					<div className="column">
-						{longName}
-						<div className="details-controls">
-							<div className="">
-								<div className="buttons">
-									<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
-										<span className="icon"><i className="fas fa-star" /></span>
-									</button>
-									{progressionButton}
+			<div className="is-background-white">
+				<div className={mapInfoClasses}>
+					<div className="details-container columns">
+						<div className="column">
+							{longName}
+							<div className="details-controls">
+								<div className="">
+									<div className="buttons">
+										<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
+											<span className="icon"><i className="fas fa-star" /></span>
+										</button>
+										{progressionButton}
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className="column details-requirements">
-						<h6>Requirements:</h6>
-						{reqs}
+						<div className="column details-requirements">
+							<h6>Requirements:</h6>
+							{reqs}
+						</div>
 					</div>
 				</div>
 			</div>

@@ -11,12 +11,16 @@ import ItemStore from 'Item.store';
 import itemsData from 'data/items';
 import LocationStore from 'Location.store';
 import LocationDetailStore from 'LocationDetail.store';
+import ItemListStore from 'ItemList.store';
 import * as serviceWorker from 'serviceWorker';
 
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	items: {},
+	itemList: ItemListStore.create({
+		id: randomId(),
+		items: {}
+	}),
 	maps: {},
 	locationDetail: LocationDetailStore.create({
 		id: randomId(),
@@ -33,6 +37,8 @@ gamesData.forEach((game) => {
 		longName: game.longName,
 	}));
 });
+// Select the game.
+appStore.selectGame('zelda3');
 // Create map models.
 appStore.maps.put(MapStore.create({
 	id: randomId(),
@@ -54,14 +60,20 @@ appStore.maps.put(MapStore.create({
 	offset: 100,
 }));
 // Create item models.
-itemsData.forEach((item) => {
-	appStore.items.put(ItemStore.create({
+itemsData.filter(item => item.game === appStore.selectedGame.name).forEach((item) => {
+	const itemData = {
 		id: randomId(),
 		name: item.name,
 		longName: item.longName,
+		group: item.group || null,
+		isDefault: item.isDefault || false,
+		index: item.index || null,
+		maxQty: item.maxQty || 1,
 		game: appStore.getGameByName(item.game),
 		image: `${process.env.PUBLIC_URL}/img/items/zelda3/${item.image}.png`,
-	}));
+	};
+
+	appStore.itemList.items.put(ItemStore.create(itemData));
 });
 // Create location models.
 locationsData.forEach(loc => {
@@ -77,8 +89,6 @@ locationsData.forEach(loc => {
 	}));
 
 });
-// Select the game.
-appStore.selectGame('zelda3');
 // Globals to help with debugging.
 // appStore.games.set(zelda1.id, zelda1);
 window.applySnapshot = applySnapshot;
@@ -87,14 +97,14 @@ window.destroy = destroy;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
 
-onSnapshot(appStore, model => {
-	if (window.localStorage) {
-		window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model))
-	}
-});
-if (window.localStorage && window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)) {
-	applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
-}
+// onSnapshot(appStore, model => {
+// 	if (window.localStorage) {
+// 		window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model))
+// 	}
+// });
+// if (window.localStorage && window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)) {
+// 	applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
+// }
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

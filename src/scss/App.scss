@@ -43,7 +43,7 @@ button {
 
 }
 .is-not-acquired {
-	opacity: 0.5;
+	opacity: 0.25;
 	filter: saturate(0);
 }
 .navbar-item .button { justify-content: left; }
@@ -124,5 +124,16 @@ button {
 		bottom: 5px;
 		right: 7px;
 		font-size: 20px;
+	}
+}
+.item-container {
+	position: relative;
+}
+.item {
+
+}
+.item-group {
+	.item {
+		position: absolute;
 	}
 }

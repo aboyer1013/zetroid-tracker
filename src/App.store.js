@@ -1,6 +1,6 @@
 import { types, applySnapshot } from 'mobx-state-tree';
-import GameStore from './Game.store';
-import ItemStore from './Item.store';
+import GameStore from 'Game.store';
+import ItemListStore from 'ItemList.store';
 import MapStore from 'Map.store';
 import LocationDetailStore from 'LocationDetail.store';
 import { find } from 'lodash';
@@ -8,7 +8,7 @@ import { find } from 'lodash';
 const AppStore = types
 	.model({
 		games: types.map(GameStore),
-		items: types.map(ItemStore),
+		itemList: ItemListStore,
 		maps: types.map(MapStore),
 		locationDetail: LocationDetailStore,
 		isModalOpen: false,
@@ -24,12 +24,9 @@ const AppStore = types
 		getMapByName: (name) => {
 			return find([...self.maps.values()], { name });
 		},
-		getItemByName: (name) => {
-			return find([...self.items.values()], { name });
-		},
 		get selectedGame() {
 			return find([...self.games.values()], { selected: true });
-		}
+		},
 	}))
 	.actions((self) => {
 		const selectGame = (gameToSelect) => {
