@@ -11,9 +11,6 @@ const LocationDetailStore = types
 		get selectedLocationDetails() {
 			return self.selectedLocation.details;
 		},
-		get displayHelp() {
-			return !self.selectedLocation;
-		},
 	}))
 	.actions((self) => {
 		const setSelectedLocation = (event, marker, mapStoreLocation) => {

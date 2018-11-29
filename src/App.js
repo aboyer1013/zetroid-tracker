@@ -5,6 +5,7 @@ import NavBar from 'NavBar';
 import Modal from 'Modal';
 import FileImportModal from 'FileImportModal';
 import FileExportModal from 'FileExportModal';
+import HelpModal from 'HelpModal';
 import { randomId } from './util';
 import 'scss/App.scss';
 import LocationDetail from 'LocationDetail';
@@ -42,10 +43,13 @@ class App extends Component {
 		if (store.isModalOpen) {
 			switch (store.activeModal) {
 				case 'FILE_IMPORT':
-					modal = <FileImportModal/>;
+					modal = <FileImportModal />;
 					break;
 				case 'FILE_EXPORT':
-					modal = <FileExportModal/>;
+					modal = <FileExportModal />;
+					break;
+				case 'HELP':
+					modal = <HelpModal />;
 					break;
 				default:
 					break;

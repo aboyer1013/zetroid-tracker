@@ -12,7 +12,7 @@ const AppStore = types
 		maps: types.map(MapStore),
 		locationDetail: LocationDetailStore,
 		isModalOpen: false,
-		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT'])),
+		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT', 'HELP'])),
 		validationMessages: types.array(types.string),
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
 		hideCompleted: false,

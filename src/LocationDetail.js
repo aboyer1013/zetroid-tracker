@@ -11,7 +11,6 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 	render() {
 		const store = get(this, 'props.store.locationDetail');
 		const selectedLocation = store.selectedLocation;
-		const displayHelp = store.displayHelp;
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
@@ -46,22 +45,8 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 				);
 			}
 		}
-		if (!details || displayHelp) {
-			return (
-				<div className="is-background-white">
-					<div className={mapInfoClasses}>
-						<h1>Help</h1>
-						<ul>
-							<li><em>Click map marker for more information.</em></li>
-							<li><em>Shift + drag to zoom in on an area.</em></li>
-							<li><em>Drag on the window title to move map.</em></li>
-							<li><em>Mousewheel or <span className="icon"><i className="fas fa-search-minus" /></span><span className="icon"><i className="fas fa-search-plus" /></span> to zoom in/out.</em></li>
-							<li><em>Click <span className="icon"><i className="fas fa-lock" /></span> in upper right to toggle position lock.</em></li>
-						</ul>
-
-					</div>
-				</div>
-			);
+		if (!details) {
+			return null;
 		}
 		if (longName) {
 			longName = <h1>{longName}</h1>;

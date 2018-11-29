@@ -91,9 +91,7 @@ const NavBar = class NavBar extends Component {
 							</div>
 						</div>
 						<div className="navbar-item has-dropdown is-hoverable">
-							<a className="navbar-link">
-								View
-							</a>
+							<a className="navbar-link">View</a>
 
 							<div className="navbar-dropdown">
 								{mapVisibilityButtons}
@@ -110,6 +108,9 @@ const NavBar = class NavBar extends Component {
 									</button>
 								</div>
 							</div>
+						</div>
+						<div className="navbar-item">
+							<a className="navbar-item" onClick={() => this.props.store.openModal('HELP')}>Help</a>
 						</div>
 					</div>
 
