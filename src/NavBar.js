@@ -77,17 +77,27 @@ const NavBar = class NavBar extends Component {
 				<div ref={this.menu} className={menuClasses}>
 					<div className="navbar-start">
 						<div className="navbar-item has-dropdown is-hoverable">
-							<a className="navbar-link">
-								File
-							</a>
+							<a className="navbar-link">File</a>
 
 							<div className="navbar-dropdown">
-								<a className="navbar-item" onClick={() => this.props.store.openModal('FILE_IMPORT')}>
-									Import
-								</a>
-								<a className="navbar-item" onClick={() => this.props.store.openModal('FILE_EXPORT')}>
-									Export
-								</a>
+								<a className="navbar-item" onClick={() => {
+									this.setState({isMenuActive: false});
+									this.props.store.openModal('FILE_IMPORT')
+								}}>Import</a>
+								<a className="navbar-item" onClick={() => {
+									this.setState({isMenuActive: false});
+									this.props.store.openModal('FILE_EXPORT')}
+								}>Export</a>
+							</div>
+						</div>
+						<div className="navbar-item has-dropdown is-hoverable">
+							<a className="navbar-link">Edit</a>
+
+							<div className="navbar-dropdown">
+								<a className="navbar-item" onClick={() => {
+									this.setState({isMenuActive: false});
+									this.props.store.openModal('EDIT_ITEM_LIST')
+								}}>Customize Item Panel</a>
 							</div>
 						</div>
 						<div className="navbar-item has-dropdown is-hoverable">

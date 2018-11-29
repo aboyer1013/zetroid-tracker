@@ -24,6 +24,11 @@ const appStore = AppStore.create({
 		items: [],
 		sortOrder: [],
 	}),
+	inactiveItemList: ItemListStore.create({
+		id: randomId(),
+		items: [],
+		sortOrder: [],
+	}),
 	maps: {},
 	locationDetail: LocationDetailStore.create({
 		id: randomId(),
@@ -63,39 +68,48 @@ appStore.maps.put(MapStore.create({
 	offset: 100,
 }));
 // Create item models.
+const itemDataFactory = (item, index, itemList) => {
+	const isItemGroup = !!(item.group && item.items.length);
+	const itemData = {
+		id: randomId(),
+		index: isUndefined(item.index) ? index : item.index,
+		name: item.name,
+		game: appStore.getGameByName(item.game),
+		maxQty: item.maxQty || 1,
+		itemList,
+	}
+
+	if (isItemGroup) {
+		itemData.isDefault = item.isDefault || false;
+		itemData.group = item.group;
+		itemData.groupIndex = item.groupIndex || null;
+	} else {
+		itemData.longName = item.longName;
+		itemData.image = item.image
+	}
+
+	const subItemData = isItemGroup && item.items.map(data => {
+		return ItemStore.create(Object.assign({}, itemData, data, {
+			id: randomId(),
+			game: appStore.getGameByName(data.game),
+		}));
+	});
+	if (subItemData.length) {
+		itemData.items = subItemData;
+	}
+	return itemData;
+};
 itemsData
 	.filter(item => item.game === appStore.selectedGame.name)
 	// .filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
 	.forEach((item, i) => {
-		const isItemGroup = !!(item.group && item.items.length);
-		const itemData = {
-			id: randomId(),
-			index: isUndefined(item.index) ? i : item.index,
-			name: item.name,
-			game: appStore.getGameByName(item.game),
-			maxQty: item.maxQty || 1,
-		}
+		const itemData = itemDataFactory(item, i, appStore.itemList);
+		const inactiveItemData = itemDataFactory(item, i, appStore.inactiveItemList);
 
-		if (isItemGroup) {
-			itemData.isDefault = item.isDefault || false;
-			itemData.group = item.group;
-			itemData.groupIndex = item.groupIndex || null;
-		} else {
-			itemData.longName = item.longName;
-			itemData.image = item.image
-		}
-
-		const subItemData = isItemGroup && item.items.map(data => {
-			return ItemStore.create(Object.assign({}, itemData, data, {
-				id: randomId(),
-				game: appStore.getGameByName(data.game),
-			}));
-		});
-		if (subItemData.length) {
-			itemData.items = subItemData;
-		}
 		appStore.itemList.sortOrder.push(i);
 		appStore.itemList.items.push(ItemStore.create(itemData));
+		appStore.inactiveItemList.sortOrder.push(i);
+		appStore.inactiveItemList.items.push(ItemStore.create(inactiveItemData));
 	})
 ;
 // Create location models.

@@ -6,6 +6,7 @@ import Modal from 'Modal';
 import FileImportModal from 'FileImportModal';
 import FileExportModal from 'FileExportModal';
 import HelpModal from 'HelpModal';
+import EditItemListModal from 'EditItemListModal';
 import { randomId } from './util';
 import 'scss/App.scss';
 import LocationDetail from 'LocationDetail';
@@ -51,6 +52,9 @@ class App extends Component {
 				case 'HELP':
 					modal = <HelpModal />;
 					break;
+				case 'EDIT_ITEM_LIST':
+					modal = <EditItemListModal />;
+					break;
 				default:
 					break;
 			}
@@ -62,7 +66,12 @@ class App extends Component {
 					<div id="main" className="main">
 						{this.generateMaps()}
 						<LocationDetail />
-						<ItemList items={this.props.store.itemList.sortedItems} />
+						<ItemList
+							itemListStore={this.props.store.itemList}
+							items={this.props.store.itemList.sortedItems}
+							direction={this.props.store.itemList.direction}
+							draggableEnabled={false}
+						/>
 					</div>
 					<Modal>
 						{modal}

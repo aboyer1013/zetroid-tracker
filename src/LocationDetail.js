@@ -17,7 +17,10 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const favoriteClasses = classNames('button', 'is-outline', {
 			'has-text-warning': get(selectedLocation, 'isFavorite'),
 		});
-		const mapInfoClasses = classNames('content', 'box', 'map-info', {'is-hidden': !store.isVisible});
+		const mapInfoClasses = classNames('content', 'box', 'map-info', {
+			'is-hidden': !store.isVisible,
+			'is-item-list-vertical': this.props.store.itemList.direction === 'vertical',
+		});
 		let progressionButton;
 
 		if (selectedLocation) {

@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
-import { find, sortBy, get } from 'lodash';
+import { find, sortBy, } from 'lodash';
 import move from 'lodash-move';
 
 const ItemListStore = types
@@ -8,6 +8,7 @@ const ItemListStore = types
 		id: types.identifier,
 		items: types.array(ItemStore),
 		sortOrder: types.optional(types.array(types.integer), []),
+		direction: types.optional(types.enumeration('Direction', ['horizontal', 'vertical']), 'horizontal'),
 	})
 	.views(self => ({
 		getItemByName: (name) => {
@@ -97,9 +98,13 @@ const ItemListStore = types
 
 			swappedItems.forEach((item, i) => item.setIndex(i));
 		};
+		const setDirection = newDirection => {
+			self.direction = newDirection;
+		}
 
 		return {
 			updateOrder,
+			setDirection,
 		}
 	})
 ;

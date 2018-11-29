@@ -1,6 +1,7 @@
 import { types, getRoot } from 'mobx-state-tree';
 import { find } from 'lodash';
 import GameStore from 'Game.store';
+import ItemListStore from 'ItemList.store';
 
 const ItemStore = types
 	.model({
@@ -10,6 +11,7 @@ const ItemStore = types
 		longName: types.maybeNull(types.string),
 		group: types.maybeNull(types.string),
 		items: types.optional(types.array(types.late(() => ItemStore)), []),
+		itemList: types.reference(types.late(() => ItemListStore)),
 		hidden: false,
 		image: '',
 		index: types.integer,

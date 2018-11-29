@@ -1,10 +1,20 @@
 .item-list-container {
-	//display: flex;
-	//flex-wrap: wrap;
-	display: grid;
+	display: flex;
+	flex-wrap: wrap;
+	//display: grid;
 	grid-gap: 2.5px;
 	grid-template-columns: repeat(auto-fit, 48px);
-	width: 100%;
+	&.is-horizontal {
+		width: 100%;
+	}
+	&.is-vertical {
+		width: 125px;
+		height: calc(100% - 52px);
+		flex-direction: column;
+	}
+	&.is-draggable-disabled {
+		cursor: pointer;
+	}
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -15,8 +25,52 @@
 }
 .item-container {
 	width: 48px;
+	height: 48px;
 	position: relative;
+	margin: 2.5px;
 }
 .item.is-item-group {
 	position: absolute;
+}
+.modal {
+	.item-list-container {
+		position: static;
+		overflow: auto;
+		flex-wrap: nowrap;
+		&.is-vertical {
+			width: 125px;
+			height: 60vh;
+		}
+		&.is-horizontal {
+			height: 125px;
+		}
+	}
+	.edit-item-list-controls {
+		margin: 0 0 20px;
+		padding: 0 0 20px;
+		border-bottom: 1px solid #ccc;
+	}
+}
+.item-list-group-container {
+	display: flex;
+	flex-direction: column;
+	&.is-vertical {
+		flex-direction: row;
+	}
+}
+.item-list-group + .item-list-group {
+	border-top: 1px solid #ccc;
+	border-left: none;
+	margin: 30px 0 0;
+	padding: 30px 0 0;
+
+}
+.item-list-group-container.is-vertical {
+	.item-list-group + .item-list-group {
+		margin: 0 0 0 30px;
+		padding: 0 0 0 30px;
+		border-top: none;
+		border-left: 1px solid #ccc;
+	}
+
 }

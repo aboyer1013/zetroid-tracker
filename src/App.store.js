@@ -9,10 +9,11 @@ const AppStore = types
 	.model({
 		games: types.map(GameStore),
 		itemList: ItemListStore,
+		inactiveItemList: ItemListStore,
 		maps: types.map(MapStore),
 		locationDetail: LocationDetailStore,
 		isModalOpen: false,
-		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT', 'HELP'])),
+		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT', 'HELP', 'EDIT_ITEM_LIST'])),
 		validationMessages: types.array(types.string),
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
 		hideCompleted: false,

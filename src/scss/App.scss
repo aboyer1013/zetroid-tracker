@@ -30,6 +30,9 @@ button {
 	bottom: 0;
 	min-width: 50%;
 	width: 100%;
+	&.is-item-list-vertical {
+		padding-left: 150px;
+	}
 }
 .details-controls {
 }
@@ -142,4 +145,8 @@ button {
 	padding: 0 0 0 20px;
 	border-left: 1px solid #ccc;
 	flex-grow: 1;
+}
+.edit-item-list-modal {
+	width: 90vw;
+	height: 85vh;
 }
