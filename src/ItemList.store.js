@@ -1,12 +1,12 @@
 import { types } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
-import { find, sortBy } from 'lodash';
+import { find, sortBy, get } from 'lodash';
 import move from 'lodash-move';
 
 const ItemListStore = types
 	.model({
 		id: types.identifier,
-		items: types.map(ItemStore),
+		items: types.array(ItemStore),
 		sortOrder: types.optional(types.array(types.integer), []),
 	})
 	.views(self => ({
@@ -14,7 +14,9 @@ const ItemListStore = types
 			return find([...self.items.values()], { name });
 		},
 		getItemsByGroup: (group) => {
-			return [...self.items.values()].filter(item => item.group === group);
+			let itemGroup = find([...self.items.values()], { group });
+
+			return [...itemGroup.items.values()];
 		},
 		hasAcquiredAnyItemsInGroup: (group) => {
 			const items = self.getItemsByGroup(group);
@@ -26,7 +28,7 @@ const ItemListStore = types
 				none: [],
 			};
 
-			[...self.items.values()].forEach(item => {
+			self.sortedItems.forEach(item => {
 				if (item.group) {
 					if (!result[item.group]) {
 						result[item.group] = [];

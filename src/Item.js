@@ -11,8 +11,8 @@ const Item = class Item extends Component {
 		});
 
 		return (
-			<div key={item.name} className={itemClasses}>
-				<img src={item.image} alt={item.longName}/>
+			<div key={item.id} className={itemClasses}>
+				<img src={item.imageSrc} alt={item.longName}/>
 			</div>
 		);
 	}
