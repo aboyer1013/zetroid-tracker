@@ -78,10 +78,10 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		return (
 			<div className="is-background-white">
 				<div className={mapInfoClasses}>
-					<div className="details-container columns">
-						<div className="column">
+					<div className="details-container">
+						<div className="details-controls">
 							{longName}
-							<div className="details-controls">
+							<div>
 								<div className="">
 									<div className="buttons">
 										<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
@@ -92,7 +92,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 								</div>
 							</div>
 						</div>
-						<div className="column details-requirements">
+						<div className="details-requirements">
 							<h6>Requirements:</h6>
 							{reqs}
 						</div>

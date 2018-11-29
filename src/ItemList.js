@@ -32,14 +32,9 @@ const ItemList = class ItemList extends Component {
 							let itemElem = null;
 
 							if (item.group) {
-								itemElem = [...item.items.values()].map(subItem => {
-									if (store.isVisible(subItem)) {
-										return <Item key={subItem.id} item={subItem} isVisible={true} />
-									}
-									return null;
-								});
+								itemElem = store.getItemsByGroup(item.group).map(subItem => <Item key={subItem.id} item={subItem} />);
 							} else {
-								itemElem = <Item key={item.id} item={item} isVisible={true} />;
+								itemElem = <Item key={item.id} item={item} />;
 							}
 							dragElems.push(
 								<Draggable key={`draggable-${i}`} draggableId={`draggable-${i}`} index={i}>
@@ -57,7 +52,7 @@ const ItemList = class ItemList extends Component {
 						});
 
 						return (
-							<div ref={provided.innerRef} className="item-list-container">
+							<div ref={provided.innerRef} className="item-list-container has-background-grey-light">
 								{dragElems}
 								{provided.placeholder}
 							</div>

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
 
 const Item = class Item extends Component {
 	render() {
 		const item = this.props.item;
+		const isVisible = this.props.store.itemList.isVisible(item);
 		const itemClasses = classNames('item', {
 			'is-not-acquired': !item.acquired,
-			'is-hidden': !this.props.isVisible,
+			'is-hidden': !isVisible,
+			'is-item-group': !!item.group,
 		});
 
 		return (
@@ -18,4 +20,4 @@ const Item = class Item extends Component {
 	}
 };
 
-export default observer(Item);
+export default inject('store')(observer(Item));

@@ -1,5 +1,6 @@
 @import 'fontawesome-config.scss';
 @import 'bulma.config';
+@import 'ItemList';
 
 html,
 body,
@@ -9,6 +10,9 @@ body,
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
+}
+.main {
+	position: relative;
 }
 button {
 	cursor: pointer;
@@ -126,14 +130,16 @@ button {
 		font-size: 20px;
 	}
 }
-.item-container {
-	position: relative;
-}
-.item {
+.details-container {
+	display: flex;
 
 }
-.item-group {
-	.item {
-		//position: absolute;
-	}
+.details-controls {
+	min-width: 25%;
+}
+.details-requirements {
+	margin: 0 0 0 20px;
+	padding: 0 0 0 20px;
+	border-left: 1px solid #ccc;
+	flex-grow: 1;
 }

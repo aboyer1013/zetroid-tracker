@@ -16,6 +16,7 @@ const AppStore = types
 		validationMessages: types.array(types.string),
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
 		hideCompleted: false,
+		shouldSync: true,
 	})
 	.views((self) => ({
 		getGameByName: (name) => {

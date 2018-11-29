@@ -17,6 +17,7 @@ import * as serviceWorker from 'serviceWorker';
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
+	// shouldSync: false,
 	itemList: ItemListStore.create({
 		id: randomId(),
 		items: [],
@@ -63,7 +64,7 @@ appStore.maps.put(MapStore.create({
 // Create item models.
 itemsData
 	.filter(item => item.game === appStore.selectedGame.name)
-	.filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
+	// .filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
 	.forEach((item, i) => {
 		const isItemGroup = !!(item.group && item.items.length);
 		const itemData = {
@@ -118,14 +119,16 @@ window.destroy = destroy;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
 
-// onSnapshot(appStore, model => {
-// 	if (window.localStorage) {
-// 		window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model))
-// 	}
-// });
-// if (window.localStorage && window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)) {
-// 	applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
-// }
+if (appStore.shouldSync) {
+	onSnapshot(appStore, model => {
+		if (window.localStorage) {
+			window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model))
+		}
+	});
+	if (window.localStorage && window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)) {
+		applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
+	}
+}
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

@@ -11,11 +11,32 @@ const ItemListStore = types
 	})
 	.views(self => ({
 		getItemByName: (name) => {
-			return find([...self.items.values()], { name });
+			const items = [...self.items.values()];
+			let itemFound = null;
+
+			if (!find(items, { name })) {
+				const itemGroups = items.filter(item => item.group);
+				if (!itemGroups) {
+					return null;
+				}
+				itemGroups.forEach(itemGroup => {
+					itemGroup.items.forEach(subItem => {
+						if (subItem.name === name) {
+							itemFound = subItem;
+						}
+					});
+				});
+				return itemFound;
+			} else {
+				return find(items, { name });
+			}
 		},
 		getItemsByGroup: (group) => {
 			let itemGroup = find([...self.items.values()], { group });
 
+			if (!itemGroup) {
+				return null;
+			}
 			return [...itemGroup.items.values()];
 		},
 		hasAcquiredAnyItemsInGroup: (group) => {
@@ -52,7 +73,9 @@ const ItemListStore = types
 		isVisible: (item) => {
 			let result = false;
 
-			if (item.acquired) {
+			if (!item.group) {
+				result = true;
+			} else if (item.acquired) {
 				result = true;
 			} else if (self.hasAcquiredAnyItemsInGroup(item.group)) {
 				result = false;

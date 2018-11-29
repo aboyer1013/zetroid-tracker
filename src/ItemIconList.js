@@ -14,8 +14,10 @@ class ItemIconList extends Component {
 		const icons = [];
 		const iconText = [];
 		const result = [];
+		// debugger;
 		this.props.items.forEach((item, i) => {
-			icons.push(<span key={`${item.name}-icon-${i}`} className="item-icon is-not-acquired"><img src={item.image} alt={get(item, 'longName')} title={get(item, 'image')} /></span>);
+			// debugger;
+			icons.push(<span key={`${item.name}-icon-${i}`} className="item-icon is-not-acquired"><img src={item.imageSrc} alt={get(item, 'longName')} title={get(item, 'longName')} /></span>);
 			iconText.push(<span key={`${item.name}-text-${i}`} className="item-icon-name is-not-acquired is-size-7">{item.longName}</span>);
 		});
 		icons.forEach((icon, i) => {
