@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import ItemIcon from 'ItemIcon';
 import { get } from 'lodash';
 import 'scss/App.scss';
+import classNames from 'classnames';
+import { observer, inject } from 'mobx-react';
 
-class ItemIconList extends Component {
+const ItemIconList = class ItemIconList extends Component {
 	render() {
 		if (!this.props.items) {
 			return <span>None</span>;
@@ -14,11 +16,17 @@ class ItemIconList extends Component {
 		const icons = [];
 		const iconText = [];
 		const result = [];
-		// debugger;
+
 		this.props.items.forEach((item, i) => {
-			// debugger;
-			icons.push(<span key={`${item.name}-icon-${i}`} className="item-icon is-not-acquired"><img src={item.imageSrc} alt={get(item, 'longName')} title={get(item, 'longName')} /></span>);
-			iconText.push(<span key={`${item.name}-text-${i}`} className="item-icon-name is-not-acquired is-size-7">{item.longName}</span>);
+			let iconsClasses = classNames('item-icon', {'is-not-acquired': !item.acquired});
+			let iconTextClasses = classNames('item-icon-name is-size-7', {'is-not-acquired': !item.acquired});
+
+			icons.push(
+				<span key={`${item.name}-icon-${i}`} className={iconsClasses}>
+					<img src={item.imageSrc} alt={get(item, 'longName')} title={get(item, 'longName')} />
+				</span>
+			);
+			iconText.push(<span key={`${item.name}-text-${i}`} className={iconTextClasses}>{item.longName}</span>);
 		});
 		icons.forEach((icon, i) => {
 			result.push(icons[i], iconText[i]);
@@ -27,6 +35,6 @@ class ItemIconList extends Component {
 			<div className="item-icon-list">{result}</div>
 		);
 	}
-}
+};
 
-export default ItemIconList;
+export default inject('store')(observer(ItemIconList));

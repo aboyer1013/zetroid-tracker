@@ -106,7 +106,7 @@ const NavBar = class NavBar extends Component {
 								<div className="navbar-item">
 									<button onClick={() => this.props.store.setHideCompleted(!this.props.store.hideCompleted)} className="button is-fullwidth">
 										<span className="icon"><i className={hideCompletedClasses} /></span>
-										<span>Hide Completed Locations</span>
+										<span>Completed Locations</span>
 									</button>
 								</div>
 							</div>

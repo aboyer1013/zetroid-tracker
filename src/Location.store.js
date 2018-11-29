@@ -9,22 +9,24 @@ const LocationStore = types
 		image: '',
 		game: types.reference(GameStore),
 		coords: types.array(types.integer),
-		itemRequirements: types.array(types.string),
-		progression: types.optional(types.enumeration('Progression types', ['UNAVAILABLE', 'AVAILABLE', 'COMPLETE']), 'UNAVAILABLE'),
+		itemRequirements: types.optional(types.array(types.string), []),
+		isComplete: false,
 		isFavorite: false,
 	})
 	.views((self) => ({
 		get details() {
-			let itemRequirements;
-
-			if (self.itemRequirements) {
-				itemRequirements = self.itemRequirements.map(req => getRoot(self).itemList.getItemByName(req))
-			}
-
 			return {
 				longName: self.longName,
-				itemRequirements,
+				itemRequirements: self.items,
 			};
+		},
+		get items() {
+			const result = [];
+
+			if (self.itemRequirements.length) {
+				self.itemRequirements.forEach(req => result.push(getRoot(self).itemList.getItemByName(req)));
+			}
+			return result;
 		},
 		get defaultMarkerType() {
 			return 'UNAVAILABLE';
@@ -33,23 +35,26 @@ const LocationStore = types
 			return self.longName;
 		},
 		get hidden() {
-			if (!self.isFavorite && getRoot(self).hideCompleted && self.progression === 'COMPLETE') {
+			if (!self.isFavorite && getRoot(self).hideCompleted && self.isComplete) {
 				return true;
 			}
 			return false;
-		}
+		},
+		get isAvailable() {
+			return self.items.every(item => item.acquired);
+		},
 	}))
 	.actions((self) => {
-		const setProgression = (progression) => {
-			self.progression = progression;
-		}
 		const setFavorite = (newFavorite) => {
 			self.isFavorite = newFavorite;
-		}
+		};
+		const toggleComplete = () => {
+			self.isComplete = !self.isComplete;
+		};
 
 		return {
-			setProgression,
 			setFavorite,
+			toggleComplete,
 		};
 	})
 ;

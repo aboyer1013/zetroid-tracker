@@ -13,7 +13,7 @@ const LocationDetailStore = types
 		},
 		get displayHelp() {
 			return !self.selectedLocation;
-		}
+		},
 	}))
 	.actions((self) => {
 		const setSelectedLocation = (event, marker, mapStoreLocation) => {

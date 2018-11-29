@@ -23,33 +23,27 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 
 		if (selectedLocation) {
 
-			switch (selectedLocation.progression) {
-				case 'UNAVAILABLE':
-					progressionButton = (
-						<button onClick={() => store.selectedLocation.setProgression('AVAILABLE')} className="button is-danger">
-							<span className="icon"><i className="fas fa-lock" /></span>
-							<span>Unavailable</span>
-						</button>
-					);
-					break;
-				case 'AVAILABLE':
-					progressionButton = (
-						<button onClick={() => store.selectedLocation.setProgression('COMPLETE')} className="button is-success">
-							<span className="icon"><i className="fas fa-unlock" /></span>
-							<span>Available</span>
-						</button>
-					);
-					break;
-				case 'COMPLETE':
-					progressionButton = (
-						<button onClick={() => store.selectedLocation.setProgression('UNAVAILABLE')} className="button is-dark">
-							<span className="icon"><i className="fas fa-check" /></span>
-							<span>Complete</span>
-						</button>
-					);
-					break;
-				default:
-					break;
+			if (selectedLocation.isComplete) {
+				progressionButton = (
+					<button onClick={selectedLocation.toggleComplete} className="button is-dark">
+						<span className="icon"><i className="fas fa-check" /></span>
+						<span>Complete</span>
+					</button>
+				);
+			} else if (selectedLocation.isAvailable) {
+				progressionButton = (
+					<button onClick={selectedLocation.toggleComplete} className="button is-success">
+						<span className="icon"><i className="fas fa-unlock" /></span>
+						<span>Available</span>
+					</button>
+				);
+			} else {
+				progressionButton = (
+					<button onClick={selectedLocation.toggleComplete} className="button is-danger">
+						<span className="icon"><i className="fas fa-lock" /></span>
+						<span>Unavailable</span>
+					</button>
+				);
 			}
 		}
 		if (!details || displayHelp) {

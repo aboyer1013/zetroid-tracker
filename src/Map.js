@@ -186,7 +186,15 @@ const Map = class Map extends Component {
 		Object.keys(typeClasses).forEach(item => {
 			marker._icon.classList.remove(typeClasses[item]);
 		});
-		const classToUse = loc.isFavorite ? typeClasses.FAVORITE : typeClasses[loc.progression];
+		let classToUse = typeClasses['UNAVAILABLE'];
+
+		if (loc.isFavorite) {
+			classToUse = typeClasses.FAVORITE;
+		} else if (loc.isComplete) {
+			classToUse = typeClasses.COMPLETE;
+		} else if (loc.isAvailable) {
+			classToUse = typeClasses.AVAILABLE;
+		}
 		marker._icon.classList.add(classToUse);
 	}
 	onResizeHandler(event, data) {
