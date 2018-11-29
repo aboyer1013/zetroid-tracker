@@ -13,6 +13,7 @@ import LocationStore from 'Location.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
 import * as serviceWorker from 'serviceWorker';
+import { isUndefined } from 'lodash';
 
 const appStore = AppStore.create({
 	id: randomId(),
@@ -69,7 +70,7 @@ itemsData
 		const isItemGroup = !!(item.group && item.items.length);
 		const itemData = {
 			id: randomId(),
-			index: i,
+			index: isUndefined(item.index) ? i : item.index,
 			name: item.name,
 			game: appStore.getGameByName(item.game),
 			maxQty: item.maxQty || 1,

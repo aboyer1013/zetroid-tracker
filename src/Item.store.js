@@ -1,4 +1,5 @@
 import { types, getRoot } from 'mobx-state-tree';
+import { find } from 'lodash';
 import GameStore from 'Game.store';
 
 const ItemStore = types
@@ -32,13 +33,47 @@ const ItemStore = types
 			}
 			self.acquired = newAcquired;
 		};
+		// Toggles item acquisition if not in a group, otherwise, acquires the next item in the group
+		const activateNext = () => {
+			if (!self.group) {
+				self.toggleAcquisition();
+				return;
+			}
+			let shouldAcquire = true;
+			const subItems = getRoot(self).itemList.getItemsByGroup(self.group);
+			let currentSubItem = find(subItems, { acquired: true });
+			if (!currentSubItem) {
+				currentSubItem = find(subItems, { isDefault: true });
+			}
+			if (!currentSubItem) {
+				// Sensible fallback to the first item.
+				currentSubItem = subItems[0];
+			}
+			let nextGroupIndex = currentSubItem.groupIndex + 1;
+
+			if (nextGroupIndex === subItems.length) {
+				// We have wrapped around - put it back to default state.
+				nextGroupIndex = 0;
+				shouldAcquire = false;
+			} else if (currentSubItem.isDefault && !currentSubItem.acquired) {
+				currentSubItem.acquire(true);
+				return;
+			}
+			const nextSubItem = subItems[nextGroupIndex];
+			nextSubItem.acquire(shouldAcquire);
+		};
+		const toggleAcquisition = () => {
+			self.acquire(!self.acquired);
+		}
 		const setIndex = newIndex => {
 			self.index = newIndex;
 		};
 
 		return {
 			acquire,
+			activateNext,
 			setIndex,
+			toggleAcquisition,
 		};
 	})
 ;

@@ -4,8 +4,9 @@ import classNames from 'classnames';
 
 const Item = class Item extends Component {
 	render() {
+		const itemListStore = this.props.store.itemList;
 		const item = this.props.item;
-		const isVisible = this.props.store.itemList.isVisible(item);
+		const isVisible = itemListStore.isVisible(item);
 		const itemClasses = classNames('item', {
 			'is-not-acquired': !item.acquired,
 			'is-hidden': !isVisible,
@@ -13,7 +14,7 @@ const Item = class Item extends Component {
 		});
 
 		return (
-			<div key={item.id} className={itemClasses}>
+			<div onClick={item.activateNext} key={item.id} className={itemClasses}>
 				<img src={item.imageSrc} alt={item.longName}/>
 			</div>
 		);

@@ -2,6 +2,7 @@
 	//display: flex;
 	//flex-wrap: wrap;
 	display: grid;
+	grid-gap: 2.5px;
 	grid-template-columns: repeat(auto-fit, 48px);
 	width: 100%;
 	position: absolute;
