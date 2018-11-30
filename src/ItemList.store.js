@@ -1,6 +1,6 @@
 import { types, detach } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
-import { find, sortBy, difference, includes, uniq } from 'lodash';
+import { find, sortBy } from 'lodash';
 import move from 'lodash-move';
 
 const ItemListStore = types

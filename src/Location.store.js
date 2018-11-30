@@ -9,6 +9,7 @@ const LocationStore = types
 		image: '',
 		game: types.reference(GameStore),
 		coords: types.array(types.integer),
+		notes: types.optional(types.string, ''),
 		itemRequirements: types.optional(types.array(types.string), []),
 		isComplete: false,
 		isFavorite: false,
@@ -18,13 +19,23 @@ const LocationStore = types
 			return {
 				longName: self.longName,
 				itemRequirements: self.items,
+				notes: self.notes,
 			};
 		},
 		get items() {
 			const result = [];
 
 			if (self.itemRequirements.length) {
-				self.itemRequirements.forEach(req => result.push(getRoot(self).itemList.getItemByName(req)));
+				self.itemRequirements.forEach(req => {
+					let item = getRoot(self).itemList.getItemByName(req);
+
+					if (!item) {
+						item = getRoot(self).inactiveItemList.getItemByName(req);
+					}
+					if (item) {
+						result.push(item);
+					}
+				});
 			}
 			return result;
 		},

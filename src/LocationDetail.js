@@ -3,17 +3,16 @@ import ItemIconList from 'ItemIconList';
 import { get } from 'lodash';
 import classNames from 'classnames';
 import { observer, inject } from 'mobx-react';
+import LocationNotes from 'LocationNotes';
 
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
-	constructor() {
-		super();
-	}
 	render() {
 		const store = get(this, 'props.store.locationDetail');
 		const selectedLocation = store.selectedLocation;
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
+		let notes = get(details, 'notes');
 		const favoriteClasses = classNames('button', 'is-outline', {
 			'has-text-warning': get(selectedLocation, 'isFavorite'),
 		});
@@ -57,6 +56,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		if (reqs.length) {
 			reqs = <ItemIconList items={reqs} />;
 		}
+		if (notes) {
+			notes = (<div className="details-notes"><h6>Notes:</h6>{notes}</div>);
+		}
 		return (
 			<div className="is-background-white">
 				<div className={mapInfoClasses}>
@@ -78,6 +80,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 							<h6>Requirements:</h6>
 							{reqs}
 						</div>
+						{notes}
 					</div>
 				</div>
 			</div>

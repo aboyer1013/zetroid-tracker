@@ -11,7 +11,11 @@ const ItemIconList = class ItemIconList extends Component {
 			return <span>None</span>;
 		}
 		if (this.props.items.length === 1) {
-			return <ItemIcon item={this.props.items[0]} />;
+			return (
+				<ItemIcon item={this.props.items[0]}>
+					<span>{this.props.items[0].longName}</span>
+				</ItemIcon>
+			);
 		}
 		const icons = [];
 		const iconText = [];

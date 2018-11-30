@@ -30,7 +30,7 @@ const inactiveItemListStore = ItemListStore.create({
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	// shouldSync: false,
+	shouldSync: false,
 	itemList: itemListStore,
 	inactiveItemList: inactiveItemListStore,
 	maps: {},
@@ -61,16 +61,16 @@ appStore.maps.put(MapStore.create({
 	locations: {},
 	locationDetail: appStore.locationDetail,
 }));
-appStore.maps.put(MapStore.create({
-	id: randomId(),
-	name: 'zelda3-dw',
-	longName: 'Dark World Map',
-	game: appStore.getGameByName('zelda3'),
-	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
-	locations: {},
-	locationDetail: appStore.locationDetail,
-	offset: 100,
-}));
+// appStore.maps.put(MapStore.create({
+// 	id: randomId(),
+// 	name: 'zelda3-dw',
+// 	longName: 'Dark World Map',
+// 	game: appStore.getGameByName('zelda3'),
+// 	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
+// 	locations: {},
+// 	locationDetail: appStore.locationDetail,
+// 	offset: 100,
+// }));
 // Create item models.
 const itemDataFactory = (item, index, itemList) => {
 	const id = randomId();
@@ -128,6 +128,7 @@ locationsData.forEach(loc => {
 		coords: loc.coords,
 		game: appStore.getGameByName(loc.game),
 		itemRequirements: loc.itemRequirements,
+		notes: loc.notes,
 	}));
 
 });

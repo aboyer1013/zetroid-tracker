@@ -37,7 +37,10 @@ const AppStore = types
 				return self.inactiveItemList;
 			}
 			return null;
-		}
+		},
+		get allItems() {
+			return self.itemList.items.concat(self.inactiveItemList.items);
+		},
 	}))
 	.actions((self) => {
 		const selectGame = (gameToSelect) => {
