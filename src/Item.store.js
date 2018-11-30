@@ -70,12 +70,16 @@ const ItemStore = types
 		const setIndex = newIndex => {
 			self.index = newIndex;
 		};
+		const setItemList = newItemList => {
+			self.itemList = newItemList;
+		}
 
 		return {
 			acquire,
 			activateNext,
 			setIndex,
 			toggleAcquisition,
+			setItemList,
 		};
 	})
 ;
