@@ -4,7 +4,7 @@ import { detach } from 'mobx-state-tree';
 import ItemList from 'ItemList';
 import classNames from 'classnames';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { find, pullAt, nth, get } from 'lodash';
+import { find } from 'lodash';
 
 class EditItemListModal extends Component {
 	constructor() {
@@ -29,13 +29,8 @@ class EditItemListModal extends Component {
 			// DnD within its own droppable area.
 			destStore.updateOrder(sourceItem, destItem);
 		} else {
-			// DnD is being dropped into another droppable different than its own.
-			destStore.moveItem(detach(sourceItem), result.destination.index);
-			// TODO There should not be duplicate items between both lists. So don't account for it. But it will allow dupe items.
-			// const sourceItem = nth(sourceItems, result.source.index);
-			// const destItem = nth(destItems, result.destination.index);
-			// const sourceItemName = get(sourceItem, 'group', 'name');
-			// const destItemName = get(destItem, 'group', 'name');
+			// DnD is being dropped into a droppable different than its own.
+			destStore.moveItem(sourceItem, result.destination.index);
 		}
 	}
 	render() {
@@ -70,28 +65,27 @@ class EditItemListModal extends Component {
 							</div>
 						</div>
 						<div className={ilgContainerClasses}>
-							<div className="item-list-group active-item-list-group">
-								<h5>Active Set</h5>
-								<DragDropContext onDragEnd={this.onDragEndHandler}>
+							<DragDropContext onDragEnd={this.onDragEndHandler}>
+								<div className="item-list-group active-item-list-group">
+									<h5>Active Set</h5>
 									<ItemList
 										itemListStore={itemListStore}
 										items={itemListStore.sortedItems}
 										direction={itemListStore.direction}
 										draggableEnabled={true}
 									/>
+								</div>
+								<div className="item-list-group inactive-item-list-group">
+									<h5>Available Items</h5>
 									<ItemList
 										itemListStore={store.inactiveItemList}
 										items={store.inactiveItemList.sortedItems}
 										direction={itemListStore.direction}
 										draggableEnabled={true}
 									/>
-								</DragDropContext>
-							</div>
-							<div className="item-list-group inactive-item-list-group">
-								<h5>Available Items</h5>
-							</div>
+								</div>
+							</DragDropContext>
 						</div>
-
 					</div>
 				</section>
 				<footer className="modal-card-foot">

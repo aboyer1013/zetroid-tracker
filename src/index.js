@@ -30,7 +30,7 @@ const inactiveItemListStore = ItemListStore.create({
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	shouldSync: false,
+	// shouldSync: false,
 	itemList: itemListStore,
 	inactiveItemList: inactiveItemListStore,
 	maps: {},
@@ -109,12 +109,12 @@ itemsData
 	// .filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
 	.forEach((item, i) => {
 		const itemData = itemDataFactory(item, i, appStore.itemList);
-		const inactiveItemData = itemDataFactory(item, i, appStore.inactiveItemList);
+		// const inactiveItemData = itemDataFactory(item, i, appStore.inactiveItemList);
 
 		appStore.itemList.sortOrder.push(i);
 		appStore.itemList.items.push(ItemStore.create(itemData));
-		appStore.inactiveItemList.sortOrder.push(i);
-		appStore.inactiveItemList.items.push(ItemStore.create(inactiveItemData));
+		// appStore.inactiveItemList.sortOrder.push(i);
+		// appStore.inactiveItemList.items.push(ItemStore.create(inactiveItemData));
 	})
 ;
 // Create location models.
@@ -139,6 +139,8 @@ window.destroy = destroy;
 window.detach = detach;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
+window.itemList = appStore.itemList;
+window.inactiveItemList = appStore.inactiveItemList;
 
 if (appStore.shouldSync) {
 	onSnapshot(appStore, model => {

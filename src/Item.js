@@ -15,7 +15,7 @@ const Item = class Item extends Component {
 
 		return (
 			<div onClick={item.activateNext} key={item.id} className={itemClasses}>
-				<img src={item.imageSrc} alt={item.longName}/>
+				<img src={item.imageSrc} alt={item.longName} title={item.longName} />
 			</div>
 		);
 	}

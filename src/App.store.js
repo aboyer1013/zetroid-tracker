@@ -75,6 +75,7 @@ const AppStore = types
 		const flushLocalStorage = () => {
 			if (window.localStorage) {
 				window.localStorage.removeItem(self.LOCAL_STORAGE_KEY);
+				window.location.reload();
 			}
 		};
 		const setHideCompleted = (isHidden) => {

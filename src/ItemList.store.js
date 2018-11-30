@@ -1,6 +1,6 @@
-import { types } from 'mobx-state-tree';
+import { types, detach } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
-import { find, sortBy } from 'lodash';
+import { find, sortBy, difference, includes, uniq } from 'lodash';
 import move from 'lodash-move';
 
 const ItemListStore = types
@@ -88,6 +88,34 @@ const ItemListStore = types
 		get sortedItems() {
 			return sortBy([...self.items.values()], ['index']);
 		},
+		getInactiveItems: (activeItems) => {
+			// TODO (aboyer) Inactive items should ALSO be from multiple games (select menu)?
+			// Probably won't need this anymore - but keeping for good measure.
+			// const activeItemNames = activeItems.map(item => {
+			// 	if (item.group) {
+			// 		return item.group;
+			// 	}
+			// 	return item.name;
+			// });
+			// const inactiveItemNames = self.sortedItems.map(item => {
+			// 	if (item.group) {
+			// 		return item.group;
+			// 	}
+			// 	return item.name;
+			// });
+			// console.log('activeItemNames', activeItemNames);
+			// console.log('inactiveItemNames', inactiveItemNames);
+			//
+			// const remainingInactiveNames = difference(inactiveItemNames, activeItemNames);
+			//
+			// return uniq(self.sortedItems.filter(item => {
+			// 	debugger;
+			// 	if (item.group && includes(remainingInactiveNames, item.group)) {
+			// 		return true;
+			// 	}
+			// 	return includes(remainingInactiveNames, item.name);
+			// }));
+		},
 		isVisible: (item) => {
 			let result = false;
 
@@ -113,17 +141,21 @@ const ItemListStore = types
 			}
 			const swappedItems = move(self.sortedItems, sourceItemIndex, destItemIndex);
 
-			self.updateIndicies(swappedItems);
+			self.updateIndices(swappedItems);
 		};
 		const moveItem = (itemToAdd, index) => {
 			const sortedItems = self.sortedItems;
+			const sourceItemList = itemToAdd.itemList;
 
-			sortedItems.splice(index, 0, itemToAdd);
+			// Add source item to destination list.
+			sortedItems.splice(index, 0, detach((itemToAdd)));
 			self.items.push(itemToAdd);
+			// Update indices on both sides.
 			itemToAdd.setIndex(index);
-			self.updateIndicies(sortedItems);
+			sourceItemList.updateIndices(sourceItemList.sortedItems);
+			self.updateIndices(sortedItems);
 		};
-		const updateIndicies = (items) => {
+		const updateIndices = (items) => {
 			items.forEach((item, i) => item.setIndex(i));
 		};
 		const setDirection = newDirection => {
@@ -134,7 +166,7 @@ const ItemListStore = types
 			updateOrder,
 			moveItem,
 			setDirection,
-			updateIndicies,
+			updateIndices,
 		}
 	})
 ;
