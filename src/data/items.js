@@ -8,14 +8,15 @@ const itemsData = [
 			{ name: 'mp-upgrade-14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mp-upgrade', groupIndex: 2, },
 		]
 	},
-	{
-		group: 'agahnim',
-		game: 'zelda3',
-		items: [
-			{ name: 'agahnim-alive',  longName: 'Agahnim',           game: 'zelda3', image: 'agahnim0', group: 'agahnim', groupIndex: 0, isDefault: true, },
-			{ name: 'agahnim-dead',   longName: 'Agahnim Defeated',  game: 'zelda3', image: 'agahnim1', group: 'agahnim', groupIndex: 1, },
-		],
-	},
+	// {
+	// 	group: 'agahnim',
+	// 	game: 'zelda3',
+	// 	items: [
+	// 		{ name: 'agahnim-alive',  longName: 'Agahnim',           game: 'zelda3', image: 'agahnim0', group: 'agahnim', groupIndex: 0, isDefault: true, },
+	// 		{ name: 'agahnim-dead',   longName: 'Agahnim Defeated',  game: 'zelda3', image: 'agahnim1', group: 'agahnim', groupIndex: 1, },
+	// 	],
+	// },
+	{ name: 'agahnim',  longName: 'Agahnim',           game: 'zelda3', image: 'agahnim0', },
 	// { name: 'arrow-upgrade',  longName: 'Arrow Upgrade',     game: 'zelda3', image: '', },
 	{
 		group: 'armor',

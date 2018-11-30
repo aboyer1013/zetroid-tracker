@@ -9,8 +9,9 @@ const LocationStore = types
 		image: '',
 		game: types.reference(GameStore),
 		coords: types.array(types.integer),
-		notes: types.optional(types.string, ''),
+		notes: types.optional(types.array(types.string), []),
 		itemRequirements: types.optional(types.array(types.string), []),
+		numItems: 1,
 		isComplete: false,
 		isFavorite: false,
 	})
@@ -20,6 +21,7 @@ const LocationStore = types
 				longName: self.longName,
 				itemRequirements: self.items,
 				notes: self.notes,
+				numItems: self.numItems,
 			};
 		},
 		get items() {

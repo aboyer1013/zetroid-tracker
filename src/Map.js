@@ -28,14 +28,14 @@ const Map = class Map extends Component {
 	markers = {};
 	offsetWidth = 53;
 	offsetHeight = 108;
-	fitWidth = 565;
-	fitHeight = 619;
+	fitWidth = 590;
+	fitHeight = 680;
 	// TODO take this out of state
 	state = {
-		containerWidth: 565,
-		containerHeight: 640,
-		mapWidth: 512,
-		mapHeight: 532,
+		containerWidth: 590,
+		containerHeight: 680,
+		mapWidth: 537,
+		mapHeight: 572,
 	};
 
 	componentDidMount() {

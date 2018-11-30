@@ -39,7 +39,6 @@ class App extends Component {
 	render() {
 		const store = this.props.store;
 		let modal = null;
-		const items = store.activeItemList.items;
 
 		if (store.isModalOpen) {
 			switch (store.activeModal) {

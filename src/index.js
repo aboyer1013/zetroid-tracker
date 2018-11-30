@@ -126,6 +126,7 @@ locationsData.forEach(loc => {
 		game: appStore.getGameByName(loc.game),
 		itemRequirements: loc.itemRequirements,
 		notes: loc.notes,
+		numItems: loc.numItems,
 	}));
 
 });

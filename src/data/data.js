@@ -30,13 +30,37 @@ const locationsData = [
 	// 	itemRequirements: ['boots', 'hookshot'],
 	// },
 	{
+	    coords: [-205,170],
 	    name: 'pedestal',
 	    longName: 'Master Sword Pedestal',
-	    coords: [-205,170],
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
 	    itemRequirements: ['greenpendant', 'redpendant', 'bluependant'],
-		notes: `Can check with ${1+1} %book%.`
+		notes: ['pedestal'],
+	},
+	{
+	    coords: [-355,500],
+	    name: 'mushroom',
+	    longName: 'Mushroom',
+	    game: 'zelda3',
+	    map: 'zelda3-lw',
+	    itemRequirements: [],
+	},
+	{
+	    coords: [-540,775],
+	    name: 'foresthideout',
+	    longName: 'Forest Hideout',
+	    game: 'zelda3',
+	    map: 'zelda3-lw',
+	    itemRequirements: [],
+	},
+	{
+	    coords: [-300,1230],
+	    name: 'lumberjacktree',
+	    longName: 'Lumberjack Tree',
+	    game: 'zelda3',
+	    map: 'zelda3-lw',
+	    itemRequirements: ['agahnim', 'boots'],
 	},
 
 ];

@@ -10,6 +10,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const store = get(this, 'props.store.locationDetail');
 		const selectedLocation = store.selectedLocation;
 		const details = get(selectedLocation, 'details');
+		const numItems = get(details, 'numItems', 1);
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
 		let notes = get(details, 'notes');
@@ -55,25 +56,26 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 		if (reqs.length) {
 			reqs = <ItemIconList items={reqs} />;
+		} else {
+			reqs = <p><em>None</em></p>;
 		}
-		if (notes) {
-			notes = (<div className="details-notes"><h6>Notes:</h6>{notes}</div>);
+		if (notes.length) {
+			notes = (<div className="details-notes"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
 		return (
 			<div className="is-background-white">
 				<div className={mapInfoClasses}>
 					<div className="details-container">
-						<div className="details-controls">
+						<div className="details-location">
 							{longName}
-							<div>
-								<div className="">
-									<div className="buttons">
-										<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
-											<span className="icon"><i className="fas fa-star" /></span>
-										</button>
-										{progressionButton}
-									</div>
+							<div className="details-controls">
+								<div className="buttons">
+									<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
+										<span className="icon"><i className="fas fa-star" /></span>
+									</button>
+									{progressionButton}
 								</div>
+								<span className="tag is-light">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
 							</div>
 						</div>
 						<div className="details-requirements">
