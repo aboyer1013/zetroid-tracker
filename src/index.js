@@ -15,7 +15,7 @@ import ItemListStore from 'ItemList.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined } from 'lodash';
 
-const itemListStore = ItemListStore.create({
+const activeItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
@@ -31,7 +31,7 @@ const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
 	shouldSync: false,
-	itemList: itemListStore,
+	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
 	maps: {},
 	locationDetail: LocationDetailStore.create({
@@ -108,13 +108,10 @@ itemsData
 	.filter(item => item.game === appStore.selectedGame.name)
 	// .filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
 	.forEach((item, i) => {
-		const itemData = itemDataFactory(item, i, appStore.itemList);
-		// const inactiveItemData = itemDataFactory(item, i, appStore.inactiveItemList);
+		const itemData = itemDataFactory(item, i, appStore.activeItemList);
 
-		appStore.itemList.sortOrder.push(i);
-		appStore.itemList.items.push(ItemStore.create(itemData));
-		// appStore.inactiveItemList.sortOrder.push(i);
-		// appStore.inactiveItemList.items.push(ItemStore.create(inactiveItemData));
+		appStore.activeItemList.sortOrder.push(i);
+		appStore.activeItemList.items.push(ItemStore.create(itemData));
 	})
 ;
 // Create location models.
@@ -140,7 +137,7 @@ window.destroy = destroy;
 window.detach = detach;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
-window.itemList = appStore.itemList;
+window.activeItemList = appStore.activeItemList;
 window.inactiveItemList = appStore.inactiveItemList;
 
 if (appStore.shouldSync) {

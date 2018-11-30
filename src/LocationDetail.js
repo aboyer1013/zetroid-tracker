@@ -18,7 +18,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		});
 		const mapInfoClasses = classNames('content', 'box', 'map-info', {
 			'is-hidden': !store.isVisible,
-			'is-item-list-vertical': this.props.store.itemList.direction === 'vertical',
+			'is-item-list-vertical': this.props.store.activeItemList.direction === 'vertical',
 		});
 		let progressionButton;
 

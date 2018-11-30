@@ -58,6 +58,7 @@
 		position: static;
 		overflow: auto;
 		flex-wrap: nowrap;
+		display: flex;
 		&.is-vertical {
 			width: 125px;
 			height: 60vh;

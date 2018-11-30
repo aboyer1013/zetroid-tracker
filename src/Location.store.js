@@ -27,14 +27,7 @@ const LocationStore = types
 
 			if (self.itemRequirements.length) {
 				self.itemRequirements.forEach(req => {
-					let item = getRoot(self).itemList.getItemByName(req);
-
-					if (!item) {
-						item = getRoot(self).inactiveItemList.getItemByName(req);
-					}
-					if (item) {
-						result.push(item);
-					}
+					result.push(getRoot(self).getItemByName(req));
 				});
 			}
 			return result;

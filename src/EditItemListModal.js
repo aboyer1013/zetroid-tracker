@@ -16,7 +16,7 @@ class EditItemListModal extends Component {
 		this.snapshot = getSnapshot(this.props.store);
 	}
 	onDirectionChangeHandler(event) {
-		this.props.store.itemList.setDirection(event.target.value)
+		this.props.store.activeItemList.setDirection(event.target.value)
 	}
 	onDragEndHandler(result) {
 		if (!result.destination) {
@@ -38,7 +38,7 @@ class EditItemListModal extends Component {
 	}
 	render() {
 		const store = this.props.store;
-		const itemListStore = store.itemList;
+		const itemListStore = store.activeItemList;
 		const ilgContainerClasses = classNames('item-list-group-container', {
 			'is-vertical': itemListStore.direction === 'vertical',
 			'is-horizontal': itemListStore.direction === 'horizontal',

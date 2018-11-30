@@ -3,12 +3,12 @@ import GameStore from 'Game.store';
 import ItemListStore from 'ItemList.store';
 import MapStore from 'Map.store';
 import LocationDetailStore from 'LocationDetail.store';
+import ItemListUtil from 'ItemListUtil';
 import { find } from 'lodash';
 
-const AppStore = types
-	.model({
+const AppStore = types.compose(ItemListUtil, types.model({
 		games: types.map(GameStore),
-		itemList: ItemListStore,
+		activeItemList: ItemListStore,
 		inactiveItemList: ItemListStore,
 		maps: types.map(MapStore),
 		locationDetail: LocationDetailStore,
@@ -30,16 +30,16 @@ const AppStore = types
 			return find([...self.games.values()], { selected: true });
 		},
 		getItemListStoreByDroppableId: (droppableId) => {
-			if (self.itemList.droppableId === droppableId) {
-				return self.itemList;
+			if (self.activeItemList.droppableId === droppableId) {
+				return self.activeItemList;
 			}
 			if (self.inactiveItemList.droppableId === droppableId) {
 				return self.inactiveItemList;
 			}
 			return null;
 		},
-		get allItems() {
-			return self.itemList.items.concat(self.inactiveItemList.items);
+		get items() {
+			return self.activeItemList.items.concat(self.inactiveItemList.items);
 		},
 	}))
 	.actions((self) => {
@@ -93,7 +93,7 @@ const AppStore = types
 			flushLocalStorage,
 			setHideCompleted,
 		};
-	})
+	}))
 ;
 
 export default AppStore;
