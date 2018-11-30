@@ -54,9 +54,6 @@
 .item-list-group-container {
 	display: flex;
 	flex-direction: column;
-	&.is-vertical {
-		flex-direction: row;
-	}
 }
 .item-list-group + .item-list-group {
 	border-top: 1px solid #ccc;
@@ -65,12 +62,24 @@
 	padding: 30px 0 0;
 
 }
+.item-exchange-divider {
+	width: 100%;
+	font-size: 40px;
+	margin: 20px 0 0;
+	transform: rotate(90deg);
+}
 .item-list-group-container.is-vertical {
+	flex-direction: row;
+	align-items: center;
 	.item-list-group + .item-list-group {
 		margin: 0 0 0 30px;
 		padding: 0 0 0 30px;
 		border-top: none;
 		border-left: 1px solid #ccc;
 	}
-
+	.item-exchange-divider {
+		transform: none;
+		width: auto;
+		margin: 0 40px;
+	}
 }

@@ -41,7 +41,7 @@ const LocationStore = types
 			return false;
 		},
 		get isAvailable() {
-			return self.items.every(item => item.acquired);
+			return self.items.every(item => item && item.acquired);
 		},
 	}))
 	.actions((self) => {

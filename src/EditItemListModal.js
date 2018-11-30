@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { detach } from 'mobx-state-tree';
+import { getSnapshot, applySnapshot } from 'mobx-state-tree';
 import ItemList from 'ItemList';
 import classNames from 'classnames';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -11,6 +11,9 @@ class EditItemListModal extends Component {
 		super();
 		this.onDirectionChangeHandler = this.onDirectionChangeHandler.bind(this);
 		this.onDragEndHandler = this.onDragEndHandler.bind(this);
+	}
+	componentDidMount() {
+		this.snapshot = getSnapshot(this.props.store);
 	}
 	onDirectionChangeHandler(event) {
 		this.props.store.itemList.setDirection(event.target.value)
@@ -48,9 +51,12 @@ class EditItemListModal extends Component {
 				</header>
 				<section className="modal-card-body">
 					<div className="content">
+						<p>Customize your trackable items by dragging and dropping between both the <em>Active Items </em>
+							and <em>Inactive Items</em> areas.</p>
 						<div className="edit-item-list-controls columns">
 							<div className="column">
 								<div className="field">
+									<legend className="legend"><strong>Placement:</strong></legend>
 									<div className="control">
 										<label className="radio">
 											<input onChange={this.onDirectionChangeHandler} checked={itemListStore.direction === 'horizontal'} type="radio" name="direction" value="horizontal" /> Horizontal
@@ -67,7 +73,7 @@ class EditItemListModal extends Component {
 						<div className={ilgContainerClasses}>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
 								<div className="item-list-group active-item-list-group">
-									<h5>Active Set</h5>
+									<h5>Active Items</h5>
 									<ItemList
 										itemListStore={itemListStore}
 										items={itemListStore.sortedItems}
@@ -75,8 +81,9 @@ class EditItemListModal extends Component {
 										draggableEnabled={true}
 									/>
 								</div>
+								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt"></i></div>
 								<div className="item-list-group inactive-item-list-group">
-									<h5>Available Items</h5>
+									<h5>Inactive Items</h5>
 									<ItemList
 										itemListStore={store.inactiveItemList}
 										items={store.inactiveItemList.sortedItems}
@@ -89,7 +96,14 @@ class EditItemListModal extends Component {
 					</div>
 				</section>
 				<footer className="modal-card-foot">
-					<button className="button" onClick={store.closeModal}>Discard Changes</button>
+					<button className="button" onClick={() => {
+						try {
+							applySnapshot(this.props.store, this.snapshot);
+						} catch (err) {
+							console.error('There was a problem loading a previous state.', err);
+						}
+						store.closeModal();
+					}}>Discard Changes</button>
 				</footer>
 			</div>
 		);
