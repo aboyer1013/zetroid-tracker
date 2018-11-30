@@ -29,6 +29,15 @@ const AppStore = types
 		get selectedGame() {
 			return find([...self.games.values()], { selected: true });
 		},
+		getItemListStoreByDroppableId: (droppableId) => {
+			if (self.itemList.droppableId === droppableId) {
+				return self.itemList;
+			}
+			if (self.inactiveItemList.droppableId === droppableId) {
+				return self.inactiveItemList;
+			}
+			return null;
+		}
 	}))
 	.actions((self) => {
 		const selectGame = (gameToSelect) => {

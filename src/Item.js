@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 const Item = class Item extends Component {
 	render() {
-		const itemListStore = this.props.store.itemList;
+		const { itemListStore } = this.props;
 		const item = this.props.item;
 		const isVisible = itemListStore.isVisible(item);
 		const itemClasses = classNames('item', {

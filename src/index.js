@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot } from 'mobx-state-tree';
+import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -15,20 +15,24 @@ import ItemListStore from 'ItemList.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined } from 'lodash';
 
+const itemListStore = ItemListStore.create({
+	id: randomId(),
+	items: [],
+	sortOrder: [],
+	droppableId: 'active-itemList-droppable',
+});
+const inactiveItemListStore = ItemListStore.create({
+	id: randomId(),
+	items: [],
+	sortOrder: [],
+	droppableId: 'inactive-itemList-droppable',
+});
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	// shouldSync: false,
-	itemList: ItemListStore.create({
-		id: randomId(),
-		items: [],
-		sortOrder: [],
-	}),
-	inactiveItemList: ItemListStore.create({
-		id: randomId(),
-		items: [],
-		sortOrder: [],
-	}),
+	shouldSync: false,
+	itemList: itemListStore,
+	inactiveItemList: inactiveItemListStore,
 	maps: {},
 	locationDetail: LocationDetailStore.create({
 		id: randomId(),
@@ -69,9 +73,10 @@ appStore.maps.put(MapStore.create({
 }));
 // Create item models.
 const itemDataFactory = (item, index, itemList) => {
+	const id = randomId();
 	const isItemGroup = !!(item.group && item.items.length);
 	const itemData = {
-		id: randomId(),
+		id: id,
 		index: isUndefined(item.index) ? index : item.index,
 		name: item.name,
 		game: appStore.getGameByName(item.game),
@@ -131,6 +136,7 @@ locationsData.forEach(loc => {
 window.applySnapshot = applySnapshot;
 window.getSnapshot = getSnapshot;
 window.destroy = destroy;
+window.detach = detach;
 window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
 

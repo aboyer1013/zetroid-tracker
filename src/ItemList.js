@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import Item from 'Item';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { find } from 'lodash';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { find, } from 'lodash';
 import classNames from 'classnames';
 
 const ItemList = class ItemList extends Component {
@@ -34,9 +34,9 @@ const ItemList = class ItemList extends Component {
 			let itemElem = null;
 
 			if (item.group) {
-				itemElem = store.getItemsByGroup(item.group).map(subItem => <Item key={subItem.id} item={subItem} />);
+				itemElem = store.getItemsByGroup(item.group).map(subItem => <Item itemListStore={store} key={subItem.id} item={subItem} />);
 			} else {
-				itemElem = <Item key={item.id} item={item} />;
+				itemElem = <Item itemListStore={store} key={item.id} item={item} />;
 			}
 			if (!this.props.draggableEnabled) {
 				dragElems.push(
@@ -46,7 +46,7 @@ const ItemList = class ItemList extends Component {
 				);
 			} else {
 				dragElems.push(
-					<Draggable key={`draggable-${i}`} draggableId={`draggable-${i}`} index={i}>
+					<Draggable key={`draggable-${i}`} draggableId={`${this.props.itemListStore.droppableId}-draggable-${i}`} index={i}>
 						{(provided, snapshot) => {
 							return (
 								<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
@@ -68,18 +68,16 @@ const ItemList = class ItemList extends Component {
 			);
 		}
 		return (
-			<DragDropContext onDragEnd={this.onDragEndHandler}>
-				<Droppable droppableId={this.props.droppableId} direction={this.props.direction}>
-					{(provided, snapshot) => {
-						return (
-							<div ref={provided.innerRef} className={containerClasses}>
-								{dragElems}
-								{provided.placeholder}
-							</div>
-						);
-					}}
-				</Droppable>
-			</DragDropContext>
+			<Droppable droppableId={this.props.itemListStore.droppableId || 'droppable'} direction={this.props.direction}>
+				{(provided, snapshot) => {
+					return (
+						<div ref={provided.innerRef} className={containerClasses}>
+							{dragElems}
+							{provided.placeholder}
+						</div>
+					);
+				}}
+			</Droppable>
 		);
 	}
 };

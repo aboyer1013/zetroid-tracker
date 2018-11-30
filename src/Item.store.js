@@ -29,7 +29,7 @@ const ItemStore = types
 	.actions(self => {
 		const acquire = (newAcquired) => {
 			if (self.group) {
-				getRoot(self).itemList.getItemsByGroup(self.group).forEach(item => {
+				self.itemList.getItemsByGroup(self.group).forEach(item => {
 					item.acquired = false;
 				});
 			}
@@ -42,7 +42,7 @@ const ItemStore = types
 				return;
 			}
 			let shouldAcquire = true;
-			const subItems = getRoot(self).itemList.getItemsByGroup(self.group);
+			const subItems = self.itemList.getItemsByGroup(self.group);
 			let currentSubItem = find(subItems, { acquired: true });
 			if (!currentSubItem) {
 				currentSubItem = find(subItems, { isDefault: true });
