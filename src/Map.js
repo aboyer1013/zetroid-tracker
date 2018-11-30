@@ -211,6 +211,7 @@ const Map = class Map extends Component {
 			AVAILABLE: 'exclamation-circle',
 			COMPLETE: 'check-circle',
 			FAVORITE: 'star',
+			DUNGEON: 'skull'
 		}
 		const markerOptions = {
 			icon: 'times-circle',
@@ -233,6 +234,9 @@ const Map = class Map extends Component {
 		} else if (loc.isViewable) {
 			markerOptions.markerColor = markerColor.VIEWABLE;
 			markerOptions.icon = icon.VIEWABLE;
+		}
+		if (loc.isDungeon && !loc.isFavorite) {
+			markerOptions.icon = icon.DUNGEON;
 		}
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}

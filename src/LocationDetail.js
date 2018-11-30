@@ -14,6 +14,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
 		let notes = get(details, 'notes');
+		let isViewable = get(details, 'isViewable');
 		const favoriteClasses = classNames('button', 'is-outline', {
 			'has-text-warning': get(selectedLocation, 'isFavorite'),
 		});
@@ -62,12 +63,23 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		if (notes.length) {
 			notes = (<div className="details-notes"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
+		if (isViewable && !selectedLocation.isComplete) {
+			//0cb0de
+			isViewable = (
+				<div className="tags has-addons is-marginless" title="Even though this item is not available to acquire, you can see what the item is">
+					<span className="tag is-info icon"><i className="fas fa-info" /></span>
+					<span className="tag">viewable</span>
+				</div>
+			);
+		}
 		return (
 			<div className="is-background-white">
 				<div className={mapInfoClasses}>
 					<div className="details-container">
 						<div className="details-location">
-							{longName}
+							<div className="details-title">
+								{longName}
+							</div>
 							<div className="details-controls">
 								<div className="buttons">
 									<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
@@ -75,7 +87,13 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 									</button>
 									{progressionButton}
 								</div>
-								<span className="tag is-light">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
+								<div>
+									{isViewable}
+									<div className="tags has-addons is-marginless">
+										<span className="tag is-info icon"><i className="fas fa-info" /></span>
+										<span className="tag">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="details-requirements">

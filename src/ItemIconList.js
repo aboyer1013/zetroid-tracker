@@ -12,7 +12,7 @@ const ItemIconList = class ItemIconList extends Component {
 		}
 		if (this.props.items.length === 1) {
 			return (
-				<ItemIcon item={this.props.items[0]}>
+				<ItemIcon item={this.props.items[0]} checkAcquired>
 					<span>{this.props.items[0].longName}</span>
 				</ItemIcon>
 			);

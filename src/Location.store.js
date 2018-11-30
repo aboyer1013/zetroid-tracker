@@ -14,7 +14,8 @@ const LocationStore = types
 		numItems: 1,
 		isComplete: false,
 		isFavorite: false,
-		isViewable: false,
+		isDungeon: false,
+		viewableRequirements: types.array(types.string),
 	})
 	.views((self) => ({
 		get details() {
@@ -23,6 +24,7 @@ const LocationStore = types
 				itemRequirements: self.items,
 				notes: self.notes,
 				numItems: self.numItems,
+				isViewable: self.isViewable,
 			};
 		},
 		get items() {
@@ -48,7 +50,21 @@ const LocationStore = types
 			return false;
 		},
 		get isAvailable() {
-			return self.items.every(item => item && item.acquired);
+			return getRoot(self).items.every(item => item && item.acquired);
+		},
+		get isViewable() {
+			const reqs = self.viewableRequirements;
+			// FIXME This is kinda gross
+			if (reqs[0] === 'true') {
+				return true;
+			}
+			if (reqs[0] === 'false') {
+				return false;
+			}
+			debugger;
+			const reqItems = reqs.map(req => getRoot(self).getItemByName(req));
+
+			return reqItems.every(item => item.acquired);
 		},
 	}))
 	.actions((self) => {

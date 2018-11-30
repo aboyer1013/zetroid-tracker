@@ -13,7 +13,7 @@ import LocationStore from 'Location.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
 import * as serviceWorker from 'serviceWorker';
-import { isUndefined } from 'lodash';
+import { isUndefined, isArray } from 'lodash';
 
 const activeItemListStore = ItemListStore.create({
 	id: randomId(),
@@ -127,7 +127,8 @@ locationsData.forEach(loc => {
 		itemRequirements: loc.itemRequirements,
 		notes: loc.notes,
 		numItems: loc.numItems,
-		isViewable: !!loc.isViewable,
+		viewableRequirements: isArray(loc.viewableRequirements) ? loc.viewableRequirements : ['false'],
+		isDungeon: !!loc.isDungeon,
 	}));
 
 });
