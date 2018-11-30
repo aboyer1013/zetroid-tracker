@@ -128,7 +128,7 @@ const NavBar = class NavBar extends Component {
 						<div className="navbar-item">
 							<button onClick={this.props.store.flushLocalStorage} className="button is-danger">
 								<span className="icon"><i className="fas fa-broom" /></span>
-								<span>Flush local storage</span>
+								<span>Reset All</span>
 							</button>
 						</div>
 						<div className="navbar-item">

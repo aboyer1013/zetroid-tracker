@@ -49,7 +49,7 @@ const Map = class Map extends Component {
 		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
 			crs: L.CRS.Simple,
 			center: [-2128,2048],
-			zoom: -3,
+			zoom: this.props.mapStore.zoom,
 			maxBounds: [[0,0], [-4256, 4096]],
 			maxBoundsViscosity: 1,
 			attributionControl: false,
@@ -66,8 +66,6 @@ const Map = class Map extends Component {
 			nativeZooms: [0],
 			tileSize: L.point(256, 224),
 		}, this.props.tileLayerOptions)).addTo(this.map);
-
-		this.map.setZoom(-3);
 		this.resize();
 	}
 	initDraggable() {
@@ -85,6 +83,7 @@ const Map = class Map extends Component {
 		const self = this;
 
 		autorun(() => {
+			// Add the markers
 			self.props.locations.forEach((loc) => {
 				if (!self.markers[loc.id]) {
 					if (!loc.hidden) {
@@ -92,6 +91,7 @@ const Map = class Map extends Component {
 					}
 				}
 			});
+			// Hide markers marked as hidden or if the location does not exist.
 			Object.keys(self.markers).forEach((markerId) => {
 				const loc = self.props.mapStore.locations.get(markerId);
 
@@ -101,6 +101,7 @@ const Map = class Map extends Component {
 					self.removeMarker(markerId);
 				}
 			});
+			// Set the progression level for each marker (color coded)
 			self.props.locations.forEach((loc) => {
 				const marker = self.markers[loc.id];
 
@@ -110,10 +111,12 @@ const Map = class Map extends Component {
 				self.setProgression(self.markers[loc.id], loc);
 			});
 			self.draggable.enabled(!self.props.mapStore.isLocked);
+			// Sync GSAP Draggable x/y with the map store.
 			TweenLite.set(self.draggableRef.current, {x: self.props.mapStore.x, y: self.props.mapStore.y });
 			if (isNull(self.props.mapStore.x)) {
 				TweenLite.set(self.draggableRef.current, self.initPosition);
 			}
+			self.map.setZoom(self.props.mapStore.zoom);
 		});
 	}
 	resize() {
@@ -139,10 +142,22 @@ const Map = class Map extends Component {
 		return { x, y };
 	}
 	zoomIn() {
-		this.map.zoomIn();
+		const mapStore = this.props.mapStore;
+		const newZoom = mapStore.zoom + 1;
+
+		if (newZoom > 2) {
+			return;
+		}
+		mapStore.setZoom(newZoom);
 	}
 	zoomOut() {
-		this.map.zoomOut();
+		const mapStore = this.props.mapStore;
+		const newZoom = mapStore.zoom - 1;
+
+		if (newZoom < -3) {
+			return;
+		}
+		mapStore.setZoom(newZoom);
 	}
 	toggleSnap() {
 		this.setState({ toggleSnap: !this.state.toggleSnap });

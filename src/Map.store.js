@@ -12,7 +12,6 @@ const MapStore = types
 		locations: types.map(LocationStore),
 		selectedLocation: types.maybe(types.reference(LocationStore)),
 		locationDetail: types.reference(LocationDetailStore),
-		displayHelp: true,
 		isVisible: true,
 		tileLayerTemplate: types.string,
 		offset: 0,
@@ -21,6 +20,7 @@ const MapStore = types
 		containerWidth: types.optional(types.maybeNull(types.number), null),
 		containerHeight: types.optional(types.maybeNull(types.number), null),
 		isLocked: false,
+		zoom: -3,
 	})
 	.volatile(() => ({
 		component: {},
@@ -56,6 +56,9 @@ const MapStore = types
 		const setSelectedLocation = (event, marker, mapStoreLocation) => {
 			self.selectedLocation = mapStoreLocation;
 		};
+		const setZoom = (newZoom) => {
+			self.zoom = newZoom;
+		}
 
 		return {
 			setComponent,
@@ -66,6 +69,7 @@ const MapStore = types
 			setWidth,
 			setHeight,
 			setLocked,
+			setZoom,
 		};
 	})
 ;

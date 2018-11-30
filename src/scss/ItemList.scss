@@ -1,9 +1,10 @@
 .item-list-container {
-	display: flex;
+	//display: flex;
 	flex-wrap: wrap;
-	//display: grid;
-	grid-gap: 2.5px;
+	display: grid;
+	grid-gap: 5px;
 	grid-template-columns: repeat(auto-fit, 48px);
+	grid-template-rows: repeat(auto-fit, 48px);
 	&.is-horizontal {
 		width: 100%;
 	}
