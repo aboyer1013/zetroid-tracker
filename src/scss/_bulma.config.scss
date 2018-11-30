@@ -10,10 +10,10 @@ $zeldaOlive: #ffc800;
 
 $family-sans-serif: 'Roboto', sans-serif;
 $primary: $zeldaBlue;
-$success: $zeldaGreen;
-$warning: $zeldaOlive;
+$success: #72b435;
+$warning: #fea041;
 //$dark: $zeldaSlateBlue;
-$danger: #bf2e2f;
+$danger: #e14633;
 $light: $zeldaTan;
 $box-radius: 0;
 @import '../../node_modules/bulma/bulma';

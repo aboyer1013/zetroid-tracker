@@ -14,6 +14,7 @@ const LocationStore = types
 		numItems: 1,
 		isComplete: false,
 		isFavorite: false,
+		isViewable: false,
 	})
 	.views((self) => ({
 		get details() {

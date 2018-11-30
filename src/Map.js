@@ -177,9 +177,16 @@ const Map = class Map extends Component {
 	addMarker(loc) {
 		const self = this;
 		const theLocation = this.props.mapStore.locations.get(loc.id);
+		const markerIcon = L.AwesomeMarkers.icon({
+			icon: 'coffee',
+			markerColor: 'red',
+			prefix: 'fa',
+			className: 'awesome-marker icon',
+			extraClasses: 'fas'
+		});
 
 		this.markers[loc.id] = L
-			.marker(loc.coords)
+			.marker(loc.coords, { icon: markerIcon })
 			.bindTooltip(theLocation.longName)
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
@@ -191,26 +198,43 @@ const Map = class Map extends Component {
 		this.setProgression(this.markers[loc.id], loc);
 	}
 	setProgression(marker, loc) {
-		const typeClasses = {
-			UNAVAILABLE: 'leaflet-marker-icon-UNAVAILABLE',
-			AVAILABLE: 'leaflet-marker-icon-AVAILABLE',
-			COMPLETE: 'leaflet-marker-icon-COMPLETE',
-			FAVORITE: 'leaflet-marker-icon-HIGHLIGHT',
+		const markerColor = {
+			VIEWABLE: 'blue',
+			UNAVAILABLE: 'red',
+			AVAILABLE: 'green',
+			COMPLETE: 'black',
+			FAVORITE: 'orange',
+		};
+		const icon = {
+			VIEWABLE: 'question-circle',
+			UNAVAILABLE: 'times-circle',
+			AVAILABLE: 'exclamation-circle',
+			COMPLETE: 'check-circle',
+			FAVORITE: 'star',
+		}
+		const markerOptions = {
+			icon: 'times-circle',
+			markerColor: 'red',
+			prefix: 'fa',
+			className: 'awesome-marker icon',
+			extraClasses: 'fas',
+			tooltipAnchor: L.point(20,-25),
 		};
 
-		Object.keys(typeClasses).forEach(item => {
-			marker._icon.classList.remove(typeClasses[item]);
-		});
-		let classToUse = typeClasses['UNAVAILABLE'];
-
 		if (loc.isFavorite) {
-			classToUse = typeClasses.FAVORITE;
+			markerOptions.markerColor = markerColor.FAVORITE;
+			markerOptions.icon = icon.FAVORITE;
 		} else if (loc.isComplete) {
-			classToUse = typeClasses.COMPLETE;
+			markerOptions.markerColor = markerColor.COMPLETE;
+			markerOptions.icon = icon.COMPLETE;
 		} else if (loc.isAvailable) {
-			classToUse = typeClasses.AVAILABLE;
+			markerOptions.markerColor = markerColor.AVAILABLE;
+			markerOptions.icon = icon.AVAILABLE;
+		} else if (loc.isViewable) {
+			markerOptions.markerColor = markerColor.VIEWABLE;
+			markerOptions.icon = icon.VIEWABLE;
 		}
-		marker._icon.classList.add(classToUse);
+		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}
 	onResizeHandler(event, data) {
 		const { width: newWidth, height: newHeight } = data.size;

@@ -61,6 +61,7 @@ const locationsData = [
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
 	    itemRequirements: ['agahnim', 'boots'],
+		isViewable: true,
 	},
 
 ];

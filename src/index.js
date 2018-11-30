@@ -127,6 +127,7 @@ locationsData.forEach(loc => {
 		itemRequirements: loc.itemRequirements,
 		notes: loc.notes,
 		numItems: loc.numItems,
+		isViewable: !!loc.isViewable,
 	}));
 
 });
