@@ -24,6 +24,26 @@
 		width: 100%;
 	}
 }
+.item {
+	position: relative;
+	&[data-qty='0']::after {
+		display: none;
+	}
+	&::after {
+		content: attr(data-qty);
+		position: absolute;
+		color: $black;
+		font-size: 14px;
+		bottom: 6px;
+		right: 0;
+		background: #eadba2;
+		padding: 1px;
+		line-height: 0.8;
+		font-weight: bold;
+		outline: 1px solid $white-bis;
+		border: 1px solid $black;
+	}
+}
 .item-container {
 	width: 48px;
 	height: 48px;

@@ -18,6 +18,9 @@ const ItemIconList = class ItemIconList extends Component {
 		const result = [];
 
 		this.props.items.forEach((item, i) => {
+			if (!item) {
+				return;
+			}
 			let iconsClasses = classNames('item-icon', {'is-not-acquired': !item.acquired});
 			let iconTextClasses = classNames('item-icon-name is-size-7', {'is-not-acquired': !item.acquired});
 

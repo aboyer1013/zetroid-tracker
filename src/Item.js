@@ -3,6 +3,11 @@ import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
 
 const Item = class Item extends Component {
+	static get defaultProps() {
+		return {
+			isReadOnly: false,
+		};
+	}
 	render() {
 		const { itemListStore } = this.props;
 		const item = this.props.item;
@@ -14,7 +19,15 @@ const Item = class Item extends Component {
 		});
 
 		return (
-			<div onClick={item.activateNext} key={item.id} className={itemClasses}>
+			<div
+				data-qty={item.qty}
+				onClick={() => {
+					if (!this.props.isReadOnly) {
+						item.activateNext();
+					}
+				}}
+				key={item.id}
+				className={itemClasses}>
 				<img src={item.imageSrc} alt={item.longName} title={item.longName} />
 			</div>
 		);

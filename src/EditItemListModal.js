@@ -78,6 +78,7 @@ class EditItemListModal extends Component {
 										itemListStore={itemListStore}
 										items={itemListStore.sortedItems}
 										direction={itemListStore.direction}
+										isReadOnly={true}
 										draggableEnabled={true}
 									/>
 								</div>
@@ -87,6 +88,7 @@ class EditItemListModal extends Component {
 									<ItemList
 										itemListStore={store.inactiveItemList}
 										items={store.inactiveItemList.sortedItems}
+										isReadOnly={true}
 										direction={itemListStore.direction}
 										draggableEnabled={true}
 									/>

@@ -18,6 +18,7 @@ const ItemStore = types
 		groupIndex: types.maybeNull(types.integer),
 		game: types.reference(GameStore),
 		acquired: false,
+		qty: types.optional(types.integer, 0),
 		maxQty: types.optional(types.integer, 1),
 		isDefault: false,
 	})
@@ -37,13 +38,21 @@ const ItemStore = types
 		};
 		// Toggles item acquisition if not in a group, otherwise, acquires the next item in the group
 		const activateNext = () => {
+			// debugger;
+			if (self.maxQty > 1) {
+				self.activateNextQty();
+				return;
+			}
 			if (!self.group) {
 				self.toggleAcquisition();
 				return;
 			}
+
+
 			let shouldAcquire = true;
 			const subItems = self.itemList.getItemsByGroup(self.group);
 			let currentSubItem = find(subItems, { acquired: true });
+
 			if (!currentSubItem) {
 				currentSubItem = find(subItems, { isDefault: true });
 			}
@@ -72,7 +81,21 @@ const ItemStore = types
 		};
 		const setItemList = newItemList => {
 			self.itemList = newItemList;
-		}
+		};
+		const activateNextQty = () => {
+			let nextQty = self.qty + 1;
+
+			if (nextQty > self.maxQty) {
+				self.acquire(false);
+				self.setQty(0);
+			} else {
+				self.acquire(true);
+				self.setQty(nextQty);
+			}
+		};
+		const setQty = (newQty) => {
+			self.qty = newQty;
+		};
 
 		return {
 			acquire,
@@ -80,6 +103,8 @@ const ItemStore = types
 			setIndex,
 			toggleAcquisition,
 			setItemList,
+			activateNextQty,
+			setQty,
 		};
 	})
 ;

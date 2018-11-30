@@ -29,6 +29,14 @@ const locationsData = [
 		map: 'zelda3-dw',
 		itemRequirements: ['boots', 'hookshot'],
 	},
+	// {
+	//     name: 'pedestal',
+	//     longName: 'Master Sword Pedestal',
+	//     coords: [-100,85],
+	//     game: 'zelda3',
+	//     map: 'zelda3-lw',
+	//     itemRequirements: ['', ],
+	// },
 ];
 
 export {
