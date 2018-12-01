@@ -28,12 +28,26 @@ const inactiveItemListStore = ItemListStore.create({
 	sortOrder: [],
 	droppableId: 'inactive-itemList-droppable',
 });
+const activeBossItemListStore = ItemListStore.create({
+	id: randomId(),
+	items: [],
+	sortOrder: [],
+	droppableId: 'active-bossItemList-droppable',
+});
+const inactiveBossItemListStore = ItemListStore.create({
+	id: randomId(),
+	items: [],
+	sortOrder: [],
+	droppableId: 'inactive-bossItemList-droppable',
+});
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
 	shouldSync: false,
 	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
+	activeBossItemList: activeBossItemListStore,
+	inactiveBossItemList: inactiveBossItemListStore,
 	maps: {},
 	locationDetail: LocationDetailStore.create({
 		id: randomId(),
@@ -83,12 +97,14 @@ const itemDataFactory = (item, index, itemList) => {
 		game: appStore.getGameByName(item.game),
 		maxQty: item.maxQty || 1,
 		itemList,
+		type: item.type,
 	}
 
 	if (isItemGroup) {
 		itemData.isDefault = item.isDefault || false;
 		itemData.group = item.group;
 		itemData.groupIndex = item.groupIndex || null;
+		itemData.type = item.type;
 	} else {
 		itemData.longName = item.longName;
 		itemData.image = item.image
@@ -105,14 +121,22 @@ const itemDataFactory = (item, index, itemList) => {
 	}
 	return itemData;
 };
-itemsData.concat(bossData)
+itemsData
 	.filter(item => item.game === appStore.selectedGame.name)
-	// .filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
 	.forEach((item, i) => {
 		const itemData = itemDataFactory(item, i, appStore.activeItemList);
 
 		appStore.activeItemList.sortOrder.push(i);
 		appStore.activeItemList.items.push(ItemStore.create(itemData));
+	})
+;
+bossData
+	.filter(item => item.game === appStore.selectedGame.name)
+	.forEach((item, i) => {
+		const itemData = itemDataFactory(item, i, appStore.activeBossItemList);
+
+		appStore.activeBossItemList.sortOrder.push(i);
+		appStore.activeBossItemList.items.push(ItemStore.create(itemData));
 	})
 ;
 // Create location models.
@@ -129,7 +153,6 @@ locationsData.forEach(loc => {
 		numItems: loc.numItems,
 		itemRequirements: loc.itemRequirements,
 		viewableRequirements: loc.viewableRequirements,
-		dungeonRequirements: loc.dungeonRequirements,
 		isDungeon: !!loc.isDungeon,
 	}));
 

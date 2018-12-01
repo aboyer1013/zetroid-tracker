@@ -15,9 +15,26 @@ const LocationStore = types
 		isComplete: false,
 		isFavorite: false,
 		isDungeon: false,
-		dungeonRequirements: types.optional(types.array(types.string), []),
-		viewableRequirements: types.optional(types.array(types.string), []),
 	})
+	.volatile(self => ({
+		// All the logic to determine if the location is viewable goes here
+		viewableRequirements: {
+			desertpalace: () => {
+				const book = getRoot(self).getItemByName('book');
+
+				if (book.acquired) {
+					return true;
+				}
+				const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
+				return items.every(item => item && item.acquired);
+			},
+		},
+		dungeonRequirements: {
+			desertpalace: () => {
+
+			},
+		}
+	}))
 	.views((self) => ({
 		get details() {
 			return {
@@ -57,14 +74,10 @@ const LocationStore = types
 			return self.items.every(item => item && item.acquired);
 		},
 		get isViewable() {
-			const reqs = self.viewableRequirements;
-
-			if (!reqs.length) {
+			if (!self.viewableRequirements[self.name]) {
 				return false;
 			}
-			const reqItems = reqs.map(req => getRoot(self).getItemByName(req));
-
-			return reqItems.every(item => item.acquired);
+			return self.viewableRequirements[self.name]();
 		},
 		get isDungeonComplete() {
 			if (!self.dungeonRequirements.length) {

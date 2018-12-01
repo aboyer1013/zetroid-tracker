@@ -71,6 +71,12 @@ class App extends Component {
 							direction={this.props.store.activeItemList.direction}
 							draggableEnabled={false}
 						/>
+						<ItemList
+							itemListStore={this.props.store.activeBossItemList}
+							items={this.props.store.activeBossItemList.sortedItems}
+							direction={this.props.store.activeBossItemList.direction}
+							draggableEnabled={false}
+						/>
 					</div>
 					<Modal>
 						{modal}

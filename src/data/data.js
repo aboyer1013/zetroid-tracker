@@ -5,30 +5,6 @@ const gamesData = [
 	{ name: 'metroid3', longName: 'Super Metroid' },
 ];
 const locationsData = [
-	// {
-	// 	name: 'linkhouse',
-	// 	longName: 'Link’s House',
-	// 	coords: [-2825,2240],
-	// 	game: 'zelda3',
-	// 	map: 'zelda3-lw',
-	// 	itemRequirements: ['bomb', 'somaria', 'bottle', 'bow', 'net', 'golden-sword', 'cape', 'hammer'],
-	// },
-	// {
-	// 	name: 'hyrule-castle',
-	// 	longName: 'Hyrule Castle',
-	// 	coords: [-1800,2050],
-	// 	game: 'zelda3',
-	// 	map: 'zelda3-lw',
-	// 	itemRequirements: ['boots', 'hookshot'],
-	// },
-	// {
-	// 	name: 'pyramid',
-	// 	longName: 'Pyramid',
-	// 	coords: [-1840,2375],
-	// 	game: 'zelda3',
-	// 	map: 'zelda3-dw',
-	// 	itemRequirements: ['boots', 'hookshot'],
-	// },
 	{
 	    coords: [-205,170],
 	    name: 'pedestal',
@@ -155,9 +131,15 @@ const locationsData = [
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
 	    itemRequirements: ['book', 'boots'],
-		viewableRequirements: ['book'],
 		isDungeon: true,
-		dungeonRequirements: ['lanmolas'],
+	},
+	{
+	    coords: [-3690,100],
+	    name: 'desertwledge',
+	    longName: 'Desert West Ledge',
+	    game: 'zelda3',
+	    map: 'zelda3-lw',
+	    // itemRequirements: ['book|mirror', ],
 	},
 
 ];
