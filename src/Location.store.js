@@ -15,7 +15,8 @@ const LocationStore = types
 		isComplete: false,
 		isFavorite: false,
 		isDungeon: false,
-		viewableRequirements: types.array(types.string),
+		dungeonRequirements: types.optional(types.array(types.string), []),
+		viewableRequirements: types.optional(types.array(types.string), []),
 	})
 	.views((self) => ({
 		get details() {
@@ -50,22 +51,29 @@ const LocationStore = types
 			return false;
 		},
 		get isAvailable() {
-			return getRoot(self).items.every(item => item && item.acquired);
+			if (!self.items.length) {
+				return true;
+			}
+			return self.items.every(item => item && item.acquired);
 		},
 		get isViewable() {
 			const reqs = self.viewableRequirements;
-			// FIXME This is kinda gross
-			if (reqs[0] === 'true') {
-				return true;
-			}
-			if (reqs[0] === 'false') {
+
+			if (!reqs.length) {
 				return false;
 			}
-			debugger;
 			const reqItems = reqs.map(req => getRoot(self).getItemByName(req));
 
 			return reqItems.every(item => item.acquired);
 		},
+		get isDungeonComplete() {
+			if (!self.dungeonRequirements.length) {
+				return false;
+			}
+			const dungeonReqs = self.dungeonRequirements.map(req => getRoot(self).getItemByName(req));
+
+			return dungeonReqs.every(item => item && item.acquired);
+		}
 	}))
 	.actions((self) => {
 		const setFavorite = (newFavorite) => {

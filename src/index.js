@@ -9,6 +9,7 @@ import GameStore from 'Game.store';
 import { gamesData, locationsData } from 'data/data';
 import ItemStore from 'Item.store';
 import itemsData from 'data/items';
+import bossData from 'data/bosses';
 import LocationStore from 'Location.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
@@ -104,7 +105,7 @@ const itemDataFactory = (item, index, itemList) => {
 	}
 	return itemData;
 };
-itemsData
+itemsData.concat(bossData)
 	.filter(item => item.game === appStore.selectedGame.name)
 	// .filter(item => item.group === 'mp-upgrade' || item.name === 'hookshot' || item.maxQty > 1)
 	.forEach((item, i) => {
@@ -124,10 +125,11 @@ locationsData.forEach(loc => {
 		longName: loc.longName,
 		coords: loc.coords,
 		game: appStore.getGameByName(loc.game),
-		itemRequirements: loc.itemRequirements,
 		notes: loc.notes,
 		numItems: loc.numItems,
-		viewableRequirements: isArray(loc.viewableRequirements) ? loc.viewableRequirements : ['false'],
+		itemRequirements: loc.itemRequirements,
+		viewableRequirements: loc.viewableRequirements,
+		dungeonRequirements: loc.dungeonRequirements,
 		isDungeon: !!loc.isDungeon,
 	}));
 

@@ -55,6 +55,7 @@ const Map = class Map extends Component {
 			attributionControl: false,
 			zoomControl: false,
 		}, this.props.mapOptions));
+		this.map.on('zoomend', () => this.map.setZoom(this.map.getZoom()));
 		// For debugging.
 		window[camelCase(this.props.mapStore.name)] = this.map;
 		this.props.locations.forEach(loc => {
@@ -66,6 +67,7 @@ const Map = class Map extends Component {
 			nativeZooms: [0],
 			tileSize: L.point(256, 224),
 		}, this.props.tileLayerOptions)).addTo(this.map);
+		this.map.setZoom(this.props.mapStore.zoom);
 		this.resize();
 	}
 	initDraggable() {
@@ -116,7 +118,6 @@ const Map = class Map extends Component {
 			if (isNull(self.props.mapStore.x)) {
 				TweenLite.set(self.draggableRef.current, self.initPosition);
 			}
-			self.map.setZoom(self.props.mapStore.zoom);
 		});
 	}
 	resize() {
@@ -135,29 +136,17 @@ const Map = class Map extends Component {
 	get initPosition() {
 		const windowRect = document.querySelector('body').getBoundingClientRect();
 		const width = this.state.containerWidth;
-		const x = (windowRect.width / 2) - (width / 2) + this.props.mapStore.offset;
-		const y = this.props.mapStore.offset + 50;
+		const x = Math.round((windowRect.width / 2) - (width / 2) + this.props.mapStore.offset);
+		const y = Math.round(this.props.mapStore.offset + 250);
 
 		this.props.mapStore.setPos({ x, y });
 		return { x, y };
 	}
 	zoomIn() {
-		const mapStore = this.props.mapStore;
-		const newZoom = mapStore.zoom + 1;
-
-		if (newZoom > 2) {
-			return;
-		}
-		mapStore.setZoom(newZoom);
+		this.map.zoomIn();
 	}
 	zoomOut() {
-		const mapStore = this.props.mapStore;
-		const newZoom = mapStore.zoom - 1;
-
-		if (newZoom < -3) {
-			return;
-		}
-		mapStore.setZoom(newZoom);
+		this.map.zoomOut();
 	}
 	toggleSnap() {
 		this.setState({ toggleSnap: !this.state.toggleSnap });
@@ -237,6 +226,9 @@ const Map = class Map extends Component {
 		}
 		if (loc.isDungeon && !loc.isFavorite) {
 			markerOptions.icon = icon.DUNGEON;
+			if (loc.isDungeonComplete) {
+				markerOptions.icon = icon.COMPLETE;
+			}
 		}
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}

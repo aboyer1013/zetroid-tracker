@@ -61,7 +61,6 @@ const locationsData = [
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
 	    itemRequirements: ['agahnim', 'boots'],
-		viewableRequirements: ['true'],
 	},
 	{
 	    coords: [-1745,95],
@@ -132,7 +131,6 @@ const locationsData = [
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
 	    itemRequirements: ['boots'],
-		viewableRequirements: ['true'],
 	},
 	{
 	    coords: [-2710,1210],
@@ -159,6 +157,7 @@ const locationsData = [
 	    itemRequirements: ['book', 'boots'],
 		viewableRequirements: ['book'],
 		isDungeon: true,
+		dungeonRequirements: ['lanmolas'],
 	},
 
 ];

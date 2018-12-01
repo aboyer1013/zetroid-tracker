@@ -16,7 +16,6 @@ const itemsData = [
 	// 		{ name: 'agahnim-dead',   longName: 'Agahnim Defeated',  game: 'zelda3', image: 'agahnim1', group: 'agahnim', groupIndex: 1, },
 	// 	],
 	// },
-	{ name: 'agahnim',  longName: 'Agahnim',           game: 'zelda3', image: 'agahnim0', },
 	// { name: 'arrow-upgrade',  longName: 'Arrow Upgrade',     game: 'zelda3', image: '', },
 	{
 		group: 'armor',
