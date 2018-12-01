@@ -13,6 +13,7 @@ import bossData from 'data/bosses';
 import LocationStore from 'Location.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
+import LayoutStore from 'Layout.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined, isArray } from 'lodash';
 
@@ -53,6 +54,9 @@ const appStore = AppStore.create({
 		id: randomId(),
 		selectedLocation: null,
 	}),
+	layout: LayoutStore.create({
+		id: randomId(),
+	})
 });
 
 unprotect(appStore);

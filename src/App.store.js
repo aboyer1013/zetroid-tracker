@@ -4,6 +4,7 @@ import ItemListStore from 'ItemList.store';
 import MapStore from 'Map.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListUtil from 'ItemListUtil';
+import LayoutStore from 'Layout.store';
 import { find } from 'lodash';
 
 const AppStore = types.compose(ItemListUtil, types.model({
@@ -20,6 +21,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
 		hideCompleted: false,
 		shouldSync: true,
+		layout: LayoutStore,
 	})
 	.views((self) => ({
 		getGameByName: (name) => {

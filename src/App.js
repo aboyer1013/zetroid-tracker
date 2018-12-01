@@ -8,14 +8,14 @@ import FileExportModal from 'FileExportModal';
 import HelpModal from 'HelpModal';
 import EditItemListModal from 'EditItemListModal';
 import { randomId } from './util';
+import { find, get } from 'lodash';
 import 'scss/App.scss';
 import LocationDetail from 'LocationDetail';
 import ItemList from 'ItemList';
+import Layout from 'Layout';
 
 class App extends Component {
-	// constructor() {
-	// 	super();
-	// }
+
 
 	componentDidMount() {
 	}
@@ -35,6 +35,28 @@ class App extends Component {
 			)
 		});
 		return maps;
+	}
+	layoutFactory(node) {
+		const component = node.getComponent();
+		const config = node.getConfig();
+
+		if (component === 'Map' && get(config, 'mapName')) {
+			const map = find([...this.props.store.maps.values()], { name: config.mapName });
+			if (map) {
+				return (
+					<Map
+						mapStore={map}
+						locations={[...map.locations.values()]}
+						id={randomId()}
+						tileLayerTemplate={map.tileLayerTemplate}
+						layoutNode={node}
+					/>
+				);
+			}
+		}
+		if (component === 'LocationDetail') {
+			return <LocationDetail />;
+		}
 	}
 	render() {
 		const store = this.props.store;
@@ -62,7 +84,11 @@ class App extends Component {
 			<Provider store={store}>
 				<div className="main-container">
 					<NavBar />
-					<div id="main" className="main">
+					<Modal>
+						{modal}
+					</Modal>
+					<Layout factory={this.layoutFactory.bind(this)} />
+					{/*<div id="main" className="main">
 						{this.generateMaps()}
 						<LocationDetail />
 						<ItemList
@@ -77,10 +103,8 @@ class App extends Component {
 							direction={this.props.store.activeBossItemList.direction}
 							draggableEnabled={false}
 						/>
-					</div>
-					<Modal>
-						{modal}
-					</Modal>
+					</div>*/}
+
 					{/*<Map
 						mapStore={this.props.store.getMapByName('zelda3-dw')}
 						id={randomId()}
@@ -106,5 +130,6 @@ class App extends Component {
 		);
 	}
 }
+
 
 export default observer(App);

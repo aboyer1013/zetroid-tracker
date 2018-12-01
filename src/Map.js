@@ -1,17 +1,14 @@
 import React, { Component, createRef } from 'react';
 import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import Draggable from 'gsap/Draggable';
-import TweenLite from 'gsap/TweenLite';
 import classNames from 'classnames';
-import { debounce, camelCase, isNull } from 'lodash';
-import { ResizableBox } from 'react-resizable';
+import { debounce, camelCase, isNull, pick } from 'lodash';
 import '../node_modules/react-resizable/css/styles.css';
 
 const L = window.L;
 const Map = class Map extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.mapRef = createRef();
 		this.draggableRef = createRef();
 		this.draggableTarget = createRef();
@@ -23,11 +20,14 @@ const Map = class Map extends Component {
 		this.resetToCenter = this.resetToCenter.bind(this);
 		this.addMarker = this.addMarker.bind(this);
 		this.onResizeHandler = this.onResizeHandler.bind(this);
+		this.props.layoutNode.setEventListener('resize', function (data) {
+			this.onResizeHandler(null, {size: pick(data.rect, ['width', 'height'])});
+		}.bind(this));
 	}
 
 	markers = {};
-	offsetWidth = 53;
-	offsetHeight = 108;
+	offsetWidth = 0;
+	offsetHeight = 0;
 	fitWidth = 590;
 	fitHeight = 680;
 	// TODO take this out of state
@@ -42,7 +42,6 @@ const Map = class Map extends Component {
 		// I may not need this.
 		this.props.mapStore.setComponent(this);
 		this.initMap();
-		this.initDraggable();
 		this.initReactions();
 	}
 	initMap() {
@@ -69,17 +68,6 @@ const Map = class Map extends Component {
 		}, this.props.tileLayerOptions)).addTo(this.map);
 		this.map.setZoom(this.props.mapStore.zoom);
 		this.resize();
-	}
-	initDraggable() {
-		this.draggable = new Draggable(this.draggableRef.current, {
-			trigger: this.draggableTarget.current,
-			bounds: document.querySelector('#main'),
-			// No subpixel dragging.
-			liveSnap: (value) => Math.round(value / 1),
-			onDragEnd: () => {
-				this.props.mapStore.setPos({ x: this.draggable.endX, y: this.draggable.endY, });
-			}
-		});
 	}
 	initReactions() {
 		const self = this;
@@ -112,12 +100,6 @@ const Map = class Map extends Component {
 				}
 				self.setProgression(self.markers[loc.id], loc);
 			});
-			self.draggable.enabled(!self.props.mapStore.isLocked);
-			// Sync GSAP Draggable x/y with the map store.
-			TweenLite.set(self.draggableRef.current, {x: self.props.mapStore.x, y: self.props.mapStore.y });
-			if (isNull(self.props.mapStore.x)) {
-				TweenLite.set(self.draggableRef.current, self.initPosition);
-			}
 		});
 	}
 	resize() {
@@ -132,15 +114,6 @@ const Map = class Map extends Component {
 		this.mapRef.current.style.width = this.state.mapWidth + 'px';
 		this.mapRef.current.style.height = this.state.mapHeight + 'px';
 		this.map.invalidateSize();
-	}
-	get initPosition() {
-		const windowRect = document.querySelector('body').getBoundingClientRect();
-		const width = this.state.containerWidth;
-		const x = Math.round((windowRect.width / 2) - (width / 2) + this.props.mapStore.offset);
-		const y = Math.round(this.props.mapStore.offset + 250);
-
-		this.props.mapStore.setPos({ x, y });
-		return { x, y };
 	}
 	zoomIn() {
 		this.map.zoomIn();
@@ -257,43 +230,33 @@ const Map = class Map extends Component {
 		});
 		const containerClasses = classNames('message-container', {'is-off-screen': !this.props.mapStore.isVisible})
 
+		return <div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />;
 		return (
-			<div ref={this.draggableRef} className={containerClasses}>
-				<ResizableBox
-					width={this.state.containerWidth}
-					height={this.state.containerHeight}
-					minConstraints={[256, 256]}
-					onResizeStop={this.onResizeHandler}
-				>
-					<div
-						style={{
-							width: '100%',
-							height: '100%',
-						}}
-						className="message is-primary map-container has-background-grey-darker is-unselectable"
-					>
-						<header className="message-header" ref={this.draggableTarget}>
-							<div className="buttons has-addons is-marginless">
-								<button onClick={this.zoomOut} className="button">
-									<span className="icon"><i className="fas fa-search-minus" /></span>
-								</button>
-								<button onClick={this.zoomIn} className="button">
-									<span className="icon"><i className="fas fa-search-plus" /></span>
-								</button>
+				<div className={containerClasses}>
+						<div
+							className="message is-primary map-container has-background-grey-darker is-unselectable"
+						>
+							<header className="message-header" ref={this.draggableTarget}>
+								<div className="buttons has-addons is-marginless">
+									<button onClick={this.zoomOut} className="button">
+										<span className="icon"><i className="fas fa-search-minus" /></span>
+									</button>
+									<button onClick={this.zoomIn} className="button">
+										<span className="icon"><i className="fas fa-search-plus" /></span>
+									</button>
+								</div>
+								<div className="buttons has-addons is-marginless">
+									<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
+										<span className="icon"><i className="fas fa-compress" /></span>
+									</button>
+									<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
+								</div>
+							</header>
+							<div className="message-body map-body">
+								<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
 							</div>
-							<div className="buttons has-addons is-marginless">
-								<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
-									<span className="icon"><i className="fas fa-compress" /></span>
-								</button>
-								<button onClick={this.toggleWindowLock} className="button"><span className="icon"><i className={lockClasses} /></span></button>
-							</div>
-						</header>
-						<div className="message-body map-body">
-							<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
 						</div>
-					</div>
-				</ResizableBox>
-			</div>
+				</div>
 		);
 	}
 };
