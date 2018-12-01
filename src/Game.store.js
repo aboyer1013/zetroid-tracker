@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 
-const Game = types
+const GameStore = types
 	.model({
 		id: types.identifier,
 		name: types.string,
@@ -18,4 +18,4 @@ const Game = types
 	})
 ;
 
-export default Game;
+export default GameStore;

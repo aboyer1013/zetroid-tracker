@@ -12,13 +12,10 @@ const MapStore = types
 		locations: types.map(LocationStore),
 		selectedLocation: types.maybe(types.reference(LocationStore)),
 		locationDetail: types.reference(LocationDetailStore),
-		isVisible: true,
 		tileLayerTemplate: types.string,
 		offset: 0,
-		x: types.optional(types.maybeNull(types.number), null),
-		y: types.optional(types.maybeNull(types.number), null),
-		containerWidth: types.optional(types.maybeNull(types.number), null),
-		containerHeight: types.optional(types.maybeNull(types.number), null),
+		containerWidth: types.optional(types.number, 0),
+		containerHeight: types.optional(types.number, 0),
 		isLocked: false,
 		zoom: -3,
 	})
@@ -34,25 +31,12 @@ const MapStore = types
 		const setComponent = (component) => {
 			self.component = component;
 		};
-		const showHelp = () => {
-			self.displayHelp = true;
-		}
-		const setMapVisibility = (isVisible) => {
-			self.isVisible = isVisible;
-		}
-		const setPos = (newPos) => {
-			self.x = newPos.x;
-			self.y = newPos.y;
-		}
 		const setWidth = (newWidth) => {
 			self.containerWidth = newWidth;
 		}
 		const setHeight = (newHeight) => {
 			self.containerHeight = newHeight;
 		}
-		const setLocked = (isLocked) => {
-			self.isLocked = isLocked;
-		};
 		const setSelectedLocation = (event, marker, mapStoreLocation) => {
 			self.selectedLocation = mapStoreLocation;
 		};
@@ -63,12 +47,8 @@ const MapStore = types
 		return {
 			setComponent,
 			setSelectedLocation,
-			showHelp,
-			setMapVisibility,
-			setPos,
 			setWidth,
 			setHeight,
-			setLocked,
 			setZoom,
 		};
 	})

@@ -11,17 +11,19 @@ const Layout = class Layout extends Component {
 		}
 		this.layoutRef = createRef();
 	}
-	componentDidMount() {
-		// debugger;
-	}
-
 	render() {
+		const self = this;
+
 		return (
 			<div className="layout-container">
 				<FlexLayout.Layout
 					ref={this.layoutRef}
 					model={this.state.model}
 					factory={this.props.factory}
+					onModelChange={model => {
+						debugger;
+						self.props.store.layout.saveToLocalStorage(model.toJson())
+					}}
 				/>
 			</div>
 		);

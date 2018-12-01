@@ -44,7 +44,7 @@ const inactiveBossItemListStore = ItemListStore.create({
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	shouldSync: false,
+	// shouldSync: false,
 	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
 	activeBossItemList: activeBossItemListStore,
@@ -174,12 +174,16 @@ window.inactiveItemList = appStore.inactiveItemList;
 
 if (appStore.shouldSync) {
 	onSnapshot(appStore, model => {
-		if (window.localStorage) {
-			window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model))
+		try {
+			window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model));
+		} catch (error) {
+			console.error('LocalStorage is not supported or there was an error saving to it. Cannot save application state.', error);
 		}
 	});
-	if (window.localStorage && window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)) {
+	try {
 		applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
+	} catch (error) {
+		console.error('LocalStorage is not supported or there was an error loading it. Cannot load application state.', error);
 	}
 }
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));

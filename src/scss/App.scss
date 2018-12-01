@@ -96,8 +96,8 @@ button {
 	grid-gap: 20px 0;
 }
 .map-container {
-	//min-width: 565px;
-	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 .map-body {
 	height: calc(100% - 70px);
@@ -119,7 +119,6 @@ button {
 	}
 }
 .map {
-	//width: 100%;
 	height: 100%
 }
 .react-resizable-handle {
