@@ -21,7 +21,6 @@ const Layout = class Layout extends Component {
 					model={this.state.model}
 					factory={this.props.factory}
 					onModelChange={model => {
-						debugger;
 						self.props.store.layout.saveToLocalStorage(model.toJson())
 					}}
 				/>

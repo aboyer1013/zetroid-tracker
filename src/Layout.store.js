@@ -1,8 +1,31 @@
 import { types, getRoot } from 'mobx-state-tree';
+import { pick } from 'lodash';
 
 const LayoutStore = types
 	.model({
 		id: types.identifier,
+		splitterSize: 16,
+		enableEdgeDock: true,
+		tabEnableClose: true,
+		tabEnableDrag: true,
+		tabEnableRename: true,
+		tabClassName: types.maybeNull(types.string),
+		tabIcon: types.maybeNull(types.string),
+		tabEnableRenderOnDemand: true,
+		tabDragSpeed: 0.3,
+		tabSetEnableDeleteWhenEmpty: true,
+		tabSetEnableDrop: true,
+		tabSetEnableDrag: true,
+		tabSetEnableDivide: true,
+		tabSetEnableMaximize: true,
+		tabSetClassNameTabStrip: types.maybeNull(types.string),
+		tabSetClassNameHeader: types.maybeNull(types.string),
+		tabSetEnableTabStrip: true,
+		tabSetHeaderHeight: 20,
+		tabSetTabStripHeight: 20,
+		borderBarSize: 25,
+		borderEnableDrop: true,
+		borderClassName: types.maybeNull(types.string),
 	})
 	.volatile(self => ({
 		layoutPresets: {
@@ -125,6 +148,34 @@ const LayoutStore = types
 		}
 	}))
 	.views(self => ({
+		get globalConfig() {
+			const attrs = [
+				'splitterSize',
+				'enableEdgeDock',
+				'tabEnableClose',
+				'tabEnableDrag',
+				'tabEnableRename',
+				'tabClassName',
+				'tabIcon',
+				'tabEnableRenderOnDemand',
+				'tabDragSpeed',
+				'tabSetEnableDeleteWhenEmpty',
+				'tabSetEnableDrop',
+				'tabSetEnableDrag',
+				'tabSetEnableDivide',
+				'tabSetEnableMaximize',
+				'tabSetClassNameTabStrip',
+				'tabSetClassNameHeader',
+				'tabSetEnableTabStrip',
+				'tabSetHeaderHeight',
+				'tabSetTabStripHeight',
+				'borderBarSize',
+				'borderEnableDrop',
+				'borderClassName',
+			];
+
+			return pick(self, attrs);
+		},
 		get json() {
 			let result;
 			const root = getRoot(self);
@@ -137,6 +188,10 @@ const LayoutStore = types
 			if (!result) {
 				result = self.layoutPresets[root.selectedGame.name].STANDARD;
 			}
+
+			result = self.normalize(result);
+			console.log(result);
+			
 			return result;
 		}
 	}))
@@ -148,9 +203,16 @@ const LayoutStore = types
 				console.error('LocalStorage is not supported or there was an error saving to it. Cannot save application state.', error);
 			}
 		};
+		const normalize = json => {
+			const globalConfig = Object.assign({}, json.global, self.globalConfig);
+
+			json.global = globalConfig;
+			return json;
+		};
 
 		return {
 			saveToLocalStorage,
+			normalize,
 		};
 	})
 ;

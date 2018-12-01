@@ -89,6 +89,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		const flushLocalStorage = () => {
 			if (window.localStorage) {
 				window.localStorage.removeItem(self.LOCAL_STORAGE_KEY);
+				window.localStorage.removeItem(self.LOCAL_STORAGE_LAYOUT_KEY);
 				window.location.reload();
 			}
 		};

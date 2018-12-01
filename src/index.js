@@ -183,7 +183,7 @@ if (appStore.shouldSync) {
 	try {
 		applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
 	} catch (error) {
-		console.error('LocalStorage is not supported or there was an error loading it. Cannot load application state.', error);
+		// console.error('LocalStorage is not supported or there was an error loading it. Cannot load application state.', error);
 	}
 }
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));
