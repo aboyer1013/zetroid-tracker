@@ -24,8 +24,6 @@ const ItemList = class ItemList extends Component {
 		const store = this.props.itemListStore;
 		const dragElems = [];
 		const containerClasses = classNames('item-list-container', 'has-background-grey-light', {
-			'is-vertical': this.props.direction === 'vertical',
-			'is-horizontal': this.props.direction === 'horizontal',
 			'is-draggable-enabled': this.props.draggableEnabled,
 			'is-draggable-disabled': !this.props.draggableEnabled,
 		});
@@ -34,6 +32,7 @@ const ItemList = class ItemList extends Component {
 			let itemElem = null;
 
 			if (item.group) {
+				debugger;
 				itemElem = store.getItemsByGroup(item.group).map(subItem => <Item isReadOnly={this.props.isReadOnly} itemListStore={store} key={subItem.id} item={subItem} />);
 			} else {
 				itemElem = <Item isReadOnly={this.props.isReadOnly} itemListStore={store} key={item.id} item={item} />;
@@ -68,7 +67,7 @@ const ItemList = class ItemList extends Component {
 			);
 		}
 		return (
-			<Droppable droppableId={this.props.itemListStore.droppableId || 'droppable'} direction={this.props.direction}>
+			<Droppable droppableId={this.props.itemListStore.droppableId || 'droppable'} direction="horizontal">
 				{(provided, snapshot) => {
 					return (
 						<div ref={provided.innerRef} className={containerClasses}>

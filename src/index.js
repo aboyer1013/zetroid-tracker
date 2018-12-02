@@ -16,6 +16,7 @@ import ItemListStore from 'ItemList.store';
 import LayoutStore from 'Layout.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined, isArray } from 'lodash';
+import { createStorage } from 'persistme';
 
 const activeItemListStore = ItemListStore.create({
 	id: randomId(),
@@ -171,19 +172,16 @@ window.appStore = appStore;
 window.mapStore = appStore.getMapByName('zelda3-lw');
 window.activeItemList = appStore.activeItemList;
 window.inactiveItemList = appStore.inactiveItemList;
+window.createStorage = createStorage;
 
 if (appStore.shouldSync) {
+	const gameStorage = appStore.getGameStorage('tree');
+
 	onSnapshot(appStore, model => {
-		try {
-			window.localStorage.setItem(appStore.LOCAL_STORAGE_KEY, JSON.stringify(model));
-		} catch (error) {
-			console.error('LocalStorage is not supported or there was an error saving to it. Cannot save application state.', error);
-		}
+		appStore.updateGameTreeStorage(model);
 	});
-	try {
-		applySnapshot(appStore, JSON.parse(window.localStorage.getItem(appStore.LOCAL_STORAGE_KEY)));
-	} catch (error) {
-		// console.error('LocalStorage is not supported or there was an error loading it. Cannot load application state.', error);
+	if (gameStorage) {
+		applySnapshot(appStore, gameStorage);
 	}
 }
 ReactDOM.render(<App store={appStore} />, document.getElementById('root'));

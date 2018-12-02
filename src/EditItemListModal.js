@@ -9,14 +9,10 @@ import { find } from 'lodash';
 class EditItemListModal extends Component {
 	constructor() {
 		super();
-		this.onDirectionChangeHandler = this.onDirectionChangeHandler.bind(this);
 		this.onDragEndHandler = this.onDragEndHandler.bind(this);
 	}
 	componentDidMount() {
 		this.snapshot = getSnapshot(this.props.store);
-	}
-	onDirectionChangeHandler(event) {
-		this.props.store.activeItemList.setDirection(event.target.value)
 	}
 	onDragEndHandler(result) {
 		if (!result.destination) {
@@ -53,23 +49,6 @@ class EditItemListModal extends Component {
 					<div className="content">
 						<p>Customize your trackable items by dragging and dropping between both the <em>Active Items </em>
 							and <em>Inactive Items</em> areas.</p>
-						<div className="edit-item-list-controls columns">
-							<div className="column">
-								<div className="field">
-									<legend className="legend"><strong>Placement:</strong></legend>
-									<div className="control">
-										<label className="radio">
-											<input onChange={this.onDirectionChangeHandler} checked={itemListStore.direction === 'horizontal'} type="radio" name="direction" value="horizontal" /> Horizontal
-										</label>
-									</div>
-									<div className="control">
-										<label className="radio">
-											<input onChange={this.onDirectionChangeHandler} checked={itemListStore.direction === 'vertical'} type="radio" name="direction" value="vertical" /> Vertical
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
 						<div className={ilgContainerClasses}>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
 								<div className="item-list-group active-item-list-group">

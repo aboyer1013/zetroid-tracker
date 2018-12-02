@@ -30,6 +30,7 @@ const LayoutStore = types
 	.volatile(self => ({
 		layoutPresets: {
 			zelda3: {
+				current: {},
 				STANDARD: {
 					'global': {},
 					'layout': {
@@ -114,19 +115,19 @@ const LayoutStore = types
 									'type': 'tab',
 									'id': '#3',
 									'name': 'Item List',
-									'component': 'grid',
+									'component': 'ItemList',
 									'config': {
-										'id': '1'
+
 									},
-									'enableClose': true
+									'enableClose': false
 								},
 								{
 									'type': 'tab',
 									'id': '#2',
 									'name': 'Boss List',
-									'component': 'grid',
+									'component': 'ItemList',
 									'config': {
-										'id': '1'
+										listType: 'boss'
 									},
 									'enableClose': true
 								}
@@ -180,28 +181,17 @@ const LayoutStore = types
 			let result;
 			const root = getRoot(self);
 
-			try {
-				result = JSON.parse(window.localStorage.getItem(root.LOCAL_STORAGE_LAYOUT_KEY));
-			} catch (error) {
-				console.error('Could not retrieve localStorage or was invalid. Loading layout preset instead.', error);
-			}
+			result = root.getGameStorage('layout');
 			if (!result) {
 				result = self.layoutPresets[root.selectedGame.name].STANDARD;
 			}
-
 			result = self.normalize(result);
-			console.log(result);
-			
 			return result;
 		}
 	}))
 	.actions(self => {
 		const saveToLocalStorage = data => {
-			try {
-				window.localStorage.setItem(getRoot(self).LOCAL_STORAGE_LAYOUT_KEY, JSON.stringify(data));
-			} catch (error) {
-				console.error('LocalStorage is not supported or there was an error saving to it. Cannot save application state.', error);
-			}
+			getRoot(self).updateGameLayoutStorage(data);
 		};
 		const normalize = json => {
 			const globalConfig = Object.assign({}, json.global, self.globalConfig);

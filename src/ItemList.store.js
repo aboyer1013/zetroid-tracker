@@ -8,7 +8,6 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 		id: types.identifier,
 		items: types.array(ItemStore),
 		sortOrder: types.optional(types.array(types.integer), []),
-		direction: types.optional(types.enumeration('Direction', ['horizontal', 'vertical']), 'horizontal'),
 		droppableId: types.optional(types.string, ''),
 	})
 	.actions(self => {
@@ -41,14 +40,10 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 		const updateIndices = (items) => {
 			items.forEach((item, i) => item.setIndex(i));
 		};
-		const setDirection = newDirection => {
-			self.direction = newDirection;
-		};
 
 		return {
 			updateOrder,
 			moveItem,
-			setDirection,
 			updateIndices,
 		}
 	}))

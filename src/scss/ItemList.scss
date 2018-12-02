@@ -1,6 +1,4 @@
 .item-list-container {
-	//display: flex;
-	flex-wrap: wrap;
 	display: grid;
 	grid-gap: 5px;
 	grid-template-columns: repeat(auto-fit, 48px);
@@ -8,17 +6,9 @@
 	&.is-horizontal {
 		width: 100%;
 	}
-	&.is-vertical {
-		width: 125px;
-		height: calc(100% - 52px);
-		flex-direction: column;
-	}
 	&.is-draggable-disabled {
 		cursor: pointer;
 	}
-	position: absolute;
-	top: 0;
-	left: 0;
 	padding: 10px;
 	img {
 		width: 100%;
@@ -59,13 +49,7 @@
 		overflow: auto;
 		flex-wrap: nowrap;
 		display: flex;
-		&.is-vertical {
-			width: 125px;
-			height: 60vh;
-		}
-		&.is-horizontal {
-			height: 125px;
-		}
+		height: 125px;
 	}
 	.edit-item-list-controls {
 		margin: 0 0 20px;
@@ -89,19 +73,4 @@
 	font-size: 40px;
 	margin: 20px 0 0;
 	transform: rotate(90deg);
-}
-.item-list-group-container.is-vertical {
-	flex-direction: row;
-	align-items: center;
-	.item-list-group + .item-list-group {
-		margin: 0 0 0 30px;
-		padding: 0 0 0 30px;
-		border-top: none;
-		border-left: 1px solid #ccc;
-	}
-	.item-exchange-divider {
-		transform: none;
-		width: auto;
-		margin: 0 40px;
-	}
 }

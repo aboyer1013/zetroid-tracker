@@ -6,6 +6,7 @@ import LocationDetailStore from 'LocationDetail.store';
 import ItemListUtil from 'ItemListUtil';
 import LayoutStore from 'Layout.store';
 import { find } from 'lodash';
+import { createStorage } from 'persistme';
 
 const AppStore = types.compose(ItemListUtil, types.model({
 		games: types.map(GameStore),
@@ -86,15 +87,43 @@ const AppStore = types.compose(ItemListUtil, types.model({
 				self.validationMessages = ['Invalid JSON.'];
 			}
 		};
-		const flushLocalStorage = () => {
-			if (window.localStorage) {
-				window.localStorage.removeItem(self.LOCAL_STORAGE_KEY);
-				window.localStorage.removeItem(self.LOCAL_STORAGE_LAYOUT_KEY);
-				window.location.reload();
-			}
+		const flushLocalStorage = (event, game = null) => {
+			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
+			const selectedGame = game || self.selectedGame.name;
+
+			appStorage.remove(selectedGame);
+			window.location.reload();
 		};
 		const setHideCompleted = (isHidden) => {
 			self.hideCompleted = isHidden;
+		};
+		// Wrapper for persistme to include the selected game in the storage key.
+		const getGameStorage = (key = null) => {
+			debugger;
+			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
+			const selectedGame = self.selectedGame.name;
+
+			if (!key) {
+				return appStorage.get(selectedGame);
+			}
+			const storageData = appStorage.get(selectedGame);
+			if (!storageData) {
+				return null;
+			}
+			return storageData[key];
+		};
+		const updateGameTreeStorage = data => {
+			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
+			const selectedGame = self.selectedGame.name;
+
+			return appStorage.update(selectedGame, {tree: data})
+		};
+		const updateGameLayoutStorage = data => {
+			debugger;
+			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
+			const selectedGame = self.selectedGame.name;
+
+			return appStorage.update(selectedGame, {layout: data})
 		};
 
 		return {
@@ -104,6 +133,9 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			loadSnapshot,
 			flushLocalStorage,
 			setHideCompleted,
+			getGameStorage,
+			updateGameLayoutStorage,
+			updateGameTreeStorage,
 		};
 	}))
 ;

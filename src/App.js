@@ -57,6 +57,35 @@ class App extends Component {
 		if (component === 'LocationDetail') {
 			return <LocationDetail />;
 		}
+		if (component === 'ItemList') {
+			let itemListStore;
+			let items;
+			let direction;
+			let draggableEnabled;
+
+			switch (config.listType) {
+				case 'boss':
+					itemListStore = this.props.store.activeBossItemList;
+					items = this.props.store.activeBossItemList.sortedItems;
+					direction = this.props.store.activeBossItemList.direction;
+					draggableEnabled = false;
+					break;
+				default:
+					itemListStore = this.props.store.activeItemList;
+					items = this.props.store.activeItemList.sortedItems;
+					direction = this.props.store.activeItemList.direction;
+					draggableEnabled = false;
+					break;
+			}
+			return (
+				<ItemList
+					itemListStore={itemListStore}
+					items={items}
+					direction={direction}
+					draggableEnabled={draggableEnabled}
+				/>
+			);
+		}
 	}
 	render() {
 		const store = this.props.store;
@@ -91,18 +120,6 @@ class App extends Component {
 					{/*<div id="main" className="main">
 						{this.generateMaps()}
 						<LocationDetail />
-						<ItemList
-							itemListStore={this.props.store.activeItemList}
-							items={this.props.store.activeItemList.sortedItems}
-							direction={this.props.store.activeItemList.direction}
-							draggableEnabled={false}
-						/>
-						<ItemList
-							itemListStore={this.props.store.activeBossItemList}
-							items={this.props.store.activeBossItemList.sortedItems}
-							direction={this.props.store.activeBossItemList.direction}
-							draggableEnabled={false}
-						/>
 					</div>*/}
 
 					{/*<Map
