@@ -77,7 +77,7 @@ const LayoutStore = types
 														'component': 'Map',
 														'mapName': 'zelda3-dw',
 														'config': {
-															'id': '1'
+															mapName: 'zelda3-dw',
 														},
 														enableClose: false,
 													}

@@ -81,16 +81,15 @@ appStore.maps.put(MapStore.create({
 	locations: {},
 	locationDetail: appStore.locationDetail,
 }));
-// appStore.maps.put(MapStore.create({
-// 	id: randomId(),
-// 	name: 'zelda3-dw',
-// 	longName: 'Dark World Map',
-// 	game: appStore.getGameByName('zelda3'),
-// 	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
-// 	locations: {},
-// 	locationDetail: appStore.locationDetail,
-// 	offset: 100,
-// }));
+appStore.maps.put(MapStore.create({
+	id: randomId(),
+	name: 'zelda3-dw',
+	longName: 'Dark World Map',
+	game: appStore.getGameByName('zelda3'),
+	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
+	locations: {},
+	locationDetail: appStore.locationDetail,
+}));
 // Create item models.
 const itemDataFactory = (item, index, itemList) => {
 	const id = randomId();
