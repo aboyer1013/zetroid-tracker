@@ -36,23 +36,25 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			return find([...self.games.values()], { selected: true });
 		},
 		getItemListStoreByDroppableId: (droppableId) => {
-			if (self.activeItemList.droppableId === droppableId) {
-				return self.activeItemList;
-			}
-			if (self.inactiveItemList.droppableId === droppableId) {
-				return self.inactiveItemList;
-			}
-			return null;
+			return find(self.itemListStores, { droppableId });
 		},
 		get items() {
 			return (
 				self.activeItemList.items.concat(
 					self.inactiveItemList.items,
-					self.activeBossItemList,
-					self.inactiveBossItemList
+					self.activeBossItemList.items,
+					self.inactiveBossItemList.items,
 				)
 			);
 		},
+		get itemListStores() {
+			return [
+				self.inactiveItemList,
+				self.activeItemList,
+				self.inactiveBossItemList,
+				self.activeBossItemList,
+			];
+		}
 	}))
 	.actions((self) => {
 		const selectGame = (gameToSelect) => {

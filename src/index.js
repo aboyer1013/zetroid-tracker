@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach } from 'mobx-state-tree';
+import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -101,7 +101,7 @@ const itemDataFactory = (item, index, itemList) => {
 		name: item.name,
 		game: appStore.getGameByName(item.game),
 		maxQty: item.maxQty || 1,
-		itemList,
+		// itemList,
 		type: item.type,
 	}
 
@@ -129,7 +129,7 @@ const itemDataFactory = (item, index, itemList) => {
 itemsData
 	.filter(item => item.game === appStore.selectedGame.name)
 	.forEach((item, i) => {
-		const itemData = itemDataFactory(item, i, appStore.activeItemList);
+		const itemData = itemDataFactory(item, i);
 
 		appStore.activeItemList.sortOrder.push(i);
 		appStore.activeItemList.items.push(ItemStore.create(itemData));
@@ -138,7 +138,7 @@ itemsData
 bossData
 	.filter(item => item.game === appStore.selectedGame.name)
 	.forEach((item, i) => {
-		const itemData = itemDataFactory(item, i, appStore.activeBossItemList);
+		const itemData = itemDataFactory(item, i);
 
 		appStore.activeBossItemList.sortOrder.push(i);
 		appStore.activeBossItemList.items.push(ItemStore.create(itemData));
@@ -173,6 +173,8 @@ window.mapStore = appStore.getMapByName('zelda3-lw');
 window.activeItemList = appStore.activeItemList;
 window.inactiveItemList = appStore.inactiveItemList;
 window.createStorage = createStorage;
+window.getParentOfType = getParentOfType;
+window.ItemListStore = ItemListStore;
 
 if (appStore.shouldSync) {
 	const gameStorage = appStore.getGameStorage('tree');

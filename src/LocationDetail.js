@@ -57,7 +57,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			reqs = <p><em>None</em></p>;
 		}
 		if (notes.length) {
-			notes = (<div className="column details-notes"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
+			notes = (<div className="column details-notes is-narrow"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
 		if (isViewable && !selectedLocation.isComplete) {
 			//0cb0de

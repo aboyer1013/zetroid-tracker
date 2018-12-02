@@ -1,7 +1,6 @@
-import { types, detach } from 'mobx-state-tree';
+import { types, detach, getParentOfType } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
 import ItemListUtil from 'ItemListUtil';
-import { find, sortBy } from 'lodash';
 import move from 'lodash-move';
 
 const ItemListStore = types.compose(ItemListUtil, types.model({
@@ -23,8 +22,11 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 			self.updateIndices(swappedItems);
 		};
 		const moveItem = (itemToAdd, index) => {
+			if (!itemToAdd) {
+				return;
+			}
 			const sortedItems = self.sortedItems;
-			const sourceItemList = itemToAdd.itemList;
+			const sourceItemList = getParentOfType(itemToAdd, ItemListStore);
 
 			// Add source item to destination list.
 			sortedItems.splice(index, 0, detach((itemToAdd)));
@@ -33,8 +35,8 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 			itemToAdd.setIndex(index);
 			sourceItemList.updateIndices(sourceItemList.sortedItems);
 			// Update itemList reference on the item and any sub-items.
-			itemToAdd.setItemList(self);
-			itemToAdd.items.forEach(item => item.setItemList(self));
+			// itemToAdd.setItemList(self);
+			// itemToAdd.items.forEach(item => item.setItemList(self));
 			self.updateIndices(sortedItems);
 		};
 		const updateIndices = (items) => {

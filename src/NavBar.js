@@ -65,7 +65,7 @@ const NavBar = class NavBar extends Component {
 								<a className="navbar-item" onClick={() => {
 									this.setState({isMenuActive: false});
 									this.props.store.openModal('EDIT_ITEM_LIST')
-								}}>Customize Item Panel</a>
+								}}>Customize Trackables</a>
 							</div>
 						</div>
 						<div className="navbar-item has-dropdown is-hoverable">

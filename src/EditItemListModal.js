@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { getSnapshot, applySnapshot } from 'mobx-state-tree';
 import ItemList from 'ItemList';
-import classNames from 'classnames';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { find } from 'lodash';
 
 class EditItemListModal extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.onDragEndHandler = this.onDragEndHandler.bind(this);
 	}
 	componentDidMount() {
@@ -35,24 +34,21 @@ class EditItemListModal extends Component {
 	render() {
 		const store = this.props.store;
 		const itemListStore = store.activeItemList;
-		const ilgContainerClasses = classNames('item-list-group-container', {
-			'is-vertical': itemListStore.direction === 'vertical',
-			'is-horizontal': itemListStore.direction === 'horizontal',
-		});
 		return (
 			<div className="modal-card edit-item-list-modal">
 				<header className="modal-card-head">
-					<p className="modal-card-title">Customize Item Panel</p>
+					<p className="modal-card-title">Customize Trackables</p>
 					<button className="delete" aria-label="close" onClick={store.closeModal} />
 				</header>
 				<section className="modal-card-body">
 					<div className="content">
-						<p>Customize your trackable items by dragging and dropping between both the <em>Active Items </em>
+						<p>Customize trackable items by dragging and dropping between both the <em>Active Items </em>
 							and <em>Inactive Items</em> areas.</p>
-						<div className={ilgContainerClasses}>
+						<div className="item-list-group-container">
+							<h4>Items</h4>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
 								<div className="item-list-group active-item-list-group">
-									<h5>Active Items</h5>
+									<h5 className="item-list-group-subtitle">Active</h5>
 									<ItemList
 										itemListStore={itemListStore}
 										items={itemListStore.sortedItems}
@@ -61,12 +57,38 @@ class EditItemListModal extends Component {
 										draggableEnabled={true}
 									/>
 								</div>
-								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt"></i></div>
+								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt" /></div>
 								<div className="item-list-group inactive-item-list-group">
-									<h5>Inactive Items</h5>
+									<h5 className="item-list-group-subtitle">Inactive</h5>
 									<ItemList
 										itemListStore={store.inactiveItemList}
 										items={store.inactiveItemList.sortedItems}
+										isReadOnly={true}
+										direction={itemListStore.direction}
+										draggableEnabled={true}
+									/>
+								</div>
+							</DragDropContext>
+						</div>
+						<div className="item-list-group-container">
+							<h4>Bosses</h4>
+							<DragDropContext onDragEnd={this.onDragEndHandler}>
+								<div className="item-list-group active-item-list-group">
+									<h5 className="item-list-group-subtitle">Active</h5>
+									<ItemList
+										itemListStore={store.activeBossItemList}
+										items={store.activeBossItemList.sortedItems}
+										direction={itemListStore.direction}
+										isReadOnly={true}
+										draggableEnabled={true}
+									/>
+								</div>
+								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt" /></div>
+								<div className="item-list-group inactive-item-list-group">
+									<h5 className="item-list-group-subtitle">Inactive</h5>
+									<ItemList
+										itemListStore={store.inactiveBossItemList}
+										items={store.inactiveBossItemList.sortedItems.filter(item => item.type === 'boss')}
 										isReadOnly={true}
 										direction={itemListStore.direction}
 										draggableEnabled={true}

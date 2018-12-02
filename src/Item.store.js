@@ -1,4 +1,4 @@
-import { types, getRoot } from 'mobx-state-tree';
+import { types, getParentOfType, } from 'mobx-state-tree';
 import { find } from 'lodash';
 import GameStore from 'Game.store';
 import ItemListStore from 'ItemList.store';
@@ -11,7 +11,7 @@ const ItemStore = types
 		longName: types.maybeNull(types.string),
 		group: types.maybeNull(types.string),
 		items: types.optional(types.array(types.late(() => ItemStore)), []),
-		itemList: types.reference(types.late(() => ItemListStore)),
+		// itemList: types.reference(types.late(() => ItemListStore)),
 		hidden: false,
 		image: '',
 		index: types.integer,
@@ -30,7 +30,8 @@ const ItemStore = types
 	.actions(self => {
 		const acquire = (newAcquired) => {
 			if (self.group) {
-				self.itemList.getItemsByGroup(self.group).forEach(item => {
+				const itemListStore = getParentOfType(self, ItemListStore);
+				itemListStore.getItemsByGroup(self.group).forEach(item => {
 					item.acquired = false;
 				});
 			}
@@ -50,7 +51,8 @@ const ItemStore = types
 
 
 			let shouldAcquire = true;
-			const subItems = self.itemList.getItemsByGroup(self.group);
+			const itemListStore = getParentOfType(self, ItemListStore);
+			const subItems = itemListStore.getItemsByGroup(self.group);
 			let currentSubItem = find(subItems, { acquired: true });
 
 			if (!currentSubItem) {
@@ -79,9 +81,6 @@ const ItemStore = types
 		const setIndex = newIndex => {
 			self.index = newIndex;
 		};
-		const setItemList = newItemList => {
-			self.itemList = newItemList;
-		};
 		const activateNextQty = () => {
 			let nextQty = self.qty + 1;
 
@@ -102,7 +101,6 @@ const ItemStore = types
 			activateNext,
 			setIndex,
 			toggleAcquisition,
-			setItemList,
 			activateNextQty,
 			setQty,
 		};

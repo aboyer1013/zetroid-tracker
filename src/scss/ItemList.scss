@@ -1,12 +1,11 @@
+// Shared styles
 .item-list-container {
 	display: grid;
 	grid-gap: 5px;
-	background: #453823;
+	background: $grey;
 	grid-template-columns: repeat(auto-fit, 48px);
 	grid-template-rows: repeat(auto-fit, 48px);
-	&.is-horizontal {
-		width: 100%;
-	}
+	width: 100%;
 	&.is-draggable-disabled {
 		cursor: pointer;
 	}
@@ -44,20 +43,6 @@
 .item.is-item-group {
 	position: absolute;
 }
-.modal {
-	.item-list-container {
-		position: static;
-		overflow: auto;
-		flex-wrap: nowrap;
-		display: flex;
-		height: 125px;
-	}
-	.edit-item-list-controls {
-		margin: 0 0 20px;
-		padding: 0 0 20px;
-		border-bottom: 1px solid #ccc;
-	}
-}
 .item-list-group-container {
 	display: flex;
 	flex-direction: column;
@@ -72,6 +57,34 @@
 .item-exchange-divider {
 	width: 100%;
 	font-size: 40px;
-	margin: 20px 0 0;
+	margin: 20px 0;
 	transform: rotate(90deg);
+}
+// Modal Styles
+.modal {
+	.item-list-group-container {
+		padding: 10px;
+		border: 1px solid #ccc;
+		& + .item-list-group-container {
+			margin: 20px 0 0;
+		}
+	}
+	.item-list-group-subtitle {
+		font-weight: 300;
+	}
+	.item-list-container {
+		position: static;
+		overflow: auto;
+		flex-wrap: nowrap;
+		display: flex;
+		height: 125px;
+	}
+	.edit-item-list-controls {
+		margin: 0 0 20px;
+		padding: 0 0 20px;
+		border-bottom: 1px solid #ccc;
+	}
+	.item-list-group {
+
+	}
 }

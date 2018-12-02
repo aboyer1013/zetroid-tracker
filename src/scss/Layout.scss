@@ -114,9 +114,11 @@
 
 .flexlayout__tab_button_textbox {
 	float: left;
-	border: none;
-	color: lightgreen;
-	background-color: #222;
+	color: $zeldaGreen;
+	padding: 0 3px;
+	border: 1px solid $grey;
+	font-size: 15px;
+	height: 25px;
 }
 
 .flexlayout__tab_button_textbox:focus {
@@ -314,9 +316,6 @@
 .flexlayout__border_button--selected {
 	color: #ddd;
 	background-color: #222;
-	&::after {
-
-	}
 }
 
 .flexlayout__border_button--unselected {
