@@ -18,10 +18,6 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const favoriteClasses = classNames('button', 'is-outline', {
 			'has-text-warning': get(selectedLocation, 'isFavorite'),
 		});
-		const mapInfoClasses = classNames('content', 'box', 'map-info', {
-			'is-hidden': !store.isVisible,
-			'is-item-list-vertical': this.props.store.activeItemList.direction === 'vertical',
-		});
 		let progressionButton;
 
 		if (selectedLocation) {
@@ -61,7 +57,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			reqs = <p><em>None</em></p>;
 		}
 		if (notes.length) {
-			notes = (<div className="details-notes"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
+			notes = (<div className="column details-notes"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
 		if (isViewable && !selectedLocation.isComplete) {
 			//0cb0de
@@ -73,36 +69,40 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			);
 		}
 		return (
-			<div className="is-background-white">
-				<div className={mapInfoClasses}>
-					<div className="details-container">
-						<div className="details-location">
-							<div className="details-title">
-								{longName}
-							</div>
-							<div className="details-controls">
+			<div className="is-flex-desktop columns details-container content map-info has-background-white is-marginless">
+				<div className="column details-location">
+
+						<div className="details-title">
+							{longName}
+						</div>
+						<div className="columns">
+							<div className="column details-controls">
 								<div className="buttons">
 									<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
 										<span className="icon"><i className="fas fa-star" /></span>
 									</button>
 									{progressionButton}
 								</div>
-								<div>
+							</div>
+							<div className="column is-narrow">
+								<div className="tags-container">
 									{isViewable}
 									<div className="tags has-addons is-marginless">
 										<span className="tag is-info icon"><i className="fas fa-info" /></span>
 										<span className="tag">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
 									</div>
 								</div>
+
 							</div>
+
 						</div>
-						<div className="details-requirements">
-							<h6>Requirements:</h6>
-							{reqs}
-						</div>
-						{notes}
-					</div>
+
 				</div>
+				<div className="column details-requirements">
+					<h6>Requirements:</h6>
+					{reqs}
+				</div>
+				{notes}
 			</div>
 		);
 	}

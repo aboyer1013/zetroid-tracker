@@ -1,0 +1,17 @@
+.details-container {
+	display: flex;
+	padding: 10px 0 15px 0;
+	height: 100%;
+	> * + * {
+		border-left: 1px solid #ccc;
+	}
+}
+.details-controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+}
+.tags-container {
+	display: flex;
+	flex-direction: column;
+}

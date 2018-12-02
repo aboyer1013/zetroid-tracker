@@ -1,6 +1,7 @@
 .item-list-container {
 	display: grid;
 	grid-gap: 5px;
+	background: #453823;
 	grid-template-columns: repeat(auto-fit, 48px);
 	grid-template-rows: repeat(auto-fit, 48px);
 	&.is-horizontal {

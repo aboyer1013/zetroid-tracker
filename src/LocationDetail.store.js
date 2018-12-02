@@ -5,7 +5,6 @@ const LocationDetailStore = types
 	.model({
 		id: types.identifier,
 		selectedLocation: types.maybeNull(types.reference(LocationStore)),
-		isVisible: true,
 	})
 	.views((self) => ({
 		get selectedLocationDetails() {
@@ -16,13 +15,9 @@ const LocationDetailStore = types
 		const setSelectedLocation = (event, marker, mapStoreLocation) => {
 			self.selectedLocation = mapStoreLocation;
 		};
-		const setVisibility = (isVisible) => {
-			self.isVisible = isVisible;
-		};
 
 		return {
 			setSelectedLocation,
-			setVisibility,
 		};
 	})
 ;

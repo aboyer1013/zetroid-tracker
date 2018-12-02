@@ -7,7 +7,6 @@ const NavBar = class NavBar extends Component {
 	constructor() {
 		super();
 		this.toggleMenu = this.toggleMenu.bind(this);
-		this.toggleMapVisibility = this.toggleMapVisibility.bind(this);
 		this.menu = createRef();
 		this.burger = createRef();
 	}
@@ -20,40 +19,9 @@ const NavBar = class NavBar extends Component {
 		this.setState({isMenuActive: !this.state.isMenuActive});
 	}
 
-	toggleMapVisibility(mapName) {
-		const map = this.props.store.getMapByName(mapName);
-
-		map.setMapVisibility(!map.isVisible);
-	}
-	generateMapVisibilityButtons() {
-		const buttons = [];
-
-		[...this.props.store.maps.values()].forEach((map, i) => {
-			const mapClasses = classNames('fas', {
-				'fa-eye': !map.isVisible,
-				'fa-eye-slash': map.isVisible,
-			});
-
-			buttons.push(
-				<div key={`map-button-${map.id}`} className="navbar-item">
-					<button onClick={() => map.setMapVisibility(!map.isVisible)} className="button is-fullwidth">
-						<span className="icon"><i className={mapClasses} /></span>
-						<span>{map.longName}</span>
-					</button>
-				</div>
-			);
-		});
-		return buttons;
-	}
 	render() {
 		const burgerClasses = classNames('navbar-burger', 'burger', {'is-active': this.state.isMenuActive});
 		const menuClasses = classNames('navbar-menu', {'is-active': this.state.isMenuActive});
-		const mapVisibilityButtons = this.generateMapVisibilityButtons();
-		const locDetailStore = get(this, 'props.store.locationDetail');
-		const locDetailClasses = classNames('fas', {
-			'fa-eye': !locDetailStore.isVisible,
-			'fa-eye-slash': locDetailStore.isVisible,
-		});
 		const hideCompletedClasses = classNames('fas', {
 			'fa-eye': this.props.store.hideCompleted,
 			'fa-eye-slash': !this.props.store.hideCompleted,
@@ -104,13 +72,6 @@ const NavBar = class NavBar extends Component {
 							<a className="navbar-link">View</a>
 
 							<div className="navbar-dropdown">
-								{mapVisibilityButtons}
-								<div className="navbar-item">
-									<button onClick={() => locDetailStore.setVisibility(!locDetailStore.isVisible)} className="button is-fullwidth">
-										<span className="icon"><i className={locDetailClasses} /></span>
-										<span>Location Details Panel</span>
-									</button>
-								</div>
 								<div className="navbar-item">
 									<button onClick={() => this.props.store.setHideCompleted(!this.props.store.hideCompleted)} className="button is-fullwidth">
 										<span className="icon"><i className={hideCompletedClasses} /></span>

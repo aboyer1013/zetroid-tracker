@@ -44,7 +44,7 @@ const ItemListUtil = types.model()
 			let itemGroup = find([...self.items.values()], { group });
 
 			if (!itemGroup) {
-				return null;
+				return [];
 			}
 			return [...itemGroup.items.values()];
 		},

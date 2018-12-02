@@ -12,7 +12,8 @@
 }
 
 .flexlayout__splitter:hover {
-	background-color: #333;
+	background-color: $zeldaOlive;
+	box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 .flexlayout__splitter_drag {
@@ -69,7 +70,7 @@
 
 .flexlayout__tabset {
 	overflow: hidden;
-	background-color: $grey-lighter;
+	background-color: $white;
 	box-sizing: border-box;
 }
 
@@ -77,18 +78,14 @@
 	overflow: auto;
 	position: absolute;
 	box-sizing: border-box;
-	background-color: $grey-lighter;
-	color: white;
-	border-top: 3px solid $white-ter;
+	background-color: $white;
+	border-top: 5px solid $white;
 }
 
 .flexlayout__tab_button {
 	cursor: pointer;
 	padding: 2px 8px 3px 8px;
 	margin: 8px 2px 0 4px;
-	/*box-shadow: inset 0px 0px 5px rgba(0, 0, 0, .15);*/
-	/*border-top-left-radius: 3px;*/
-	/*border-top-right-radius: 3px;*/
 	float: left;
 	vertical-align: top;
 	box-sizing: border-box;
@@ -96,14 +93,13 @@
 
 .flexlayout__tab_button--selected {
 	color: $black-ter;
-	background: $white-ter;
-
+	background: $white;
 }
 
 .flexlayout__tab_button--unselected {
 	color: $white;
-	background: #9fb4cf;
-	font-weight: 100;
+	background: none;
+	font-weight: 300;
 }
 
 .flexlayout__tab_button_leading {
@@ -206,6 +202,7 @@
 }
 
 .flexlayout__tab_toolbar_button-min {
+	color: $white;
 	height: 35px;
 	border: none;
 	margin: 0 10px 0 0;
@@ -218,6 +215,7 @@
 }
 
 .flexlayout__tab_toolbar_button-max {
+	color: $white;
 	height: 35px;
 	border: none;
 	margin: 0 10px 0 0;
@@ -251,42 +249,42 @@
 
 
 .flexlayout__border_top {
-	background-color: $grey-light;
-	border-bottom: 1px solid #ddd;
+	background-color: #9f9f9f;
+	border-bottom: 4px double #666;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
 .flexlayout__border_bottom {
-	background-color: $grey-light;
-	border-top: 1px solid #333;
+	background-color: #9f9f9f;
+	border-top: 4px double #666;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
 .flexlayout__border_left {
-	background-color: $grey-light;
-	border-right: 1px solid #333;
+	background-color: #9f9f9f;
+	border-right: 4px double #666;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
 .flexlayout__border_right {
-	background-color: $grey-light;
-	border-left: 1px solid #333;
+	background-color: #9f9f9f;
+	border-left: 4px double #666;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
 .flexlayout__border_inner_bottom {
 	display: flex;
-	margin: 3px 0 0;
+	padding: 1px 0 0;
 }
 
 .flexlayout__border_inner_left {
 	position: absolute;
 	white-space: nowrap;
-	right: 35px;
+	right: 34px;
 	transform-origin: top right;
 	transform: rotate(-90deg);
 }
@@ -294,7 +292,7 @@
 .flexlayout__border_inner_right {
 	position: absolute;
 	white-space: nowrap;
-	left: 35px;
+	left: 34px;
 	transform-origin: top left;
 	transform: rotate(90deg);
 }
@@ -316,6 +314,9 @@
 .flexlayout__border_button--selected {
 	color: #ddd;
 	background-color: #222;
+	&::after {
+
+	}
 }
 
 .flexlayout__border_button--unselected {

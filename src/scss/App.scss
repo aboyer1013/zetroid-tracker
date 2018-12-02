@@ -2,11 +2,8 @@
 @import 'bulma.config';
 @import 'ItemList';
 @import 'Layout';
+@import 'LocationDetail';
 
-//::-webkit-scrollbar {
-//	width: 0;
-//	background: transparent;
-//}
 html, body {
 	background: $grey-light;
 }
@@ -43,16 +40,6 @@ button {
 .is-off-screen {
 	position: absolute;
 	z-index: -9999 !important;
-}
-.map-info {
-}
-.details-controls {
-}
-.navbar {
-	//box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-	//margin: 0 0 20px;
-	background: $zeldaBrown;
-	z-index: 9999;
 }
 
 .navbar-menu.is-active {
@@ -129,43 +116,14 @@ button {
 .map {
 	height: 100%
 }
-.react-resizable-handle {
-	background: none !important;
-	@extend .fas;
-	@extend .fa-expand-arrows-alt;
-	&::before {
-		color: $light;
-		position: absolute;
-		bottom: 5px;
-		right: 7px;
-		font-size: 20px;
-	}
-}
-.details-container {
-	display: flex;
-	> * + * {
-		margin: 0 0 0 20px;
-		padding: 0 0 0 20px;
-		border-left: 1px solid #ccc;
-	}
-}
-.details-title {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-.details-location {
-	flex-basis: 33%;
-}
-.details-controls {
-	display: flex;
-	justify-content: space-between;
-	align-items: end;
-}
-.details-requirements {
-	flex-grow: 1;
-}
+
 .edit-item-list-modal {
 	width: 90vw;
 	height: 85vh;
+}
+.leaflet-container {
+	$stripe1: rgba(235,235,235,0.65);
+	$stripe2: rgba(220,220,220,0.65);
+	background-image: linear-gradient(45deg, $stripe1 25%, $stripe2 25%, $stripe2 50%, $stripe1 50%, $stripe1 75%, $stripe2 75%, $stripe2 100%);
+	background-size: 56.57px 56.57px;
 }

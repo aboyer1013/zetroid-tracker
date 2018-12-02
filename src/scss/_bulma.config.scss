@@ -8,7 +8,13 @@ $zeldaTan: #DCDDD6;
 $zeldaGreen: #3B5D37;
 $zeldaOlive: #ffc800;
 $zeldaBrown: #caa975;
-
+$navbar-background-color: $zeldaBrown;
+$navbar-z: 9999;
+$navbar-fixed-z: 9999;
+$navbar-item-color: #34221b;
+$navbar-item-hover-color: $zeldaTan;
+$navbar-item-hover-background-color: $zeldaSlateBlue;
+$navbar-dropdown-arrow: $zeldaTan;
 $family-sans-serif: 'Roboto', sans-serif;
 $primary: $zeldaBlue;
 $info: #0cb0de;
