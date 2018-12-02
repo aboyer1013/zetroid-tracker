@@ -21,9 +21,9 @@ const LayoutStore = types
 		tabSetClassNameTabStrip: types.maybeNull(types.string),
 		tabSetClassNameHeader: types.maybeNull(types.string),
 		tabSetEnableTabStrip: true,
-		tabSetHeaderHeight: 20,
-		tabSetTabStripHeight: 20,
-		borderBarSize: 25,
+		tabSetHeaderHeight: 30,
+		tabSetTabStripHeight: 35,
+		borderBarSize: 40,
 		borderEnableDrop: true,
 		borderClassName: types.maybeNull(types.string),
 	})
@@ -60,7 +60,7 @@ const LayoutStore = types
 														'config': {
 															mapName: 'zelda3-lw',
 														},
-														'enableClose': true
+														'enableClose': false
 													}
 												],
 												'active': true
@@ -78,7 +78,8 @@ const LayoutStore = types
 														'mapName': 'zelda3-dw',
 														'config': {
 															'id': '1'
-														}
+														},
+														enableClose: false,
 													}
 												]
 											}
@@ -129,7 +130,7 @@ const LayoutStore = types
 									'config': {
 										listType: 'boss'
 									},
-									'enableClose': true
+									'enableClose': false
 								}
 							]
 						},

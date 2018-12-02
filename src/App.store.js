@@ -99,7 +99,6 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		};
 		// Wrapper for persistme to include the selected game in the storage key.
 		const getGameStorage = (key = null) => {
-			debugger;
 			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
 			const selectedGame = self.selectedGame.name;
 
@@ -113,13 +112,18 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			return storageData[key];
 		};
 		const updateGameTreeStorage = data => {
+			if (!self.shouldSync) {
+				return;
+			}
 			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
 			const selectedGame = self.selectedGame.name;
 
 			return appStorage.update(selectedGame, {tree: data})
 		};
 		const updateGameLayoutStorage = data => {
-			debugger;
+			if (!self.shouldSync) {
+				return;
+			}
 			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
 			const selectedGame = self.selectedGame.name;
 

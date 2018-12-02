@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { observer, inject } from 'mobx-react';
 import FlexLayout from 'flexlayout-react';
-import '../node_modules/flexlayout-react/style/dark.css';
 
 const Layout = class Layout extends Component {
 	constructor(props) {

@@ -1,11 +1,15 @@
 @import 'fontawesome-config.scss';
 @import 'bulma.config';
 @import 'ItemList';
+@import 'Layout';
 
 //::-webkit-scrollbar {
 //	width: 0;
 //	background: transparent;
 //}
+html, body {
+	background: $grey-light;
+}
 #root {
 	left: 0;
 	top: 0;
@@ -21,6 +25,7 @@
 	flex-grow: 1;
 }
 .layout-container {
+	border-top: 7px solid #000;
 	position: relative;
 	flex-grow: 1;
 	top: 0;
@@ -44,6 +49,9 @@ button {
 .details-controls {
 }
 .navbar {
+	//box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+	//margin: 0 0 20px;
+	background: $zeldaBrown;
 	z-index: 9999;
 }
 

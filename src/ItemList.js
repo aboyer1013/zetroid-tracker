@@ -23,7 +23,7 @@ const ItemList = class ItemList extends Component {
 	render() {
 		const store = this.props.itemListStore;
 		const dragElems = [];
-		const containerClasses = classNames('item-list-container', 'has-background-grey-light', {
+		const containerClasses = classNames('item-list-container', {
 			'is-draggable-enabled': this.props.draggableEnabled,
 			'is-draggable-disabled': !this.props.draggableEnabled,
 		});
