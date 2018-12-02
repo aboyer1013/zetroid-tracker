@@ -38,10 +38,9 @@ const ItemStore = types
 			self.acquired = newAcquired;
 		};
 		// Toggles item acquisition if not in a group, otherwise, acquires the next item in the group
-		const activateNext = () => {
-			// debugger;
+		const activateNext = (forwardDirection = true) => {
 			if (self.maxQty > 1) {
-				self.activateNextQty();
+				self.activateNextQty(forwardDirection);
 				return;
 			}
 			if (!self.group) {
@@ -62,15 +61,24 @@ const ItemStore = types
 				// Sensible fallback to the first item.
 				currentSubItem = subItems[0];
 			}
-			let nextGroupIndex = currentSubItem.groupIndex + 1;
+			let nextGroupIndex = forwardDirection ? currentSubItem.groupIndex + 1 : currentSubItem.groupIndex - 1;
 
-			if (nextGroupIndex === subItems.length) {
-				// We have wrapped around - put it back to default state.
-				nextGroupIndex = 0;
-				shouldAcquire = false;
-			} else if (currentSubItem.isDefault && !currentSubItem.acquired) {
-				currentSubItem.acquire(true);
-				return;
+			if (forwardDirection) {
+				if (nextGroupIndex === subItems.length) {
+					// We have wrapped around - put it back to default state.
+					nextGroupIndex = 0;
+					shouldAcquire = false;
+				} else if (currentSubItem.isDefault && !currentSubItem.acquired) {
+					currentSubItem.acquire(true);
+					return;
+				}
+			} else if (nextGroupIndex === -1) {
+				if (currentSubItem.acquired) {
+					nextGroupIndex = 0;
+					shouldAcquire = false;
+				} else {
+					nextGroupIndex = subItems.length - 1;
+				}
 			}
 			const nextSubItem = subItems[nextGroupIndex];
 			nextSubItem.acquire(shouldAcquire);
@@ -81,12 +89,23 @@ const ItemStore = types
 		const setIndex = newIndex => {
 			self.index = newIndex;
 		};
-		const activateNextQty = () => {
-			let nextQty = self.qty + 1;
+		const activateNextQty = (forwardDirection = true) => {
+			let nextQty = forwardDirection ? self.qty + 1 : self.qty - 1;
 
-			if (nextQty > self.maxQty) {
+			if (forwardDirection) {
+				if (nextQty > self.maxQty) {
+					self.acquire(false);
+					self.setQty(0);
+				} else {
+					self.acquire(true);
+					self.setQty(nextQty);
+				}
+			} else if (nextQty < 0) {
+				self.acquire(true);
+				self.setQty(self.maxQty);
+			} else if (nextQty === 0) {
 				self.acquire(false);
-				self.setQty(0);
+				self.setQty(nextQty);
 			} else {
 				self.acquire(true);
 				self.setQty(nextQty);

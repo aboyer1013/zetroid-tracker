@@ -21,9 +21,9 @@ const Item = class Item extends Component {
 		return (
 			<div
 				data-qty={item.qty}
-				onClick={() => {
+				onClick={event => {
 					if (!this.props.isReadOnly) {
-						item.activateNext();
+						item.activateNext(!event.shiftKey);
 					}
 				}}
 				key={item.id}

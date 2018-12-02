@@ -60,7 +60,6 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			notes = (<div className="column details-notes is-narrow"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
 		if (isViewable && !selectedLocation.isComplete) {
-			//0cb0de
 			isViewable = (
 				<div className="tags has-addons is-marginless" title="Even though this item is not available to acquire, you can see what the item is">
 					<span className="tag is-info icon"><i className="fas fa-info" /></span>

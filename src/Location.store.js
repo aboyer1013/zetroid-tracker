@@ -29,6 +29,11 @@ const LocationStore = types
 				return items.every(item => item && item.acquired);
 			},
 		},
+		// Most locations require all items to be acquired to be considered available.
+		// Anything logically more complex should be defined here.
+		customItemRequirements: {
+
+		},
 		dungeonRequirements: {
 			desertpalace: () => {
 
@@ -68,6 +73,9 @@ const LocationStore = types
 			return false;
 		},
 		get isAvailable() {
+			if (self.customItemRequirements[self.name]) {
+				return self.customItemRequirements[self.name]();
+			}
 			if (!self.items.length) {
 				return true;
 			}
