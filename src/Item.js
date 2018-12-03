@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
+import { includes } from 'lodash';
 
 const Item = class Item extends Component {
 	static get defaultProps() {
@@ -23,7 +24,12 @@ const Item = class Item extends Component {
 				data-qty={item.qty}
 				onClick={event => {
 					if (!this.props.isReadOnly) {
-						item.activateNext(!event.shiftKey);
+						// FIXME This is gross - item.type should be refactored as an array of types instead.
+						if (includes(item.name, 'chest')) {
+							item.activateNext(event.shiftKey);
+						} else {
+							item.activateNext(!event.shiftKey);
+						}
 					}
 				}}
 				key={item.id}

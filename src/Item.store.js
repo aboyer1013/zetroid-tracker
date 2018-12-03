@@ -85,9 +85,11 @@ const ItemStore = types
 					return;
 				}
 			} else if (nextGroupIndex === -1) {
-				if (currentSubItem.acquired) {
+				if (self.isDungeonItem) {
+					nextGroupIndex = subItems.length - 1;
+				} else if (currentSubItem.acquired) {
 					nextGroupIndex = 0;
-					shouldAcquire = self.isDungeonItem;
+					shouldAcquire = false;
 				} else {
 					nextGroupIndex = subItems.length - 1;
 				}
@@ -106,7 +108,7 @@ const ItemStore = types
 
 			if (forwardDirection) {
 				if (nextQty > self.maxQty) {
-					self.acquire(false);
+					self.acquire(self.isDungeonItem);
 					self.setQty(0);
 				} else {
 					self.acquire(true);
@@ -116,7 +118,7 @@ const ItemStore = types
 				self.acquire(true);
 				self.setQty(self.maxQty);
 			} else if (nextQty === 0) {
-				self.acquire(false);
+				self.acquire(self.isDungeonItem);
 				self.setQty(nextQty);
 			} else {
 				self.acquire(true);

@@ -1,4 +1,5 @@
 const itemsData = [
+	{ type: 'dungeon-item', name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', acquired: true, },
 	{
 		group: 'prize',
 		game: 'zelda3',

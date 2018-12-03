@@ -100,6 +100,7 @@ const itemDataFactory = (item, index = 0) => {
 		index: isUndefined(item.index) ? index : item.index,
 		name: item.name,
 		game: appStore.getGameByName(item.game),
+		qty: item.qty || 0,
 		maxQty: item.maxQty || 1,
 		type: item.type,
 		acquired: item.acquired,
@@ -148,6 +149,14 @@ locationsData.forEach(loc => {
 	const selectedMap = appStore.getMapByName(loc.map);
 	let bossId = loc.boss && find(appStore.activeBossItemList.items, { name: loc.boss });
 	let prizeId = find(appStore.activeBossItemList.items, { group: 'prize' });
+	let chestItem = null;
+
+	if (loc.numChests) {
+		const chestItemData = find(gameItemsData, { name: 'closedchest' });
+		chestItemData.qty = loc.numChests;
+		chestItemData.maxQty = loc.numChests;
+		chestItem = ItemStore.create(itemDataFactory(chestItemData))
+	}
 
 	bossId = bossId && bossId.id;
 	prizeId = prizeId && prizeId.id;
@@ -162,6 +171,7 @@ locationsData.forEach(loc => {
 		itemRequirements: loc.itemRequirements,
 		viewableRequirements: loc.viewableRequirements,
 		isDungeon: !!loc.isDungeon,
+		chest: chestItem,
 		numChests: loc.numChests,
 		boss: bossId,
 		prize: prizeId,

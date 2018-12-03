@@ -60,6 +60,37 @@
 	margin: 20px 0;
 	transform: rotate(90deg);
 }
+// Dungeon List
+.item-list-container.dungeon-list-container {
+	display: flex;
+	.dungeon-title {
+		//text-transform: uppercase;
+	}
+	.dungeon-grid-container {
+		display: grid;
+		margin: 10px 0 0;
+		grid-template-columns: repeat(4, 32px);
+		grid-template-rows: repeat(3, 32px);
+		//grid-gap: 10px;
+		grid-template-areas:
+			"boss boss prize ."
+			"boss boss chests medallion"
+		;
+		.boss {
+			grid-area: boss;
+		}
+		.prize {
+			grid-area: prize;
+			position: relative;
+		}
+		.chests {
+			grid-area: chests;
+		}
+		.medallion {
+			grid-area: medallion;
+		}
+	}
+}
 // Modal Styles
 .modal {
 	.item-list-group-container {

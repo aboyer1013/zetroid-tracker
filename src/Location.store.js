@@ -16,6 +16,7 @@ const LocationStore = types
 		isComplete: false,
 		isFavorite: false,
 		isDungeon: false,
+		chest: types.maybeNull(ItemStore),
 		numChests: types.maybe(types.integer),
 		boss: types.maybe(types.reference(ItemStore)),
 		prize: types.maybeNull(types.reference(ItemStore)),
