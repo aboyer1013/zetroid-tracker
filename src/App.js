@@ -13,6 +13,7 @@ import 'scss/App.scss';
 import LocationDetail from 'LocationDetail';
 import ItemList from 'ItemList';
 import Layout from 'Layout';
+import DungeonList from 'DungeonList';
 
 class App extends Component {
 
@@ -66,10 +67,13 @@ class App extends Component {
 			switch (config.listType) {
 				case 'boss':
 					itemListStore = this.props.store.activeBossItemList;
-					items = this.props.store.activeBossItemList.sortedItems;
-					direction = this.props.store.activeBossItemList.direction;
-					draggableEnabled = false;
-					break;
+					items = this.props.store.activeBossItemList.bosses;
+					return (
+						<DungeonList
+							itemListStore={itemListStore}
+							items={items}
+						/>
+					);
 				default:
 					itemListStore = this.props.store.activeItemList;
 					items = this.props.store.activeItemList.sortedItems;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType } from 'mobx-state-tree';
+import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent } from 'mobx-state-tree';
 import { randomId } from './util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -15,7 +15,7 @@ import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
 import LayoutStore from 'Layout.store';
 import * as serviceWorker from 'serviceWorker';
-import { isUndefined, isArray } from 'lodash';
+import { isUndefined, find } from 'lodash';
 import { createStorage } from 'persistme';
 
 const activeItemListStore = ItemListStore.create({
@@ -45,7 +45,7 @@ const inactiveBossItemListStore = ItemListStore.create({
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	// shouldSync: false,
+	shouldSync: false,
 	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
 	activeBossItemList: activeBossItemListStore,
@@ -91,24 +91,24 @@ appStore.maps.put(MapStore.create({
 	locationDetail: appStore.locationDetail,
 }));
 // Create item models.
-const itemDataFactory = (item, index, itemList) => {
+const itemDataFactory = (item, index = 0) => {
 	const id = randomId();
 	const isItemGroup = !!(item.group && item.items.length);
+
 	const itemData = {
 		id: id,
 		index: isUndefined(item.index) ? index : item.index,
 		name: item.name,
 		game: appStore.getGameByName(item.game),
 		maxQty: item.maxQty || 1,
-		// itemList,
 		type: item.type,
+		acquired: item.acquired,
 	}
 
 	if (isItemGroup) {
 		itemData.isDefault = item.isDefault || false;
 		itemData.group = item.group;
 		itemData.groupIndex = item.groupIndex || null;
-		itemData.type = item.type;
 	} else {
 		itemData.longName = item.longName;
 		itemData.image = item.image
@@ -125,28 +125,32 @@ const itemDataFactory = (item, index, itemList) => {
 	}
 	return itemData;
 };
-itemsData
-	.filter(item => item.game === appStore.selectedGame.name)
-	.forEach((item, i) => {
-		const itemData = itemDataFactory(item, i);
+const gameItemsData = itemsData.filter(item => item.game === appStore.selectedGame.name);
+gameItemsData.filter(item => item.type === 'item').forEach((item, i) => {
+	const itemData = itemDataFactory(item, i);
 
-		appStore.activeItemList.sortOrder.push(i);
-		appStore.activeItemList.items.push(ItemStore.create(itemData));
-	})
-;
-bossData
-	.filter(item => item.game === appStore.selectedGame.name)
-	.forEach((item, i) => {
-		const itemData = itemDataFactory(item, i);
+	appStore.activeItemList.sortOrder.push(i);
+	appStore.activeItemList.items.push(ItemStore.create(itemData));
+});
+// Add the dungeon items for a separate list.
+// FIXME I'm calling it bosses, but it should really be dungeons.
+const gameBossData = bossData.filter(item => item.game === appStore.selectedGame.name);
+// When constructing boss items - include in the other items collection but only if they are of "dungeon-item" type.
+// This is driven by the fact that green pendant is an item, but also used in boss item lists as well.
+gameBossData.concat(gameItemsData.filter(item => item.type === 'dungeon-item')).forEach((item, i) => {
+	const itemData = itemDataFactory(item, i);
 
-		appStore.activeBossItemList.sortOrder.push(i);
-		appStore.activeBossItemList.items.push(ItemStore.create(itemData));
-	})
-;
+	appStore.activeBossItemList.sortOrder.push(i);
+	appStore.activeBossItemList.items.push(ItemStore.create(itemData));
+});
 // Create location models.
 locationsData.forEach(loc => {
 	const selectedMap = appStore.getMapByName(loc.map);
+	let bossId = loc.boss && find(appStore.activeBossItemList.items, { name: loc.boss });
+	let prizeId = find(appStore.activeBossItemList.items, { group: 'prize' });
 
+	bossId = bossId && bossId.id;
+	prizeId = prizeId && prizeId.id;
 	selectedMap.locations.put(LocationStore.create({
 		id: `loc-${randomId()}`,
 		name: loc.name,
@@ -158,6 +162,9 @@ locationsData.forEach(loc => {
 		itemRequirements: loc.itemRequirements,
 		viewableRequirements: loc.viewableRequirements,
 		isDungeon: !!loc.isDungeon,
+		numChests: loc.numChests,
+		boss: bossId,
+		prize: prizeId,
 	}));
 
 });
@@ -174,6 +181,8 @@ window.inactiveItemList = appStore.inactiveItemList;
 window.createStorage = createStorage;
 window.getParentOfType = getParentOfType;
 window.ItemListStore = ItemListStore;
+window.LocationStore = LocationStore;
+window.getParent = getParent;
 
 if (appStore.shouldSync) {
 	const gameStorage = appStore.getGameStorage('tree');

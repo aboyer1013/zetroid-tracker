@@ -26,6 +26,9 @@ const MapStore = types
 		get selectedLocationDetails() {
 			return self.selectedLocation.details;
 		},
+		get dungeonLocations() {
+			return [...self.locations.values()].filter(loc => loc.isDungeon);
+		}
 	}))
 	.actions((self) => {
 		const setComponent = (component) => {

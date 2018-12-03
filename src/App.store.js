@@ -34,6 +34,14 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		get selectedGame() {
 			return find([...self.games.values()], { selected: true });
 		},
+		get dungeonLocations() {
+			const result = [];
+
+			[...self.maps.values()].forEach(map => {
+				result.push(map.dungeonLocations);
+			});
+			return [].concat(...result);
+		},
 		getItemListStoreByDroppableId: (droppableId) => {
 			return find(self.itemListStores, { droppableId });
 		},

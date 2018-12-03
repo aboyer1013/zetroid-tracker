@@ -79,10 +79,15 @@ const ItemListUtil = types.model()
 		get sortedItems() {
 			return sortBy([...self.items.values()], ['index']);
 		},
+		get bosses() {
+			return self.sortedItems.filter(item => item.type === 'boss');
+		},
 		isVisible: (item) => {
 			let result = false;
 
-			if (!item.group) {
+			if (item.isDungeonItem && item.acquired) {
+				result = true;
+			} else if (!item.group) {
 				result = true;
 			} else if (item.acquired) {
 				result = true;

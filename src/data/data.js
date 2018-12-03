@@ -132,6 +132,8 @@ const locationsData = [
 	    map: 'zelda3-lw',
 	    itemRequirements: ['book', 'boots'],
 		isDungeon: true,
+		boss: 'lanmolas',
+		numChests: 2,
 	},
 	{
 	    coords: [-3690,100],
@@ -139,7 +141,6 @@ const locationsData = [
 	    longName: 'Desert West Ledge',
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
-	    // itemRequirements: ['book|mirror', ],
 	},
 
 ];

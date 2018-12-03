@@ -1,4 +1,4 @@
-import { types, getParentOfType, } from 'mobx-state-tree';
+import { types, getParentOfType, getRoot } from 'mobx-state-tree';
 import { find } from 'lodash';
 import GameStore from 'Game.store';
 import ItemListStore from 'ItemList.store';
@@ -15,6 +15,7 @@ const ItemStore = types
 		hidden: false,
 		image: '',
 		index: types.integer,
+		type: types.string,
 		groupIndex: types.maybeNull(types.integer),
 		game: types.reference(GameStore),
 		acquired: false,
@@ -25,6 +26,16 @@ const ItemStore = types
 	.views(self => ({
 		get imageSrc() {
 			return `${process.env.PUBLIC_URL}/img/items/${self.game.name}/${self.image}.png`;
+		},
+		get itemListOrRoot() {
+			try {
+				return getParentOfType(self, ItemListStore);
+			} catch (error) {
+				return getRoot(self);
+			}
+		},
+		get isDungeonItem() {
+			return self.type === 'dungeon-item';
 		},
 	}))
 	.actions(self => {
@@ -48,10 +59,10 @@ const ItemStore = types
 				return;
 			}
 
-
+			// Collecting information first
 			let shouldAcquire = true;
-			const itemListStore = getParentOfType(self, ItemListStore);
-			const subItems = itemListStore.getItemsByGroup(self.group);
+			const store = self.itemListOrRoot;
+			const subItems = store.getItemsByGroup(self.group);
 			let currentSubItem = find(subItems, { acquired: true });
 
 			if (!currentSubItem) {
@@ -63,11 +74,12 @@ const ItemStore = types
 			}
 			let nextGroupIndex = forwardDirection ? currentSubItem.groupIndex + 1 : currentSubItem.groupIndex - 1;
 
+			// Logic
 			if (forwardDirection) {
 				if (nextGroupIndex === subItems.length) {
 					// We have wrapped around - put it back to default state.
 					nextGroupIndex = 0;
-					shouldAcquire = false;
+					shouldAcquire = self.isDungeonItem;
 				} else if (currentSubItem.isDefault && !currentSubItem.acquired) {
 					currentSubItem.acquire(true);
 					return;
@@ -75,7 +87,7 @@ const ItemStore = types
 			} else if (nextGroupIndex === -1) {
 				if (currentSubItem.acquired) {
 					nextGroupIndex = 0;
-					shouldAcquire = false;
+					shouldAcquire = self.isDungeonItem;
 				} else {
 					nextGroupIndex = subItems.length - 1;
 				}

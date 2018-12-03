@@ -13,11 +13,5 @@ const bossData = [
 	{ name: 'chestclosed', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', type: 'chest', },
 	{ name: 'chestopen', longName: 'Open Chest', game: 'zelda3', image: 'chest-open', type: 'chest', },
 ];
-const dungeonData = [
-	{
-		name: 'desertpalace',
-		longName:''
-	}
-]
 
 export default bossData;
