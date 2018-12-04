@@ -61,7 +61,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 		if (isViewable && !selectedLocation.isComplete) {
 			isViewable = (
-				<div className="tags has-addons is-marginless" title="Even though this item is not available to acquire, you can see what the item is">
+				<div className="tags has-addons is-marginless is-narrow" title="Even though this item is not available to acquire, you can see what the item is">
 					<span className="tag is-info icon"><i className="fas fa-info" /></span>
 					<span className="tag">viewable</span>
 				</div>
@@ -69,33 +69,29 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 		return (
 			<div className="is-flex-desktop columns details-container content map-info has-background-white is-marginless">
-				<div className="column details-location">
-
-						<div className="details-title">
-							{longName}
+				<div className="column details-location is-narrow">
+					<div className="details-title">
+						{longName}
+					</div>
+					<div className="columns">
+						<div className="column details-controls">
+							<div className="buttons">
+								<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
+									<span className="icon"><i className="fas fa-star" /></span>
+								</button>
+								{progressionButton}
+							</div>
 						</div>
-						<div className="columns">
-							<div className="column details-controls">
-								<div className="buttons">
-									<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)} className={favoriteClasses}>
-										<span className="icon"><i className="fas fa-star" /></span>
-									</button>
-									{progressionButton}
+						<div className="column is-narrow">
+							<div className="tags-container">
+								{isViewable}
+								<div className="tags has-addons is-marginless">
+									<span className="tag is-info icon"><i className="fas fa-info" /></span>
+									<span className="tag">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
 								</div>
 							</div>
-							<div className="column is-narrow">
-								<div className="tags-container">
-									{isViewable}
-									<div className="tags has-addons is-marginless">
-										<span className="tag is-info icon"><i className="fas fa-info" /></span>
-										<span className="tag">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
-									</div>
-								</div>
-
-							</div>
-
 						</div>
-
+					</div>
 				</div>
 				<div className="column details-requirements">
 					<h6>Requirements:</h6>
