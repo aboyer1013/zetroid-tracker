@@ -30,6 +30,10 @@ html, body {
 	bottom: 0;
 	left: 0;
 }
+.flexlayout__tab[style*='z-index'] {
+	// Bug fix for when map panel is maximized. It still shows both maps.
+	z-index: 401 !important;
+}
 button {
 	cursor: pointer;
 }

@@ -22,6 +22,16 @@ const Layout = class Layout extends Component {
 					onModelChange={model => {
 						self.props.store.layout.saveToLocalStorage(model.toJson())
 					}}
+					onRenderTab={(a,b,c,d) => {
+
+					}}
+					onRenderTabSet={(a,b,c,d) => {
+
+					}}
+					classNameMapper={className => {
+						// console.log(className);
+						return className;
+					}}
 				/>
 			</div>
 		);

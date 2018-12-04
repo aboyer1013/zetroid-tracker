@@ -45,7 +45,7 @@ const inactiveBossItemListStore = ItemListStore.create({
 const appStore = AppStore.create({
 	id: randomId(),
 	games: {},
-	// shouldSync: false,
+	shouldSync: false,
 	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
 	activeBossItemList: activeBossItemListStore,

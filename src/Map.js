@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { debounce, camelCase, pick, } from 'lodash';
+import { debounce, camelCase, pick } from 'lodash';
 import '../node_modules/react-resizable/css/styles.css';
 
 const L = window.L;
@@ -12,11 +12,18 @@ const Map = class Map extends Component {
 		this.addMarker = this.addMarker.bind(this);
 		this.onResizeHandler = this.onResizeHandler.bind(this);
 		this.props.layoutNode.setEventListener('resize', function (data) {
+			// this.mapContainerRef.current.parentNode.classList.add(`${this.props.mapStore.name}-container`, 'layout-map-container');
 			this.onResizeHandler(pick(data.rect, ['width', 'height']));
 		}.bind(this));
-		this.props.layoutNode.setEventListener('visibility', function (data) {
+		this.props.layoutNode.setEventListener('close', function (data) {
+			console.log(`${this.props.mapStore.name} visibility:`, data);
 			this.resize();
 		}.bind(this));
+		this.props.layoutNode.setEventListener('visibility', function (data) {
+			console.log(`${this.props.mapStore.name} visibility:`, data);
+			this.resize();
+		}.bind(this));
+
 	}
 
 	markers = {};
@@ -175,33 +182,10 @@ const Map = class Map extends Component {
 			<div className="map-container">
 				<div
 					id={`map-${this.props.id}`}
-					ref={this.mapRef}
 					className="map"
 				/>
 			</div>
 		);
-		/*return (
-			<div className="message is-primary map-container has-background-grey-darker is-unselectable">
-				<header className="message-header" ref={this.draggableTarget}>
-					<div className="buttons has-addons is-marginless">
-						<button onClick={this.map.zoomOut} className="button">
-							<span className="icon"><i className="fas fa-search-minus" /></span>
-						</button>
-						<button onClick={this.map.zoomIn} className="button">
-							<span className="icon"><i className="fas fa-search-plus" /></span>
-						</button>
-					</div>
-					<div className="buttons has-addons is-marginless">
-						<button title="Reset zoom and center" onClick={this.resetToCenter} className="button">
-							<span className="icon"><i className="fas fa-compress" /></span>
-						</button>
-					</div>
-				</header>
-				<div className="message-body map-body">
-					<div id={`map-${this.props.id}`} ref={this.mapRef} className="map" />
-				</div>
-			</div>
-		);*/
 	}
 };
 
