@@ -22,7 +22,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 
 		if (selectedLocation) {
 
-			if (selectedLocation.isComplete) {
+			if (selectedLocation.isDungeonComplete || selectedLocation.isComplete) {
 				progressionButton = (
 					<button onClick={selectedLocation.toggleComplete} className="button is-dark">
 						<span className="icon"><i className="fas fa-check" /></span>
@@ -59,7 +59,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		if (notes.length) {
 			notes = (<div className="column details-notes is-narrow"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
-		if (isViewable && !selectedLocation.isComplete) {
+		if (isViewable && !selectedLocation.isComplete && !selectedLocation.isAvailable) {
 			isViewable = (
 				<div className="tags has-addons is-marginless is-narrow" title="Even though this item is not available to acquire, you can see what the item is">
 					<span className="tag is-info icon"><i className="fas fa-info" /></span>

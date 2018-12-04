@@ -40,11 +40,6 @@ const LocationStore = types
 		customItemRequirements: {
 
 		},
-		dungeonRequirements: {
-			desertpalace: () => {
-
-			},
-		}
 	}))
 	.views((self) => ({
 		get details() {
@@ -94,19 +89,23 @@ const LocationStore = types
 			return self.viewableRequirements[self.name]();
 		},
 		get isDungeonComplete() {
-			if (!self.dungeonRequirements.length) {
-				return false;
-			}
-			const dungeonReqs = self.dungeonRequirements.map(req => getRoot(self).getItemByName(req));
-
-			return dungeonReqs.every(item => item && item.acquired);
-		}
+			return self.isDungeon && self.boss.acquired && self.chest.qty < 1;
+		},
 	}))
 	.actions((self) => {
 		const setFavorite = (newFavorite) => {
 			self.isFavorite = newFavorite;
 		};
 		const toggleComplete = () => {
+			if (self.isDungeon) {
+				if (!self.isComplete) {
+					self.boss.acquire(true);
+					self.chest.setQty(0);
+				} else {
+					self.boss.acquire(false);
+					self.chest.setQty(self.chest.maxQty);
+				}
+			}
 			self.isComplete = !self.isComplete;
 		};
 

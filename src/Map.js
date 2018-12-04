@@ -100,7 +100,6 @@ const Map = class Map extends Component {
 		const self = this;
 		const theLocation = this.props.mapStore.locations.get(loc.id);
 		const markerIcon = L.AwesomeMarkers.icon({
-			icon: 'coffee',
 			markerColor: 'red',
 			prefix: 'fa',
 			className: 'awesome-marker icon',
@@ -158,9 +157,13 @@ const Map = class Map extends Component {
 			markerOptions.icon = icon.VIEWABLE;
 		}
 		if (loc.isDungeon && !loc.isFavorite) {
-			markerOptions.icon = icon.DUNGEON;
 			if (loc.isDungeonComplete) {
+				markerOptions.markerColor = markerColor.COMPLETE;
 				markerOptions.icon = icon.COMPLETE;
+			} else if (loc.boss.acquired) {
+				markerOptions.icon = icon.AVAILABLE;
+			} else {
+				markerOptions.icon = icon.DUNGEON;
 			}
 		}
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));

@@ -17,7 +17,7 @@ const Dungeon = class Dungeon extends Component {
 		}
 
 		return (
-			<div className="dungeon-container has-text-white">
+			<div className="dungeon-container has-text-white is-unselectable">
 				<h6 className="dungeon-title">{loc.longName}</h6>
 				<div className="dungeon-grid-container">
 					<div className="boss"><Item itemListStore={itemListStore} item={loc.boss} /></div>
