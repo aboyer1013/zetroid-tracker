@@ -15,7 +15,7 @@ import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
 import LayoutStore from 'Layout.store';
 import * as serviceWorker from 'serviceWorker';
-import { isUndefined, find } from 'lodash';
+import { isUndefined, find, includes } from 'lodash';
 import { createStorage } from 'persistme';
 
 const activeItemListStore = ItemListStore.create({
@@ -91,6 +91,7 @@ appStore.maps.put(MapStore.create({
 	locationDetail: appStore.locationDetail,
 }));
 // Create item models.
+// TODO Consider not cherry-picking item fields and just apply all the data at once - or use defaults
 const itemDataFactory = (item, index = 0) => {
 	const id = randomId();
 	const isItemGroup = !!(item.group && item.items.length);
@@ -104,6 +105,7 @@ const itemDataFactory = (item, index = 0) => {
 		maxQty: item.maxQty || 1,
 		type: item.type,
 		acquired: item.acquired,
+		imageEmpty: item.imageEmpty,
 	}
 
 	if (isItemGroup) {
@@ -127,7 +129,7 @@ const itemDataFactory = (item, index = 0) => {
 	return itemData;
 };
 const gameItemsData = itemsData.filter(item => item.game === appStore.selectedGame.name);
-gameItemsData.filter(item => item.type === 'item').forEach((item, i) => {
+gameItemsData.filter(item => includes(item.type, 'item')).forEach((item, i) => {
 	const itemData = itemDataFactory(item, i);
 
 	appStore.activeItemList.sortOrder.push(i);
@@ -138,7 +140,7 @@ gameItemsData.filter(item => item.type === 'item').forEach((item, i) => {
 const gameBossData = bossData.filter(item => item.game === appStore.selectedGame.name);
 // When constructing boss items - include in the other items collection but only if they are of "dungeon-item" type.
 // This is driven by the fact that green pendant is an item, but also used in boss item lists as well.
-gameBossData.concat(gameItemsData.filter(item => item.type === 'dungeon-item')).forEach((item, i) => {
+gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-item'))).forEach((item, i) => {
 	const itemData = itemDataFactory(item, i);
 
 	appStore.activeBossItemList.sortOrder.push(i);

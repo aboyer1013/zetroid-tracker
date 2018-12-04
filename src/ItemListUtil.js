@@ -80,7 +80,7 @@ const ItemListUtil = types.model()
 			return sortBy([...self.items.values()], ['index']);
 		},
 		get bosses() {
-			return self.sortedItems.filter(item => item.type === 'boss');
+			return self.sortedItems.filter(item => item.isBoss);
 		},
 		isVisible: (item) => {
 			let result = false;

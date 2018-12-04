@@ -18,14 +18,18 @@ const Item = class Item extends Component {
 			'is-hidden': !isVisible,
 			'is-item-group': !!item.group,
 		});
+		let imageSrc = item.imageSrc;
+
+		if (item.isChest && item.qty < 1) {
+			imageSrc = item.imageEmptySrc;
+		}
 
 		return (
 			<div
 				data-qty={item.qty}
 				onClick={event => {
 					if (!this.props.isReadOnly) {
-						// FIXME This is gross - item.type should be refactored as an array of types instead.
-						if (includes(item.name, 'chest')) {
+						if (item.isChest) {
 							item.activateNext(event.shiftKey);
 						} else {
 							item.activateNext(!event.shiftKey);
@@ -34,7 +38,7 @@ const Item = class Item extends Component {
 				}}
 				key={item.id}
 				className={itemClasses}>
-				<img src={item.imageSrc} alt={item.longName} title={item.longName} />
+				<img src={imageSrc} alt={item.longName} title={item.longName} />
 			</div>
 		);
 	}

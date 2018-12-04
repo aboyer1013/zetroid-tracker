@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import classNames from 'classnames';
-import { find } from 'lodash';
 import Item from 'Item';
 
 const Dungeon = class Dungeon extends Component {
@@ -17,7 +15,6 @@ const Dungeon = class Dungeon extends Component {
 		if (loc.chest) {
 			chestElem = (<div className="chests"><Item itemListStore={itemListStore} item={loc.chest} /></div>);
 		}
-		console.log(loc);
 
 		return (
 			<div className="dungeon-container has-text-white">
@@ -30,7 +27,11 @@ const Dungeon = class Dungeon extends Component {
 						)}
 					</div>
 					{chestElem}
-					<div className="medallion">M</div>
+					{/*<div className="medallion">
+						{this.props.store.getItemOrGroupByName('medallion').items.map(subItem =>
+							<Item key={subItem.id} itemListStore={itemListStore} item={subItem} />
+						)}
+					</div>*/}
 				</div>
 			</div>
 		);

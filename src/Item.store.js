@@ -1,5 +1,5 @@
 import { types, getParentOfType, getRoot } from 'mobx-state-tree';
-import { find } from 'lodash';
+import { find, includes } from 'lodash';
 import GameStore from 'Game.store';
 import ItemListStore from 'ItemList.store';
 
@@ -11,11 +11,11 @@ const ItemStore = types
 		longName: types.maybeNull(types.string),
 		group: types.maybeNull(types.string),
 		items: types.optional(types.array(types.late(() => ItemStore)), []),
-		// itemList: types.reference(types.late(() => ItemListStore)),
 		hidden: false,
 		image: '',
+		imageEmpty: '',
 		index: types.integer,
-		type: types.string,
+		type: types.array(types.string),
 		groupIndex: types.maybeNull(types.integer),
 		game: types.reference(GameStore),
 		acquired: false,
@@ -27,6 +27,9 @@ const ItemStore = types
 		get imageSrc() {
 			return `${process.env.PUBLIC_URL}/img/items/${self.game.name}/${self.image}.png`;
 		},
+		get imageEmptySrc() {
+			return `${process.env.PUBLIC_URL}/img/items/${self.game.name}/${self.imageEmpty}.png`;
+		},
 		get itemListOrRoot() {
 			try {
 				return getParentOfType(self, ItemListStore);
@@ -35,8 +38,17 @@ const ItemStore = types
 			}
 		},
 		get isDungeonItem() {
-			return self.type === 'dungeon-item';
+			return includes(self.type, 'dungeon-item');
 		},
+		get isItem() {
+			return includes(self.type, 'item');
+		},
+		get isBoss() {
+			return includes(self.type, 'boss');
+		},
+		get isChest() {
+			return includes(self.type, 'chest');
+		}
 	}))
 	.actions(self => {
 		const acquire = (newAcquired) => {
