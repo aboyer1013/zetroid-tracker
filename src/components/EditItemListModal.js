@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { getSnapshot, applySnapshot } from 'mobx-state-tree';
-import ItemList from 'ItemList';
+import ItemList from './ItemList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { find } from 'lodash';
 
@@ -35,20 +35,20 @@ class EditItemListModal extends Component {
 		const store = this.props.store;
 		const itemListStore = store.activeItemList;
 		return (
-			<div className="modal-card edit-item-list-modal">
-				<header className="modal-card-head">
-					<p className="modal-card-title">Customize Trackables</p>
-					<button className="delete" aria-label="close" onClick={store.closeModal} />
+			<div className='modal-card edit-item-list-modal'>
+				<header className='modal-card-head'>
+					<p className='modal-card-title'>Customize Trackables</p>
+					<button className='delete' aria-label='close' onClick={store.closeModal} />
 				</header>
-				<section className="modal-card-body">
-					<div className="content">
+				<section className='modal-card-body'>
+					<div className='content'>
 						<p>Customize trackable items by dragging and dropping between both the <em>Active Items </em>
 							and <em>Inactive Items</em> areas.</p>
-						<div className="item-list-group-container">
+						<div className='item-list-group-container'>
 							<h4>Items</h4>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
-								<div className="item-list-group active-item-list-group">
-									<h5 className="item-list-group-subtitle">Active</h5>
+								<div className='item-list-group active-item-list-group'>
+									<h5 className='item-list-group-subtitle'>Active</h5>
 									<ItemList
 										itemListStore={itemListStore}
 										items={itemListStore.sortedItems}
@@ -57,9 +57,9 @@ class EditItemListModal extends Component {
 										draggableEnabled={true}
 									/>
 								</div>
-								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt" /></div>
-								<div className="item-list-group inactive-item-list-group">
-									<h5 className="item-list-group-subtitle">Inactive</h5>
+								<div className='icon item-exchange-divider'><i className='fas fa-exchange-alt' /></div>
+								<div className='item-list-group inactive-item-list-group'>
+									<h5 className='item-list-group-subtitle'>Inactive</h5>
 									<ItemList
 										itemListStore={store.inactiveItemList}
 										items={store.inactiveItemList.sortedItems}
@@ -70,11 +70,11 @@ class EditItemListModal extends Component {
 								</div>
 							</DragDropContext>
 						</div>
-						<div className="item-list-group-container">
+						<div className='item-list-group-container'>
 							<h4>Bosses</h4>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
-								<div className="item-list-group active-item-list-group">
-									<h5 className="item-list-group-subtitle">Active</h5>
+								<div className='item-list-group active-item-list-group'>
+									<h5 className='item-list-group-subtitle'>Active</h5>
 									<ItemList
 										itemListStore={store.activeBossItemList}
 										items={store.activeBossItemList.bosses}
@@ -83,9 +83,9 @@ class EditItemListModal extends Component {
 										draggableEnabled={true}
 									/>
 								</div>
-								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt" /></div>
-								<div className="item-list-group inactive-item-list-group">
-									<h5 className="item-list-group-subtitle">Inactive</h5>
+								<div className='icon item-exchange-divider'><i className='fas fa-exchange-alt' /></div>
+								<div className='item-list-group inactive-item-list-group'>
+									<h5 className='item-list-group-subtitle'>Inactive</h5>
 									<ItemList
 										itemListStore={store.inactiveBossItemList}
 										items={store.inactiveBossItemList.bosses}
@@ -98,8 +98,8 @@ class EditItemListModal extends Component {
 						</div>
 					</div>
 				</section>
-				<footer className="modal-card-foot">
-					<button className="button" onClick={() => {
+				<footer className='modal-card-foot'>
+					<button className='button' onClick={() => {
 						try {
 							applySnapshot(this.props.store, this.snapshot);
 						} catch (err) {

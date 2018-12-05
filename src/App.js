@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
-import Map from 'Map';
-import NavBar from 'NavBar';
-import Modal from 'Modal';
-import FileImportModal from 'FileImportModal';
-import FileExportModal from 'FileExportModal';
-import HelpModal from 'HelpModal';
-import EditItemListModal from 'EditItemListModal';
+import Map from 'components/Map';
+import NavBar from 'components/NavBar';
+import Modal from 'components/Modal';
+import FileImportModal from 'components/FileImportModal';
+import FileExportModal from 'components/FileExportModal';
+import HelpModal from 'components/HelpModal';
+import EditItemListModal from 'components/EditItemListModal';
 import { randomId } from './util';
 import { find, get } from 'lodash';
 import 'scss/App.scss';
-import LocationDetail from 'LocationDetail';
-import ItemList from 'ItemList';
-import Layout from 'Layout';
-import DungeonList from 'DungeonList';
+import LocationDetail from 'components/LocationDetail';
+import ItemList from 'components/ItemList';
+import Layout from 'components/Layout';
+import DungeonList from 'components/DungeonList';
 
 class App extends Component {
 

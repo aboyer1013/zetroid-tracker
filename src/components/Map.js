@@ -1,8 +1,8 @@
-import React, { Component, createRef } from 'react';
-import { autorun } from 'mobx';
-import { observer, inject } from 'mobx-react';
-import { debounce, camelCase, pick } from 'lodash';
-import '../node_modules/react-resizable/css/styles.css';
+import React, {Component} from 'react';
+import {autorun} from 'mobx';
+import {observer, inject} from 'mobx-react';
+import {debounce, camelCase, pick} from 'lodash';
+import '../../node_modules/react-resizable/css/styles.css';
 
 const L = window.L;
 const Map = class Map extends Component {
@@ -34,12 +34,13 @@ const Map = class Map extends Component {
 		this.initMap();
 		this.initReactions();
 	}
+
 	initMap() {
 		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
 			crs: L.CRS.Simple,
-			center: [-2128,2048],
+			center: [-2128, 2048],
 			zoom: this.props.mapStore.zoom,
-			maxBounds: [[0,0], [-4256, 4096]],
+			maxBounds: [[0, 0], [-4256, 4096]],
 			maxBoundsViscosity: 1,
 			attributionControl: false,
 			zoomControl: false,
@@ -58,6 +59,7 @@ const Map = class Map extends Component {
 		// For debugging.
 		window[camelCase(this.props.mapStore.name)] = this.map;
 	}
+
 	initReactions() {
 		const self = this;
 
@@ -91,11 +93,13 @@ const Map = class Map extends Component {
 			});
 		});
 	}
+
 	resize() {
 		// Why not just call it outright? Because it's flaky and we need a timeout.
 		this.map.invalidateSize();
 		this.map.fitWorld({maxZoom: -2});
 	}
+
 	addMarker(loc) {
 		const self = this;
 		const theLocation = this.props.mapStore.locations.get(loc.id);
@@ -107,7 +111,7 @@ const Map = class Map extends Component {
 		});
 
 		this.markers[loc.id] = L
-			.marker(loc.coords, { icon: markerIcon })
+			.marker(loc.coords, {icon: markerIcon})
 			.bindTooltip(theLocation.longName)
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
@@ -118,6 +122,7 @@ const Map = class Map extends Component {
 		;
 		this.setProgression(this.markers[loc.id], loc);
 	}
+
 	setProgression(marker, loc) {
 		const markerColor = {
 			VIEWABLE: 'blue',
@@ -140,7 +145,7 @@ const Map = class Map extends Component {
 			prefix: 'fa',
 			className: 'awesome-marker icon',
 			extraClasses: 'fas',
-			tooltipAnchor: L.point(20,-25),
+			tooltipAnchor: L.point(20, -25),
 		};
 
 		if (loc.isFavorite) {
@@ -168,24 +173,27 @@ const Map = class Map extends Component {
 		}
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}
+
 	onResizeHandler(data) {
-		const { width: newWidth, height: newHeight } = data;
+		const {width: newWidth, height: newHeight} = data;
 
 		this.props.mapStore.setWidth(newWidth);
 		this.props.mapStore.setHeight(newHeight);
 		this.resize();
 	}
+
 	removeMarker(markerId) {
 		this.markers[markerId].off('click');
 		this.map.removeLayer(this.markers[markerId]);
 		delete this.markers[markerId];
 	}
+
 	render() {
 		return (
-			<div className="map-container">
+			<div className='map-container'>
 				<div
 					id={`map-${this.props.id}`}
-					className="map"
+					className='map'
 				/>
 			</div>
 		);
