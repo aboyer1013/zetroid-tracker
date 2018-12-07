@@ -30,13 +30,13 @@ const inactiveItemListStore = ItemListStore.create({
 	sortOrder: [],
 	droppableId: 'inactive-itemList-droppable',
 });
-const activeBossItemListStore = ItemListStore.create({
+const activeDungeonItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
 	droppableId: 'active-bossItemList-droppable',
 });
-const inactiveBossItemListStore = ItemListStore.create({
+const inactiveDungeonItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
@@ -48,8 +48,8 @@ const appStore = AppStore.create({
 	// shouldSync: false,
 	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
-	activeBossItemList: activeBossItemListStore,
-	inactiveBossItemList: inactiveBossItemListStore,
+	activeDungeonItemList: activeDungeonItemListStore,
+	inactiveDungeonItemList: inactiveDungeonItemListStore,
 	maps: {},
 	locationDetail: LocationDetailStore.create({
 		id: randomId(),
@@ -143,14 +143,14 @@ const gameBossData = bossData.filter(item => item.game === appStore.selectedGame
 gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-item'))).forEach((item, i) => {
 	const itemData = itemDataFactory(item, i);
 
-	appStore.activeBossItemList.sortOrder.push(i);
-	appStore.activeBossItemList.items.push(ItemStore.create(itemData));
+	appStore.activeDungeonItemList.sortOrder.push(i);
+	appStore.activeDungeonItemList.items.push(ItemStore.create(itemData));
 });
 // Create location models.
 locationsData.forEach(loc => {
 	const selectedMap = appStore.getMapByName(loc.map);
-	let bossId = loc.boss && find(appStore.activeBossItemList.items, { name: loc.boss });
-	let prizeId = find(appStore.activeBossItemList.items, { group: 'prize' });
+	let bossId = loc.boss && find(appStore.activeDungeonItemList.items, { name: loc.boss });
+	let prizeId = find(appStore.activeDungeonItemList.items, { group: 'prize' });
 	let chestItem = null;
 
 	if (loc.numChests) {

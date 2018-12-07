@@ -142,6 +142,14 @@ const locationsData = [
 	    game: 'zelda3',
 	    map: 'zelda3-lw',
 	},
+	{
+	    coords: [-1215,2460],
+	    name: 'kingtomb',
+	    longName: 'King’s Tomb',
+	    game: 'zelda3',
+	    map: 'zelda3-lw',
+	    itemRequirements: [ ],
+	},
 
 ];
 

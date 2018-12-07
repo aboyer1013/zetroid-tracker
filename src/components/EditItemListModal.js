@@ -76,8 +76,8 @@ class EditItemListModal extends Component {
 								<div className='item-list-group active-item-list-group'>
 									<h5 className='item-list-group-subtitle'>Active</h5>
 									<ItemList
-										itemListStore={store.activeBossItemList}
-										items={store.activeBossItemList.bosses}
+										itemListStore={store.activeDungeonItemList}
+										items={store.activeDungeonItemList.bosses}
 										direction={itemListStore.direction}
 										isReadOnly={true}
 										draggableEnabled={true}
@@ -87,8 +87,8 @@ class EditItemListModal extends Component {
 								<div className='item-list-group inactive-item-list-group'>
 									<h5 className='item-list-group-subtitle'>Inactive</h5>
 									<ItemList
-										itemListStore={store.inactiveBossItemList}
-										items={store.inactiveBossItemList.bosses}
+										itemListStore={store.inactiveDungeonItemList}
+										items={store.inactiveDungeonItemList.bosses}
 										isReadOnly={true}
 										direction={itemListStore.direction}
 										draggableEnabled={true}

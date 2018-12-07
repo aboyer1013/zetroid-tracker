@@ -16,11 +16,9 @@ const Map = class Map extends Component {
 			this.onResizeHandler(pick(data.rect, ['width', 'height']));
 		}.bind(this));
 		this.props.layoutNode.setEventListener('close', function (data) {
-			console.log(`${this.props.mapStore.name} visibility:`, data);
 			this.resize();
 		}.bind(this));
 		this.props.layoutNode.setEventListener('visibility', function (data) {
-			console.log(`${this.props.mapStore.name} visibility:`, data);
 			this.resize();
 		}.bind(this));
 
@@ -97,7 +95,7 @@ const Map = class Map extends Component {
 	resize() {
 		// Why not just call it outright? Because it's flaky and we need a timeout.
 		this.map.invalidateSize();
-		this.map.fitWorld({maxZoom: -2});
+		// this.map.fitWorld({maxZoom: -2});
 	}
 
 	addMarker(loc) {

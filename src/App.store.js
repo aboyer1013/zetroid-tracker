@@ -12,8 +12,8 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		games: types.map(GameStore),
 		activeItemList: ItemListStore,
 		inactiveItemList: ItemListStore,
-		activeBossItemList: ItemListStore,
-		inactiveBossItemList: ItemListStore,
+		activeDungeonItemList: ItemListStore,
+		inactiveDungeonItemList: ItemListStore,
 		maps: types.map(MapStore),
 		locationDetail: LocationDetailStore,
 		isModalOpen: false,
@@ -49,8 +49,8 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			return (
 				self.activeItemList.items.concat(
 					self.inactiveItemList.items,
-					self.activeBossItemList.items,
-					self.inactiveBossItemList.items,
+					self.activeDungeonItemList.items,
+					self.inactiveDungeonItemList.items,
 				)
 			);
 		},
@@ -58,8 +58,8 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			return [
 				self.inactiveItemList,
 				self.activeItemList,
-				self.inactiveBossItemList,
-				self.activeBossItemList,
+				self.inactiveDungeonItemList,
+				self.activeDungeonItemList,
 			];
 		}
 	}))

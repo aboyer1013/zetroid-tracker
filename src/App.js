@@ -66,8 +66,8 @@ class App extends Component {
 
 			switch (config.listType) {
 				case 'boss':
-					itemListStore = this.props.store.activeBossItemList;
-					items = this.props.store.activeBossItemList.bosses;
+					itemListStore = this.props.store.activeDungeonItemList;
+					items = this.props.store.activeDungeonItemList.bosses;
 					return (
 						<DungeonList
 							itemListStore={itemListStore}
