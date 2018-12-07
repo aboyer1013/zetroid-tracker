@@ -14,6 +14,7 @@ import LocationStore from 'Location.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
 import LayoutStore from 'Layout.store';
+import ConfigStore from 'Config.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes } from 'lodash';
 import { createStorage } from 'persistme';
@@ -42,8 +43,13 @@ const inactiveDungeonItemListStore = ItemListStore.create({
 	sortOrder: [],
 	droppableId: 'inactive-bossItemList-droppable',
 });
+const configStore = ConfigStore.create({
+	id: randomId(),
+});
 const appStore = AppStore.create({
 	id: randomId(),
+	version: 1,
+	config: configStore,
 	games: {},
 	// shouldSync: false,
 	activeItemList: activeItemListStore,

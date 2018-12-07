@@ -5,10 +5,13 @@ import MapStore from 'Map.store';
 import LocationDetailStore from 'LocationDetail.store';
 import ItemListUtil from 'ItemListUtil';
 import LayoutStore from 'Layout.store';
+import ConfigStore from 'Config.store';
 import { find } from 'lodash';
 import { createStorage } from 'persistme';
 
 const AppStore = types.compose(ItemListUtil, types.model({
+		config: ConfigStore,
+		version: types.number,
 		games: types.map(GameStore),
 		activeItemList: ItemListStore,
 		inactiveItemList: ItemListStore,
