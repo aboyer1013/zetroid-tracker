@@ -7,7 +7,7 @@ import FileImportModal from 'components/FileImportModal';
 import FileExportModal from 'components/FileExportModal';
 import HelpModal from 'components/HelpModal';
 import EditItemListModal from 'components/EditItemListModal';
-import { randomId } from './util';
+import { randomId } from 'utilities/util';
 import { find, get } from 'lodash';
 import 'scss/App.scss';
 import LocationDetail from 'components/LocationDetail';

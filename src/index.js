@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
 import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent } from 'mobx-state-tree';
-import { randomId } from './util';
+import { randomId } from 'utilities/util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
 import GameStore from 'Game.store';

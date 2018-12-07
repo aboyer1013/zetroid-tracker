@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
-import Item from './Item';
+import Item from 'components/Item';
 
 const Dungeon = ({itemListStore, loc}) => (
 	<div className='dungeon-container has-text-white is-unselectable'>

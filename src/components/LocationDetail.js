@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import ItemIconList from './ItemIconList';
+import ItemIconList from 'components/ItemIconList';
 import {get} from 'lodash';
 import classNames from 'classnames';
 import {observer, inject} from 'mobx-react';
-import LocationNotes from './LocationNotes';
+import LocationNotes from 'components/LocationNotes';
 
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
 	render() {

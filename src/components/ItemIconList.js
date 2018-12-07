@@ -1,7 +1,6 @@
 import React from 'react';
-import ItemIcon from './ItemIcon';
+import ItemIcon from 'components/ItemIcon';
 import {get} from 'lodash';
-import '../scss/App.scss';
 import classNames from 'classnames';
 import {observer, inject} from 'mobx-react';
 
