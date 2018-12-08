@@ -17,7 +17,7 @@ const DungeonList = ({items, store, itemListStore }) => {
 				<Dungeon
 					key={item.id}
 					loc={dungeonLocation}
-					itemListStore
+					itemListStore={itemListStore}
 				/>
 			);
 		}

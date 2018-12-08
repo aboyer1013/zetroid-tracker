@@ -27,9 +27,9 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'mp-upgrade-11',  longName: '1/1 Magic',         game: 'zelda3', image: 'mpupgrade0', group: 'mp-upgrade', groupIndex: 0, isDefault: true, },
-			{ type: ['item'], name: 'mp-upgrade-12',  longName: '1/2 Magic',         game: 'zelda3', image: 'mpupgrade1', group: 'mp-upgrade', groupIndex: 1, },
-			{ type: ['item'], name: 'mp-upgrade-14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mp-upgrade', groupIndex: 2, },
+			{ type: ['item'], name: 'mp-upgrade-11',  longName: '1/1 Magic',         game: 'zelda3', image: 'mpupgrade0', group: 'mp-upgrade', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'mp-upgrade-12',  longName: '1/2 Magic',         game: 'zelda3', image: 'mpupgrade1', group: 'mp-upgrade', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'mp-upgrade-14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mp-upgrade', groupIndex: 2, tier: 3, },
 		]
 	},
 	// {
@@ -46,9 +46,9 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'jerkin',         longName: 'Green Jerkin',      game: 'zelda3', image: 'tunic1', group: 'armor', groupIndex: 0, isDefault: true, },
-			{ type: ['item'], name: 'blue-mail',      longName: 'Blue Mail',         game: 'zelda3', image: 'tunic2', group: 'armor', groupIndex: 1, },
-			{ type: ['item'], name: 'red-mail',       longName: 'Red Mail',          game: 'zelda3', image: 'tunic3', group: 'armor', groupIndex: 2, },
+			{ type: ['item'], name: 'jerkin',         longName: 'Green Jerkin',      game: 'zelda3', image: 'tunic1', group: 'armor', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'blue-mail',      longName: 'Blue Mail',         game: 'zelda3', image: 'tunic2', group: 'armor', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'red-mail',       longName: 'Red Mail',          game: 'zelda3', image: 'tunic3', group: 'armor', groupIndex: 2, tier: 3, },
 		],
 	},
 	{
@@ -56,9 +56,9 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'boomerang',      longName: 'Boomerang',         game: 'zelda3', image: 'boomerang1', group: 'boomerang', groupIndex: 0, isDefault: true, },
-			{ type: ['item'], name: 'm-boomerang',    longName: 'Magical Boomerang', game: 'zelda3', image: 'boomerang2', group: 'boomerang', groupIndex: 1,  },
-			{ type: ['item'], name: 'all-boomerangs',    longName: 'All Boomerangs', game: 'zelda3', image: 'boomerang3', group: 'boomerang', groupIndex: 2,  },
+			{ type: ['item'], name: 'boomerang',      longName: 'Boomerang',         game: 'zelda3', image: 'boomerang1', group: 'boomerang', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'm-boomerang',    longName: 'Magical Boomerang', game: 'zelda3', image: 'boomerang2', group: 'boomerang', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'all-boomerangs',    longName: 'All Boomerangs', game: 'zelda3', image: 'boomerang3', group: 'boomerang', groupIndex: 2, tier: 3, },
 		],
 	},
 	{ type: ['item'], name: 'bomb',           longName: 'Bomb',              game: 'zelda3', image: 'bomb1', },
@@ -68,10 +68,10 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'sword',          longName: 'Fighter’s Sword',   game: 'zelda3', image: 'sword1', group: 'sword', groupIndex: 0, isDefault: true, },
-			{ type: ['item'], name: 'master-sword',   longName: 'Master Sword',      game: 'zelda3', image: 'sword2', group: 'sword', groupIndex: 1, },
-			{ type: ['item'], name: 'tempered-sword', longName: 'Tempered Sword',    game: 'zelda3', image: 'sword3', group: 'sword', groupIndex: 2, },
-			{ type: ['item'], name: 'golden-sword',   longName: 'Golden Sword',      game: 'zelda3', image: 'sword4', group: 'sword', groupIndex: 3, },
+			{ type: ['item'], name: 'fighters-sword',          longName: 'Fighter’s Sword',   game: 'zelda3', image: 'sword1', group: 'sword', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'master-sword',   longName: 'Master Sword',      game: 'zelda3', image: 'sword2', group: 'sword', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'tempered-sword', longName: 'Tempered Sword',    game: 'zelda3', image: 'sword3', group: 'sword', groupIndex: 2, tier: 3, },
+			{ type: ['item'], name: 'golden-sword',   longName: 'Golden Sword',      game: 'zelda3', image: 'sword4', group: 'sword', groupIndex: 3, tier: 4, },
 		],
 	},
 	{
@@ -79,9 +79,9 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'shield',         longName: 'Fighter’s Shield',  game: 'zelda3', image: 'shield1', group: 'shield', groupIndex: 0, isDefault: true, },
-			{ type: ['item'], name: 'red-shield',     longName: 'Red Shield',        game: 'zelda3', image: 'shield2', group: 'shield', groupIndex: 1, },
-			{ type: ['item'], name: 'mirror-shield',  longName: 'Mirror Shield',     game: 'zelda3', image: 'shield3', group: 'shield', groupIndex: 2, },
+			{ type: ['item'], name: 'shield',         longName: 'Fighter’s Shield',  game: 'zelda3', image: 'shield1', group: 'shield', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'red-shield',     longName: 'Red Shield',        game: 'zelda3', image: 'shield2', group: 'shield', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'mirror-shield',  longName: 'Mirror Shield',     game: 'zelda3', image: 'shield3', group: 'shield', groupIndex: 2, tier: 3, },
 		],
 	},
 	{
@@ -89,8 +89,8 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'glove',          longName: 'Power Glove',       game: 'zelda3', image: 'glove1', group: 'glove', groupIndex: 0, isDefault: true, },
-			{ type: ['item'], name: 'titan-mitt',     longName: 'Titan’s Mitt',      game: 'zelda3', image: 'glove2', group: 'glove', groupIndex: 1, },
+			{ type: ['item'], name: 'glove',          longName: 'Power Glove',       game: 'zelda3', image: 'glove1', group: 'glove', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'titan-mitt',     longName: 'Titan’s Mitt',      game: 'zelda3', image: 'glove2', group: 'glove', groupIndex: 1, tier: 2, },
 		],
 	},
 	{ type: ['item'], name: 'greenpendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', },

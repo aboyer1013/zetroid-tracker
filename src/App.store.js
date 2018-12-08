@@ -10,7 +10,7 @@ import { find } from 'lodash';
 import { createStorage } from 'persistme';
 
 const AppStore = types.compose(ItemListUtil, types.model({
-		config: ConfigStore,
+		configStore: ConfigStore,
 		version: types.number,
 		games: types.map(GameStore),
 		activeItemList: ItemListStore,

@@ -22,6 +22,7 @@ const ItemStore = types
 		qty: types.optional(types.integer, 0),
 		maxQty: types.optional(types.integer, 1),
 		isDefault: false,
+		tier: types.maybeNull(types.number),
 	})
 	.views(self => ({
 		get imageSrc() {

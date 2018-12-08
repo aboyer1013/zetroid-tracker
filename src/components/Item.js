@@ -19,7 +19,7 @@ const Item = ({isReadOnly = false, item, itemListStore}) => {
 		<div
 			data-qty={item.qty}
 			onClick={event => {
-				if (!this.props.isReadOnly) {
+				if (!isReadOnly) {
 					if (item.isChest) {
 						item.activateNext(event.shiftKey);
 					} else {

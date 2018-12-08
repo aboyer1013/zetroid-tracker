@@ -6,7 +6,7 @@ const ConfigStore = types
 		id: types.identifier,
 		// TODO AFAIK, "regions" is still in beta. Including it here for reference but probably will scrap it.
 		mode: types.optional(types.enumeration('aka zeldaMode', ['oldstyle', 'regions']), 'oldstyle'),
-		mapLogic: types.optional(types.enumeration('Map logic', ['glitchless', 'minorGlitches', 'majorGlitches', 'owGlitches']), 'glitchless'),
+		MAP_LOGIC: types.optional(types.enumeration('Map logic', ['glitchless', 'minorGlitches', 'majorGlitches', 'owGlitches']), 'glitchless'),
 		// Standard is vanilla intro: Stormy beginning with access to only sewer passage to meet Uncle.
 		// Open is equivalent to vanilla intro only you start the game like you just exited the church.
 		gameState: types.optional(types.enumeration('Game state', ['standard', 'open']), 'standard'),

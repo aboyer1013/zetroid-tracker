@@ -26,8 +26,14 @@ const LayoutStore = types
 		borderBarSize: 40,
 		borderEnableDrop: true,
 		borderClassName: types.maybeNull(types.string),
+		showBorderTop: true,
+		showBorderRight: true,
+		showBorderBottom: true,
+		showBorderLeft: true,
 	})
 	.volatile(self => ({
+		// layoutModel: null,
+		// Actions: null,
 		layoutPresets: {
 			zelda3: {
 				current: {},
@@ -93,7 +99,7 @@ const LayoutStore = types
 											{
 												'type': 'tab',
 												'id': '#1',
-												'name': 'Location Details',
+												'name': 'Details',
 												'component': 'LocationDetail',
 												'config': {
 													'id': '1'
@@ -115,7 +121,7 @@ const LayoutStore = types
 								{
 									'type': 'tab',
 									'id': '#3',
-									'name': 'Item List',
+									'name': 'Items',
 									'component': 'ItemList',
 									'config': {
 
@@ -125,10 +131,10 @@ const LayoutStore = types
 								{
 									'type': 'tab',
 									'id': '#2',
-									'name': 'Boss List',
+									'name': 'Dungeons',
 									'component': 'ItemList',
 									'config': {
-										listType: 'boss'
+										listType: 'dungeon'
 									},
 									'enableClose': false
 								}
@@ -137,13 +143,20 @@ const LayoutStore = types
 						{
 							'type': 'border',
 							'location': 'right',
+							show: true,
 							'children': []
 						},
 						{
 							'type': 'border',
 							'location': 'bottom',
 							'children': []
-						}
+						},
+						{
+							'type': 'border',
+							'location': 'top',
+							show: false,
+							'children': []
+						},
 					]
 				}
 			}
@@ -188,7 +201,10 @@ const LayoutStore = types
 			}
 			result = self.normalize(result);
 			return result;
-		}
+		},
+		// getBorderVisibility: (borderId) => {
+		// 	return self.layoutModel.getNodeById(borderId)._attributes.show;
+		// }
 	}))
 	.actions(self => {
 		const saveToLocalStorage = data => {
@@ -200,10 +216,14 @@ const LayoutStore = types
 			json.global = globalConfig;
 			return json;
 		};
+		const toggleBorder = (borderName) => {
+			self[`showBorder${borderName}`] = !self[`showBorder${borderName}`];
+		};
 
 		return {
 			saveToLocalStorage,
 			normalize,
+			toggleBorder,
 		};
 	})
 ;

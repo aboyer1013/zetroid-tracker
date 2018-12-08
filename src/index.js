@@ -19,36 +19,41 @@ import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes } from 'lodash';
 import { createStorage } from 'persistme';
 
+const configStore = ConfigStore.create({
+	id: randomId(),
+});
 const activeItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
 	droppableId: 'active-itemList-droppable',
+	config: configStore,
 });
 const inactiveItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
 	droppableId: 'inactive-itemList-droppable',
+	config: configStore,
 });
 const activeDungeonItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
 	droppableId: 'active-bossItemList-droppable',
+	config: configStore,
 });
 const inactiveDungeonItemListStore = ItemListStore.create({
 	id: randomId(),
 	items: [],
 	sortOrder: [],
 	droppableId: 'inactive-bossItemList-droppable',
-});
-const configStore = ConfigStore.create({
-	id: randomId(),
+	config: configStore,
 });
 const appStore = AppStore.create({
 	id: randomId(),
 	version: 1,
+	configStore: configStore,
 	config: configStore,
 	games: {},
 	// shouldSync: false,
@@ -112,6 +117,7 @@ const itemDataFactory = (item, index = 0) => {
 		type: item.type,
 		acquired: item.acquired,
 		imageEmpty: item.imageEmpty,
+		tier: item.tier || null,
 	}
 
 	if (isItemGroup) {

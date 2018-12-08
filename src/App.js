@@ -65,7 +65,7 @@ class App extends Component {
 			let draggableEnabled;
 
 			switch (config.listType) {
-				case 'boss':
+				case 'dungeon':
 					itemListStore = this.props.store.activeDungeonItemList;
 					items = this.props.store.activeDungeonItemList.bosses;
 					return (
@@ -120,7 +120,7 @@ class App extends Component {
 					<Modal>
 						{modal}
 					</Modal>
-					<Layout factory={this.layoutFactory.bind(this)} />
+					<Layout layoutStore={store.layout} factory={this.layoutFactory.bind(this)} />
 					{/*<div id="main" className="main">
 						{this.generateMaps()}
 						<LocationDetail />

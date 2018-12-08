@@ -47,10 +47,11 @@ const Map = class Map extends Component {
 			this.addMarker(loc);
 		});
 		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, {
-			minZoom: -3,
+			minZoom: -4,
 			maxZoom: 2,
 			nativeZooms: [0],
 			tileSize: L.point(256, 224),
+			bounds: [[0, 0], [-4256, 4096]],
 		}, this.props.tileLayerOptions)).addTo(this.map);
 		this.map.setZoom(this.props.mapStore.zoom);
 
