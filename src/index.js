@@ -15,6 +15,7 @@ import LocationDetailStore from 'LocationDetail.store';
 import ItemListStore from 'ItemList.store';
 import LayoutStore from 'Layout.store';
 import ConfigStore from 'Config.store';
+import AbilitiesStore from 'Abilities.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes } from 'lodash';
 import { createStorage } from 'persistme';
@@ -55,6 +56,10 @@ const appStore = AppStore.create({
 	version: 1,
 	configStore: configStore,
 	config: configStore,
+	abilities: AbilitiesStore.create({
+		id: randomId(),
+		config: configStore,
+	}),
 	games: {},
 	// shouldSync: false,
 	activeItemList: activeItemListStore,

@@ -6,6 +6,7 @@ import LocationDetailStore from 'LocationDetail.store';
 import ItemListUtil from 'ItemListUtil';
 import LayoutStore from 'Layout.store';
 import ConfigStore from 'Config.store';
+import AbilitiesStore from 'Abilities.store'
 import { find } from 'lodash';
 import { createStorage } from 'persistme';
 
@@ -26,6 +27,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		hideCompleted: false,
 		shouldSync: true,
 		layout: LayoutStore,
+		abilities: AbilitiesStore,
 	})
 	.views((self) => ({
 		getGameByName: (name) => {
