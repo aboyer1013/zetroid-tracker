@@ -112,7 +112,7 @@ const Map = class Map extends Component {
 		this.markers[loc.id] = L
 			.marker(loc.coords, {icon: markerIcon})
 			.bindTooltip(theLocation.longName)
-			.on('click', (event) => {
+			.on('mouseup', (event) => {
 				const marker = self.markers[loc.id];
 
 				self.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);

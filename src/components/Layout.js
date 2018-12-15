@@ -31,12 +31,11 @@ const Layout = class Layout extends Component {
 					model={this.state.model}
 					factory={this.props.factory}
 					onModelChange={model => {
-
 						self.props.store.layout.saveToLocalStorage(model.toJson());
 					}}
-					onRenderTab={(a, b, c, d) => {
+					onRenderTab={() => {
 					}}
-					onRenderTabSet={(a, b, c, d) => {
+					onRenderTabSet={() => {
 					}}
 					classNameMapper={className => {
 						// console.log(className);

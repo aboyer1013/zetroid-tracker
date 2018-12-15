@@ -20,6 +20,7 @@ import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes } from 'lodash';
 import { createStorage } from 'persistme';
 
+const shouldSync = true;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });
@@ -61,7 +62,7 @@ const appStore = AppStore.create({
 		config: configStore,
 	}),
 	games: {},
-	// shouldSync: false,
+	shouldSync,
 	activeItemList: activeItemListStore,
 	inactiveItemList: inactiveItemListStore,
 	activeDungeonItemList: activeDungeonItemListStore,
