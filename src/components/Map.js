@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {autorun} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import {debounce, camelCase, pick} from 'lodash';
-import '../../node_modules/react-resizable/css/styles.css';
 
 const L = window.L;
 const Map = class Map extends Component {
@@ -112,7 +111,7 @@ const Map = class Map extends Component {
 		this.markers[loc.id] = L
 			.marker(loc.coords, {icon: markerIcon})
 			.bindTooltip(theLocation.longName)
-			.on('mouseup', (event) => {
+			.on('click', (event) => {
 				const marker = self.markers[loc.id];
 
 				self.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);

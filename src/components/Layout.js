@@ -33,9 +33,16 @@ const Layout = class Layout extends Component {
 					onModelChange={model => {
 						self.props.store.layout.saveToLocalStorage(model.toJson());
 					}}
-					onRenderTab={() => {
-					}}
-					onRenderTabSet={() => {
+					// onRenderTab={() => {
+					// }}
+					// onRenderTabSet={() => {
+					// }}
+					onAction={action => {
+						// Issue #5 Activating tab sets messes with click handlers on maps.
+						// Plus, there's not really a point to activating tab sets that was obvious, so let's scrap it.
+						if (action.type !== 'FlexLayout_SetActiveTabset') {
+							this.state.model.doAction(action);
+						}
 					}}
 					classNameMapper={className => {
 						// console.log(className);
