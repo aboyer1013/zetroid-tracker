@@ -132,13 +132,16 @@ const itemDataFactory = (item, index = 0) => {
 		itemData.groupIndex = item.groupIndex || null;
 	} else {
 		itemData.longName = item.longName;
-		itemData.image = item.image
+		itemData.image = item.image;
+		itemData.autoAcquire = item.autoAcquire;
 	}
 
 	const subItemData = isItemGroup && item.items.map(data => {
 		return ItemStore.create(Object.assign({}, itemData, data, {
 			id: randomId(),
 			game: appStore.getGameByName(data.game),
+			autoAcquire: data.autoAcquire,
+			acquired: data.autoAcquire,
 		}));
 	});
 	if (subItemData.length) {

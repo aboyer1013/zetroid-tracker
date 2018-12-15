@@ -27,7 +27,7 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'mp-upgrade-11',  longName: '1/1 Magic',         game: 'zelda3', image: 'mpupgrade0', group: 'mp-upgrade', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'mp-upgrade-11',  longName: '1/1 Magic',         game: 'zelda3', image: 'mpupgrade0', group: 'mp-upgrade', groupIndex: 0, isDefault: true, tier: 1, autoAcquire: true, },
 			{ type: ['item'], name: 'mp-upgrade-12',  longName: '1/2 Magic',         game: 'zelda3', image: 'mpupgrade1', group: 'mp-upgrade', groupIndex: 1, tier: 2, },
 			{ type: ['item'], name: 'mp-upgrade-14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mp-upgrade', groupIndex: 2, tier: 3, },
 		]
@@ -46,7 +46,7 @@ const itemsData = [
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'jerkin',         longName: 'Green Jerkin',      game: 'zelda3', image: 'tunic1', group: 'armor', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'jerkin',         longName: 'Green Jerkin',      game: 'zelda3', image: 'tunic1', group: 'armor', groupIndex: 0, isDefault: true, tier: 1, autoAcquire: true, },
 			{ type: ['item'], name: 'blue-mail',      longName: 'Blue Mail',         game: 'zelda3', image: 'tunic2', group: 'armor', groupIndex: 1, tier: 2, },
 			{ type: ['item'], name: 'red-mail',       longName: 'Red Mail',          game: 'zelda3', image: 'tunic3', group: 'armor', groupIndex: 2, tier: 3, },
 		],
