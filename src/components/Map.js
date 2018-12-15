@@ -7,7 +7,7 @@ const L = window.L;
 const Map = class Map extends Component {
 	constructor(props) {
 		super(props);
-		this.resize = debounce(this.resize, 500);
+		this.resize = debounce(this.resize, 1000);
 		this.addMarker = this.addMarker.bind(this);
 		this.onResizeHandler = this.onResizeHandler.bind(this);
 		this.props.layoutNode.setEventListener('resize', function (data) {
@@ -53,7 +53,16 @@ const Map = class Map extends Component {
 			bounds: [[0, 0], [-4256, 4096]],
 		}, this.props.tileLayerOptions)).addTo(this.map);
 		this.map.setZoom(this.props.mapStore.zoom);
-
+		const markerCluster = L.markerClusterGroup({
+			showCoverageOnHover: false,
+			zoomToBoundsOnClick: false,
+			spiderfyOnMaxZoom: true,
+			disableClusteringAtZoom: -2,
+		});
+		Object.keys(this.markers).forEach(function (key) {
+			markerCluster.addLayer(this.markers[key]);
+		}.bind(this));
+		this.map.addLayer(markerCluster);
 		// For debugging.
 		window[camelCase(this.props.mapStore.name)] = this.map;
 	}
@@ -116,7 +125,7 @@ const Map = class Map extends Component {
 
 				self.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);
 			})
-			.addTo(this.map)
+			// .addTo(this.map)
 		;
 		this.setProgression(this.markers[loc.id], loc);
 	}

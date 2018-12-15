@@ -40,7 +40,7 @@ const MapStore = types
 		const setHeight = (newHeight) => {
 			self.containerHeight = newHeight;
 		}
-		const setSelectedLocation = (event, marker, mapStoreLocation) => {
+		const setSelectedLocation = (marker, mapStoreLocation) => {
 			self.selectedLocation = mapStoreLocation;
 		};
 		const setZoom = (newZoom) => {
