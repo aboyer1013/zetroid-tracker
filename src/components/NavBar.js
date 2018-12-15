@@ -1,11 +1,13 @@
 import React, {Component, createRef} from 'react';
 import classNames from 'classnames';
 import {inject, observer} from 'mobx-react';
+import ConfigModal from 'components/ConfigModal';
 
 const NavBar = class NavBar extends Component {
 	constructor() {
 		super();
 		this.toggleMenu = this.toggleMenu.bind(this);
+		this.toggleConfigModal = this.toggleConfigModal.bind(this);
 		this.menu = createRef();
 		this.burger = createRef();
 	}
@@ -16,6 +18,16 @@ const NavBar = class NavBar extends Component {
 
 	toggleMenu() {
 		this.setState({isMenuActive: !this.state.isMenuActive});
+	}
+
+	toggleConfigModal() {
+		const store = this.props.store;
+
+		if (store.activeModal === 'CONFIG') {
+			store.closeModal('CONFIG');
+		} else {
+			store.openModal('CONFIG');
+		}
 	}
 
 	render() {
@@ -197,18 +209,7 @@ const NavBar = class NavBar extends Component {
 
 					<div className="navbar-end">
 						<div className="navbar-item">
-							<button
-								onClick={this.props.store.flushLocalStorage}
-								className="button is-danger"
-							>
-				                <span className="icon">
-				                  <i className="fas fa-broom"/>
-				                </span>
-								<span>Reset All</span>
-							</button>
-						</div>
-						<div className="navbar-item">
-							<button className="button">
+							<button className="button" onClick={this.toggleConfigModal}>
 				                <span className="icon">
 				                  <i className="fas fa-cog"/>
 				                </span>

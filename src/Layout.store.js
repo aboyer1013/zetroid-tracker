@@ -4,7 +4,6 @@ import { pick } from 'lodash';
 const LayoutStore = types
 	.model({
 		id: types.identifier,
-		splitterSize: 16,
 		enableEdgeDock: true,
 		tabEnableClose: true,
 		tabEnableDrag: true,
@@ -163,6 +162,9 @@ const LayoutStore = types
 		}
 	}))
 	.views(self => ({
+		get splitterSize() {
+			return getRoot(self).configStore.splitterSize || 5;
+		},
 		get globalConfig() {
 			const attrs = [
 				'splitterSize',

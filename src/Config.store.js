@@ -10,6 +10,9 @@ const ConfigStore = types
 		// Standard is vanilla intro: Stormy beginning with access to only sewer passage to meet Uncle.
 		// Open is equivalent to vanilla intro only you start the game like you just exited the church.
 		gameState: types.optional(types.enumeration('Game state', ['standard', 'open']), 'standard'),
+		splitterSize: types.optional(types.refinement(types.number, val => {
+			return val >= 5 && val <= 20;
+		}), 5),
 	})
 	.views(self => ({
 		get mapOhko() {
@@ -26,9 +29,13 @@ const ConfigStore = types
 		const setSelected = (state) => {
 			self.selected = state;
 		};
+		const setSplitterSize = (newSize) => {
+			self.splitterSize = newSize;
+		};
 
 		return {
 			setSelected,
+			setSplitterSize,
 		};
 	})
 ;

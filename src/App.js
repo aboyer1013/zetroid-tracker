@@ -7,6 +7,7 @@ import FileImportModal from 'components/FileImportModal';
 import FileExportModal from 'components/FileExportModal';
 import HelpModal from 'components/HelpModal';
 import EditItemListModal from 'components/EditItemListModal';
+import ConfigModal from 'components/ConfigModal';
 import { randomId } from 'utilities/util';
 import { find, get } from 'lodash';
 import 'scss/App.scss';
@@ -108,6 +109,9 @@ class App extends Component {
 					break;
 				case 'EDIT_ITEM_LIST':
 					modal = <EditItemListModal />;
+					break;
+				case 'CONFIG':
+					modal = <ConfigModal />;
 					break;
 				default:
 					break;

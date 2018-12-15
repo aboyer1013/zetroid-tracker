@@ -13,6 +13,9 @@ const Layout = class Layout extends Component {
 		this.props.layoutStore.Actions = FlexLayout.Actions;
 		this.layoutRef = createRef();
 		autorun(() => {
+			this.state.model.doAction(FlexLayout.Actions.updateModelAttributes({
+				splitterSize: this.props.layoutStore.splitterSize,
+			}));
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_top', {show: this.props.layoutStore.showBorderTop}));
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_right', {show: this.props.layoutStore.showBorderRight}));
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_bottom', {show: this.props.layoutStore.showBorderBottom}));

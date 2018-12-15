@@ -21,7 +21,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		maps: types.map(MapStore),
 		locationDetail: LocationDetailStore,
 		isModalOpen: false,
-		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT', 'HELP', 'EDIT_ITEM_LIST'])),
+		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT', 'HELP', 'EDIT_ITEM_LIST', 'CONFIG'])),
 		validationMessages: types.array(types.string),
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
 		hideCompleted: false,
