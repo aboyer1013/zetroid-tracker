@@ -105,6 +105,7 @@
 .flexlayout__tab_button_leading {
 	float: left;
 	display: inline-block;
+	max-width: 15px;
 }
 
 .flexlayout__tab_button_content {
@@ -311,6 +312,9 @@
 	margin: 2px 10px;
 	vertical-align: top;
 	box-sizing: border-box;
+}
+.flexlayout__border_button_top {
+	margin-top: 4px;
 }
 
 .flexlayout__border_button--selected {

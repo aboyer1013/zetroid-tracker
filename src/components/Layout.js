@@ -22,10 +22,8 @@ const Layout = class Layout extends Component {
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_left', {show: this.props.layoutStore.showBorderLeft}));
 		});
 	}
-
 	render() {
 		const self = this;
-		// window.model = this.state.model;
 
 		return (
 			<div className="layout-container">
@@ -36,10 +34,6 @@ const Layout = class Layout extends Component {
 					onModelChange={model => {
 						self.props.store.layout.saveToLocalStorage(model.toJson());
 					}}
-					// onRenderTab={() => {
-					// }}
-					// onRenderTabSet={() => {
-					// }}
 					onAction={action => {
 						// Issue #5 Activating tab sets messes with click handlers on maps.
 						// Plus, there's not really a point to activating tab sets that was obvious, so let's scrap it.
@@ -48,7 +42,6 @@ const Layout = class Layout extends Component {
 						}
 					}}
 					classNameMapper={className => {
-						// console.log(className);
 						return className;
 					}}
 				/>

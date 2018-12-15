@@ -7,7 +7,7 @@ const LayoutStore = types
 		enableEdgeDock: true,
 		tabEnableClose: true,
 		tabEnableDrag: true,
-		tabEnableRename: true,
+		tabEnableRename: false,
 		tabClassName: types.maybeNull(types.string),
 		tabIcon: types.maybeNull(types.string),
 		tabEnableRenderOnDemand: true,

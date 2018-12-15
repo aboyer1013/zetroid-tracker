@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {autorun} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import {debounce, camelCase, pick} from 'lodash';
+import classNames from 'classnames';
 
 const L = window.L;
 const Map = class Map extends Component {
@@ -11,7 +12,6 @@ const Map = class Map extends Component {
 		this.addMarker = this.addMarker.bind(this);
 		this.onResizeHandler = this.onResizeHandler.bind(this);
 		this.props.layoutNode.setEventListener('resize', function (data) {
-			// this.mapContainerRef.current.parentNode.classList.add(`${this.props.mapStore.name}-container`, 'layout-map-container');
 			this.onResizeHandler(pick(data.rect, ['width', 'height']));
 		}.bind(this));
 		this.props.layoutNode.setEventListener('close', function (data) {
@@ -98,6 +98,15 @@ const Map = class Map extends Component {
 				}
 				self.setProgression(self.markers[loc.id], loc);
 			});
+			if (self.props.mapStore.zoomLock) {
+				self.map.touchZoom.disable();
+				self.map.doubleClickZoom.disable();
+				self.map.scrollWheelZoom.disable();
+			} else {
+				self.map.touchZoom.enable();
+				self.map.doubleClickZoom.enable();
+				self.map.scrollWheelZoom.enable();
+			}
 		});
 	}
 
@@ -125,7 +134,6 @@ const Map = class Map extends Component {
 
 				self.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);
 			})
-			// .addTo(this.map)
 		;
 		this.setProgression(this.markers[loc.id], loc);
 	}
@@ -196,12 +204,28 @@ const Map = class Map extends Component {
 	}
 
 	render() {
+		const zoomLockClasses = classNames('fas', {
+			'fa-lock': !this.props.mapStore.zoomLock,
+			'fa-unlock': this.props.mapStore.zoomLock,
+		});
+		const zoomLockText = this.props.mapStore.zoomLock ? 'Unlock Zoom' : 'Lock Zoom';
+
 		return (
-			<div className='map-container'>
-				<div
-					id={`map-${this.props.id}`}
-					className='map'
-				/>
+			<div className="map-wrapper">
+				<div className="map-toolbar">
+					<button className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
+						<span className="icon">
+							<i className={zoomLockClasses} />
+						</span>
+						<span>{zoomLockText}</span>
+					</button>
+				</div>
+				<div className="map-container">
+					<div
+						id={`map-${this.props.id}`}
+						className="map"
+					/>
+				</div>
 			</div>
 		);
 	}
