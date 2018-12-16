@@ -7,6 +7,7 @@ class ConfigModal extends Component {
 	constructor(props) {
 		super(props);
 		this.splitterSizeChangeHandler = this.splitterSizeChangeHandler.bind(this);
+		this.quickMarkModeChangeHandler = this.quickMarkModeChangeHandler.bind(this);
 		this.splitterSizeChangeDebounced = debounce(this.changeSplitterSize, 300);
 	}
 	componentDidMount() {
@@ -15,12 +16,17 @@ class ConfigModal extends Component {
 	splitterSizeChangeHandler(event) {
 		this.splitterSizeChangeDebounced(event.target.value);
 	}
+	quickMarkModeChangeHandler(event) {
+		const configStore = this.props.store.configStore;
+
+		configStore.setQuickMarkMode(!configStore.quickMarkMode);
+	}
 	changeSplitterSize(newSize) {
 		this.props.store.configStore.setSplitterSize(parseInt(newSize));
 	}
 	render() {
 		const store = this.props.store;
-		const configStore = store.configStore;
+		const configStore = store.config;
 
 		return (
 			<div className="modal-card config-modal">
@@ -31,38 +37,45 @@ class ConfigModal extends Component {
 				<section className="modal-card-body">
 					<div className="content">
 						<div className="columns">
-							<div className="field column">
-								<div className="control">
-									<label>
-										<p>Splitter size</p>
-										<div className="splitter-size">
-											<input
-												type="range"
-												className="range"
-												min="5"
-												max="20"
-												step="1"
-												defaultValue={configStore.splitterSize}
-												onChange={this.splitterSizeChangeHandler}
-											/>
-											<p>{configStore.splitterSize}</p>
-										</div>
-									</label>
+							<div className="column">
+								<div className="field">
+									<fieldset>
+										<legend>Splitter size</legend>
+										<label>
+											<p className="has-text-grey">Adjust the size of the panel splitters for easier resizing.</p>
+											<div className="splitter-size">
+												<input
+													type="range"
+													className="range"
+													min="5"
+													max="20"
+													step="1"
+													defaultValue={configStore.splitterSize}
+													onChange={this.splitterSizeChangeHandler}
+												/>
+												<p>{configStore.splitterSize}</p>
+											</div>
+										</label>
+									</fieldset>
 								</div>
 							</div>
-							<div className="field column">
-								<div className="notification is-danger">
-									<p>Warning! This will erase all game progression, layout preferences, and settings.</p>
-									<button
-										title="Reset progress, layout preferences, and settings."
-										onClick={this.props.store.flushLocalStorage}
-										className="button"
-									>
-							                <span className="icon">
-							                  <i className="fas fa-broom"/>
-							                </span>
-										<span>I understand. Reset everything to defaults.</span>
-									</button>
+							<div className="column">
+								<div className="field quickmark-mode">
+									<fieldset className="control">
+										<legend>QuickMark Mode</legend>
+										<div className="has-text-grey">
+											<p>Left Click the map markers to view details about the location. CTRL + Click on the map markers to toggle completion.</p>
+											<p>When QuickMark Mode is enabled, these shortcuts are swapped.</p>
+										</div>
+										<label>
+											<input
+												type="checkbox"
+												className="checkbox"
+												checked={configStore.quickMarkMode}
+												onChange={this.quickMarkModeChangeHandler}
+											/> Enabled
+										</label>
+									</fieldset>
 								</div>
 							</div>
 						</div>
@@ -77,6 +90,16 @@ class ConfigModal extends Component {
 						}
 						store.closeModal();
 					}}>Discard Changes</button>
+					<button
+						title="Reset progress, layout preferences, and settings."
+						onClick={this.props.store.flushLocalStorage}
+						className="button is-danger"
+					>
+							                <span className="icon">
+							                  <i className="fas fa-broom"/>
+							                </span>
+						<span>Reset all settings and game progression</span>
+					</button>
 				</footer>
 			</div>
 		);

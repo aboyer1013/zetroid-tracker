@@ -13,6 +13,7 @@ const ConfigStore = types
 		splitterSize: types.optional(types.refinement(types.number, val => {
 			return val >= 5 && val <= 20;
 		}), 5),
+		quickMarkMode: false,
 	})
 	.views(self => ({
 		get mapOhko() {
@@ -32,10 +33,14 @@ const ConfigStore = types
 		const setSplitterSize = (newSize) => {
 			self.splitterSize = newSize;
 		};
+		const setQuickMarkMode = (newValue) => {
+			self.quickMarkMode = newValue;
+		};
 
 		return {
 			setSelected,
 			setSplitterSize,
+			setQuickMarkMode,
 		};
 	})
 ;

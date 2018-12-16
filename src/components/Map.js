@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {autorun} from 'mobx';
 import {observer, inject} from 'mobx-react';
-import {debounce, camelCase, pick} from 'lodash';
+import {debounce, camelCase, pick, get} from 'lodash';
 import classNames from 'classnames';
 
 const L = window.L;
@@ -121,6 +121,24 @@ const Map = class Map extends Component {
 		sizeToFit && this.sizeToFit();
 	}
 
+	markerClickHandler(options) {
+		const {
+			event,
+			marker,
+			theLocation,
+			ctrlKeyPressed,
+			quickMarkMode,
+		} = options;
+
+		if (
+			(quickMarkMode && !ctrlKeyPressed) ||
+			(!quickMarkMode && ctrlKeyPressed)
+		) {
+			theLocation.toggleComplete();
+		}
+		this.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);
+	}
+
 	addMarker(loc) {
 		const self = this;
 		const theLocation = this.props.mapStore.locations.get(loc.id);
@@ -136,8 +154,16 @@ const Map = class Map extends Component {
 			.bindTooltip(theLocation.longName)
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
+				const ctrlKeyPressed = get(event, 'originalEvent.ctrlKey');
+				const quickMarkMode = self.props.store.config.quickMarkMode;
 
-				self.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);
+				self.markerClickHandler({
+					event,
+					marker,
+					theLocation,
+					ctrlKeyPressed,
+					quickMarkMode,
+				});
 			})
 		;
 		this.setProgression(this.markers[loc.id], loc);
@@ -223,18 +249,27 @@ const Map = class Map extends Component {
 		return (
 			<div className="map-wrapper">
 				<div className="map-toolbar">
-					<button className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
-						<span className="icon">
-							<i className={zoomLockClasses} />
-						</span>
-						<span>{zoomLockText}</span>
-					</button>
-					<button className="button is-small" onClick={this.sizeToFit}>
-						<span className="icon">
-							<i className="fas fa-compress" />
-						</span>
-						<span>Size to Fit</span>
-					</button>
+					<div>
+						<button className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
+							<span className="icon">
+								<i className={zoomLockClasses} />
+							</span>
+							<span>{zoomLockText}</span>
+						</button>
+						<button className="button is-small" onClick={this.sizeToFit}>
+							<span className="icon">
+								<i className="fas fa-compress" />
+							</span>
+							<span>Size to Fit</span>
+						</button>
+					</div>
+					<div>
+						<button className="button is-small" onClick={() => this.props.store.openModal('HELP')}>
+							<span className="icon">
+								<i className="fas fa-question-circle" />
+							</span>
+						</button>
+					</div>
 				</div>
 				<div className="map-container">
 					<div
