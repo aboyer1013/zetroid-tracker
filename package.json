@@ -2,7 +2,7 @@
   "name": "zetroid-tracker",
   "description": "An item tracker for Zelda: A Link to the Past + Super Metroid Randomizer.",
   "tags": "rom hacks, emulation, utilities, map, zelda, super metroid",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "homepage": "http://aboyer1013.github.io/zetroid-tracker",
   "private": true,
   "dependencies": {
@@ -12,6 +12,7 @@
     "classnames": "^2.2.6",
     "flexlayout-react": "^0.3.3",
     "gsap": "^2.0.2",
+    "inobounce": "^0.1.6",
     "lodash": "^4.17.11",
     "lodash-move": "^1.1.1",
     "mobx": "^5.6.0",

@@ -15,6 +15,7 @@ import LocationDetail from 'components/LocationDetail';
 import ItemList from 'components/ItemList';
 import Layout from 'components/Layout';
 import DungeonList from 'components/DungeonList';
+import 'inobounce';
 
 class App extends Component {
 

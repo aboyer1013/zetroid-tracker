@@ -11,8 +11,10 @@ const Map = class Map extends Component {
 		this.resize = debounce(this.resize, 1000);
 		this.addMarker = this.addMarker.bind(this);
 		this.onResizeHandler = this.onResizeHandler.bind(this);
+		this.sizeToFit = this.sizeToFit.bind(this);
 		this.props.layoutNode.setEventListener('resize', function (data) {
-			this.onResizeHandler(pick(data.rect, ['width', 'height']));
+			this.onResizeHandler(pick(data.rect, ['width', 'height']), !this.mapInitialized);
+			this.mapInitialized = true;
 		}.bind(this));
 		this.props.layoutNode.setEventListener('close', function (data) {
 			this.resize();
@@ -24,6 +26,8 @@ const Map = class Map extends Component {
 	}
 
 	markers = {};
+	mapBounds = [[0, 0], [-4256, 4096]];
+	mapInitialized = false;
 
 	componentDidMount() {
 		// I may not need this.
@@ -37,10 +41,11 @@ const Map = class Map extends Component {
 			crs: L.CRS.Simple,
 			center: [-2128, 2048],
 			zoom: this.props.mapStore.zoom,
-			maxBounds: [[0, 0], [-4256, 4096]],
+			maxBounds: this.mapBounds,
 			maxBoundsViscosity: 1,
 			attributionControl: false,
 			zoomControl: false,
+			zoomSnap: 0.001,
 		}, this.props.mapOptions));
 		this.props.locations.forEach(loc => {
 			this.addMarker(loc);
@@ -110,10 +115,10 @@ const Map = class Map extends Component {
 		});
 	}
 
-	resize() {
+	resize(sizeToFit = false) {
 		// Why not just call it outright? Because it's flaky and we need a timeout.
 		this.map.invalidateSize();
-		// this.map.fitWorld({maxZoom: -2});
+		sizeToFit && this.sizeToFit();
 	}
 
 	addMarker(loc) {
@@ -189,12 +194,17 @@ const Map = class Map extends Component {
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}
 
-	onResizeHandler(data) {
+	onResizeHandler(data, onInit = false) {
 		const {width: newWidth, height: newHeight} = data;
 
 		this.props.mapStore.setWidth(newWidth);
 		this.props.mapStore.setHeight(newHeight);
-		this.resize();
+		this.resize(onInit);
+	}
+
+	sizeToFit() {
+		this.map.setView(this.map.getCenter());
+		this.map.fitBounds([[0, 0], [-4256, 4096]]);
 	}
 
 	removeMarker(markerId) {
@@ -218,6 +228,12 @@ const Map = class Map extends Component {
 							<i className={zoomLockClasses} />
 						</span>
 						<span>{zoomLockText}</span>
+					</button>
+					<button className="button is-small" onClick={this.sizeToFit}>
+						<span className="icon">
+							<i className="fas fa-compress" />
+						</span>
+						<span>Size to Fit</span>
 					</button>
 				</div>
 				<div className="map-container">
