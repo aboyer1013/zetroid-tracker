@@ -58,6 +58,45 @@ class ConfigModal extends Component {
 										</label>
 									</fieldset>
 								</div>
+								<div>
+									<fieldset>
+										<legend>Reset Current Game Settings</legend>
+										<div className="field">
+											<button
+												onClick={this.props.store.flushGameTreeStorage}
+												className="button is-danger"
+											>
+								                <span className="icon">
+								                  <i className="fas fa-broom"/>
+								                </span>
+												<span>Reset Progression</span>
+											</button>
+										</div>
+										<div className="field">
+											<button
+												onClick={this.props.store.flushGameLayoutStorage}
+												className="button is-danger"
+											>
+								                <span className="icon">
+								                  <i className="fas fa-broom"/>
+								                </span>
+												<span>Reset UI Settings</span>
+											</button>
+										</div>
+										<div className="field">
+											<button
+												title="Reset progress, layout preferences, and settings."
+												onClick={this.props.store.flushLocalStorage}
+												className="button is-danger"
+											>
+								                <span className="icon">
+								                  <i className="fas fa-broom"/>
+								                </span>
+												<span>Reset all settings</span>
+											</button>
+										</div>
+									</fieldset>
+								</div>
 							</div>
 							<div className="column">
 								<div className="field quickmark-mode">
@@ -90,16 +129,6 @@ class ConfigModal extends Component {
 						}
 						store.closeModal();
 					}}>Discard Changes</button>
-					<button
-						title="Reset progress, layout preferences, and settings."
-						onClick={this.props.store.flushLocalStorage}
-						className="button is-danger"
-					>
-							                <span className="icon">
-							                  <i className="fas fa-broom"/>
-							                </span>
-						<span>Reset all settings and game progression</span>
-					</button>
 				</footer>
 			</div>
 		);

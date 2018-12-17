@@ -70,7 +70,6 @@ const LocationStore = types
 			return self.longName;
 		},
 		get hidden() {
-			debugger;
 			if (!self.isFavorite && self.map.hideCompleted && self.isComplete) {
 				return true;
 			}

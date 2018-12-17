@@ -17,7 +17,7 @@ import LayoutStore from 'Layout.store';
 import ConfigStore from 'Config.store';
 import AbilitiesStore from 'Abilities.store';
 import * as serviceWorker from 'serviceWorker';
-import { isUndefined, find, includes } from 'lodash';
+import { isUndefined, find, includes, isEmpty } from 'lodash';
 import { createStorage } from 'persistme';
 
 const shouldSync = true;
@@ -224,7 +224,7 @@ if (appStore.shouldSync) {
 	onSnapshot(appStore, model => {
 		appStore.updateGameTreeStorage(model);
 	});
-	if (gameStorage) {
+	if (!isEmpty(gameStorage)) {
 		applySnapshot(appStore, gameStorage);
 	}
 }

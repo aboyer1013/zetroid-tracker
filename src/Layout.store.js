@@ -1,5 +1,5 @@
 import { types, getRoot } from 'mobx-state-tree';
-import { pick } from 'lodash';
+import { pick, isEmpty } from 'lodash';
 
 const LayoutStore = types
 	.model({
@@ -198,7 +198,7 @@ const LayoutStore = types
 			const root = getRoot(self);
 
 			result = root.getGameStorage('layout');
-			if (!result) {
+			if (isEmpty(result)) {
 				result = self.layoutPresets[root.selectedGame.name].STANDARD;
 			}
 			result = self.normalize(result);

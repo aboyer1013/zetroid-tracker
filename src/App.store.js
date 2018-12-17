@@ -107,6 +107,20 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			appStorage.remove(selectedGame);
 			window.location.reload();
 		};
+		const flushGameLayoutStorage = (event, game = null) => {
+			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
+			const selectedGame = game || self.selectedGame.name;
+
+			appStorage.update(selectedGame, {layout: {}});
+			window.location.reload();
+		};
+		const flushGameTreeStorage = (event, game = null) => {
+			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
+			const selectedGame = game || self.selectedGame.name;
+
+			appStorage.update(selectedGame, {tree: {}});
+			window.location.reload();
+		}
 		// Wrapper for persistme to include the selected game in the storage key.
 		const getGameStorage = (key = null) => {
 			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
@@ -149,6 +163,8 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			getGameStorage,
 			updateGameLayoutStorage,
 			updateGameTreeStorage,
+			flushGameTreeStorage,
+			flushGameLayoutStorage,
 		};
 	}))
 ;
