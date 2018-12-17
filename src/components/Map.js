@@ -47,9 +47,6 @@ const Map = class Map extends Component {
 			zoomControl: false,
 			zoomSnap: 0.001,
 		}, this.props.mapOptions));
-		this.props.locations.forEach(loc => {
-			this.addMarker(loc);
-		});
 		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, {
 			minZoom: -4,
 			maxZoom: 2,
@@ -58,16 +55,19 @@ const Map = class Map extends Component {
 			bounds: [[0, 0], [-4256, 4096]],
 		}, this.props.tileLayerOptions)).addTo(this.map);
 		this.map.setZoom(this.props.mapStore.zoom);
-		const markerCluster = L.markerClusterGroup({
+		this.markerCluster = L.markerClusterGroup({
 			showCoverageOnHover: false,
 			zoomToBoundsOnClick: false,
 			spiderfyOnMaxZoom: true,
 			disableClusteringAtZoom: -2,
 		});
+		this.props.locations.forEach(loc => {
+			this.addMarker(loc);
+		});
 		Object.keys(this.markers).forEach(function (key) {
-			markerCluster.addLayer(this.markers[key]);
+			this.markerCluster.addLayer(this.markers[key]);
 		}.bind(this));
-		this.map.addLayer(markerCluster);
+		this.map.addLayer(this.markerCluster);
 		// For debugging.
 		window[camelCase(this.props.mapStore.name)] = this.map;
 	}
@@ -166,6 +166,7 @@ const Map = class Map extends Component {
 				});
 			})
 		;
+		this.markerCluster.addLayer(this.markers[loc.id]);
 		this.setProgression(this.markers[loc.id], loc);
 	}
 
@@ -235,7 +236,7 @@ const Map = class Map extends Component {
 
 	removeMarker(markerId) {
 		this.markers[markerId].off('click');
-		this.map.removeLayer(this.markers[markerId]);
+		this.markerCluster.removeLayer(this.markers[markerId]);
 		delete this.markers[markerId];
 	}
 
@@ -245,6 +246,11 @@ const Map = class Map extends Component {
 			'fa-unlock': this.props.mapStore.zoomLock,
 		});
 		const zoomLockText = this.props.mapStore.zoomLock ? 'Unlock Zoom' : 'Lock Zoom';
+		const hideCompletedClasses = classNames('fas', {
+			'fa-eye': this.props.mapStore.hideCompleted,
+			'fa-eye-slash': !this.props.mapStore.hideCompleted,
+		});
+		const hideCompletedText = this.props.mapStore.hideCompleted ? 'Show Completed' : 'Hide Completed';
 
 		return (
 			<div className="map-wrapper">
@@ -264,6 +270,14 @@ const Map = class Map extends Component {
 									<i className="fas fa-compress" />
 								</span>
 								<span>Size to Fit</span>
+							</button>
+						</div>
+						<div className="control">
+							<button className="button is-small" onClick={this.props.mapStore.toggleHideCompleted}>
+								<span className="icon">
+									<i className={hideCompletedClasses} />
+								</span>
+								<span>{hideCompletedText}</span>
 							</button>
 						</div>
 					</div>

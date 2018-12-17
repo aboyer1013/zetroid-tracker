@@ -1,6 +1,7 @@
 import { types, getRoot } from 'mobx-state-tree';
 import GameStore from 'Game.store';
 import ItemStore from 'Item.store';
+import MapStore from 'Map.store';
 
 const LocationStore = types
 	.model({
@@ -21,6 +22,7 @@ const LocationStore = types
 		boss: types.maybe(types.reference(ItemStore)),
 		prize: types.maybeNull(types.reference(ItemStore)),
 		medallion: types.maybe(types.reference(ItemStore)),
+		map: types.reference(types.late(() => MapStore)),
 	})
 	.volatile(self => ({
 		// All the logic to determine if the location is viewable goes here
@@ -68,7 +70,8 @@ const LocationStore = types
 			return self.longName;
 		},
 		get hidden() {
-			if (!self.isFavorite && getRoot(self).hideCompleted && self.isComplete) {
+			debugger;
+			if (!self.isFavorite && self.map.hideCompleted && self.isComplete) {
 				return true;
 			}
 			return false;

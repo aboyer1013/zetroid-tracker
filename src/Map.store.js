@@ -19,6 +19,7 @@ const MapStore = types
 		isLocked: false,
 		zoom: -3,
 		zoomLock: false,
+		hideCompleted: false,
 	})
 	.volatile(() => ({
 		component: {},
@@ -50,6 +51,9 @@ const MapStore = types
 		const toggleZoomLock = () => {
 			self.zoomLock = !self.zoomLock;
 		};
+		const toggleHideCompleted = () => {
+			self.hideCompleted = !self.hideCompleted;
+		};
 
 		return {
 			setComponent,
@@ -58,6 +62,7 @@ const MapStore = types
 			setHeight,
 			setZoom,
 			toggleZoomLock,
+			toggleHideCompleted,
 		};
 	})
 ;

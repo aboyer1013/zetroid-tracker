@@ -38,10 +38,6 @@ const NavBar = class NavBar extends Component {
 		const menuClasses = classNames('navbar-menu', {
 			'is-active': this.state.isMenuActive,
 		});
-		const hideCompletedClasses = classNames('fas', {
-			'fa-eye': this.props.store.hideCompleted,
-			'fa-eye-slash': !this.props.store.hideCompleted,
-		});
 		const toggleBorderTopClasses = classNames('fas', {
 			'fa-eye': !this.props.store.layout.showBorderTop,
 			'fa-eye-slash': this.props.store.layout.showBorderTop,
@@ -120,21 +116,6 @@ const NavBar = class NavBar extends Component {
 								<a className="navbar-link">View</a>
 
 								<div className="navbar-dropdown">
-									<div className="navbar-item">
-										<button
-											onClick={() =>
-												this.props.store.setHideCompleted(
-													!this.props.store.hideCompleted
-												)
-											}
-											className="button is-fullwidth"
-										>
-						                    <span className="icon">
-						                      <i className={hideCompletedClasses}/>
-						                    </span>
-											<span>Completed Locations</span>
-										</button>
-									</div>
 									<div className="navbar-item">
 										<button
 											onClick={() =>

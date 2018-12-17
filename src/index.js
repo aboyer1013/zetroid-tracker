@@ -198,6 +198,7 @@ locationsData.forEach(loc => {
 		numChests: loc.numChests,
 		boss: bossId,
 		prize: prizeId,
+		map: selectedMap,
 	}));
 
 });

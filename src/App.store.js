@@ -24,7 +24,6 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		activeModal: types.maybeNull(types.enumeration('Modals', ['FILE_IMPORT', 'FILE_EXPORT', 'HELP', 'EDIT_ITEM_LIST', 'CONFIG'])),
 		validationMessages: types.array(types.string),
 		LOCAL_STORAGE_KEY: 'zetroid-tracker',
-		hideCompleted: false,
 		shouldSync: true,
 		layout: LayoutStore,
 		abilities: AbilitiesStore,
@@ -108,9 +107,6 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			appStorage.remove(selectedGame);
 			window.location.reload();
 		};
-		const setHideCompleted = (isHidden) => {
-			self.hideCompleted = isHidden;
-		};
 		// Wrapper for persistme to include the selected game in the storage key.
 		const getGameStorage = (key = null) => {
 			const appStorage = createStorage(self.LOCAL_STORAGE_KEY);
@@ -150,7 +146,6 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			closeModal,
 			loadSnapshot,
 			flushLocalStorage,
-			setHideCompleted,
 			getGameStorage,
 			updateGameLayoutStorage,
 			updateGameTreeStorage,
