@@ -107,7 +107,7 @@ const itemsData = [
 	{ type: ['item'], name: 'fire-rod',       longName: 'Fire Rod',          game: 'zelda3', image: 'firerod', },
 	{ type: ['item'], name: 'flute',          longName: 'Flute',             game: 'zelda3', image: 'flute', },
 
-	{ type: ['item'], name: 'heart-c',        longName: 'Heart Container',   game: 'zelda3', image: 'heartcontainer', },
+	{ type: ['item'], name: 'heart-c',        longName: 'Heart Container',   game: 'zelda3', image: 'heartcontainer', maxQty: 11, },
 	{ type: ['item'], name: 'heart-p',        longName: 'Heart Piece',       game: 'zelda3', image: 'heartpiece', maxQty: 24, },
 	{ type: ['item'], name: 'hookshot',       longName: 'Hookshot',          game: 'zelda3', image: 'hookshot', },
 	{ type: ['item'], name: 'ice-rod',        longName: 'Ice Rod',           game: 'zelda3', image: 'icerod', },

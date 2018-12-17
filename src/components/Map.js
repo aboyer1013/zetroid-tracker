@@ -249,26 +249,32 @@ const Map = class Map extends Component {
 		return (
 			<div className="map-wrapper">
 				<div className="map-toolbar">
-					<div>
-						<button className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
-							<span className="icon">
-								<i className={zoomLockClasses} />
-							</span>
-							<span>{zoomLockText}</span>
-						</button>
-						<button className="button is-small" onClick={this.sizeToFit}>
-							<span className="icon">
-								<i className="fas fa-compress" />
-							</span>
-							<span>Size to Fit</span>
-						</button>
+					<div className="field has-addons">
+						<div className="control">
+							<button className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
+								<span className="icon">
+									<i className={zoomLockClasses} />
+								</span>
+								<span>{zoomLockText}</span>
+							</button>
+						</div>
+						<div className="control">
+							<button className="button is-small" onClick={this.sizeToFit}>
+								<span className="icon">
+									<i className="fas fa-compress" />
+								</span>
+								<span>Size to Fit</span>
+							</button>
+						</div>
 					</div>
-					<div>
-						<button className="button is-small" onClick={() => this.props.store.openModal('HELP')}>
-							<span className="icon">
-								<i className="fas fa-question-circle" />
-							</span>
-						</button>
+					<div className="field has-addons">
+						<div className="control">
+							<button className="button is-small" onClick={() => this.props.store.openModal('HELP')}>
+								<span className="icon">
+									<i className="fas fa-question-circle" />
+								</span>
+							</button>
+						</div>
 					</div>
 				</div>
 				<div className="map-container">
