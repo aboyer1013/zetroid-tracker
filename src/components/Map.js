@@ -4,6 +4,24 @@ import {observer, inject} from 'mobx-react';
 import {debounce, camelCase, pick, get} from 'lodash';
 import classNames from 'classnames';
 
+/**
+ * Marker color legend:
+ * ====================
+ * Red: Not available
+ * Blue: Can view item
+ * Green: Item acquirable
+ * Orange: Mix of unavailable and available
+ * Yellow: Glitch required or dark room
+ *
+ * Marker icon legend:
+ * ===================
+ * "X": Not available
+ * "!": Available
+ * "✓": Completed
+ * "Skull": Boss not defeated
+ * "★": Favorited
+ */
+
 const L = window.L;
 const Map = class Map extends Component {
 	constructor(props) {
@@ -22,7 +40,6 @@ const Map = class Map extends Component {
 		this.props.layoutNode.setEventListener('visibility', function (data) {
 			this.resize();
 		}.bind(this));
-
 	}
 
 	markers = {};
@@ -251,6 +268,11 @@ const Map = class Map extends Component {
 			'fa-eye-slash': !this.props.mapStore.hideCompleted,
 		});
 		const hideCompletedText = this.props.mapStore.hideCompleted ? 'Show Completed' : 'Hide Completed';
+		const hideUnavailableClasses = classNames('fas', {
+			'fa-eye': this.props.mapStore.hideUnavailable,
+			'fa-eye-slash': !this.props.mapStore.hideUnavailable,
+		});
+		const hideUnavailableText = this.props.mapStore.hideUnavailable ? 'Show Unavailable' : 'Hide Unavailable';
 
 		return (
 			<div className="map-wrapper">
@@ -278,6 +300,14 @@ const Map = class Map extends Component {
 									<i className={hideCompletedClasses} />
 								</span>
 								<span>{hideCompletedText}</span>
+							</button>
+						</div>
+						<div className="control">
+							<button className="button is-small" onClick={this.props.mapStore.toggleHideUnavailable}>
+								<span className="icon">
+									<i className={hideUnavailableClasses} />
+								</span>
+								<span>{hideUnavailableText}</span>
 							</button>
 						</div>
 					</div>

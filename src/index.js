@@ -199,6 +199,7 @@ locationsData.forEach(loc => {
 		boss: bossId,
 		prize: prizeId,
 		map: selectedMap,
+		abilities: appStore.abilities,
 	}));
 
 });

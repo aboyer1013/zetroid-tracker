@@ -278,8 +278,7 @@ const MapLogicHelpers = types
 					return false;
 				default:
 					if (
-						self.hasItem('moonpearl')
-						&&
+						self.hasItem('moonpearl') &&
 						(
 							self.canLiftDarkRocks ||
 							(self.hasItem('hammer') && self.canLiftRocks) ||
@@ -291,6 +290,126 @@ const MapLogicHelpers = types
 								)
 							)
 						)
+					) {
+						return true;
+					}
+					return false;
+			}
+		},
+		canEnterMireArea: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+			switch (self.config.MAP_LOGIC) {
+				case 'majorGlitches':
+					if (
+						self.hasItem('bottle') && self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches)
+						|| (self.canLiftDarkRocks && (self.canFly || self.has('bottle') || self.canDash))
+						|| (self.glitchedLinkInDarkWorld && self.canDash && self.canEnterSouthDarkWorld('majorGlitches', agahnimCheck, allowOutOfLogicGlitches))
+					) {
+						return true;
+					}
+					return false;
+				case 'owGlitches':
+					if (
+						(self.canLiftDarkRocks && (self.canFly || self.canDash))
+						|| (self.hasItem('moonpearl') && self.canDash && self.canEnterSouthDarkWorld('owGlitches', agahnimCheck, allowOutOfLogicGlitches))
+					) {
+						return true;
+					}
+					return false;
+				default:
+					if (
+						(self.canFly && self.canLiftDarkRocks) || self.canAccessMiseryMirePortal()
+					) {
+						return true;
+					}
+					return false;
+			}
+		},
+		canEnterWestDeathMountain: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+			switch (self.config.MAP_LOGIC) {
+				case 'majorGlitches':
+					if (
+						self.canDash
+						|| self.has('bottle')
+						|| self.canFly
+						|| (self.canLiftRocks && (self.hasItem('lantern') || allowOutOfLogicGlitches))
+					) {
+						return true;
+					}
+					return false;
+				case 'owGlitches':
+					if (
+						self.canDash
+						|| self.canFly
+						|| (self.canLiftRocks && (self.hasItem('lantern')) || allowOutOfLogicGlitches)
+					) {
+						return true;
+					}
+					return false;
+				default:
+					if (
+						self.canFly
+						|| (self.canLiftRocks && (self.hasItem('lantern') || allowOutOfLogicGlitches))
+						|| self.canAccessDeathMountainPortal()
+					) {
+						return true;
+					}
+					return false;
+			}
+		},
+		canEnterEastDeathMountain: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+			switch (self.config.MAP_LOGIC) {
+				case 'majorGlitches':
+					if (
+						self.canDash
+						|| (self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches) && (self.canGrapple || self.hasItem('mirror')))
+					) {
+						return true;
+					}
+					return false;
+				case 'owGlitches':
+					if (
+						self.canDash
+						|| (self.canEnterWestDeathMountain('owGlitches', allowOutOfLogicGlitches) && (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer'))))
+					) {
+						return true;
+					}
+					return false;
+				default:
+					if (
+						self.canEnterWestDeathMountain('glitchless', allowOutOfLogicGlitches)
+						&& (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer')))
+					) {
+						return true;
+					}
+					return false;
+			}
+		},
+		canEnterEastDarkWorldDeathMountain: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+			switch (self.config.MAP_LOGIC) {
+				case 'majorGlitches':
+					if (
+						self.hasItem('moonpearl')
+						|| (self.hasItem('bottle') && self.canDash)
+						|| ((self.canLiftDarkRocks || (self.hasItem('hammer') && self.canDash)) && self.canEnterEastDeathMountain('majorGlitches', allowOutOfLogicGlitches))
+						|| (self.hasItem('mirror') && self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches))
+					) {
+						return true;
+					}
+					return false;
+				case 'owGlitches':
+					if (
+						(self.hasItem('moonpearl') || self.canDash)
+						|| (
+							(self.canLiftDarkRocks || (self.hasItem('hammer') && self.canDash))
+							&& self.canEnterEastDeathMountain('owGlitches', allowOutOfLogicGlitches)
+						)
+					) {
+						return true;
+					}
+					return false;
+				default:
+					if (
+						self.canLiftDarkRocks && self.canEnterEastDeathMountain('glitchless', allowOutOfLogicGlitches)
 					) {
 						return true;
 					}

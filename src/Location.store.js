@@ -2,6 +2,7 @@ import { types, getRoot } from 'mobx-state-tree';
 import GameStore from 'Game.store';
 import ItemStore from 'Item.store';
 import MapStore from 'Map.store';
+import AbilitiesStore from 'Abilities.store';
 
 const LocationStore = types
 	.model({
@@ -23,24 +24,38 @@ const LocationStore = types
 		prize: types.maybeNull(types.reference(ItemStore)),
 		medallion: types.maybe(types.reference(ItemStore)),
 		map: types.reference(types.late(() => MapStore)),
+		abilities: types.reference(AbilitiesStore),
 	})
 	.volatile(self => ({
 		// All the logic to determine if the location is viewable goes here
-		viewableRequirements: {
+		viewability: {
 			desertpalace: () => {
-				const book = getRoot(self).getItemByName('book');
-
-				if (book.acquired) {
-					return true;
-				}
-				const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
-				return items.every(item => item && item.acquired);
+				// const book = getRoot(self).getItemByName('book');
+				//
+				// if (book.acquired) {
+				// 	return true;
+				// }
+				// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
+				// return items.every(item => item && item.acquired);
 			},
 		},
-		// Most locations require all items to be acquired to be considered available.
-		// Anything logically more complex should be defined here.
-		customItemRequirements: {
+		availability: {
+			kingsTomb: () => {
+				const abl = self.abilities;
 
+				if (abl.canDash && abl.canLiftDarkRocks) {
+					return true;
+				}
+				if (
+					abl.canDash
+					&& abl.hasItem('mirror')
+					&& abl.hasItem('moonpearl')
+					&& abl.canEnterNorthWestDarkWorld()
+				) {
+					return true;
+				}
+				return false;
+			}
 		},
 	}))
 	.views((self) => ({
@@ -70,25 +85,27 @@ const LocationStore = types
 			return self.longName;
 		},
 		get hidden() {
-			if (!self.isFavorite && self.map.hideCompleted && self.isComplete) {
-				return true;
+			if (!self.isFavorite) {
+				if ((self.map.hideCompleted && self.isComplete) || (self.map.hideUnavailable && self.isUnavailable)) {
+					return true;
+				}
 			}
 			return false;
 		},
-		get isAvailable() {
-			if (self.customItemRequirements[self.name]) {
-				return self.customItemRequirements[self.name]();
-			}
-			if (!self.items.length) {
-				return true;
-			}
-			return self.items.every(item => item && item.acquired);
+		get isUnavailable() {
+			return !self.isAvailable && !self.isViewable && !self.isComplete;
 		},
-		get isViewable() {
-			if (!self.viewableRequirements[self.name]) {
+		get isAvailable() {
+			if (!self.availability[self.name]) {
 				return false;
 			}
-			return self.viewableRequirements[self.name]();
+			return self.availability[self.name]();
+		},
+		get isViewable() {
+			if (!self.viewability[self.name]) {
+				return false;
+			}
+			return self.viewability[self.name]();
 		},
 		get isDungeonComplete() {
 			return self.isDungeon && self.boss.acquired && self.chest.qty < 1;

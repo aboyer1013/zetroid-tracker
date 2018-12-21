@@ -32,6 +32,7 @@ const itemsData = [
 			{ type: ['item'], name: 'mp-upgrade-14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mp-upgrade', groupIndex: 2, tier: 3, },
 		]
 	},
+	// { type: ['item'], name: 'agahnim',  longName: 'Agahnim', game: 'zelda3', image: 'agahnim', },
 	// {
 	// 	group: 'agahnim',
 	// 	game: 'zelda3',
