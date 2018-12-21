@@ -1,10 +1,12 @@
 .details-container {
 	display: flex;
-	padding: 10px 0 15px 0;
-	height: 100%;
+	flex-wrap: wrap;
 	> * + * {
 		border-left: 1px solid #ccc;
 	}
+}
+.details-section {
+	padding: 7.5px;
 }
 .details-controls {
 	display: flex;

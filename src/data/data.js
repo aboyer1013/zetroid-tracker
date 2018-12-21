@@ -9,6 +9,16 @@ let locationsData = [
 	    coords: [-1215,2460],
 	    name: 'kingsTomb',
 	    longName: 'King’s Tomb',
+		areas: [
+			{
+				longName: 'The Crypt',
+				collectables: [
+					{
+						numChests: 1,
+					},
+				],
+			},
+		],
 	},
 ];
 

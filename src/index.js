@@ -16,11 +16,12 @@ import ItemListStore from 'ItemList.store';
 import LayoutStore from 'Layout.store';
 import ConfigStore from 'Config.store';
 import AbilitiesStore from 'Abilities.store';
+import AreaStore from 'Area.store';
 import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes, isEmpty } from 'lodash';
 import { createStorage } from 'persistme';
 
-const shouldSync = true;
+const shouldSync = false;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });
@@ -173,13 +174,27 @@ locationsData.forEach(loc => {
 	let bossId = loc.boss && find(appStore.activeDungeonItemList.items, { name: loc.boss });
 	let prizeId = find(appStore.activeDungeonItemList.items, { group: 'prize' });
 	let chestItem = null;
+	const areas = [];
 
-	if (loc.numChests) {
-		const chestItemData = find(gameItemsData, { name: 'closedchest' });
-		chestItemData.qty = loc.numChests;
-		chestItemData.maxQty = loc.numChests;
-		chestItem = ItemStore.create(itemDataFactory(chestItemData))
-	}
+	loc.areas.forEach(area => {
+		const collectables = [];
+
+		area.collectables.forEach(collectable => {
+			const chestItemData = find(gameItemsData, { name: 'closedchest' });
+
+			chestItemData.qty = collectable.numChests;
+			chestItemData.maxQty = collectable.numChests;
+			// chestItemData.type.push('dungeon-item');
+			// chestItem =
+			collectables.push(ItemStore.create(itemDataFactory(chestItemData)));
+		});
+		areas.push(AreaStore.create({
+			id: randomId(),
+			longName: area.longName,
+			abilities: appStore.abilities,
+			collectables: collectables,
+		}));
+	});
 
 	bossId = bossId && bossId.id;
 	prizeId = prizeId && prizeId.id;
@@ -200,6 +215,7 @@ locationsData.forEach(loc => {
 		prize: prizeId,
 		map: selectedMap,
 		abilities: appStore.abilities,
+		areas: areas,
 	}));
 
 });

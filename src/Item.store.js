@@ -64,7 +64,7 @@ const ItemStore = types
 		};
 		// Toggles item acquisition if not in a group, otherwise, acquires the next item in the group
 		const activateNext = (forwardDirection = true) => {
-			if (self.maxQty > 1) {
+			if (self.maxQty > 1 || self.isChest) {
 				self.activateNextQty(forwardDirection);
 				return;
 			}
