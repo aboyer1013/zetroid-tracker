@@ -24,6 +24,7 @@ const Item = ({isReadOnly = false, item, itemListStore}) => {
 				if (!isReadOnly) {
 					if (item.isCollectableChest) {
 						item.activateNext(event.shiftKey, true);
+						itemListStore.setComplete();
 					} else if (item.isChest && item.isDungeonItem) {
 						item.activateNext(event.shiftKey);
 					} else {

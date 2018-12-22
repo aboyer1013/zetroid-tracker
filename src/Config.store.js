@@ -11,8 +11,8 @@ const ConfigStore = types
 		// Open is equivalent to vanilla intro only you start the game like you just exited the church.
 		gameState: types.optional(types.enumeration('Game state', ['standard', 'open']), 'standard'),
 		splitterSize: types.optional(types.refinement(types.number, val => {
-			return val >= 5 && val <= 20;
-		}), 5),
+			return val >= 10 && val <= 20;
+		}), 10),
 		quickMarkMode: false,
 	})
 	.views(self => ({

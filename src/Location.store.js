@@ -4,6 +4,7 @@ import ItemStore from 'Item.store';
 import MapStore from 'Map.store';
 import AbilitiesStore from 'Abilities.store';
 import AreaStore from 'Area.store';
+import { isBoolean } from 'lodash';
 
 const LocationStore = types
 	.model({
@@ -27,38 +28,41 @@ const LocationStore = types
 		abilities: types.reference(AbilitiesStore),
 		areas: types.array(AreaStore),
 	})
-	.volatile(self => ({
+	.volatile(self => {
 		// All the logic to determine if the location is viewable goes here
-		viewability: {
-			desertpalace: () => {
-				// const book = getRoot(self).getItemByName('book');
-				//
-				// if (book.acquired) {
-				// 	return true;
-				// }
-				// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
-				// return items.every(item => item && item.acquired);
+		return {
+			viewability: {
+				desertpalace: () => {
+					// const book = getRoot(self).getItemByName('book');
+					//
+					// if (book.acquired) {
+					// 	return true;
+					// }
+					// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
+					// return items.every(item => item && item.acquired);
+				},
 			},
-		},
-		availability: {
-			kingsTomb: () => {
-				const abl = self.abilities;
+			availability: {
+				kingsTomb: () => {
+					const abl = self.abilities;
 
-				if (abl.canDash && abl.canLiftDarkRocks) {
-					return true;
-				}
-				if (
-					abl.canDash
-					&& abl.hasItem('mirror')
-					&& abl.hasItem('moonpearl')
-					&& abl.canEnterNorthWestDarkWorld()
-				) {
-					return true;
-				}
-				return false;
-			}
-		},
-	}))
+					if (abl.canDash && abl.canLiftDarkRocks) {
+						return true;
+					}
+					if (
+						abl.canDash
+						&& abl.hasItem('mirror')
+						&& abl.hasItem('moonpearl')
+						&& abl.canEnterNorthWestDarkWorld()
+					) {
+						return true;
+					}
+					return false;
+				},
+				dam: () => true,
+			},
+		};
+	})
 	.views((self) => ({
 		get details() {
 			return {
@@ -104,18 +108,6 @@ const LocationStore = types
 			}
 			return self.availability[self.name]();
 		},
-		get asdf() {
-			let result = true;
-
-			self.areas.forEach(area => {
-				area.collectables.forEach(collectable => {
-					if (collectable.qty !== 0) {
-						result = false;
-					}
-				});
-			});
-			return result;
-		},
 		get isViewable() {
 			if (!self.viewability[self.name]) {
 				return false;
@@ -124,6 +116,16 @@ const LocationStore = types
 		},
 		get isDungeonComplete() {
 			return self.isDungeon && self.boss.acquired && self.chest.qty < 1;
+		},
+		get areAllAreasComplete() {
+			let result = true;
+
+			self.areas.forEach(area => {
+				if (!area.isComplete) {
+					result = false;
+				}
+			});
+			return result;
 		},
 	}))
 	.actions((self) => {
@@ -148,10 +150,17 @@ const LocationStore = types
 			}
 			// TODO add dungeon reset logic
 		};
+		const setComplete = (override = null) => {
+			if (isBoolean(override)) {
+				self.isComplete = override;
+			}
+			self.isComplete = self.areAllAreasComplete;
+		};
 
 		return {
 			setFavorite,
 			toggleComplete,
+			setComplete,
 		};
 	})
 ;

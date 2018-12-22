@@ -39,24 +39,24 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 
 		if (selectedLocation) {
 
-			if (selectedLocation.isDungeonComplete || selectedLocation.isComplete) {
+			if (selectedLocation.isDungeonComplete || selectedLocation.isComplete || selectedLocation.areAllAreasComplete) {
 				progressionButton = (
 					<button onClick={this.onProgressionClickHandler} className="button is-dark">
-						<span className="icon"><i className="fas fa-check"/></span>
+						<span className="icon"><i className="fas fa-check-circle"/></span>
 						<span>Complete</span>
 					</button>
 				);
 			} else if (selectedLocation.isAvailable) {
 				progressionButton = (
 					<button onClick={this.onProgressionClickHandler} className="button is-success">
-						<span className="icon"><i className="fas fa-unlock"/></span>
+						<span className="icon"><i className="fas fa-exclamation-circle"/></span>
 						<span>Available</span>
 					</button>
 				);
 			} else {
 				progressionButton = (
 					<button onClick={this.onProgressionClickHandler} className="button is-danger">
-						<span className="icon"><i className="fas fa-lock"/></span>
+						<span className="icon"><i className="fas fa-times-circle"/></span>
 						<span>Unavailable</span>
 					</button>
 				);
@@ -105,7 +105,8 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 				<div className="details-section details-areas">
 				{selectedLocation.areas.map(area => (
 					<div className="details-area" key={randomId()}>
-						<div className="details-area-title has-text-grey"><em>{area.longName}</em></div>
+						<div className="details-area-title is-size-7 has-text-grey">{area.longName}</div>
+						<div className="divider" />
 						<div className="details-area-collectables">
 							{area.collectables.map(collectable => {
 								return (

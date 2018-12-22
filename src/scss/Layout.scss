@@ -11,35 +11,37 @@
 	background-color: $grey-light;
 	&::after {
 		@extend .fas;
-		@extend .fa-bars;
+		@extend .fa-grip-horizontal;
 		font-style: normal;
 		font-variant: normal;
 		text-rendering: auto;
 		-webkit-font-smoothing: antialiased;
-		font-size: 11px;
-		content: '\F0C9';
+		font-size: 15px;
+		content: '\f58d';
 		position: absolute;
 		text-shadow: 1px 1px 0 #fff;
-		color: rgba(0,0,0,.75);
+		color: rgba(0,0,0,.5);
 		font-weight: bold;
-		top: 0;
-		left: 50%;
+		top: -3px;
+		left: calc(50% - 6px);
 	}
+	// I know. Don't ask. This is what happens when you're backed into a corner.
 	&[style*='height: 13px']::after {
-		top: 1px;
+		top: -2px;
 	}
 	&[style*='height: 15px']::after {
-		top: 2px;
+		top: -1px;
 	}
 	&[style*='height: 18px']::after {
-		top: 3px;
+		top: 0;
 	}
 	&[style*='height: 20px']::after {
-		top: 4px;
+		top: 1px;
 	}
 	&[style*='ew-resize'] {
 		&::after {
-			@extend .fa-rotate-90;
+			@extend .fa-grip-vertical;
+			content: '\f58e';
 			top: 50%;
 			left: 0;
 		}

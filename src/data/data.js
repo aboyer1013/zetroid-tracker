@@ -6,7 +6,7 @@ const gamesData = [
 ];
 let locationsData = [
 	{
-	    coords: [-1215,2460],
+	    coords: [-1215,2463],
 	    name: 'kingsTomb',
 	    longName: 'King’s Tomb',
 		areas: [
@@ -19,6 +19,30 @@ let locationsData = [
 				],
 			},
 		],
+	},
+	{
+	    coords: [-3830,1920],
+	    name: 'dam',
+	    longName: 'Dam',
+	    areas: [
+	        {
+	            longName: 'Inside',
+	            collectables: [
+	                {
+	                    numChests: 1,
+	                },
+	            ],
+	        },
+		    {
+		        longName: 'Outside',
+		        collectables: [
+		            {
+		                numChests: 1,
+		            },
+		        ],
+		    },
+	    ],
+
 	},
 ];
 

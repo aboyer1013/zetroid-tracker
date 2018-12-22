@@ -11,18 +11,40 @@
 		}
 		cursor: pointer;
 	}
-	.details-area-title {
-		border-bottom: 1px dotted #7a7a7a;
-		margin: 0 0 10px;
-	}
+}
+.details-location {
+	min-width: 190px;
 }
 .details-section {
 	padding: 7.5px;
+}
+.divider {
+	border-top: 1px solid #ccc;
+	box-shadow: 1px 1px 0 #fff;
+	margin: 0 0 10px;
+}
+.details-areas {
+	display: flex;
+}
+.details-area {
+	//padding: 0 7.5px;
+	margin: 0 7.5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background: #efefef;
+}
+.details-area-title {
+	padding: 0 7.5px;
+	border-radius: 5px 5px 0 0;
+	//background: #b1b1b1;
 }
 .details-controls {
 	display: flex;
 	justify-content: space-between;
 	align-items: end;
+}
+.details-area-collectables {
+	padding: 0 7.5px;
 }
 .tags-container {
 	display: flex;

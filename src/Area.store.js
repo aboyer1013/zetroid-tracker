@@ -7,7 +7,6 @@ const AreaStore = types
 	.model({
 		id: types.identifier,
 		longName: types.string,
-		isComplete: false,
 		collectables: types.array(ItemStore),
 		abilities: types.reference(AbilitiesStore),
 	})
@@ -19,19 +18,27 @@ const AreaStore = types
 			const parent = getParentOfType(self, LocationStore);
 
 			return parent.isAvailable || parent.isComplete;
-		}
+		},
+		get isComplete() {
+			let result = true;
+
+			self.collectables.forEach(collectable => {
+				if (collectable.qty > 0) {
+					result = false;
+				}
+			});
+			return result;
+		},
 	}))
-	// .actions(self => {
-	// 	const activateCollectables = () => {
-	// 		if (getParent(self).isAvailable) {
-	// 			self.collectables.forEach(collectable => collectable.acquire(true));
-	// 		}
-	// 	};
-	//
-	// 	return {
-	// 		activateCollectables,
-	// 	}
-	// })
+	.actions(self => {
+		const setComplete = () => {
+			getParentOfType(self, LocationStore).setComplete();
+		};
+
+		return {
+			setComplete,
+		}
+	})
 ;
 
 export default AreaStore;

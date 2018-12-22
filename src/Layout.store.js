@@ -163,7 +163,7 @@ const LayoutStore = types
 	}))
 	.views(self => ({
 		get splitterSize() {
-			return getRoot(self).configStore.splitterSize || 5;
+			return getRoot(self).configStore.splitterSize || 10;
 		},
 		get globalConfig() {
 			const attrs = [
