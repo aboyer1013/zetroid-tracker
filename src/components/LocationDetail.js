@@ -5,13 +5,29 @@ import classNames from 'classnames';
 import {observer, inject} from 'mobx-react';
 import LocationNotes from 'components/LocationNotes';
 import Item from 'components/Item';
+import { randomId } from 'utilities/util';
 
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
+	constructor(props) {
+		super(props);
+		this.onProgressionClickHandler = this.onProgressionClickHandler.bind(this);
+	}
+	onProgressionClickHandler(event) {
+		const selectedLocation = get(this, 'props.store.locationDetail.selectedLocation');
+		const quickMarkMode = get(this, 'props.store.config.quickMarkMode');
+
+		if (selectedLocation) {
+			if (quickMarkMode && !event.ctrlKey) {
+				selectedLocation.toggleComplete();
+			} else if (!quickMarkMode && event.ctrlKey) {
+				selectedLocation.toggleComplete();
+			}
+		}
+	}
 	render() {
 		const store = get(this, 'props.store.locationDetail');
 		const selectedLocation = store.selectedLocation;
 		const details = get(selectedLocation, 'details');
-		const numItems = get(details, 'numItems', 1);
 		let longName = get(details, 'longName');
 		let reqs = get(details, 'itemRequirements', []);
 		let notes = get(details, 'notes');
@@ -25,21 +41,21 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 
 			if (selectedLocation.isDungeonComplete || selectedLocation.isComplete) {
 				progressionButton = (
-					<button onClick={selectedLocation.toggleComplete} className="button is-dark">
+					<button onClick={this.onProgressionClickHandler} className="button is-dark">
 						<span className="icon"><i className="fas fa-check"/></span>
 						<span>Complete</span>
 					</button>
 				);
 			} else if (selectedLocation.isAvailable) {
 				progressionButton = (
-					<button onClick={selectedLocation.toggleComplete} className="button is-success">
+					<button onClick={this.onProgressionClickHandler} className="button is-success">
 						<span className="icon"><i className="fas fa-unlock"/></span>
 						<span>Available</span>
 					</button>
 				);
 			} else {
 				progressionButton = (
-					<button onClick={selectedLocation.toggleComplete} className="button is-danger">
+					<button onClick={this.onProgressionClickHandler} className="button is-danger">
 						<span className="icon"><i className="fas fa-lock"/></span>
 						<span>Unavailable</span>
 					</button>
@@ -76,30 +92,34 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					<div className="details-title">
 						{longName}
 					</div>
-					<div>
-						<div className="details-controls">
-							<div className="buttons">
-								<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)}
-								        className={favoriteClasses}>
-									<span className="icon"><i className="fas fa-star" /></span>
-								</button>
-								{progressionButton}
-							</div>
-						</div>
-						<div>
-							<div className="tags-container">
-								{isViewable}
-								<div className="tags has-addons is-marginless">
-									<span className="tag is-info icon"><i className="fas fa-info"/></span>
-									<span className="tag">{`${numItems} item${(numItems > 1) ? 's' : ''} here`}</span>
-								</div>
-							</div>
+					<div className="details-controls">
+						<div className="buttons">
+							<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)}
+							        className={favoriteClasses}>
+								<span className="icon"><i className="fas fa-star" /></span>
+							</button>
+							{progressionButton}
 						</div>
 					</div>
 				</div>
-				<div className="details-section">
-					<h6>{selectedLocation.areas[0].longName}</h6>
-					<Item itemListStore={{ isVisible: () => true }} item={selectedLocation.areas[0].collectables[0]}/>
+				<div className="details-section details-areas">
+				{selectedLocation.areas.map(area => (
+					<div className="details-area" key={randomId()}>
+						<div className="details-area-title has-text-grey"><em>{area.longName}</em></div>
+						<div className="details-area-collectables">
+							{area.collectables.map(collectable => {
+								return (
+									<Item
+										key={randomId()}
+										itemListStore={area}
+										item={collectable}
+										isReadOnly={!selectedLocation.isAvailable && !selectedLocation.isComplete}
+									/>
+								);
+							})}
+						</div>
+					</div>
+				))}
 				</div>
 			</div>
 		);

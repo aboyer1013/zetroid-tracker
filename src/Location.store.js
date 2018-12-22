@@ -67,6 +67,8 @@ const LocationStore = types
 				notes: self.notes,
 				numItems: self.numItems,
 				isViewable: self.isViewable,
+				isAvailable: self.isAvailable,
+				isUnavailable: self.isUnavailable,
 			};
 		},
 		get items() {
@@ -102,6 +104,18 @@ const LocationStore = types
 			}
 			return self.availability[self.name]();
 		},
+		get asdf() {
+			let result = true;
+
+			self.areas.forEach(area => {
+				area.collectables.forEach(collectable => {
+					if (collectable.qty !== 0) {
+						result = false;
+					}
+				});
+			});
+			return result;
+		},
 		get isViewable() {
 			if (!self.viewability[self.name]) {
 				return false;
@@ -117,16 +131,22 @@ const LocationStore = types
 			self.isFavorite = newFavorite;
 		};
 		const toggleComplete = () => {
-			if (self.isDungeon) {
-				if (!self.isComplete) {
-					self.boss.acquire(true);
-					self.chest.setQty(0);
-				} else {
-					self.boss.acquire(false);
-					self.chest.setQty(self.chest.maxQty);
-				}
-			}
 			self.isComplete = !self.isComplete;
+			if (self.isComplete) {
+				self.areas.forEach(area => {
+					area.collectables.forEach(collectable => {
+						collectable.setQty(0);
+						// collectable.acquire(true);
+					});
+				});
+			} else {
+				self.areas.forEach(area => {
+					area.collectables.forEach(collectable => {
+						collectable.setQty(collectable.maxQty);
+					});
+				})
+			}
+			// TODO add dungeon reset logic
 		};
 
 		return {

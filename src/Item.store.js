@@ -50,6 +50,12 @@ const ItemStore = types
 		},
 		get isChest() {
 			return includes(self.type, 'chest');
+		},
+		get isCollectable() {
+			return includes(self.type, 'collectable');
+		},
+		get isCollectableChest() {
+			return self.isChest && self.isCollectable;
 		}
 	}))
 	.actions(self => {
@@ -63,9 +69,9 @@ const ItemStore = types
 			self.acquired = newAcquired;
 		};
 		// Toggles item acquisition if not in a group, otherwise, acquires the next item in the group
-		const activateNext = (forwardDirection = true) => {
+		const activateNext = (forwardDirection = true, collectAll = false) => {
 			if (self.maxQty > 1 || self.isChest) {
-				self.activateNextQty(forwardDirection);
+				self.activateNextQty(forwardDirection, collectAll);
 				return;
 			}
 			if (!self.group) {
@@ -121,10 +127,26 @@ const ItemStore = types
 		const setIndex = newIndex => {
 			self.index = newIndex;
 		};
-		const activateNextQty = (forwardDirection = true) => {
+		const activateNextQty = (forwardDirection = true, collectAll = false) => {
 			let nextQty = forwardDirection ? self.qty + 1 : self.qty - 1;
 
-			if (forwardDirection) {
+			if (collectAll && forwardDirection) {
+				if (self.qty < self.maxQty) {
+					self.setQty(self.maxQty);
+					self.acquire(true);
+				} else {
+					self.setQty(0);
+					self.acquire(true);
+				}
+			} else if (collectAll && !forwardDirection) {
+				if (self.qty >= self.maxQty) {
+					self.setQty(0);
+					self.acquire(true);
+				} else {
+					self.setQty(self.maxQty);
+					self.acquire(true);
+				}
+			} else if (forwardDirection) {
 				if (nextQty > self.maxQty) {
 					self.acquire(self.isDungeonItem);
 					self.setQty(0);

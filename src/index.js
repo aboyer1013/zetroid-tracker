@@ -21,7 +21,7 @@ import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes, isEmpty } from 'lodash';
 import { createStorage } from 'persistme';
 
-const shouldSync = false;
+const shouldSync = true;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });
@@ -181,11 +181,15 @@ locationsData.forEach(loc => {
 
 		area.collectables.forEach(collectable => {
 			const chestItemData = find(gameItemsData, { name: 'closedchest' });
+			const type = chestItemData.type.slice(0);
 
+			type.push('collectable');
+			if (loc.isDungeon) {
+				type.push('dungeon-item');
+			}
 			chestItemData.qty = collectable.numChests;
 			chestItemData.maxQty = collectable.numChests;
-			// chestItemData.type.push('dungeon-item');
-			// chestItem =
+			chestItemData.type = type;
 			collectables.push(ItemStore.create(itemDataFactory(chestItemData)));
 		});
 		areas.push(AreaStore.create({
@@ -209,6 +213,7 @@ locationsData.forEach(loc => {
 		itemRequirements: loc.itemRequirements,
 		viewableRequirements: loc.viewableRequirements,
 		isDungeon: !!loc.isDungeon,
+		// TODO remove chest
 		chest: chestItem,
 		numChests: loc.numChests,
 		boss: bossId,

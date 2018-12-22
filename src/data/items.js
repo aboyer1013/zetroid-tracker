@@ -10,7 +10,7 @@ const itemsData = [
 			{ group: 'medallion', type: ['dungeon-item'], name: 'quake',          longName: 'Quake Medallion',   game: 'zelda3', image: 'quake', groupIndex: 3, },
 		],
 	},
-	{ type: ['dungeon-item', 'chest'], name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', imageEmpty: 'chest-open', acquired: true, },
+	{ type: ['chest'], name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', imageEmpty: 'chest-open', acquired: true, },
 	{
 		group: 'prize',
 		game: 'zelda3',

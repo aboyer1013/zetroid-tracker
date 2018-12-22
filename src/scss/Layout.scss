@@ -9,6 +9,53 @@
 
 .flexlayout__splitter {
 	background-color: $grey-light;
+	&::after {
+		@extend .fas;
+		@extend .fa-bars;
+		font-style: normal;
+		font-variant: normal;
+		text-rendering: auto;
+		-webkit-font-smoothing: antialiased;
+		font-size: 11px;
+		content: '\F0C9';
+		position: absolute;
+		text-shadow: 1px 1px 0 #fff;
+		color: rgba(0,0,0,.75);
+		font-weight: bold;
+		top: 0;
+		left: 50%;
+	}
+	&[style*='height: 13px']::after {
+		top: 1px;
+	}
+	&[style*='height: 15px']::after {
+		top: 2px;
+	}
+	&[style*='height: 18px']::after {
+		top: 3px;
+	}
+	&[style*='height: 20px']::after {
+		top: 4px;
+	}
+	&[style*='ew-resize'] {
+		&::after {
+			@extend .fa-rotate-90;
+			top: 50%;
+			left: 0;
+		}
+		&[style*='width: 13px']::after {
+			left: 1px;
+		}
+		&[style*='width: 15px']::after {
+			left: 2px;
+		}
+		&[style*='width: 18px']::after {
+			left: 3px;
+		}
+		&[style*='width: 20px']::after {
+			left: 4px;
+		}
+	}
 }
 
 .flexlayout__splitter:hover {

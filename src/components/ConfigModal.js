@@ -47,7 +47,7 @@ class ConfigModal extends Component {
 												<input
 													type="range"
 													className="range"
-													min="5"
+													min="10"
 													max="20"
 													step="1"
 													defaultValue={configStore.splitterSize}
@@ -104,7 +104,7 @@ class ConfigModal extends Component {
 										<legend>QuickMark Mode</legend>
 										<div className="has-text-grey">
 											<p>Left Click the map markers to view details about the location. CTRL + Click on the map markers to toggle completion.</p>
-											<p>When QuickMark Mode is enabled, these shortcuts are swapped.</p>
+											<p>When QuickMark Mode is enabled, these shortcuts are swapped. This also applies to the progression button in the Details panel.</p>
 										</div>
 										<label>
 											<input

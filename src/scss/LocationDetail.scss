@@ -4,6 +4,17 @@
 	> * + * {
 		border-left: 1px solid #ccc;
 	}
+	.item {
+		width: 48px;
+		&.is-read-only {
+			cursor: default;
+		}
+		cursor: pointer;
+	}
+	.details-area-title {
+		border-bottom: 1px dotted #7a7a7a;
+		margin: 0 0 10px;
+	}
 }
 .details-section {
 	padding: 7.5px;

@@ -4,10 +4,12 @@ import classNames from 'classnames';
 
 const Item = ({isReadOnly = false, item, itemListStore}) => {
 	const isVisible = itemListStore.isVisible(item);
+	const isAcquired = (!item.isChest && item.acquired) || (item.isCollectableChest && itemListStore.acquired);
 	const itemClasses = classNames('item', {
-		'is-not-acquired': !item.acquired,
+		'is-not-acquired': !isAcquired,
 		'is-hidden': !isVisible,
-		'is-item-group': !!item.group
+		'is-item-group': !!item.group,
+		'is-read-only': isReadOnly,
 	});
 	let imageSrc = item.imageSrc;
 
@@ -20,7 +22,9 @@ const Item = ({isReadOnly = false, item, itemListStore}) => {
 			data-qty={item.qty}
 			onClick={event => {
 				if (!isReadOnly) {
-					if (item.isChest) {
+					if (item.isCollectableChest) {
+						item.activateNext(event.shiftKey, true);
+					} else if (item.isChest && item.isDungeonItem) {
 						item.activateNext(event.shiftKey);
 					} else {
 						item.activateNext(!event.shiftKey);

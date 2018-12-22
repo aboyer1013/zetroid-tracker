@@ -1,8 +1,7 @@
-import { types, getRoot } from 'mobx-state-tree';
-import GameStore from 'Game.store';
+import { types, getParentOfType } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
-import MapStore from 'Map.store';
 import AbilitiesStore from 'Abilities.store';
+import LocationStore from 'Location.store';
 
 const AreaStore = types
 	.model({
@@ -10,9 +9,29 @@ const AreaStore = types
 		longName: types.string,
 		isComplete: false,
 		collectables: types.array(ItemStore),
-		// numChests: types.maybe(types.integer),
 		abilities: types.reference(AbilitiesStore),
 	})
+	.views(self => ({
+		isVisible: (item) => {
+			return true;
+		},
+		get acquired() {
+			const parent = getParentOfType(self, LocationStore);
+
+			return parent.isAvailable || parent.isComplete;
+		}
+	}))
+	// .actions(self => {
+	// 	const activateCollectables = () => {
+	// 		if (getParent(self).isAvailable) {
+	// 			self.collectables.forEach(collectable => collectable.acquire(true));
+	// 		}
+	// 	};
+	//
+	// 	return {
+	// 		activateCollectables,
+	// 	}
+	// })
 ;
 
 export default AreaStore;

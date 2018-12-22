@@ -23,7 +23,7 @@ const HelpModal = ({store}) => {
 						<li>{detailsShortcut} map marker for more information (shown on Details panel).</li>
 						<li>{toggleCompleteShortcut} map marker to toggle completed locations.</li>
 						<li>Shift + drag to zoom in on an area. This is enabled if zooming is locked.</li>
-						<li>Mousewheel to zoom.</li>
+						<li>Mousewheel / Pinch to zoom.</li>
 					</ul>
 				</div>
 			</section>
