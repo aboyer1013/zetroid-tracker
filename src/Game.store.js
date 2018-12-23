@@ -6,6 +6,7 @@ const GameStore = types
 		name: types.string,
 		longName: types.string,
 		selected: false,
+		crossOver: types.maybeNull(types.reference(types.late(() => GameStore))),
 	})
 	.actions((self) => {
 		const setSelected = (state) => {

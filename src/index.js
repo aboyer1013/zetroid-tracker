@@ -194,6 +194,7 @@ locationsData.forEach(loc => {
 		});
 		areas.push(AreaStore.create({
 			id: randomId(),
+			name: area.name,
 			longName: area.longName,
 			abilities: appStore.abilities,
 			collectables: collectables,
@@ -202,6 +203,7 @@ locationsData.forEach(loc => {
 
 	bossId = bossId && bossId.id;
 	prizeId = prizeId && prizeId.id;
+
 	selectedMap.locations.put(LocationStore.create({
 		id: `loc-${randomId()}`,
 		name: loc.name,

@@ -69,9 +69,10 @@ const MapLogicHelpers = types
 			return self.hasItem('mirror-shield');
 		},
 		get canExtendMagic() {
-			const mpUpgrade = self.hasItem('mpupgrade');
+			const mpUpgrade = self.getItemsByGroup('mpUpgrade');
+			const result = find(mpUpgrade, { acquired: true });
 
-			return (mpUpgrade && mpUpgrade.tier >= 2) || self.hasItem('bottle');
+			return (result && result.tier >= 2) || self.hasItem('bottle');
 		},
 		get canGetGoodBee() {
 			return (
@@ -81,7 +82,7 @@ const MapLogicHelpers = types
 			);
 		},
 		get glitchedLinkInDarkWorld() {
-			return self.hasItem('moonpearl') || self.hasItem('bottle');
+			return self.hasItem('moonPearl') || self.hasItem('bottle');
 		},
 		canDefeatAgahnim: (allowOutOfLogicGlitches = false) => {
 			return (
@@ -101,7 +102,7 @@ const MapLogicHelpers = types
 						return true;
 					}
 					if (
-						self.hasItem('moonpearl') &&
+						self.hasItem('moonPearl') &&
 						(
 							(self.canLiftDarkRocks && (self.canDash || self.canSwim)) ||
 							(self.hasItem('hammer') && self.canLiftRocks)
@@ -114,7 +115,7 @@ const MapLogicHelpers = types
 						(
 							self.hasItem('bottle') ||
 							(self.hasItem('mirror') && self.canSpinSpeed) ||
-							(self.hasItem('moonpearl') && (self.hasItem('mirror') || self.canDash))
+							(self.hasItem('moonPearl') && (self.hasItem('mirror') || self.canDash))
 						)
 					) {
 						return true;
@@ -128,7 +129,7 @@ const MapLogicHelpers = types
 						return true;
 					}
 					if (
-						self.hasItem('moonpearl') &&
+						self.hasItem('moonPearl') &&
 						(
 							(self.canLiftDarkRocks && (self.canDash || self.canSwim)) ||
 							(self.hasItem('hammer') && self.canLiftRocks)
@@ -140,7 +141,7 @@ const MapLogicHelpers = types
 						self.canEnterWestDeathMountain('owGlitches', allowOutOfLogicGlitches) &&
 						(
 							(self.hasItem('mirror') && self.canSpinSpeed) ||
-							(self.hasItem('moonpearl') && (self.hasItem('mirror') || self.canDash))
+							(self.hasItem('moonPearl') && (self.hasItem('mirror') || self.canDash))
 						)
 					) {
 						return true;
@@ -153,13 +154,13 @@ const MapLogicHelpers = types
 					if (agahnimCheck && self.canDefeatAgahnim(allowOutOfLogicGlitches)) {
 						return true;
 					}
-					if (self.hasItem('hammer') && self.canLiftRocks && self.hasItem('moonpearl')) {
+					if (self.hasItem('hammer') && self.canLiftRocks && self.hasItem('moonPearl')) {
 						return true;
 					}
-					if (self.canLiftDarkRocks && self.canSwim && self.hasItem('moonpearl')) {
+					if (self.canLiftDarkRocks && self.canSwim && self.hasItem('moonPearl')) {
 						return true;
 					}
-					if (self.canAccessDarkWorldPortal && self.canSwim && self.hasItem('moonpearl')) {
+					if (self.canAccessDarkWorldPortal() && self.canSwim && self.hasItem('moonPearl')) {
 						return true;
 					}
 					return false;
@@ -172,7 +173,7 @@ const MapLogicHelpers = types
 						return true;
 					}
 					if (
-						self.hasItem('moonpearl') &&
+						self.hasItem('moonPearl') &&
 						(
 							self.canLiftDarkRocks ||
 							(self.hasItem('hammer') && self.canLiftRocks) ||
@@ -189,12 +190,12 @@ const MapLogicHelpers = types
 				case 'owGlitches':
 					if (
 						self.canEnterWestDeathMountain('owGlitches', allowOutOfLogicGlitches) &&
-						(self.hasItem('mirror') || (self.canDash && self.hasItem('moonpearl')))
+						(self.hasItem('mirror') || (self.canDash && self.hasItem('moonPearl')))
 					) {
 						return true;
 					}
 					if (
-						self.hasItem('moonpearl') &&
+						self.hasItem('moonPearl') &&
 						(
 							self.canLiftDarkRocks ||
 							(self.hasItem('hammer') && self.canLiftRocks) ||
@@ -210,7 +211,7 @@ const MapLogicHelpers = types
 					return false;
 				default:
 					if (
-						self.hasItem('moonpearl') &&
+						self.hasItem('moonPearl') &&
 						(
 							(
 								self.canEnterNorthEastDarkWorld(agahnimCheck, allowOutOfLogicGlitches) &&
@@ -235,7 +236,7 @@ const MapLogicHelpers = types
 					}
 					if (
 						(
-							self.hasItem('moonpearl') &&
+							self.hasItem('moonPearl') &&
 							(
 								self.canLiftDarkRocks ||
 								(self.hasItem('hammer') && self.canLiftRocks) ||
@@ -253,7 +254,7 @@ const MapLogicHelpers = types
 					if (
 						(
 							(
-								self.hasItem('moonpearl') &&
+								self.hasItem('moonPearl') &&
 								(
 									self.canLiftDarkRocks ||
 									(self.hasItem('hammer') && self.canLiftRocks) ||
@@ -267,10 +268,10 @@ const MapLogicHelpers = types
 								)
 							) ||
 							(
-								(self.hasItem('mirror') || (self.canDash && self.hasItem('moonpearl'))) &&
+								(self.hasItem('mirror') || (self.canDash && self.hasItem('moonPearl'))) &&
 								self.canEnterWestDeathMountain(allowOutOfLogicGlitches)
 							) ||
-							(self.canAccessDarkWorldPortal && self.canSwim)
+							(self.canAccessDarkWorldPortal() && self.canSwim)
 						)
 					) {
 						return true;
@@ -278,7 +279,7 @@ const MapLogicHelpers = types
 					return false;
 				default:
 					if (
-						self.hasItem('moonpearl') &&
+						self.hasItem('moonPearl') &&
 						(
 							self.canLiftDarkRocks ||
 							(self.hasItem('hammer') && self.canLiftRocks) ||
@@ -310,7 +311,7 @@ const MapLogicHelpers = types
 				case 'owGlitches':
 					if (
 						(self.canLiftDarkRocks && (self.canFly || self.canDash))
-						|| (self.hasItem('moonpearl') && self.canDash && self.canEnterSouthDarkWorld('owGlitches', agahnimCheck, allowOutOfLogicGlitches))
+						|| (self.hasItem('moonPearl') && self.canDash && self.canEnterSouthDarkWorld('owGlitches', agahnimCheck, allowOutOfLogicGlitches))
 					) {
 						return true;
 					}
@@ -324,7 +325,7 @@ const MapLogicHelpers = types
 					return false;
 			}
 		},
-		canEnterWestDeathMountain: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+		canEnterWestDeathMountain: (allowOutOfLogicGlitches = false) => {
 			switch (self.config.MAP_LOGIC) {
 				case 'majorGlitches':
 					if (
@@ -356,12 +357,12 @@ const MapLogicHelpers = types
 					return false;
 			}
 		},
-		canEnterEastDeathMountain: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+		canEnterEastDeathMountain: (allowOutOfLogicGlitches = false) => {
 			switch (self.config.MAP_LOGIC) {
 				case 'majorGlitches':
 					if (
 						self.canDash
-						|| (self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches) && (self.canGrapple || self.hasItem('mirror')))
+						|| (self.canEnterWestDeathMountain(allowOutOfLogicGlitches) && (self.canGrapple || self.hasItem('mirror')))
 					) {
 						return true;
 					}
@@ -369,14 +370,14 @@ const MapLogicHelpers = types
 				case 'owGlitches':
 					if (
 						self.canDash
-						|| (self.canEnterWestDeathMountain('owGlitches', allowOutOfLogicGlitches) && (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer'))))
+						|| (self.canEnterWestDeathMountain(allowOutOfLogicGlitches) && (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer'))))
 					) {
 						return true;
 					}
 					return false;
 				default:
 					if (
-						self.canEnterWestDeathMountain('glitchless', allowOutOfLogicGlitches)
+						self.canEnterWestDeathMountain(allowOutOfLogicGlitches)
 						&& (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer')))
 					) {
 						return true;
@@ -388,7 +389,7 @@ const MapLogicHelpers = types
 			switch (self.config.MAP_LOGIC) {
 				case 'majorGlitches':
 					if (
-						self.hasItem('moonpearl')
+						self.hasItem('moonPearl')
 						|| (self.hasItem('bottle') && self.canDash)
 						|| ((self.canLiftDarkRocks || (self.hasItem('hammer') && self.canDash)) && self.canEnterEastDeathMountain('majorGlitches', allowOutOfLogicGlitches))
 						|| (self.hasItem('mirror') && self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches))
@@ -398,7 +399,7 @@ const MapLogicHelpers = types
 					return false;
 				case 'owGlitches':
 					if (
-						(self.hasItem('moonpearl') || self.canDash)
+						(self.hasItem('moonPearl') || self.canDash)
 						|| (
 							(self.canLiftDarkRocks || (self.hasItem('hammer') && self.canDash))
 							&& self.canEnterEastDeathMountain('owGlitches', allowOutOfLogicGlitches)
@@ -409,12 +410,82 @@ const MapLogicHelpers = types
 					return false;
 				default:
 					if (
-						self.canLiftDarkRocks && self.canEnterEastDeathMountain('glitchless', allowOutOfLogicGlitches)
+						self.canLiftDarkRocks && self.canEnterEastDeathMountain(allowOutOfLogicGlitches)
 					) {
 						return true;
 					}
 					return false;
 			}
+		},
+		// TODO - Flesh portals out once SM is created. Finish each game rando first, then figure out combining the two.
+		// SM -> ALttP portals
+		canAccessLightWorldPortal: () => {	// Crateria Map Room -> Link's Fortune Teller
+			return true;
+		},
+		canAccessDeathMountainPortal: () => { // Norfair Map Room -> DM (Old Man exit)
+			return true;
+			// return ((canDestroyBombWalls() || canDashSM())
+			// 	&& (canOpenGreenDoors() && canMorph()));
+		},
+		canAccessMiseryMirePortal: () => { // Lower Norfair (Golden Torizo Energy Refill) -> Mire (Great Fairy, east "Entrance")
+			return true;
+			// if(trackerData.metroid3.mapLogic == "casualLogic") {
+			// 	return heatProof()
+			// 		&& canOpenGreenDoors()
+			// 		&& canOpenYellowDoors()
+			// 		&& (canSwimSM() && has("space"));
+			// } else if(trackerData.metroid3.mapLogic == "tourneyLogic") {
+			// 	return heatProof()
+			// 		&& canOpenGreenDoors()
+			// 		&& (canHiJump() || canSwimSM())
+			// 		&& canOpenYellowDoors();
+			// }
+		},
+		canAccessDarkWorldPortal: () => { // Maridia Missile Refill -> DW (DW Ice Rod Right)
+			return false;
+			// if(trackerData.metroid3.mapLogic == "casualLogic") {
+			// 	return canUsePowerBombs() && canOpenGreenDoors() && canSwimSM() && canDashSM();
+			// } else if(trackerData.metroid3.mapLogic == "tourneyLogic") {
+			// 	return canUsePowerBombs()
+			// 		&& canOpenGreenDoors()
+			// 		&& (has("charge") || (canOpenGreenDoors() && canOpenRedDoors()))
+			// 		&& (canSwimSM() || (canHiJump() && has("ice") && canGrappleSM()))
+			// 		&& (has("ice") || (canDashSM() && canSwimSM()));
+			// }
+		},
+		// ALttP -> SM portals,
+		canAccessCrateriaPortal: () => { // Fortune Teller -> Crateria Map Room
+			return true;
+		},
+		canAccessNorfairPortal: () => {
+			// DM (Old Man exit) -> Norfair Map Room
+			// Death Mountain Access
+			return self.canFly || (self.canLiftRocks && self.hasItem('lantern'));
+		},
+		canAccessLowerNorfairPortal: () => {
+			// Mire (Great Fairy, east "Entrance") -> Lower Norfair (Golden Torizo Energy Refill)
+			return self.canFly && self.canLiftDarkRocks;
+		},
+		canAccessMaridiaPortal: () => {
+			// DW (DW Ice Rod Right) -> Maridia Missile Refill
+			return true;
+			// if(trackerData.metroid3.mapLogic == "casualLogic") {
+			// 	return has("moonPearl")
+			// 		&& canSwim()
+			// 		&& canSwimSM()
+			// 		&& canMorph()
+			// 		&& (has("agahnim")
+			// 			|| (has("hammer") && canLiftRocks())
+			// 			|| canLiftDarkRocks());
+			// } else if(trackerData.metroid3.mapLogic == "tourneyLogic") {
+			// 	return has("moonPearl")
+			// 		&& canSwim()
+			// 		&& (canSpringBallJump() || canHiJump() || canSwimSM())
+			// 		&& canMorph()
+			// 		&& (has("agahnim")
+			// 			|| (has("hammer") && canLiftRocks())
+			// 			|| canLiftDarkRocks());
+			// }
 		},
 	}))
 ;

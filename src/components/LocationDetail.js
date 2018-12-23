@@ -32,13 +32,12 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		let reqs = get(details, 'itemRequirements', []);
 		let notes = get(details, 'notes');
 		let isViewable = get(details, 'isViewable');
-		const favoriteClasses = classNames('button', 'is-outline', {
-			'has-text-warning': get(selectedLocation, 'isFavorite'),
+		const favoriteClasses = classNames('button', 'is-outline favorite-button', {
+			'is-favorite': get(selectedLocation, 'isFavorite'),
 		});
 		let progressionButton;
 
 		if (selectedLocation) {
-
 			if (selectedLocation.isDungeonComplete || selectedLocation.isComplete || selectedLocation.areAllAreasComplete) {
 				progressionButton = (
 					<button onClick={this.onProgressionClickHandler} className="button is-dark">
@@ -51,6 +50,20 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					<button onClick={this.onProgressionClickHandler} className="button is-success">
 						<span className="icon"><i className="fas fa-exclamation-circle"/></span>
 						<span>Available</span>
+					</button>
+				);
+			} else if (selectedLocation.isPartiallyAvailable) {
+				progressionButton = (
+					<button onClick={this.onProgressionClickHandler} className="button is-warning">
+						<span className="icon"><i className="fas fa-times-circle"/></span>
+						<span>Unavailable</span>
+					</button>
+				);
+			} else if (selectedLocation.isAgahnimTheOnlyRemainingRequirement) {
+				progressionButton = (
+					<button onClick={this.onProgressionClickHandler} className="button is-info">
+						<span className="icon"><i className="fas fa-exclamation-circle"/></span>
+						<span>Agahnim Must Be Defeated</span>
 					</button>
 				);
 			} else {
@@ -103,24 +116,43 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					</div>
 				</div>
 				<div className="details-section details-areas">
-				{selectedLocation.areas.map(area => (
-					<div className="details-area" key={randomId()}>
-						<div className="details-area-title is-size-7 has-text-grey">{area.longName}</div>
-						<div className="divider" />
-						<div className="details-area-collectables">
-							{area.collectables.map(collectable => {
-								return (
-									<Item
-										key={randomId()}
-										itemListStore={area}
-										item={collectable}
-										isReadOnly={!selectedLocation.isAvailable && !selectedLocation.isComplete}
-									/>
-								);
-							})}
+				{selectedLocation.areas.map(area => {
+					let tagClasses;
+					let tagIconClasses;
+
+					if (area.isComplete) {
+						tagClasses = 'is-dark';
+						tagIconClasses = 'fa-check-circle';
+					} else if (area.isAvailable) {
+						tagClasses = 'is-success';
+						tagIconClasses = 'fa-exclamation-circle';
+					} else {
+						tagClasses = 'is-danger';
+						tagIconClasses = 'fa-times-circle';
+					}
+					return (
+						<div className="details-area" key={randomId()}>
+							<div className="details-area-title tags has-addons is-marginless">
+								<span className={`tag ${tagClasses}`}>
+									<span className="icon"><i className={`fas ${tagIconClasses}`}/></span>
+								</span>
+								<span className="tag">{area.longName}</span>
+							</div>
+							<div className="details-area-collectables">
+								{area.collectables.map(collectable => {
+									return (
+										<Item
+											key={randomId()}
+											itemListStore={area}
+											item={collectable}
+											isReadOnly={!selectedLocation.isAvailable && !selectedLocation.isComplete}
+										/>
+									);
+								})}
+							</div>
 						</div>
-					</div>
-				))}
+					);
+				})}
 				</div>
 			</div>
 		);

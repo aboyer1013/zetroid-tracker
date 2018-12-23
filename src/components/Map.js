@@ -118,7 +118,7 @@ const Map = class Map extends Component {
 				if (!marker) {
 					return;
 				}
-				self.setProgression(self.markers[loc.id], loc);
+				self.setProgression(marker, loc);
 			});
 			if (self.props.mapStore.zoomLock) {
 				self.map.touchZoom.disable();
@@ -189,16 +189,22 @@ const Map = class Map extends Component {
 
 	setProgression(marker, loc) {
 		const markerColor = {
-			VIEWABLE: 'blue',
+			AGAHNIM_ONLY_REQUIREMENT: 'blue',
+			VIEWABLE: 'yellow',
+			POSSIBLE: 'yellow',
 			UNAVAILABLE: 'red',
+			PARTIALLY_AVAILABLE: 'orange',
 			AVAILABLE: 'green',
 			COMPLETE: 'black',
-			FAVORITE: 'orange',
+			FAVORITE: 'pink',
 		};
 		const icon = {
 			VIEWABLE: 'question-circle',
 			UNAVAILABLE: 'times-circle',
 			AVAILABLE: 'exclamation-circle',
+			PARTIALLY_AVAILABLE: 'exclamation-circle',
+			POSSIBLE: 'exclamation-circle',
+			AGAHNIM_ONLY_REQUIREMENT: 'exclamation-circle',
 			COMPLETE: 'check-circle',
 			FAVORITE: 'star',
 			DUNGEON: 'skull'
@@ -221,6 +227,12 @@ const Map = class Map extends Component {
 		} else if (loc.isAvailable) {
 			markerOptions.markerColor = markerColor.AVAILABLE;
 			markerOptions.icon = icon.AVAILABLE;
+		} else if (loc.isPartiallyAvailable) {
+			markerOptions.markerColor = markerColor.PARTIALLY_AVAILABLE;
+			markerOptions.icon = icon.PARTIALLY_AVAILABLE;
+		} else if (loc.isAgahnimTheOnlyRemainingRequirement) {
+			markerOptions.markerColor = markerColor.AGAHNIM_ONLY_REQUIREMENT;
+			markerOptions.icon = icon.AGAHNIM_ONLY_REQUIREMENT;
 		} else if (loc.isViewable) {
 			markerOptions.markerColor = markerColor.VIEWABLE;
 			markerOptions.icon = icon.VIEWABLE;

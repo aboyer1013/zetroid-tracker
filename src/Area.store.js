@@ -2,10 +2,12 @@ import { types, getParentOfType } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
 import AbilitiesStore from 'Abilities.store';
 import LocationStore from 'Location.store';
+import { isFunction } from 'lodash';
 
 const AreaStore = types
 	.model({
 		id: types.identifier,
+		name: types.string,
 		longName: types.string,
 		collectables: types.array(ItemStore),
 		abilities: types.reference(AbilitiesStore),
@@ -17,6 +19,9 @@ const AreaStore = types
 		get acquired() {
 			const parent = getParentOfType(self, LocationStore);
 
+			if (!parent) {
+				return false;
+			}
 			return parent.isAvailable || parent.isComplete;
 		},
 		get isComplete() {
@@ -28,6 +33,22 @@ const AreaStore = types
 				}
 			});
 			return result;
+		},
+		get isAvailable() {
+			const parent = getParentOfType(self, LocationStore);
+
+			if (!parent) {
+				return false;
+			}
+			if (!parent.availability[parent.name]) {
+				return false;
+			}
+			if (isFunction(parent.availability[parent.name])) {
+				return parent.availability[parent.name]();
+			}
+			if (isFunction(parent.availability[parent.name][self.name])) {
+				return parent.availability[parent.name][self.name]();
+			}
 		},
 	}))
 	.actions(self => {
