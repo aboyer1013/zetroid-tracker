@@ -50,6 +50,22 @@ const AreaStore = types
 				return parent.availability[parent.name][self.name]();
 			}
 		},
+		get isPossible() {
+			const parent = getParentOfType(self, LocationStore);
+
+			if (!parent) {
+				return false;
+			}
+			if (!parent.possibility[parent.name]) {
+				return false;
+			}
+			if (isFunction(parent.possibility[parent.name])) {
+				return parent.possibility[parent.name]();
+			}
+			if (isFunction(parent.possibility[parent.name][self.name])) {
+				return parent.possibility[parent.name][self.name]();
+			}
+		}
 	}))
 	.actions(self => {
 		const setComplete = () => {

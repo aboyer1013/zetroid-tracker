@@ -190,8 +190,8 @@ const Map = class Map extends Component {
 	setProgression(marker, loc) {
 		const markerColor = {
 			AGAHNIM_ONLY_REQUIREMENT: 'blue',
-			VIEWABLE: 'yellow',
-			POSSIBLE: 'yellow',
+			VIEWABLE: 'blue',
+			POSSIBLE: 'green',
 			UNAVAILABLE: 'red',
 			PARTIALLY_AVAILABLE: 'orange',
 			AVAILABLE: 'green',
@@ -203,7 +203,7 @@ const Map = class Map extends Component {
 			UNAVAILABLE: 'times-circle',
 			AVAILABLE: 'exclamation-circle',
 			PARTIALLY_AVAILABLE: 'exclamation-circle',
-			POSSIBLE: 'exclamation-circle',
+			POSSIBLE: 'dot-circle',
 			AGAHNIM_ONLY_REQUIREMENT: 'exclamation-circle',
 			COMPLETE: 'check-circle',
 			FAVORITE: 'star',
@@ -236,6 +236,9 @@ const Map = class Map extends Component {
 		} else if (loc.isViewable) {
 			markerOptions.markerColor = markerColor.VIEWABLE;
 			markerOptions.icon = icon.VIEWABLE;
+		} else if (loc.isPossible) {
+			markerOptions.markerColor = markerColor.POSSIBLE;
+			markerOptions.icon = icon.POSSIBLE;
 		}
 		if (loc.isDungeon && !loc.isFavorite) {
 			if (loc.isDungeonComplete) {

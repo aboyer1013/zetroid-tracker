@@ -66,6 +66,13 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 						<span>Agahnim Must Be Defeated</span>
 					</button>
 				);
+			} else if (selectedLocation.isPossible) {
+				progressionButton = (
+					<button onClick={this.onProgressionClickHandler} className="button is-success">
+						<span className="icon"><i className="fas fa-dot-circle"/></span>
+						<span>Possible</span>
+					</button>
+				);
 			} else {
 				progressionButton = (
 					<button onClick={this.onProgressionClickHandler} className="button is-danger">
@@ -126,6 +133,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					} else if (area.isAvailable) {
 						tagClasses = 'is-success';
 						tagIconClasses = 'fa-exclamation-circle';
+					} else if (area.isPossible) {
+						tagClasses = 'is-success';
+						tagIconClasses = 'fa-dot-circle';
 					} else {
 						tagClasses = 'is-danger';
 						tagIconClasses = 'fa-times-circle';

@@ -266,6 +266,18 @@ let z3LwLocationsData = [
 	        },
 	    ],
 	},
+	{
+	    coords: [-75,1720],
+	    name: 'etherTablet',
+	    longName: 'Ether Tablet',
+	    areas: [
+	        {
+	            name: 'tablet',
+	            longName: 'Tablet',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
 ];
 let z3DwLocationsData = [
 	{

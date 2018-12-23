@@ -42,6 +42,31 @@ const LocationStore = types
 					// return items.every(item => item && item.acquired);
 				},
 			},
+			possibility: {
+				etherTablet: () => {
+					const abl = self.abilities;
+
+					if (!abl.canRead || !abl.canEnterWestDeathMountain()) {
+						return false;
+					}
+					if (abl.hasItem('mirror')) {
+						return true;
+					}
+					if (abl.hasItem('hammer') && abl.canGrapple) {
+						return true;
+					}
+					return false;
+					// if (canRead() && (has("mirror") || (has("hammer") && canGrapple()))) {
+					// 	if (canEnterWestDeathMountain('glitchless', false)) {
+					// 		if (hasSword(2)) {
+					// 			availability.glitchless = 'available';
+					// 		} else {
+					// 			availability.glitchless = 'possible';
+					// 		}
+					// 	}
+					// }
+				},
+			},
 			/*
 			=== Not sure why there's the distinction between can/may ===
 			hasMedallion = Checks the medallion gate for the dungeon and has the same medallion acquired.
@@ -165,6 +190,20 @@ const LocationStore = types
 				sickKid: () => self.abilities.hasItem('bottle'),
 				purpleChest: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(),
 				hobo: () => self.abilities.canSwim,
+				etherTablet: () => {
+					const abl = self.abilities;
+
+					if (!abl.canRead || !abl.canEnterWestDeathMountain() || abl.hasSwordTier < 2) {
+						return false;
+					}
+					if (abl.hasItem('mirror')) {
+						return true;
+					}
+					if (abl.hasItem('hammer') && abl.canGrapple) {
+						return true;
+					}
+					return false;
+				}
 			},
 		};
 	})
@@ -205,7 +244,13 @@ const LocationStore = types
 			return false;
 		},
 		get isUnavailable() {
-			return !self.isAvailable && !self.isViewable && !self.isComplete && !self.mustDefeatAgahnimFirst;
+			return (
+				!self.isAvailable
+				&& !self.isViewable
+				&& !self.isComplete
+				&& !self.mustDefeatAgahnimFirst
+				&& !self.isPossible
+			);
 		},
 		get isAgahnimTheOnlyRemainingRequirement() {
 			if (!self.mustDefeatAgahnimFirst[self.name]) {
@@ -242,6 +287,12 @@ const LocationStore = types
 				return false;
 			}
 			return self.viewability[self.name]();
+		},
+		get isPossible() {
+			if (!self.possibility[self.name]) {
+				return false;
+			}
+			return self.possibility[self.name]();
 		},
 		get isDungeonComplete() {
 			return self.isDungeon && self.boss.acquired && self.chest.qty < 1;
