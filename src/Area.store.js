@@ -65,6 +65,22 @@ const AreaStore = types
 			if (isFunction(parent.possibility[parent.name][self.name])) {
 				return parent.possibility[parent.name][self.name]();
 			}
+		},
+		get mustDefeatAgahnimFirst() {
+			const parent = getParentOfType(self, LocationStore);
+
+			if (!parent) {
+				return false;
+			}
+			if (!parent.mustDefeatAgahnimFirst[parent.name]) {
+				return false;
+			}
+			if (isFunction(parent.mustDefeatAgahnimFirst[parent.name])) {
+				return parent.mustDefeatAgahnimFirst[parent.name]();
+			}
+			if (isFunction(parent.mustDefeatAgahnimFirst[parent.name][self.name])) {
+				return parent.mustDefeatAgahnimFirst[parent.name][self.name]();
+			}
 		}
 	}))
 	.actions(self => {

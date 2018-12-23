@@ -27,6 +27,24 @@ const LocationStore = types
 		map: types.reference(types.late(() => MapStore)),
 		abilities: types.reference(AbilitiesStore),
 		areas: types.array(AreaStore),
+		// TODO This needs to be shareable between multiple stores
+		PROGRESSION: types.frozen({
+			// All items are acquired.
+			COMPLETE: 'COMPLETE',
+			// All items are obtainable without glitches.
+			AVAILABLE: 'AVAILABLE',
+			// Some items, but not all, are obtainable without glitches.
+			PARTIAL: 'PARTIAL',
+			// The only remaining requirement to obtain all items is to defeat Agahnim.
+			AGAHNIM: 'AGAHNIM',
+			// Items can be obtained but include dark rooms (user does not have lantern) to get to chest.
+			// There may be more scenarios where this applies.
+			POSSIBLE: 'POSSIBLE',
+			// Item is not obtainable but can be seen. Useful to check if item is junk or worth skipping.
+			VIEWABLE: 'VIEWABLE',
+			// All items are not obtainable.
+			UNAVAILABLE: 'UNAVAILABLE',
+		}),
 	})
 	.volatile(self => {
 		// All the logic to determine if the location is viewable goes here
@@ -49,22 +67,23 @@ const LocationStore = types
 					if (!abl.canRead || !abl.canEnterWestDeathMountain()) {
 						return false;
 					}
-					if (abl.hasItem('mirror')) {
-						return true;
-					}
-					if (abl.hasItem('hammer') && abl.canGrapple) {
+					if (
+						abl.hasItem('mirror')
+						&& abl.hasItem('hammer')
+						&& abl.canGrapple
+					) {
 						return true;
 					}
 					return false;
-					// if (canRead() && (has("mirror") || (has("hammer") && canGrapple()))) {
-					// 	if (canEnterWestDeathMountain('glitchless', false)) {
-					// 		if (hasSword(2)) {
-					// 			availability.glitchless = 'available';
-					// 		} else {
-					// 			availability.glitchless = 'possible';
-					// 		}
-					// 	}
-					// }
+				},
+				bombosTablet: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canRead
+						&& abl.hasItem('mirror')
+						&& abl.canEnterSouthDarkWorld()
+					);
 				},
 			},
 			/*
@@ -88,6 +107,16 @@ const LocationStore = types
 				diggingGame: () => self.abilities.canEnterNorthWestDarkWorld(true),
 				hauntedGrove: () => self.abilities.canEnterSouthDarkWorld(true),
 				purpleChest: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(true),
+				bombosTablet: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canRead
+						&& abl.hasItem('mirror')
+						&& abl.hasSwordTier >= 2
+						&& abl.canEnterSouthDarkWorld(true)
+					);
+				}
 			},
 			availability: {
 				kingsTomb: () => {
@@ -109,8 +138,8 @@ const LocationStore = types
 				dam: () => true,
 				linksHouse: () => true,
 				spiralCave: () => self.abilities.canEnterEastDeathMountain(),
-				// TODO Finish this after dungeons.
 				mimicCave: () => {
+				// TODO Finish this after dungeons.
 					const abl = self.abilities;
 
 					// if (abl.canEnterEastDeathMountain() && self.hasItem('mirror') && self.)
@@ -133,12 +162,11 @@ const LocationStore = types
 				superBunnyCave: () => {
 					const abl = self.abilities;
 
-					if (abl.canEnterEastDarkWorldDeathMountain(true)) {
-						if (abl.canEnterEastDarkWorldDeathMountain() && abl.hasItem('moonPearl')) {
-							return true;
-						}
-					}
-					return false;
+					return (
+						abl.canEnterEastDarkWorldDeathMountain(true)
+						&& abl.canEnterEastDarkWorldDeathMountain()
+						&& abl.hasItem('moonPearl')
+					);
 				},
 				sahasrahlasHut: {
 					cave: () => true,
@@ -203,6 +231,16 @@ const LocationStore = types
 						return true;
 					}
 					return false;
+				},
+				bombosTablet: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canRead
+						&& abl.hasItem('mirror')
+						&& abl.canEnterSouthDarkWorld()
+						&& abl.hasSwordTier >= 2
+					);
 				}
 			},
 		};
@@ -306,6 +344,27 @@ const LocationStore = types
 				}
 			});
 			return result;
+		},
+		get currentProgression() {
+			if (self.isDungeonComplete || self.isComplete || self.areAllAreasComplete) {
+				return self.PROGRESSION.COMPLETE;
+			}
+			if (self.isAvailable) {
+				return self.PROGRESSION.AVAILABLE;
+			}
+			if (self.isPartiallyAvailable) {
+				return self.PROGRESSION.PARTIAL;
+			}
+			if (self.isAgahnimTheOnlyRemainingRequirement) {
+				return self.PROGRESSION.AGAHNIM;
+			}
+			if (self.isPossible) {
+				return self.PROGRESSION.POSSIBLE;
+			}
+			if (self.isViewable) {
+				return self.PROGRESSION.VIEWABLE;
+			}
+			return self.PROGRESSION.UNAVAILABLE;
 		},
 	}))
 	.actions((self) => {

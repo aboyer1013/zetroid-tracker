@@ -163,6 +163,22 @@ button {
 .awesome-marker i {
 	font-size: 20px;
 }
+.custom-marker-cluster {
+	margin-left: -20px;
+	margin-top: -20px;
+	width: 40px;
+	height: 40px;
+	background-color: rgba(0, 0, 0, 0.6);
+	&.are-unavailable {
+		background-color: rgba(224, 70, 51, 0.6);
+	}
+	&.are-partially-available {
+		background-color: rgba(254, 160, 65, 0.6);
+	}
+	&.are-available {
+		background-color: rgba(114, 180, 53, 0.6);
+	}
+}
 .map-wrapper {
 	position: relative;
 	width: 100%;

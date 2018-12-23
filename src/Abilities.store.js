@@ -442,7 +442,7 @@ const MapLogicHelpers = types
 			// }
 		},
 		canAccessDarkWorldPortal: () => { // Maridia Missile Refill -> DW (DW Ice Rod Right)
-			return false;
+			return true;
 			// if(trackerData.metroid3.mapLogic == "casualLogic") {
 			// 	return canUsePowerBombs() && canOpenGreenDoors() && canSwimSM() && canDashSM();
 			// } else if(trackerData.metroid3.mapLogic == "tourneyLogic") {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {autorun} from 'mobx';
 import {observer, inject} from 'mobx-react';
-import {debounce, camelCase, pick, get} from 'lodash';
+import {debounce, camelCase, pick, get, every, some} from 'lodash';
 import classNames from 'classnames';
 
 /**
@@ -54,6 +54,8 @@ const Map = class Map extends Component {
 	}
 
 	initMap() {
+		const self = this;
+
 		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
 			crs: L.CRS.Simple,
 			center: [-2128, 2048],
@@ -77,6 +79,37 @@ const Map = class Map extends Component {
 			zoomToBoundsOnClick: false,
 			spiderfyOnMaxZoom: true,
 			disableClusteringAtZoom: -2,
+			iconCreateFunction: cluster => {
+				const childMarkers = cluster.getAllChildMarkers();
+				const markerClasses = [
+					'leaflet-marker-icon',
+					'custom-marker-cluster',
+					'marker-cluster',
+					'marker-cluster-small',
+					'leaflet-zoom-animated',
+					'leaflet-interactive',
+				];
+				if (childMarkers.length) {
+					if (self.areAllMarkersUnavailable(childMarkers)) {
+						console.log('all markers are unavailable');
+						markerClasses.push('are-unavailable')
+					} else if (self.areAllMarkersAvailable(childMarkers)) {
+						console.log('all markers are available');
+						markerClasses.push('are-available');
+					} else if (self.areSomeMarkersAvailable(childMarkers)) {
+						markerClasses.push('are-partially-available');
+					}
+				}
+				const html = `
+					<div
+						class="${markerClasses.join(' ')}"
+						tabIndex="0"
+					>
+						<div><span>${cluster.getChildCount()}</span></div>
+					</div>
+				`;
+				return L.divIcon({ html });
+			}
 		});
 		this.props.locations.forEach(loc => {
 			this.addMarker(loc);
@@ -129,11 +162,42 @@ const Map = class Map extends Component {
 				self.map.doubleClickZoom.enable();
 				self.map.scrollWheelZoom.enable();
 			}
+			this.markerCluster.refreshClusters();
+		});
+	}
+
+	areAllMarkersAvailable(markers) {
+		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
+
+		return every(locations, loc => {
+			return (
+				loc.currentProgression === loc.PROGRESSION.AVAILABLE
+				|| loc.currentProgression !== loc.PROGRESSION.COMPLETE
+			);
+		});
+	}
+
+	areSomeMarkersAvailable(markers) {
+		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
+
+		return some(locations, loc => {
+			return (
+				loc.currentProgression === loc.PROGRESSION.AVAILABLE
+				|| loc.currentProgression !== loc.PROGRESSION.COMPLETE
+			);
+		});
+	}
+
+	areAllMarkersUnavailable(markers) {
+		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
+
+		return every(locations, loc => {
+			return loc.currentProgression === loc.PROGRESSION.UNAVAILABLE;
 		});
 	}
 
 	resize(sizeToFit = false) {
-		// Why not just call it outright? Because it's flaky and we need a timeout.
+		// Why not just call it outright? Because it's flakey and we need a timeout.
 		this.map.invalidateSize();
 		sizeToFit && this.sizeToFit();
 	}
@@ -167,7 +231,10 @@ const Map = class Map extends Component {
 		});
 
 		this.markers[loc.id] = L
-			.marker(loc.coords, {icon: markerIcon})
+			.marker(loc.coords, {
+				icon: markerIcon,
+				locationId: loc.id,
+			})
 			.bindTooltip(theLocation.longName)
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
@@ -202,9 +269,9 @@ const Map = class Map extends Component {
 			VIEWABLE: 'question-circle',
 			UNAVAILABLE: 'times-circle',
 			AVAILABLE: 'exclamation-circle',
-			PARTIALLY_AVAILABLE: 'exclamation-circle',
+			PARTIALLY_AVAILABLE: 'dot-circle',
 			POSSIBLE: 'dot-circle',
-			AGAHNIM_ONLY_REQUIREMENT: 'exclamation-circle',
+			AGAHNIM_ONLY_REQUIREMENT: 'times-circle',
 			COMPLETE: 'check-circle',
 			FAVORITE: 'star',
 			DUNGEON: 'skull'

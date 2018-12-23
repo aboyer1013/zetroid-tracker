@@ -16,12 +16,13 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const selectedLocation = get(this, 'props.store.locationDetail.selectedLocation');
 		const quickMarkMode = get(this, 'props.store.config.quickMarkMode');
 
-		if (selectedLocation) {
-			if (quickMarkMode && !event.ctrlKey) {
-				selectedLocation.toggleComplete();
-			} else if (!quickMarkMode && event.ctrlKey) {
-				selectedLocation.toggleComplete();
-			}
+		if (!selectedLocation) {
+			return;
+		}
+		if (quickMarkMode && !event.ctrlKey) {
+			selectedLocation.toggleComplete();
+		} else if (!quickMarkMode && event.ctrlKey) {
+			selectedLocation.toggleComplete();
 		}
 	}
 	render() {
@@ -29,82 +30,59 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const selectedLocation = store.selectedLocation;
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
-		let reqs = get(details, 'itemRequirements', []);
 		let notes = get(details, 'notes');
-		let isViewable = get(details, 'isViewable');
 		const favoriteClasses = classNames('button', 'is-outline favorite-button', {
 			'is-favorite': get(selectedLocation, 'isFavorite'),
 		});
-		let progressionButton;
+		let progBtnClass;
+		let progBtnIcon;
+		let progBtnText;
 
 		if (selectedLocation) {
-			if (selectedLocation.isDungeonComplete || selectedLocation.isComplete || selectedLocation.areAllAreasComplete) {
-				progressionButton = (
-					<button onClick={this.onProgressionClickHandler} className="button is-dark">
-						<span className="icon"><i className="fas fa-check-circle"/></span>
-						<span>Complete</span>
-					</button>
-				);
-			} else if (selectedLocation.isAvailable) {
-				progressionButton = (
-					<button onClick={this.onProgressionClickHandler} className="button is-success">
-						<span className="icon"><i className="fas fa-exclamation-circle"/></span>
-						<span>Available</span>
-					</button>
-				);
-			} else if (selectedLocation.isPartiallyAvailable) {
-				progressionButton = (
-					<button onClick={this.onProgressionClickHandler} className="button is-warning">
-						<span className="icon"><i className="fas fa-times-circle"/></span>
-						<span>Unavailable</span>
-					</button>
-				);
-			} else if (selectedLocation.isAgahnimTheOnlyRemainingRequirement) {
-				progressionButton = (
-					<button onClick={this.onProgressionClickHandler} className="button is-info">
-						<span className="icon"><i className="fas fa-exclamation-circle"/></span>
-						<span>Agahnim Must Be Defeated</span>
-					</button>
-				);
-			} else if (selectedLocation.isPossible) {
-				progressionButton = (
-					<button onClick={this.onProgressionClickHandler} className="button is-success">
-						<span className="icon"><i className="fas fa-dot-circle"/></span>
-						<span>Possible</span>
-					</button>
-				);
-			} else {
-				progressionButton = (
-					<button onClick={this.onProgressionClickHandler} className="button is-danger">
-						<span className="icon"><i className="fas fa-times-circle"/></span>
-						<span>Unavailable</span>
-					</button>
-				);
+			switch (selectedLocation.currentProgression) {
+				case selectedLocation.PROGRESSION.COMPLETE:
+					progBtnClass = 'is-dark';
+					progBtnIcon = 'fa-check-circle';
+					progBtnText = 'Complete';
+					break;
+				case selectedLocation.PROGRESSION.AVAILABLE:
+					progBtnClass = 'is-success';
+					progBtnIcon = 'fa-exclamation-circle';
+					progBtnText = 'Available';
+					break;
+				case selectedLocation.PROGRESSION.VIEWABLE:
+					progBtnClass = 'is-success';
+					progBtnIcon = 'fa-question-circle';
+					progBtnText = 'Viewable';
+					break;
+				case selectedLocation.PROGRESSION.PARTIAL:
+					progBtnClass = 'is-warning';
+					progBtnIcon = 'fa-dot-circle';
+					progBtnText = 'Partially Available';
+					break;
+				case selectedLocation.PROGRESSION.AGAHNIM:
+					progBtnClass = 'is-info';
+					progBtnIcon = 'fa-times-circle';
+					progBtnText = 'Agahnim Must Be Defeated';
+					break;
+				case selectedLocation.PROGRESSION.POSSIBLE:
+					progBtnClass = 'is-success';
+					progBtnIcon = 'fa-dot-circle';
+					progBtnText = 'Possible';
+					break;
+				default:
+					progBtnClass = 'is-danger';
+					progBtnIcon = 'fa-times-circle';
+					progBtnText = 'Unavailable';
+					break;
 			}
 		}
 		if (!details) {
 			return null;
 		}
-		if (longName) {
-			longName = <h1>{longName}</h1>;
-		}
-		if (reqs.length) {
-			reqs = <ItemIconList items={reqs}/>;
-		} else {
-			reqs = <p><em>None</em></p>;
-		}
 		if (notes.length) {
 			notes = (
-				<div className="details-notes"><h6>Notes:</h6><LocationNotes notes={notes}/></div>);
-		}
-		if (isViewable && !selectedLocation.isComplete && !selectedLocation.isAvailable) {
-			isViewable = (
-				<div className="tags has-addons is-marginless is-narrow"
-				     title="Even though this item is not available to acquire, you can see what the item is">
-					<span className="tag is-info icon"><i className="fas fa-info"/></span>
-					<span className="tag">viewable</span>
-				</div>
-			);
+				<div className="details-notes"><h6>Notes:</h6><LocationNotes notes={notes} /></div>);
 		}
 		return (
 			<div className="details-container content map-info has-background-white">
@@ -118,7 +96,10 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 							        className={favoriteClasses}>
 								<span className="icon"><i className="fas fa-star" /></span>
 							</button>
-							{progressionButton}
+							<button onClick={this.onProgressionClickHandler} className={`button ${progBtnClass}`}>
+								<span className="icon"><i className={`fas ${progBtnIcon}`} /></span>
+								<span>{progBtnText}</span>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -136,6 +117,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					} else if (area.isPossible) {
 						tagClasses = 'is-success';
 						tagIconClasses = 'fa-dot-circle';
+					} else if (area.mustDefeatAgahnimFirst) {
+						tagClasses = 'is-info';
+						tagIconClasses = 'fa-times-circle';
 					} else {
 						tagClasses = 'is-danger';
 						tagIconClasses = 'fa-times-circle';

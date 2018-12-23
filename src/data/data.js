@@ -278,6 +278,18 @@ let z3LwLocationsData = [
 	        },
 	    ],
 	},
+	{
+	    coords: [-3770,895],
+	    name: 'bombosTablet',
+	    longName: 'Bombos Tablet',
+	    areas: [
+	        {
+	            name: 'tablet',
+	            longName: 'Tablet',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
 ];
 let z3DwLocationsData = [
 	{
