@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {autorun} from 'mobx';
 import {observer, inject} from 'mobx-react';
-import {debounce, camelCase, pick, get, every, some} from 'lodash';
+import {debounce, camelCase, pick, get, every, filter} from 'lodash';
 import classNames from 'classnames';
 
 /**
@@ -169,31 +169,32 @@ const Map = class Map extends Component {
 	areAllMarkersAvailable(markers) {
 		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
 
-		return every(locations, loc => {
-			return (
-				loc.currentProgression === loc.PROGRESSION.AVAILABLE
-				|| loc.currentProgression !== loc.PROGRESSION.COMPLETE
-			);
-		});
+		return every(locations, loc => loc.currentProgression === loc.PROGRESSION.AVAILABLE);
 	}
 
 	areSomeMarkersAvailable(markers) {
 		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
-
-		return some(locations, loc => {
+		const filteredLocs = filter(locations, loc => {
 			return (
 				loc.currentProgression === loc.PROGRESSION.AVAILABLE
-				|| loc.currentProgression !== loc.PROGRESSION.COMPLETE
+				|| loc.currentProgression === loc.PROGRESSION.UNAVAILABLE
+				|| loc.currentProgression === loc.PROGRESSION.PARTIAL
 			);
 		});
+
+		if (every(filteredLocs, loc => loc.currentProgression === loc.PROGRESSION.AVAILABLE)) {
+			return false;
+		}
+		if (every(filteredLocs, loc => loc.currentProgression === loc.PROGRESSION.UNAVAILABLE)) {
+			return false;
+		}
+		return true;
 	}
 
 	areAllMarkersUnavailable(markers) {
 		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
 
-		return every(locations, loc => {
-			return loc.currentProgression === loc.PROGRESSION.UNAVAILABLE;
-		});
+		return every(locations, loc => loc.currentProgression === loc.PROGRESSION.UNAVAILABLE);
 	}
 
 	resize(sizeToFit = false) {
