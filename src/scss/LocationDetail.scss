@@ -6,6 +6,9 @@
 	}
 	.item {
 		width: 48px;
+		height: 48px;
+		margin-left: 5px;
+		margin-right: 5px;
 		&.is-read-only {
 			cursor: default;
 		}
@@ -30,15 +33,7 @@
 	display: flex;
 }
 .details-area {
-	//padding: 0 7.5px;
 	margin: 0 7.5px;
-	//border: 1px solid #ccc;
-	//border-radius: 5px;
-}
-.details-area-title {
-	//padding: 0 7.5px;
-	//border-radius: 5px 5px 0 0;
-	//background: #b1b1b1;
 }
 .details-controls {
 	display: flex;
@@ -46,12 +41,13 @@
 	align-items: end;
 }
 .details-area-collectables {
-	padding: 10px 7.5px 0;
+	padding: 10px 7.5px 10px;
 	border: 1px solid #ccc;
 	border-top: none;
 	margin: -7px 0 0;
 	background: #eee;
 	border-radius: 0 0 5px 5px;
+	display: flex;
 }
 .tags-container {
 	display: flex;

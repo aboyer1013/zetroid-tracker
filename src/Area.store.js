@@ -11,6 +11,8 @@ const AreaStore = types
 		longName: types.string,
 		collectables: types.array(ItemStore),
 		abilities: types.reference(AbilitiesStore),
+		// If true, has the potential to be viewable. Different than if the item is CURRENTLY viewable.
+		canBeViewable: false,
 	})
 	.views(self => ({
 		isVisible: (item) => {

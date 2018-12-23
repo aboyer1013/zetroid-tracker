@@ -91,10 +91,8 @@ const Map = class Map extends Component {
 				];
 				if (childMarkers.length) {
 					if (self.areAllMarkersUnavailable(childMarkers)) {
-						console.log('all markers are unavailable');
 						markerClasses.push('are-unavailable')
 					} else if (self.areAllMarkersAvailable(childMarkers)) {
-						console.log('all markers are available');
 						markerClasses.push('are-available');
 					} else if (self.areSomeMarkersAvailable(childMarkers)) {
 						markerClasses.push('are-partially-available');

@@ -198,6 +198,7 @@ locationsData.forEach(loc => {
 			longName: area.longName,
 			abilities: appStore.abilities,
 			collectables: collectables,
+			canBeViewable: area.canBeViewable || false,
 		}));
 	});
 

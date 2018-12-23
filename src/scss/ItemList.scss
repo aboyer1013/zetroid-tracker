@@ -16,6 +16,7 @@
 }
 .item {
 	position: relative;
+	&:not([data-qty])::after,
 	&[data-qty='0']::after {
 		display: none;
 	}
@@ -32,6 +33,16 @@
 		font-weight: bold;
 		outline: 1px solid $white-bis;
 		border: 1px solid $black;
+	}
+	&.item-select {
+		border: 3px dashed $info;
+		display: flex;
+		align-items: center;
+		.item-select-plus {
+			width: 100%;
+			font-size: 25px;
+			text-align: center;
+		}
 	}
 }
 .item-container {

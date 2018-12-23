@@ -6,6 +6,7 @@ import {observer, inject} from 'mobx-react';
 import LocationNotes from 'components/LocationNotes';
 import Item from 'components/Item';
 import { randomId } from 'utilities/util';
+import Area from 'components/Area';
 
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
 	constructor(props) {
@@ -34,49 +35,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		const favoriteClasses = classNames('button', 'is-outline favorite-button', {
 			'is-favorite': get(selectedLocation, 'isFavorite'),
 		});
-		let progBtnClass;
-		let progBtnIcon;
-		let progBtnText;
 
-		if (selectedLocation) {
-			switch (selectedLocation.currentProgression) {
-				case selectedLocation.PROGRESSION.COMPLETE:
-					progBtnClass = 'is-dark';
-					progBtnIcon = 'fa-check-circle';
-					progBtnText = 'Complete';
-					break;
-				case selectedLocation.PROGRESSION.AVAILABLE:
-					progBtnClass = 'is-success';
-					progBtnIcon = 'fa-exclamation-circle';
-					progBtnText = 'Available';
-					break;
-				case selectedLocation.PROGRESSION.VIEWABLE:
-					progBtnClass = 'is-info';
-					progBtnIcon = 'fa-question-circle';
-					progBtnText = 'Viewable';
-					break;
-				case selectedLocation.PROGRESSION.PARTIAL:
-					progBtnClass = 'is-warning';
-					progBtnIcon = 'fa-dot-circle';
-					progBtnText = 'Partially Available';
-					break;
-				case selectedLocation.PROGRESSION.AGAHNIM:
-					progBtnClass = 'is-info';
-					progBtnIcon = 'fa-times-circle';
-					progBtnText = 'Agahnim Must Be Defeated';
-					break;
-				case selectedLocation.PROGRESSION.POSSIBLE:
-					progBtnClass = 'is-success';
-					progBtnIcon = 'fa-dot-circle';
-					progBtnText = 'Possible';
-					break;
-				default:
-					progBtnClass = 'is-danger';
-					progBtnIcon = 'fa-times-circle';
-					progBtnText = 'Unavailable';
-					break;
-			}
-		}
 		if (!details) {
 			return null;
 		}
@@ -99,60 +58,15 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 							        className={favoriteClasses}>
 								<span className="icon"><i className="fas fa-star" /></span>
 							</button>
-							<button onClick={this.onProgressionClickHandler} className={`button ${progBtnClass}`}>
-								<span className="icon"><i className={`fas ${progBtnIcon}`} /></span>
-								<span>{progBtnText}</span>
+							<button onClick={this.onProgressionClickHandler} className={`button ${store.progBtnClass}`}>
+								<span className="icon"><i className={`fas ${store.progBtnIcon}`} /></span>
+								<span>{store.progBtnText}</span>
 							</button>
 						</div>
 					</div>
 				</div>
 				<div className="details-section details-areas">
-				{selectedLocation.areas.map(area => {
-					let tagClasses;
-					let tagIconClasses;
-
-					if (area.isComplete) {
-						tagClasses = 'is-dark';
-						tagIconClasses = 'fa-check-circle';
-					} else if (area.isAvailable) {
-						tagClasses = 'is-success';
-						tagIconClasses = 'fa-exclamation-circle';
-					} else if (area.isPossible) {
-						tagClasses = 'is-success';
-						tagIconClasses = 'fa-dot-circle';
-					} else if (area.isViewable) {
-						tagClasses = 'is-info';
-						tagIconClasses = 'fa-question-circle';
-					} else if (area.mustDefeatAgahnimFirst) {
-						tagClasses = 'is-info';
-						tagIconClasses = 'fa-times-circle';
-					} else {
-						tagClasses = 'is-danger';
-						tagIconClasses = 'fa-times-circle';
-					}
-					return (
-						<div className="details-area" key={randomId()}>
-							<div className="details-area-title tags has-addons is-marginless">
-								<span className={`tag ${tagClasses}`}>
-									<span className="icon"><i className={`fas ${tagIconClasses}`}/></span>
-								</span>
-								<span className="tag">{area.longName}</span>
-							</div>
-							<div className="details-area-collectables">
-								{area.collectables.map(collectable => {
-									return (
-										<Item
-											key={randomId()}
-											itemListStore={area}
-											item={collectable}
-											isReadOnly={!selectedLocation.isAvailable && !selectedLocation.isComplete}
-										/>
-									);
-								})}
-							</div>
-						</div>
-					);
-				})}
+					{selectedLocation.areas.map(area => <Area key={`area-${randomId()}`} areaStore={area} selectedLocation={selectedLocation} />)}
 				</div>
 			</div>
 		);
