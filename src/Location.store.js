@@ -50,17 +50,6 @@ const LocationStore = types
 		// All the logic to determine if the location is viewable goes here
 		return {
 			viewability: {
-				desertpalace: () => {
-					// const book = getRoot(self).getItemByName('book');
-					//
-					// if (book.acquired) {
-					// 	return true;
-					// }
-					// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
-					// return items.every(item => item && item.acquired);
-				},
-			},
-			possibility: {
 				etherTablet: () => {
 					const abl = self.abilities;
 
@@ -85,6 +74,17 @@ const LocationStore = types
 						&& abl.canEnterSouthDarkWorld()
 					);
 				},
+				desertpalace: () => {
+					// const book = getRoot(self).getItemByName('book');
+					//
+					// if (book.acquired) {
+					// 	return true;
+					// }
+					// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
+					// return items.every(item => item && item.acquired);
+				},
+			},
+			possibility: {
 			},
 			/*
 			=== Not sure why there's the distinction between can/may ===

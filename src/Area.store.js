@@ -66,6 +66,22 @@ const AreaStore = types
 				return parent.possibility[parent.name][self.name]();
 			}
 		},
+		get isViewable() {
+			const parent = getParentOfType(self, LocationStore);
+
+			if (!parent) {
+				return false;
+			}
+			if (!parent.viewability[parent.name]) {
+				return false;
+			}
+			if (isFunction(parent.viewability[parent.name])) {
+				return parent.viewability[parent.name]();
+			}
+			if (isFunction(parent.viewability[parent.name][self.name])) {
+				return parent.viewability[parent.name][self.name]();
+			}
+		},
 		get mustDefeatAgahnimFirst() {
 			const parent = getParentOfType(self, LocationStore);
 

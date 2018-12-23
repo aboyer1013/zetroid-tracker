@@ -51,7 +51,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					progBtnText = 'Available';
 					break;
 				case selectedLocation.PROGRESSION.VIEWABLE:
-					progBtnClass = 'is-success';
+					progBtnClass = 'is-info';
 					progBtnIcon = 'fa-question-circle';
 					progBtnText = 'Viewable';
 					break;
@@ -79,6 +79,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		}
 		if (!details) {
 			return null;
+		}
+		if (longName) {
+			longName = <h1>{longName}</h1>;
 		}
 		if (notes.length) {
 			notes = (
@@ -117,6 +120,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					} else if (area.isPossible) {
 						tagClasses = 'is-success';
 						tagIconClasses = 'fa-dot-circle';
+					} else if (area.isViewable) {
+						tagClasses = 'is-info';
+						tagIconClasses = 'fa-question-circle';
 					} else if (area.mustDefeatAgahnimFirst) {
 						tagClasses = 'is-info';
 						tagIconClasses = 'fa-times-circle';
