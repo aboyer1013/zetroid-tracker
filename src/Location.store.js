@@ -93,11 +93,17 @@ const LocationStore = types
 				zoraArea: {
 					ledge: () => true,
 				},
+				lumberjacks: () => true,
+				library: () => true,
+				spectacleRock: () => self.abilities.canEnterWestDeathMountain(),
+				floatingIsland: () => self.abilities.canEnterEastDeathMountain(),
+				desertLedge: () => true,
+				bumperCave: () => self.abilities.canEnterNorthWestDarkWorld(),
 			},
 			possibility: {
 				zoraArea: {
 					ledge: () => self.abilities.canLiftRocks,
-				}
+				},
 			},
 			/*
 			=== Not sure why there's the distinction between can/may ===
@@ -117,7 +123,6 @@ const LocationStore = types
 				bombableShack: () => self.abilities.canEnterNorthWestDarkWorld(true),
 				cShapedHouse: () => self.abilities.canEnterNorthWestDarkWorld(true),
 				hypeCave: () => self.abilities.canEnterSouthDarkWorld(true),
-				diggingGame: () => self.abilities.canEnterNorthWestDarkWorld(true),
 				hauntedGrove: () => self.abilities.canEnterSouthDarkWorld(true),
 				purpleChest: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(true),
 				bombosTablet: () => {
@@ -134,7 +139,50 @@ const LocationStore = types
 					const abl = self.abilities;
 
 					return abl.hasItem('moonPearl') && abl.canLiftRocks && abl.canEnterNorthEastDarkWorld(true);
-				}
+				},
+				lumberjacks: () => self.abilities.canDash && self.abilities.canDefeatAgahnim(),
+				southOfGrove: () => self.abilities.hasItem('mirror') && self.abilities.canEnterSouthDarkWorld(true),
+				graveyardLedge: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.hasItem('mirror')
+						&& abl.hasItem('moonPearl')
+						&& abl.canEnterNorthWestDarkWorld(true)
+					);
+				},
+				hammerPegs: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canLiftDarkRocks
+						&& abl.hasItem('hammer')
+						&& abl.canEnterNorthWestDarkWorld(true)
+					);
+				},
+				lakeHyliaIsland: () => {
+					const abl = self.abilities;
+
+					if (!abl.canEnterSouthDarkWorld(true) && !abl.canEnterNorthEastDarkWorld(true)) {
+						return false;
+					}
+					return (
+						abl.canSwim
+						&& abl.hasItem('moonPearl')
+						&& abl.hasItem('mirror')
+					);
+				},
+				bumperCave: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canEnterNorthWestDarkWorld(true)
+						&& abl.canLiftRocks
+						&& abl.hasItem('cape')
+					);
+				},
+				pyramidLedge: () => self.abilities.canEnterNorthEastDarkWorld(true),
+				diggingGame: () => self.abilities.canEnterSouthDarkWorld(true),
 			},
 			availability: {
 				kingsTomb: () => {
@@ -230,7 +278,6 @@ const LocationStore = types
 						);
 					}
 				},
-				diggingGame: () => self.abilities.canEnterNorthWestDarkWorld(),
 				bottleVendor: () => true,
 				hauntedGrove: () => self.abilities.canEnterSouthDarkWorld(),
 				sickKid: () => self.abilities.hasItem('bottle'),
@@ -268,7 +315,90 @@ const LocationStore = types
 				zoraArea: {
 					kingZora: () => self.abilities.canSwim || self.abilities.canLiftRocks,
 					ledge: () => self.abilities.canSwim,
-				}
+				},
+				oldMan: () => self.abilities.canEnterWestDeathMountain(true) && self.abilities.hasItem('lantern'),
+				witchsHut: () => self.abilities.hasItem('mushroom'),
+				forestHideout: () => true,
+				lumberjacks:() => self.abilities.canDash && self.abilities.hasItem('agahnim'),
+				spectacleRockCave: () => self.abilities.canEnterWestDeathMountain(),
+				southOfGrove: () => self.abilities.hasItem('mirror') && self.abilities.canEnterSouthDarkWorld(),
+				graveyardLedge: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.hasItem('mirror')
+						&& abl.hasItem('moonPearl')
+						&& abl.canEnterNorthWestDarkWorld()
+					);
+				},
+				checkerboard: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('mirror')) {
+						return false;
+					}
+					if (abl.canAccessMiseryMirePortal()) {
+						return true;
+					}
+					if (abl.canFly && abl.canLiftDarkRocks) {
+						return true;
+					}
+				},
+				hammerPegs: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canLiftDarkRocks
+						&& abl.hasItem('hammer')
+						&& abl.canEnterNorthWestDarkWorld()
+					);
+				},
+				library: () => self.abilities.canDash,
+				forestMushroom: () => true,
+				spectacleRock: () => self.abilities.canEnterWestDeathMountain() && self.abilities.hasItem('mirror'),
+				floatingIsland: () => {
+					const abl = self.abilities;
+
+					if (!abl.canEnterEastDeathMountain()) {
+						return false;
+					}
+					return (
+						abl.hasItem('mirror')
+						&& abl.hasItem('moonPearl')
+						&& abl.canLiftDarkRocks
+					);
+				},
+				race: () => true,
+				desertLedge: () => {
+					// TODO complete once dungeons are finished
+					// if (dungeons.zelda3[1].canEnter('glitchless', false, false)) {
+					// 	availability.glitchless = 'available';
+					// }
+				},
+				lakeHyliaIsland: () => {
+					const abl = self.abilities;
+
+					if (!abl.canEnterSouthDarkWorld() && !abl.canEnterNorthEastDarkWorld()) {
+						return false;
+					}
+					return (
+						abl.canSwim
+						&& abl.hasItem('moonPearl')
+						&& abl.hasItem('mirror')
+					);
+				},
+				bumperCave: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canEnterNorthWestDarkWorld()
+						&& abl.canLiftRocks
+						&& abl.hasItem('cape')
+					);
+				},
+				pyramidLedge: () => self.abilities.canEnterNorthEastDarkWorld(),
+				diggingGame: () => self.abilities.canEnterSouthDarkWorld(),
+				digSpot: () => self.abilities.hasItem('shovel')
 			},
 		};
 	})

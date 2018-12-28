@@ -310,6 +310,203 @@ let z3LwLocationsData = [
 		    },
 	    ],
 	},
+	{
+	    coords: [-720,1455],
+	    name: 'oldMan',
+	    longName: 'Old Man',
+	    areas: [
+	        {
+	            name: 'bringHimHome',
+	            longName: 'Bring Him Home',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-1368,3280],
+	    name: 'witchsHut',
+	    longName: 'Witch’s Hut',
+	    areas: [
+	        {
+	            name: 'assistant',
+	            longName: 'Assistant',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-535,775],
+	    name: 'forestHideout',
+	    longName: 'Forest Hideout',
+	    areas: [
+	        {
+	            name: 'hideout',
+	            longName: 'Hideout',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-300,1232],
+	    name: 'lumberjacks',
+	    longName: 'Lumberjacks',
+	    areas: [
+	        {
+	            name: 'cave',
+	            longName: 'Cave',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-415,2000],
+	    name: 'spectacleRockCave',
+	    longName: 'Spectacle Rock Cave',
+	    areas: [
+	        {
+	            name: 'cave',
+	            longName: 'Cave',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-3377,1087],
+	    name: 'southOfGrove',
+	    longName: 'South of Grove',
+	    areas: [
+	        {
+	            name: 'circleOfBushes',
+	            longName: 'Circle of Bushes',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-1120,2335],
+	    name: 'graveyardLedge',
+	    longName: 'Graveyard Ledge',
+	    areas: [
+	        {
+	            name: 'cave',
+	            longName: 'Cave',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-3183,720],
+	    name: 'checkerboard',
+	    longName: 'Checkerboard',
+	    areas: [
+	        {
+	            name: 'cave',
+	            longName: 'Cave',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-2695,640],
+	    name: 'library',
+	    longName: 'Library',
+	    areas: [
+	        {
+	            name: 'onTheShelf',
+	            longName: 'On the Shelf',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-350,500],
+	    name: 'forestMushroom',
+	    longName: 'Forest Mushroom',
+	    areas: [
+	        {
+	            name: 'mushroom',
+	            longName: 'Mushroom',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-340,2080],
+	    name: 'spectacleRock',
+	    longName: 'Spectacle Rock',
+	    areas: [
+	        {
+	            name: 'upOnTop',
+	            longName: 'Up On Top',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-65,3330],
+	    name: 'floatingIsland',
+	    longName: 'Floating Island',
+	    areas: [
+	        {
+	            name: 'island',
+	            longName: 'Island',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-2865,145],
+	    name: 'race',
+	    longName: 'Race',
+	    areas: [
+	        {
+	            name: 'minigame',
+	            longName: 'Mini-game',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-3730,100],
+	    name: 'desertLedge',
+	    longName: 'Desert Ledge',
+	    areas: [
+	        {
+	            name: 'ledge',
+	            longName: 'Ledge',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-3405,2960],
+	    name: 'lakeHyliaIsland',
+	    longName: 'Lake Hylia Island',
+	    areas: [
+	        {
+	            name: 'island',
+	            longName: 'Island',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-2695,1205],
+	    name: 'digSpot',
+	    longName: 'Dig Spot',
+	    areas: [
+	        {
+	            name: 'hiddenTreasure',
+	            longName: 'Hidden Treasure',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
 ];
 let z3DwLocationsData = [
 	{
@@ -402,18 +599,6 @@ let z3DwLocationsData = [
 	    ],
 	},
 	{
-	    coords: [-2843,230],
-	    name: 'diggingGame',
-	    longName: 'Digging Game',
-	    areas: [
-	        {
-	            name: 'digForTreasure',
-	            longName: 'Dig For Treasure',
-	            collectables: [{ numChests: 1 }],
-	        },
-	    ],
-	},
-	{
 	    coords: [-2797,1263],
 	    name: 'hauntedGrove',
 	    longName: 'Haunted Grove',
@@ -433,6 +618,55 @@ let z3DwLocationsData = [
 	        {
 	            name: 'ringOfStones',
 	            longName: 'Ring of Stones',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-2478,1295],
+	    name: 'hammerPegs',
+	    longName: 'Hammer Pegs',
+	    areas: [
+	        {
+	            name: 'cave',
+	            longName: 'Cave',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-625,1470],
+	    name: 'bumperCave',
+	    longName: 'Bumper Cave',
+	    areas: [
+	        {
+	            name: 'ledge',
+	            longName: 'Ledge',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-1833,2375],
+	    name: 'pyramidLedge',
+	    longName: 'Pyramid Ledge',
+	    areas: [
+	        {
+	            name: 'ledge',
+	            longName: 'Ledge',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-2840,232],
+	    name: 'diggingGame',
+	    longName: 'Digging Game',
+	    areas: [
+	        {
+	            name: 'digForTreasure',
+	            longName: 'Dig for Treasure',
 	            collectables: [{ numChests: 1 }],
 	        },
 	    ],

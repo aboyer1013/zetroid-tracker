@@ -104,7 +104,6 @@ const AreaStore = types
 			}
 		},
 		get isPossible() {
-			debugger;
 			const parent = getParentOfType(self, LocationStore);
 
 			if (!parent) {
@@ -121,7 +120,6 @@ const AreaStore = types
 			}
 		},
 		get isViewable() {
-			debugger;
 			const parent = getParentOfType(self, LocationStore);
 
 			if (!parent) {
