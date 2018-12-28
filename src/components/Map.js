@@ -177,6 +177,7 @@ const Map = class Map extends Component {
 				loc.currentProgression === loc.PROGRESSION.AVAILABLE
 				|| loc.currentProgression === loc.PROGRESSION.UNAVAILABLE
 				|| loc.currentProgression === loc.PROGRESSION.PARTIAL
+				|| loc.currentProgression === loc.PROGRESSION.VIEWABLE
 			);
 		});
 

@@ -7,6 +7,7 @@ import ItemListUtil from 'ItemListUtil';
 import LayoutStore from 'Layout.store';
 import ConfigStore from 'Config.store';
 import AbilitiesStore from 'Abilities.store'
+import AreaStore from 'Area.store';
 import { find } from 'lodash';
 import { createStorage } from 'persistme';
 
@@ -34,6 +35,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 		shouldSync: true,
 		layout: LayoutStore,
 		abilities: AbilitiesStore,
+		selectedAreaStore: types.maybeNull(types.reference(AreaStore)),
 	})
 	.views((self) => ({
 		getGameByName: (name) => {
@@ -64,6 +66,9 @@ const AppStore = types.compose(ItemListUtil, types.model({
 					self.inactiveDungeonItemList.items,
 				)
 			);
+		},
+		get selectableItems() {
+			return self.activeItemList.items.concat(self.inactiveItemList.items);
 		},
 		get itemListStores() {
 			return [
@@ -160,6 +165,9 @@ const AppStore = types.compose(ItemListUtil, types.model({
 
 			return appStorage.update(selectedGame, {layout: data})
 		};
+		const setSelectedAreaStore = (areaStore) => {
+			self.selectedAreaStore = areaStore;
+		};
 
 		return {
 			selectGame,
@@ -172,6 +180,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 			updateGameTreeStorage,
 			flushGameTreeStorage,
 			flushGameLayoutStorage,
+			setSelectedAreaStore,
 		};
 	}))
 ;

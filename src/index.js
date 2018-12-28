@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent } from 'mobx-state-tree';
+import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent, getType } from 'mobx-state-tree';
 import { randomId } from 'utilities/util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -75,7 +75,9 @@ const appStore = AppStore.create({
 	}),
 	layout: LayoutStore.create({
 		id: randomId(),
-	})
+	}),
+	itemSelectStore: null,
+	selectedAreaStore: null,
 });
 
 unprotect(appStore);
@@ -178,6 +180,7 @@ locationsData.forEach(loc => {
 
 	loc.areas.forEach(area => {
 		const collectables = [];
+		const itemSelectStore = area.canBeViewable ? appStore.itemSelectStore : null;
 
 		area.collectables.forEach(collectable => {
 			const chestItemData = find(gameItemsData, { name: 'closedchest' });
@@ -199,6 +202,8 @@ locationsData.forEach(loc => {
 			abilities: appStore.abilities,
 			collectables: collectables,
 			canBeViewable: area.canBeViewable || false,
+			itemSelectStore,
+			selectedItem: area.selectedItem || null,
 		}));
 	});
 

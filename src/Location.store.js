@@ -4,7 +4,14 @@ import ItemStore from 'Item.store';
 import MapStore from 'Map.store';
 import AbilitiesStore from 'Abilities.store';
 import AreaStore from 'Area.store';
-import { isBoolean, isFunction, every, reject } from 'lodash';
+import {
+	isBoolean,
+	isFunction,
+	every,
+	reject,
+	some,
+	isNull,
+} from 'lodash';
 
 const LocationStore = types
 	.model({
@@ -321,10 +328,18 @@ const LocationStore = types
 			}
 		},
 		get isViewable() {
+			let result = false;
+
 			if (!self.viewability[self.name]) {
-				return false;
+				result = false;
+			} else {
+				result = self.viewability[self.name]();
 			}
-			return self.viewability[self.name]();
+			// User has selected all viewable items - do not flag as viewable since all of the items are now known.
+			if (result && self.isAnyAreaViewable && self.doAllAreasHaveSelectedItems) {
+				result = false;
+			}
+			return result;
 		},
 		get isPossible() {
 			if (!self.possibility[self.name]) {
@@ -334,6 +349,12 @@ const LocationStore = types
 		},
 		get isDungeonComplete() {
 			return self.isDungeon && self.boss.acquired && self.chest.qty < 1;
+		},
+		get isAnyAreaViewable() {
+			return some(self.areas, { canBeViewable: true });
+		},
+		get doAllAreasHaveSelectedItems() {
+			return every(self.areas, (area) => !isNull(area.selectedItem));
 		},
 		get areAllAreasComplete() {
 			let result = true;

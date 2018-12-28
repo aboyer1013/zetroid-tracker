@@ -14,7 +14,7 @@ const ItemListUtil = types.model({
 		getItemGroupByName: (group) => {
 			return find([...self.items.values()], { group });
 		},
-		// If search matches an item group, returns it, otherwise, searches against single item names and returns that.
+		// If search matches an item group, return it, otherwise, searches against single item names and returns that.
 		getItemOrGroupByName: (name) => {
 			const items = [...self.items.values()];
 			const match = find(items, { group: name });

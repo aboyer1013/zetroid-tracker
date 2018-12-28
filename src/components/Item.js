@@ -1,15 +1,26 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import classNames from 'classnames';
+import { get } from 'lodash';
 
-const Item = ({isReadOnly = false, item, itemListStore}) => {
+const Item = ({
+	isReadOnly = false,
+	item,
+	itemListStore,
+	isSelectMode = false,
+	store,
+}) => {
 	const isVisible = itemListStore.isVisible(item);
 	const isAcquired = (!item.isChest && item.acquired) || (item.isCollectableChest && itemListStore.acquired);
+	const selectedItemName = get(store, 'selectedAreaStore.selectedItem.name');
 	const itemClasses = classNames('item', {
 		'is-not-acquired': !isAcquired,
 		'is-hidden': !isVisible,
 		'is-item-group': !!item.group,
 		'is-read-only': isReadOnly,
+		'is-unselectable': isReadOnly,
+		'is-select-mode': isSelectMode,
+		'is-selected': isSelectMode && selectedItemName === item.name
 	});
 	let imageSrc = item.imageSrc;
 
@@ -21,15 +32,19 @@ const Item = ({isReadOnly = false, item, itemListStore}) => {
 		<div
 			data-qty={item.qty}
 			onClick={event => {
-				if (!isReadOnly) {
-					if (item.isCollectableChest) {
-						item.activateNext(event.shiftKey, true);
-						itemListStore.setComplete();
-					} else if (item.isChest && item.isDungeonItem) {
-						item.activateNext(event.shiftKey);
-					} else {
-						item.activateNext(!event.shiftKey);
-					}
+				if (isReadOnly) {
+					return;
+				}
+				if (isSelectMode) {
+					store.selectedAreaStore.selectItem(item);
+					store.closeModal();
+				} else if (item.isCollectableChest) {
+					item.activateNext(event.shiftKey, true);
+					itemListStore.setComplete();
+				} else if (item.isChest && item.isDungeonItem) {
+					item.activateNext(event.shiftKey);
+				} else {
+					item.activateNext(!event.shiftKey);
 				}
 			}}
 			key={item.id}

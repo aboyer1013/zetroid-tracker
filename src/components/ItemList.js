@@ -34,11 +34,25 @@ const ItemList = class ItemList extends Component {
 			let itemElem = null;
 
 			if (item.group) {
-				itemElem = store.getItemsByGroup(item.group).map(subItem => <Item isReadOnly={this.props.isReadOnly}
-				                                                                  itemListStore={store} key={subItem.id}
-				                                                                  item={subItem}/>);
+				itemElem = store.getItemsByGroup(item.group).map(subItem => (
+					<Item
+						isReadOnly={this.props.isReadOnly}
+						isSelectMode={this.props.isSelectMode}
+						itemListStore={store}
+						key={subItem.id}
+						item={subItem}
+					/>
+				));
 			} else {
-				itemElem = <Item isReadOnly={this.props.isReadOnly} itemListStore={store} key={item.id} item={item}/>;
+				itemElem = (
+					<Item
+						isReadOnly={this.props.isReadOnly}
+						isSelectMode={this.props.isSelectMode}
+						itemListStore={store}
+						key={item.id}
+						item={item}
+					/>
+				);
 			}
 			if (!this.props.draggableEnabled) {
 				dragElems.push(
