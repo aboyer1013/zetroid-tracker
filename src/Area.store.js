@@ -2,7 +2,7 @@ import { types, getParentOfType } from 'mobx-state-tree';
 import ItemStore from 'Item.store';
 import AbilitiesStore from 'Abilities.store';
 import LocationStore from 'Location.store';
-import { isFunction } from 'lodash';
+import { isFunction, has } from 'lodash';
 import ItemListStore from 'ItemList.store';
 
 const AreaStore = types
@@ -104,6 +104,7 @@ const AreaStore = types
 			}
 		},
 		get isPossible() {
+			debugger;
 			const parent = getParentOfType(self, LocationStore);
 
 			if (!parent) {
@@ -112,14 +113,15 @@ const AreaStore = types
 			if (!parent.possibility[parent.name]) {
 				return false;
 			}
-			if (isFunction(parent.possibility[parent.name])) {
-				return parent.possibility[parent.name]();
-			}
-			if (isFunction(parent.possibility[parent.name][self.name])) {
+			if (has(parent, `possibility[${parent.name}][${self.name}]`)) {
 				return parent.possibility[parent.name][self.name]();
+			}
+			if (has(parent, `possibility[${parent.name}]`) && isFunction(parent, `possibility[${parent.name}]`)) {
+				return parent.possibility[parent.name]();
 			}
 		},
 		get isViewable() {
+			debugger;
 			const parent = getParentOfType(self, LocationStore);
 
 			if (!parent) {
@@ -131,11 +133,11 @@ const AreaStore = types
 			if (self.selectedItem) {
 				return false;
 			}
+			if (has(parent, `viewability[${parent.name}][${self.name}]`)) {
+				return parent.viewability[parent.name][self.name]();
+			}
 			if (isFunction(parent.viewability[parent.name])) {
 				return parent.viewability[parent.name]();
-			}
-			if (isFunction(parent.viewability[parent.name][self.name])) {
-				return parent.viewability[parent.name][self.name]();
 			}
 		},
 		get mustDefeatAgahnimFirst() {
@@ -164,11 +166,11 @@ const AreaStore = types
 			// if (self.isAgahnimTheOnlyRemainingRequirement) {
 			// 	return self.PROGRESSION.AGAHNIM;
 			// }
-			if (self.isPossible) {
-				return self.PROGRESSION.POSSIBLE;
-			}
 			if (self.isViewable) {
 				return self.PROGRESSION.VIEWABLE;
+			}
+			if (self.isPossible) {
+				return self.PROGRESSION.POSSIBLE;
 			}
 			return self.PROGRESSION.UNAVAILABLE;
 		},

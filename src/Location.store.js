@@ -90,8 +90,14 @@ const LocationStore = types
 					// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
 					// return items.every(item => item && item.acquired);
 				},
+				zoraArea: {
+					ledge: () => true,
+				},
 			},
 			possibility: {
+				zoraArea: {
+					ledge: () => self.abilities.canLiftRocks,
+				}
 			},
 			/*
 			=== Not sure why there's the distinction between can/may ===
@@ -123,6 +129,11 @@ const LocationStore = types
 						&& abl.hasSwordTier >= 2
 						&& abl.canEnterSouthDarkWorld(true)
 					);
+				},
+				catfish: () => {
+					const abl = self.abilities;
+
+					return abl.hasItem('moonPearl') && abl.canLiftRocks && abl.canEnterNorthEastDarkWorld(true);
 				}
 			},
 			availability: {
@@ -248,6 +259,15 @@ const LocationStore = types
 						&& abl.canEnterSouthDarkWorld()
 						&& abl.hasSwordTier >= 2
 					);
+				},
+				catfish: () => {
+					const abl = self.abilities;
+
+					return abl.hasItem('moonPearl') && abl.canLiftRocks && abl.canEnterNorthEastDarkWorld();
+				},
+				zoraArea: {
+					kingZora: () => self.abilities.canSwim || self.abilities.canLiftRocks,
+					ledge: () => self.abilities.canSwim,
 				}
 			},
 		};
@@ -332,7 +352,7 @@ const LocationStore = types
 
 			if (!self.viewability[self.name]) {
 				result = false;
-			} else {
+			} else if (isFunction(self.viewability[self.name])) {
 				result = self.viewability[self.name]();
 			}
 			// User has selected all viewable items - do not flag as viewable since all of the items are now known.
@@ -342,8 +362,11 @@ const LocationStore = types
 			return result;
 		},
 		get isPossible() {
-			if (!self.possibility[self.name]) {
+			if (!isFunction(self.possibility[self.name])) {
 				return false;
+			}
+			if (self.areAllAreasPossible) {
+				return true;
 			}
 			return self.possibility[self.name]();
 		},
@@ -352,6 +375,9 @@ const LocationStore = types
 		},
 		get isAnyAreaViewable() {
 			return some(self.areas, { canBeViewable: true });
+		},
+		get areAllAreasPossible() {
+			return every(self.areas, { isPossible: true });
 		},
 		get doAllAreasHaveSelectedItems() {
 			return every(self.areas, (area) => !isNull(area.selectedItem));

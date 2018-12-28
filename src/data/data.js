@@ -292,6 +292,24 @@ let z3LwLocationsData = [
 	        },
 	    ],
 	},
+	{
+	    coords: [-520,3920],
+	    name: 'zoraArea',
+	    longName: 'Zora Area',
+	    areas: [
+	        {
+	            name: 'kingZora',
+	            longName: 'King Zora',
+	            collectables: [{ numChests: 1 }],
+	        },
+		    {
+		        name: 'ledge',
+		        longName: 'Ledge',
+		        collectables: [{ numChests: 1 }],
+			    canBeViewable: true,
+		    },
+	    ],
+	},
 ];
 let z3DwLocationsData = [
 	{
@@ -403,6 +421,18 @@ let z3DwLocationsData = [
 	        {
 	            name: 'stumpy',
 	            longName: 'Stumpy',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-700,3663],
+	    name: 'catfish',
+	    longName: 'Catfish',
+	    areas: [
+	        {
+	            name: 'ringOfStones',
+	            longName: 'Ring of Stones',
 	            collectables: [{ numChests: 1 }],
 	        },
 	    ],

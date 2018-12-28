@@ -21,7 +21,7 @@ import * as serviceWorker from 'serviceWorker';
 import { isUndefined, find, includes, isEmpty } from 'lodash';
 import { createStorage } from 'persistme';
 
-const shouldSync = true;
+const shouldSync = false;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });
