@@ -1,5 +1,5 @@
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Item from 'components/Item';
 
 const ItemSelect = ({ store, areaStore }) => {
@@ -19,10 +19,14 @@ const ItemSelect = ({ store, areaStore }) => {
 		);
 	}
 	return (
-		<div className="item-select-container" onClick={() => {
-			store.setSelectedAreaStore(areaStore);
-			store.openModal('ITEM_SELECT');
-		}}>{itemElem}</div>
+		<div
+			className="item-select-container"
+			onClick={() => {
+				store.setSelectedAreaStore(areaStore);
+				store.openModal('ITEM_SELECT');
+			}}
+		>{itemElem}
+		</div>
 	);
 };
 

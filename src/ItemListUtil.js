@@ -7,8 +7,8 @@ import ConfigStore from 'Config.store';
  * @type {IModelType<ModelPropertiesDeclarationToProperties<{}>, {} & {getItemByName: getItemByName, getItemsByGroup: getItemsByGroup, bosses: *, getItemOrGroupByName: getItemOrGroupByName, sortedItems: *, hasAcquiredAnyItemsInGroup: (function(*=): *), groupedItems: *, isVisible: (function(*): boolean), getItemGroupByName: (function(*))}, _NotCustomized, _NotCustomized>}
  */
 const ItemListUtil = types.model({
-		config: types.reference(ConfigStore),
-	})
+	config: types.reference(ConfigStore),
+})
 	.views(self => ({
 		// Returns the item group
 		getItemGroupByName: (group) => {
@@ -34,21 +34,20 @@ const ItemListUtil = types.model({
 				if (!itemGroups) {
 					return null;
 				}
-				itemGroups.forEach(itemGroup => {
-					itemGroup.items.forEach(subItem => {
+				itemGroups.forEach((itemGroup) => {
+					itemGroup.items.forEach((subItem) => {
 						if (subItem.name === name) {
 							itemFound = subItem;
 						}
 					});
 				});
 				return itemFound;
-			} else {
-				return find(items, { name });
 			}
+			return find(items, { name });
 		},
 		// Returns all the sub items from the item group
 		getItemsByGroup: (group) => {
-			let itemGroup = find([...self.items.values()], { group });
+			const itemGroup = find([...self.items.values()], { group });
 
 			if (!itemGroup) {
 				return [];
@@ -65,7 +64,7 @@ const ItemListUtil = types.model({
 				none: [],
 			};
 
-			self.sortedItems.forEach(item => {
+			self.sortedItems.forEach((item) => {
 				if (item.group) {
 					if (!result[item.group]) {
 						result[item.group] = [];
@@ -105,7 +104,5 @@ const ItemListUtil = types.model({
 			}
 			return result;
 		},
-	}))
-;
-
+	}));
 export default ItemListUtil;

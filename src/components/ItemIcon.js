@@ -1,23 +1,23 @@
 import React from 'react';
-import {get} from 'lodash';
-import {inject, observer} from 'mobx-react';
+import { get } from 'lodash';
+import { inject, observer } from 'mobx-react';
 import classNames from 'classnames';
 
-const ItemIcon = ({item, checkAcquired, children}) => {
-	const imageSrc = item.imageSrc;
+const ItemIcon = ({ item, checkAcquired, children }) => {
+	const { imageSrc } = item;
 	const iconClasses = classNames('item-icon', {
-		'is-not-acquired': !item.acquired && checkAcquired
+		'is-not-acquired': !item.acquired && checkAcquired,
 	});
 
 	return (
 		<span className={iconClasses}>
-      <img
-	      src={imageSrc}
-	      alt={get(item, 'longName')}
-	      title={get(item, 'longName')}
-      />
+			<img
+				src={imageSrc}
+				alt={get(item, 'longName')}
+				title={get(item, 'longName')}
+			/>
 			{children}
-    </span>
+		</span>
 	);
 };
 

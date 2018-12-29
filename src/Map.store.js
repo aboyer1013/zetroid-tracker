@@ -25,13 +25,13 @@ const MapStore = types
 	.volatile(() => ({
 		component: {},
 	}))
-	.views((self) => ({
+	.views(self => ({
 		get selectedLocationDetails() {
 			return self.selectedLocation.details;
 		},
 		get dungeonLocations() {
 			return [...self.locations.values()].filter(loc => loc.isDungeon);
-		}
+		},
 	}))
 	.actions((self) => {
 		const setComponent = (component) => {
@@ -39,10 +39,10 @@ const MapStore = types
 		};
 		const setWidth = (newWidth) => {
 			self.containerWidth = newWidth;
-		}
+		};
 		const setHeight = (newHeight) => {
 			self.containerHeight = newHeight;
-		}
+		};
 		const setSelectedLocation = (marker, mapStoreLocation) => {
 			self.selectedLocation = mapStoreLocation;
 		};
@@ -69,7 +69,5 @@ const MapStore = types
 			toggleHideCompleted,
 			toggleHideUnavailable,
 		};
-	})
-;
-
+	});
 export default MapStore;

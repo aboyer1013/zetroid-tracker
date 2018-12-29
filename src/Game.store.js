@@ -16,7 +16,5 @@ const GameStore = types
 		return {
 			setSelected,
 		};
-	})
-;
-
+	});
 export default GameStore;

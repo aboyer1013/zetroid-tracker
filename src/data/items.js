@@ -1,3 +1,4 @@
+/* eslint-disable */
 const itemsData = [
 	{
 		group: 'medallion',
@@ -177,18 +178,6 @@ const itemsData = [
 	{ type: ['item'], name: 'long', longName: 'Long Beam', game: 'metroid1', },
 	{ type: ['item'], name: 'kraidtotem', longName: 'Kraid Totem', game: 'metroid1', },
 	{ type: ['item'], name: 'ridleytotem', longName: 'Ridley Totem', game: 'metroid1', },
-	// Zelda 3 bosses
-	// { type: ['item'], name: 'boss0', longName: '', },
-	// { type: ['item'], name: 'boss1', longName: '', },
-	// { type: ['item'], name: 'boss2', longName: '', },
-	// { type: ['item'], name: 'boss3', longName: '', },
-	// { type: ['item'], name: 'boss4', longName: '', },
-	// { type: ['item'], name: 'boss5', longName: '', },
-	// { type: ['item'], name: 'boss6', longName: '', },
-	// { type: ['item'], name: 'boss7', longName: '', },
-	// { type: ['item'], name: 'boss8', longName: '', },
-	// { type: ['item'], name: 'boss9', longName: '', },
-	// { type: ['item'], name: 'boss10', longName: '', },
 ];
 
 export default itemsData;

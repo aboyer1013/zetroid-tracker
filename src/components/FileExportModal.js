@@ -12,11 +12,13 @@ class FileExportModal extends Component {
 			hasBeenCopied: false,
 		};
 	}
+
 	copyToClipboard() {
 		this.textboxRef.current.select();
 		document.execCommand('copy');
-		this.setState({hasBeenCopied: true})
+		this.setState({ hasBeenCopied: true });
 	}
+
 	render() {
 		const copyBtnClasses = classNames('button', {
 			'is-primary': !this.state.hasBeenCopied,
@@ -25,27 +27,27 @@ class FileExportModal extends Component {
 		const copyBtnTxt = this.state.hasBeenCopied ? 'Copied to Clipboard!' : 'Copy';
 
 		return (
-			<div className='modal-card'>
-				<header className='modal-card-head'>
-					<p className='modal-card-title'>Export generated JSON</p>
-					<button className='delete' aria-label='close' onClick={this.props.store.closeModal} />
+			<div className="modal-card">
+				<header className="modal-card-head">
+					<p className="modal-card-title">Export generated JSON</p>
+					<button type="button" className="delete" aria-label="close" onClick={this.props.store.closeModal} />
 				</header>
-				<section className='modal-card-body'>
+				<section className="modal-card-body">
 					<p>Copy the JSON below to save the state of the application for the currently selected game ({this.props.store.selectedGame.longName}).</p>
-					<div className='field'>
-						<div className='control'>
+					<div className="field">
+						<div className="control">
 							<textarea
-								readOnly={true}
+								readOnly
 								ref={this.textboxRef}
-								className='is-fullwidth textarea'
+								className="is-fullwidth textarea"
 								value={JSON.stringify(getSnapshot(this.props.store))}
 							/>
 						</div>
 					</div>
 				</section>
-				<footer className='modal-card-foot'>
-					<button className={copyBtnClasses} onClick={this.copyToClipboard}>{copyBtnTxt}</button>
-					<button className='button' onClick={this.props.store.closeModal}>Cancel</button>
+				<footer className="modal-card-foot">
+					<button type="button" className={copyBtnClasses} onClick={this.copyToClipboard}>{copyBtnTxt}</button>
+					<button type="button" className="button" onClick={this.props.store.closeModal}>Cancel</button>
 				</footer>
 			</div>
 		);

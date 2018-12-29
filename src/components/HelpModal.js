@@ -1,7 +1,7 @@
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
-const HelpModal = ({store}) => {
+const HelpModal = ({ store }) => {
 	const CLICK_TEXT = 'Click';
 	const CTRL_CLICK_TEXT = 'Control / Command + Click';
 	const detailsShortcut = store.config.quickMarkMode ? CTRL_CLICK_TEXT : CLICK_TEXT;
@@ -12,6 +12,7 @@ const HelpModal = ({store}) => {
 			<header className="modal-card-head">
 				<p className="modal-card-title">Help</p>
 				<button
+					type="button"
 					className="delete"
 					aria-label="close"
 					onClick={store.closeModal}

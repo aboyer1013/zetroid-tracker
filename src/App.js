@@ -19,15 +19,15 @@ import DungeonList from 'components/DungeonList';
 import 'inobounce';
 
 class App extends Component {
-
-
-	componentDidMount() {
+	constructor(props) {
+		super(props);
+		this.layoutFactory = this.layoutFactory.bind(this);
 	}
 
 	generateMaps() {
 		const maps = [];
 
-		[...this.props.store.maps.values()].forEach(map => {
+		[...this.props.store.maps.values()].forEach((map) => {
 			maps.push(
 				<Map
 					key={`map-${map.id}`}
@@ -35,11 +35,12 @@ class App extends Component {
 					locations={[...map.locations.values()]}
 					id={randomId()}
 					tileLayerTemplate={map.tileLayerTemplate}
-				/>
-			)
+				/>,
+			);
 		});
 		return maps;
 	}
+
 	layoutFactory(node) {
 		const component = node.getComponent();
 		const config = node.getConfig();
@@ -68,21 +69,21 @@ class App extends Component {
 			let draggableEnabled;
 
 			switch (config.listType) {
-				case 'dungeon':
-					itemListStore = this.props.store.activeDungeonItemList;
-					items = this.props.store.activeDungeonItemList.bosses;
-					return (
-						<DungeonList
-							itemListStore={itemListStore}
-							items={items}
-						/>
-					);
-				default:
-					itemListStore = this.props.store.activeItemList;
-					items = this.props.store.activeItemList.sortedItems;
-					direction = this.props.store.activeItemList.direction;
-					draggableEnabled = false;
-					break;
+			case 'dungeon':
+				itemListStore = this.props.store.activeDungeonItemList;
+				items = this.props.store.activeDungeonItemList.bosses;
+				return (
+					<DungeonList
+						itemListStore={itemListStore}
+						items={items}
+					/>
+				);
+			default:
+				itemListStore = this.props.store.activeItemList;
+				items = this.props.store.activeItemList.sortedItems;
+				direction = this.props.store.activeItemList.direction; // eslint-disable-line prefer-destructuring
+				draggableEnabled = false;
+				break;
 			}
 			return (
 				<ItemList
@@ -93,33 +94,35 @@ class App extends Component {
 				/>
 			);
 		}
+		return null;
 	}
+
 	render() {
-		const store = this.props.store;
+		const { store } = this.props;
 		let modal = null;
 
 		if (store.isModalOpen) {
 			switch (store.activeModal) {
-				case 'FILE_IMPORT':
-					modal = <FileImportModal />;
-					break;
-				case 'FILE_EXPORT':
-					modal = <FileExportModal />;
-					break;
-				case 'HELP':
-					modal = <HelpModal />;
-					break;
-				case 'EDIT_ITEM_LIST':
-					modal = <EditItemListModal />;
-					break;
-				case 'CONFIG':
-					modal = <ConfigModal />;
-					break;
-				case 'ITEM_SELECT':
-					modal = <ItemSelectModal />;
-					break;
-				default:
-					break;
+			case 'FILE_IMPORT':
+				modal = <FileImportModal />;
+				break;
+			case 'FILE_EXPORT':
+				modal = <FileExportModal />;
+				break;
+			case 'HELP':
+				modal = <HelpModal />;
+				break;
+			case 'EDIT_ITEM_LIST':
+				modal = <EditItemListModal />;
+				break;
+			case 'CONFIG':
+				modal = <ConfigModal />;
+				break;
+			case 'ITEM_SELECT':
+				modal = <ItemSelectModal />;
+				break;
+			default:
+				break;
 			}
 		}
 		return (
@@ -129,18 +132,8 @@ class App extends Component {
 					<Modal>
 						{modal}
 					</Modal>
-					<Layout layoutStore={store.layout} factory={this.layoutFactory.bind(this)} />
-					{/*<div id="main" className="main">
-						{this.generateMaps()}
-						<LocationDetail />
-					</div>*/}
-
-					{/*<Map
-						mapStore={this.props.store.getMapByName('zelda3-dw')}
-						id={randomId()}
-						tileLayerTemplate={`${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`}
-					/>*/}
-					{/*<Map
+					<Layout layoutStore={store.layout} factory={this.layoutFactory} />
+					{/* <Map
 						id={randomId()}
 						mapOptions={{
 							center: [-560,640],
@@ -154,12 +147,11 @@ class App extends Component {
 						}}
 						mapWidth={1280}
 						mapHeight={1120}
-					/>*/}
+					/> */}
 				</div>
 			</Provider>
 		);
 	}
 }
-
 
 export default observer(App);

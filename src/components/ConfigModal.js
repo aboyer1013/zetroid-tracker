@@ -10,29 +10,34 @@ class ConfigModal extends Component {
 		this.quickMarkModeChangeHandler = this.quickMarkModeChangeHandler.bind(this);
 		this.splitterSizeChangeDebounced = debounce(this.changeSplitterSize, 300);
 	}
+
 	componentDidMount() {
 		this.snapshot = getSnapshot(this.props.store);
 	}
+
 	splitterSizeChangeHandler(event) {
 		this.splitterSizeChangeDebounced(event.target.value);
 	}
-	quickMarkModeChangeHandler(event) {
-		const configStore = this.props.store.configStore;
+
+	quickMarkModeChangeHandler() {
+		const { configStore } = this.props.store;
 
 		configStore.setQuickMarkMode(!configStore.quickMarkMode);
 	}
+
 	changeSplitterSize(newSize) {
 		this.props.store.configStore.setSplitterSize(parseInt(newSize));
 	}
+
 	render() {
-		const store = this.props.store;
+		const { store } = this.props;
 		const configStore = store.config;
 
 		return (
 			<div className="modal-card config-modal">
 				<header className="modal-card-head">
 					<p className="modal-card-title">Settings</p>
-					<button className="delete" aria-label="close" onClick={store.closeModal} />
+					<button type="button" className="delete" aria-label="close" onClick={store.closeModal} />
 				</header>
 				<section className="modal-card-body">
 					<div className="content">
@@ -42,7 +47,9 @@ class ConfigModal extends Component {
 									<fieldset>
 										<legend>Splitter size</legend>
 										<label>
-											<p className="has-text-grey">Adjust the size of the panel splitters for easier resizing.</p>
+											<p className="has-text-grey">Adjust the size of the panel splitters for
+												easier resizing.
+											</p>
 											<div className="splitter-size">
 												<input
 													type="range"
@@ -63,35 +70,38 @@ class ConfigModal extends Component {
 										<legend>Reset Current Game Settings</legend>
 										<div className="field">
 											<button
+												type="button"
 												onClick={this.props.store.flushGameTreeStorage}
 												className="button is-danger"
 											>
-								                <span className="icon">
-								                  <i className="fas fa-broom"/>
-								                </span>
+												<span className="icon">
+													<i className="fas fa-broom" />
+												</span>
 												<span>Reset Progression</span>
 											</button>
 										</div>
 										<div className="field">
 											<button
+												type="button"
 												onClick={this.props.store.flushGameLayoutStorage}
 												className="button is-danger"
 											>
-								                <span className="icon">
-								                  <i className="fas fa-broom"/>
-								                </span>
+												<span className="icon">
+													<i className="fas fa-broom" />
+												</span>
 												<span>Reset UI Settings</span>
 											</button>
 										</div>
 										<div className="field">
 											<button
+												type="button"
 												title="Reset progress, layout preferences, and settings."
 												onClick={this.props.store.flushLocalStorage}
 												className="button is-danger"
 											>
-								                <span className="icon">
-								                  <i className="fas fa-broom"/>
-								                </span>
+												<span className="icon">
+													<i className="fas fa-broom" />
+												</span>
 												<span>Reset all settings</span>
 											</button>
 										</div>
@@ -103,8 +113,12 @@ class ConfigModal extends Component {
 									<fieldset className="control">
 										<legend>QuickMark Mode</legend>
 										<div className="has-text-grey">
-											<p>Left Click the map markers to view details about the location. CTRL + Click on the map markers to toggle completion.</p>
-											<p>When QuickMark Mode is enabled, these shortcuts are swapped. This also applies to the progression button in the Details panel.</p>
+											<p>Left Click the map markers to view details about the location. CTRL +
+												Click on the map markers to toggle completion.
+											</p>
+											<p>When QuickMark Mode is enabled, these shortcuts are swapped. This also
+												applies to the progression button in the Details panel.
+											</p>
 										</div>
 										<label>
 											<input
@@ -121,14 +135,19 @@ class ConfigModal extends Component {
 					</div>
 				</section>
 				<footer className="modal-card-foot">
-					<button className="button" onClick={() => {
-						try {
-							applySnapshot(this.props.store, this.snapshot);
-						} catch (err) {
-							console.error('There was a problem loading a previous state.', err);
-						}
-						store.closeModal();
-					}}>Discard Changes</button>
+					<button
+						type="button"
+						className="button"
+						onClick={() => {
+							try {
+								applySnapshot(this.props.store, this.snapshot);
+							} catch (err) {
+								console.error('There was a problem loading a previous state.', err);
+							}
+							store.closeModal();
+						}}
+					>Discard Changes
+					</button>
 				</footer>
 			</div>
 		);

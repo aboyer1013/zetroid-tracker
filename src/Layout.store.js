@@ -30,136 +30,136 @@ const LayoutStore = types
 		showBorderBottom: true,
 		showBorderLeft: true,
 	})
-	.volatile(self => ({
+	.volatile(() => ({
 		// layoutModel: null,
 		// Actions: null,
 		layoutPresets: {
 			zelda3: {
 				current: {},
 				STANDARD: {
-					'global': {},
-					'layout': {
-						'type': 'row',
-						'id': '#4',
-						'children': [
+					global: {},
+					layout: {
+						type: 'row',
+						id: '#4',
+						children: [
 							{
-								'type': 'row',
-								'id': '#11',
-								'weight': 25,
-								'children': [
+								type: 'row',
+								id: '#11',
+								weight: 25,
+								children: [
 									{
-										'type': 'row',
-										'id': '#23',
-										'weight': 25,
-										'children': [
+										type: 'row',
+										id: '#23',
+										weight: 25,
+										children: [
 											{
-												'type': 'tabset',
-												'id': '#22',
-												'weight': 50,
-												'children': [
+												type: 'tabset',
+												id: '#22',
+												weight: 50,
+												children: [
 													{
-														'type': 'tab',
-														'id': '#24',
-														'name': 'Light World',
-														'component': 'Map',
-														'config': {
+														type: 'tab',
+														id: '#24',
+														name: 'Light World',
+														component: 'Map',
+														config: {
 															mapName: 'zelda3-lw',
 														},
-														'enableClose': false
-													}
+														enableClose: false,
+													},
 												],
-												'active': true
+												active: true,
 											},
 											{
-												'type': 'tabset',
-												'id': '#10',
-												'weight': 50,
-												'children': [
+												type: 'tabset',
+												id: '#10',
+												weight: 50,
+												children: [
 													{
-														'type': 'tab',
-														'id': '#6',
-														'name': 'Dark World',
-														'component': 'Map',
-														'mapName': 'zelda3-dw',
-														'config': {
+														type: 'tab',
+														id: '#6',
+														name: 'Dark World',
+														component: 'Map',
+														mapName: 'zelda3-dw',
+														config: {
 															mapName: 'zelda3-dw',
 														},
 														enableClose: false,
-													}
-												]
-											}
-										]
+													},
+												],
+											},
+										],
 									},
 									{
-										'type': 'tabset',
-										'id': '#70',
-										'weight': 5,
-										'children': [
+										type: 'tabset',
+										id: '#70',
+										weight: 5,
+										children: [
 											{
-												'type': 'tab',
-												'id': '#1',
-												'name': 'Details',
-												'component': 'LocationDetail',
-												'config': {
-													'id': '1'
+												type: 'tab',
+												id: '#1',
+												name: 'Details',
+												component: 'LocationDetail',
+												config: {
+													id: '1',
 												},
-												'enableClose': false
-											}
-										]
-									}
-								]
-							}
-						]
+												enableClose: false,
+											},
+										],
+									},
+								],
+							},
+						],
 					},
-					'borders': [
+					borders: [
 						{
-							'type': 'border',
-							'size': 257,
-							'location': 'left',
-							'children': [
+							type: 'border',
+							size: 257,
+							location: 'left',
+							children: [
 								{
-									'type': 'tab',
-									'id': '#3',
-									'name': 'Items',
-									'component': 'ItemList',
-									'config': {
+									type: 'tab',
+									id: '#3',
+									name: 'Items',
+									component: 'ItemList',
+									config: {
 
 									},
-									'enableClose': false
+									enableClose: false,
 								},
 								{
-									'type': 'tab',
-									'id': '#2',
-									'name': 'Dungeons',
-									'component': 'ItemList',
-									'config': {
-										listType: 'dungeon'
+									type: 'tab',
+									id: '#2',
+									name: 'Dungeons',
+									component: 'ItemList',
+									config: {
+										listType: 'dungeon',
 									},
-									'enableClose': false
-								}
-							]
+									enableClose: false,
+								},
+							],
 						},
 						{
-							'type': 'border',
-							'location': 'right',
+							type: 'border',
+							location: 'right',
 							show: true,
-							'children': []
+							children: [],
 						},
 						{
-							'type': 'border',
-							'location': 'bottom',
-							'children': []
+							type: 'border',
+							location: 'bottom',
+							children: [],
 						},
 						{
-							'type': 'border',
-							'location': 'top',
+							type: 'border',
+							location: 'top',
 							show: false,
-							'children': []
+							children: [],
 						},
-					]
-				}
-			}
-		}
+					],
+				},
+			},
+		},
 	}))
 	.views(self => ({
 		get splitterSize() {
@@ -204,15 +204,12 @@ const LayoutStore = types
 			result = self.normalize(result);
 			return result;
 		},
-		// getBorderVisibility: (borderId) => {
-		// 	return self.layoutModel.getNodeById(borderId)._attributes.show;
-		// }
 	}))
-	.actions(self => {
-		const saveToLocalStorage = data => {
+	.actions((self) => {
+		const saveToLocalStorage = (data) => {
 			getRoot(self).updateGameLayoutStorage(data);
 		};
-		const normalize = json => {
+		const normalize = (json) => {
 			const globalConfig = Object.assign({}, json.global, self.globalConfig);
 
 			json.global = globalConfig;
@@ -227,7 +224,5 @@ const LayoutStore = types
 			normalize,
 			toggleBorder,
 		};
-	})
-;
-
+	});
 export default LayoutStore;

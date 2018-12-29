@@ -1,7 +1,6 @@
-import React, {Component, createRef} from 'react';
+import React, { Component, createRef } from 'react';
 import classNames from 'classnames';
-import {inject, observer} from 'mobx-react';
-import ConfigModal from 'components/ConfigModal';
+import { inject, observer } from 'mobx-react';
 
 const NavBar = class NavBar extends Component {
 	constructor() {
@@ -18,11 +17,11 @@ const NavBar = class NavBar extends Component {
 	};
 
 	toggleMenu() {
-		this.setState({isMenuActive: !this.state.isMenuActive});
+		this.setState({ isMenuActive: !this.state.isMenuActive });
 	}
 
 	toggleConfigModal() {
-		const store = this.props.store;
+		const { store } = this.props;
 
 		if (store.activeModal === 'CONFIG') {
 			store.closeModal('CONFIG');
@@ -32,9 +31,6 @@ const NavBar = class NavBar extends Component {
 	}
 
 	render() {
-		const burgerClasses = classNames('navbar-burger', 'burger', {
-			'is-active': this.state.isMenuActive,
-		});
 		const menuClasses = classNames('navbar-menu', {
 			'is-active': this.state.isMenuActive,
 		});
@@ -61,13 +57,17 @@ const NavBar = class NavBar extends Component {
 		const mainMenuButtonClasses = classNames('fas', {
 			'fa-angle-double-left': this.state.isMenuOpen,
 			'fa-angle-double-right': !this.state.isMenuOpen,
-		})
+		});
 
 		return (
 			<div className="main-menu-container">
 				<nav className={navbarClasses} role="navigation" aria-label="main navigation">
 					<div ref={this.menu} className={menuClasses}>
-						<button className="button main-menu-button is-primary" onClick={() => this.setState({isMenuOpen: !this.state.isMenuOpen})}>
+						<button
+							type="button"
+							className="button main-menu-button is-primary"
+							onClick={() => this.setState({ isMenuOpen: !this.state.isMenuOpen })}
+						>
 							<span className="icon">
 								<i className={mainMenuButtonClasses} />
 							</span>
@@ -80,7 +80,7 @@ const NavBar = class NavBar extends Component {
 									<a
 										className="navbar-item"
 										onClick={() => {
-											this.setState({isMenuActive: false});
+											this.setState({ isMenuActive: false });
 											this.props.store.openModal('FILE_IMPORT');
 										}}
 									>
@@ -89,7 +89,7 @@ const NavBar = class NavBar extends Component {
 									<a
 										className="navbar-item"
 										onClick={() => {
-											this.setState({isMenuActive: false});
+											this.setState({ isMenuActive: false });
 											this.props.store.openModal('FILE_EXPORT');
 										}}
 									>
@@ -104,7 +104,7 @@ const NavBar = class NavBar extends Component {
 									<a
 										className="navbar-item"
 										onClick={() => {
-											this.setState({isMenuActive: false});
+											this.setState({ isMenuActive: false });
 											this.props.store.openModal('EDIT_ITEM_LIST');
 										}}
 									>
@@ -118,53 +118,49 @@ const NavBar = class NavBar extends Component {
 								<div className="navbar-dropdown">
 									<div className="navbar-item">
 										<button
-											onClick={() =>
-												this.props.store.layout.toggleBorder('Top')
-											}
+											type="button"
+											onClick={() => this.props.store.layout.toggleBorder('Top')}
 											className="button is-fullwidth"
 										>
-						                    <span className="icon">
-						                      <i className={toggleBorderTopClasses}/>
-						                    </span>
+											<span className="icon">
+												<i className={toggleBorderTopClasses} />
+											</span>
 											<span>Top Border</span>
 										</button>
 									</div>
 									<div className="navbar-item">
 										<button
-											onClick={() =>
-												this.props.store.layout.toggleBorder('Right')
-											}
+											type="button"
+											onClick={() => this.props.store.layout.toggleBorder('Right')}
 											className="button is-fullwidth"
 										>
-						                    <span className="icon">
-						                      <i className={toggleBorderRightClasses}/>
-						                    </span>
+											<span className="icon">
+												<i className={toggleBorderRightClasses} />
+											</span>
 											<span>Right Border</span>
 										</button>
 									</div>
 									<div className="navbar-item">
 										<button
-											onClick={() =>
-												this.props.store.layout.toggleBorder('Bottom')
-											}
+											type="button"
+											onClick={() => this.props.store.layout.toggleBorder('Bottom')}
 											className="button is-fullwidth"
 										>
-						                    <span className="icon">
-						                      <i className={toggleBorderBottomClasses}/>
-						                    </span>
+											<span className="icon">
+												<i className={toggleBorderBottomClasses} />
+											</span>
 											<span>Bottom Border</span>
 										</button>
 									</div>
 									<div className="navbar-item">
 										<button
-											onClick={() =>
-												this.props.store.layout.toggleBorder('Left')
-											}
+											type="button"
+											onClick={() => this.props.store.layout.toggleBorder('Left')}
 											className="button is-fullwidth"
 										>
-						                    <span className="icon">
-						                      <i className={toggleBorderLeftClasses}/>
-						                    </span>
+											<span className="icon">
+												<i className={toggleBorderLeftClasses} />
+											</span>
 											<span>Left Border</span>
 										</button>
 									</div>
@@ -182,10 +178,10 @@ const NavBar = class NavBar extends Component {
 
 						<div className="is-hideable-navbar-item navbar-end">
 							<div className="navbar-item">
-								<button className="button" onClick={this.toggleConfigModal}>
-					                <span className="icon">
-					                  <i className="fas fa-cog"/>
-					                </span>
+								<button type="button" className="button" onClick={this.toggleConfigModal}>
+									<span className="icon">
+										<i className="fas fa-cog" />
+									</span>
 								</button>
 							</div>
 						</div>

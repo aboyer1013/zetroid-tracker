@@ -1,13 +1,13 @@
-import React, {Component, createRef} from 'react';
+import React, { Component, createRef } from 'react';
 import { autorun } from 'mobx';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import FlexLayout from 'flexlayout-react';
 
 const Layout = class Layout extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			model: FlexLayout.Model.fromJson(this.props.store.layout.json)
+			model: FlexLayout.Model.fromJson(this.props.store.layout.json),
 		};
 		this.props.layoutStore.layoutModel = this.state.model;
 		this.props.layoutStore.Actions = FlexLayout.Actions;
@@ -16,12 +16,13 @@ const Layout = class Layout extends Component {
 			this.state.model.doAction(FlexLayout.Actions.updateModelAttributes({
 				splitterSize: this.props.layoutStore.splitterSize,
 			}));
-			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_top', {show: this.props.layoutStore.showBorderTop}));
-			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_right', {show: this.props.layoutStore.showBorderRight}));
-			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_bottom', {show: this.props.layoutStore.showBorderBottom}));
-			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_left', {show: this.props.layoutStore.showBorderLeft}));
+			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_top', { show: this.props.layoutStore.showBorderTop }));
+			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_right', { show: this.props.layoutStore.showBorderRight }));
+			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_bottom', { show: this.props.layoutStore.showBorderBottom }));
+			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_left', { show: this.props.layoutStore.showBorderLeft }));
 		});
 	}
+
 	render() {
 		const self = this;
 
@@ -31,17 +32,17 @@ const Layout = class Layout extends Component {
 					ref={this.layoutRef}
 					model={this.state.model}
 					factory={this.props.factory}
-					onModelChange={model => {
+					onModelChange={(model) => {
 						self.props.store.layout.saveToLocalStorage(model.toJson());
 					}}
-					onAction={action => {
+					onAction={(action) => {
 						// Issue #5 Activating tab sets messes with click handlers on maps.
 						// Plus, there's not really a point to activating tab sets that was obvious, so let's scrap it.
 						if (action.type !== 'FlexLayout_SetActiveTabset') {
 							this.state.model.doAction(action);
 						}
 					}}
-					classNameMapper={className => {
+					classNameMapper={(className) => {
 						return className;
 					}}
 				/>

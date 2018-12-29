@@ -10,9 +10,11 @@ class EditItemListModal extends Component {
 		super(props);
 		this.onDragEndHandler = this.onDragEndHandler.bind(this);
 	}
+
 	componentDidMount() {
 		this.snapshot = getSnapshot(this.props.store);
 	}
+
 	onDragEndHandler(result) {
 		if (!result.destination) {
 			return;
@@ -31,82 +33,89 @@ class EditItemListModal extends Component {
 			destStore.moveItem(sourceItem, result.destination.index);
 		}
 	}
+
 	render() {
-		const store = this.props.store;
+		const { store } = this.props;
 		const itemListStore = store.activeItemList;
 		return (
-			<div className='modal-card edit-item-list-modal'>
-				<header className='modal-card-head'>
-					<p className='modal-card-title'>Customize Trackables</p>
-					<button className='delete' aria-label='close' onClick={store.closeModal} />
+			<div className="modal-card edit-item-list-modal">
+				<header className="modal-card-head">
+					<p className="modal-card-title">Customize Trackables</p>
+					<button type="button" className="delete" aria-label="close" onClick={store.closeModal} />
 				</header>
-				<section className='modal-card-body'>
-					<div className='content'>
+				<section className="modal-card-body">
+					<div className="content">
 						<p>Customize trackable items by dragging and dropping between both the <em>Active Items </em>
-							and <em>Inactive Items</em> areas.</p>
-						<div className='item-list-group-container'>
+							and <em>Inactive Items</em> areas.
+						</p>
+						<div className="item-list-group-container">
 							<h4>Items</h4>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
-								<div className='item-list-group active-item-list-group'>
-									<h5 className='item-list-group-subtitle'>Active</h5>
+								<div className="item-list-group active-item-list-group">
+									<h5 className="item-list-group-subtitle">Active</h5>
 									<ItemList
 										itemListStore={itemListStore}
 										items={itemListStore.sortedItems}
 										direction={itemListStore.direction}
-										isReadOnly={true}
-										draggableEnabled={true}
+										isReadOnly
+										draggableEnabled
 									/>
 								</div>
-								<div className='icon item-exchange-divider'><i className='fas fa-exchange-alt' /></div>
-								<div className='item-list-group inactive-item-list-group'>
-									<h5 className='item-list-group-subtitle'>Inactive</h5>
+								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt" /></div>
+								<div className="item-list-group inactive-item-list-group">
+									<h5 className="item-list-group-subtitle">Inactive</h5>
 									<ItemList
 										itemListStore={store.inactiveItemList}
 										items={store.inactiveItemList.sortedItems}
-										isReadOnly={true}
+										isReadOnly
 										direction={itemListStore.direction}
-										draggableEnabled={true}
+										draggableEnabled
 									/>
 								</div>
 							</DragDropContext>
 						</div>
-						<div className='item-list-group-container'>
+						<div className="item-list-group-container">
 							<h4>Bosses</h4>
 							<DragDropContext onDragEnd={this.onDragEndHandler}>
-								<div className='item-list-group active-item-list-group'>
-									<h5 className='item-list-group-subtitle'>Active</h5>
+								<div className="item-list-group active-item-list-group">
+									<h5 className="item-list-group-subtitle">Active</h5>
 									<ItemList
 										itemListStore={store.activeDungeonItemList}
 										items={store.activeDungeonItemList.bosses}
 										direction={itemListStore.direction}
-										isReadOnly={true}
-										draggableEnabled={true}
+										isReadOnly
+										draggableEnabled
 									/>
 								</div>
-								<div className='icon item-exchange-divider'><i className='fas fa-exchange-alt' /></div>
-								<div className='item-list-group inactive-item-list-group'>
-									<h5 className='item-list-group-subtitle'>Inactive</h5>
+								<div className="icon item-exchange-divider"><i className="fas fa-exchange-alt" /></div>
+								<div className="item-list-group inactive-item-list-group">
+									<h5 className="item-list-group-subtitle">Inactive</h5>
 									<ItemList
 										itemListStore={store.inactiveDungeonItemList}
 										items={store.inactiveDungeonItemList.bosses}
-										isReadOnly={true}
+										isReadOnly
 										direction={itemListStore.direction}
-										draggableEnabled={true}
+										draggableEnabled
 									/>
 								</div>
 							</DragDropContext>
 						</div>
 					</div>
 				</section>
-				<footer className='modal-card-foot'>
-					<button className='button' onClick={() => {
-						try {
-							applySnapshot(this.props.store, this.snapshot);
-						} catch (err) {
-							console.error('There was a problem loading a previous state.', err);
-						}
-						store.closeModal();
-					}}>Discard Changes</button>
+				<footer className="modal-card-foot">
+					<button
+						type="button"
+						className="button"
+						onClick={() => {
+							try {
+								applySnapshot(this.props.store, this.snapshot);
+							} catch (err) {
+								console.error('There was a problem loading a previous state.', err);
+							}
+							store.closeModal();
+						}}
+					>Discard Changes
+					</button>
 				</footer>
 			</div>
 		);

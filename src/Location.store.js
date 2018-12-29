@@ -53,7 +53,7 @@ const LocationStore = types
 			UNAVAILABLE: 'UNAVAILABLE',
 		}),
 	})
-	.volatile(self => {
+	.volatile((self) => {
 		// All the logic to determine if the location is viewable goes here
 		return {
 			viewability: {
@@ -208,8 +208,8 @@ const LocationStore = types
 				spiralCave: () => self.abilities.canEnterEastDeathMountain(),
 				mimicCave: () => {
 				// TODO Finish this after dungeons.
-					const abl = self.abilities;
 
+				// 	const abl = self.abilities;
 					// if (abl.canEnterEastDeathMountain() && self.hasItem('mirror') && self.)
 					//
 					// if (abl.canEnterEastDeathMountain() && self.hasItem("mirror") && dungeons.zelda3[9].mayEnter("glitchless", false)) {
@@ -278,7 +278,7 @@ const LocationStore = types
 							&& abl.canGrapple
 							&& abl.canEnterEastDarkWorldDeathMountain()
 						);
-					}
+					},
 				},
 				bottleVendor: () => true,
 				hauntedGrove: () => self.abilities.canEnterSouthDarkWorld(),
@@ -321,7 +321,7 @@ const LocationStore = types
 				oldMan: () => self.abilities.canEnterWestDeathMountain(true) && self.abilities.hasItem('lantern'),
 				witchsHut: () => self.abilities.hasItem('mushroom'),
 				forestHideout: () => true,
-				lumberjacks:() => self.abilities.canDash && self.abilities.hasItem('agahnim'),
+				lumberjacks: () => self.abilities.canDash && self.abilities.hasItem('agahnim'),
 				spectacleRockCave: () => self.abilities.canEnterWestDeathMountain(),
 				southOfGrove: () => self.abilities.hasItem('mirror') && self.abilities.canEnterSouthDarkWorld(),
 				graveyardLedge: () => {
@@ -345,6 +345,7 @@ const LocationStore = types
 					if (abl.canFly && abl.canLiftDarkRocks) {
 						return true;
 					}
+					return false;
 				},
 				hammerPegs: () => {
 					const abl = self.abilities;
@@ -475,7 +476,7 @@ const LocationStore = types
 			},
 		};
 	})
-	.views((self) => ({
+	.views(self => ({
 		get details() {
 			return {
 				longName: self.longName,
@@ -491,7 +492,7 @@ const LocationStore = types
 			const result = [];
 
 			if (self.itemRequirements.length) {
-				self.itemRequirements.forEach(req => {
+				self.itemRequirements.forEach((req) => {
 					result.push(getRoot(self).getItemByName(req));
 				});
 			}
@@ -549,6 +550,7 @@ const LocationStore = types
 
 				return numUnavailAreas > 0 && areas.length !== numUnavailAreas;
 			}
+			return false;
 		},
 		get isViewable() {
 			let result = false;
@@ -583,12 +585,12 @@ const LocationStore = types
 			return every(self.areas, { isPossible: true });
 		},
 		get doAllAreasHaveSelectedItems() {
-			return every(self.areas, (area) => !isNull(area.selectedItem));
+			return every(self.areas, area => !isNull(area.selectedItem));
 		},
 		get areAllAreasComplete() {
 			let result = true;
 
-			self.areas.forEach(area => {
+			self.areas.forEach((area) => {
 				if (!area.isComplete) {
 					result = false;
 				}
@@ -624,17 +626,17 @@ const LocationStore = types
 		const toggleComplete = () => {
 			self.isComplete = !self.isComplete;
 			if (self.isComplete) {
-				self.areas.forEach(area => {
-					area.collectables.forEach(collectable => {
+				self.areas.forEach((area) => {
+					area.collectables.forEach((collectable) => {
 						collectable.setQty(0);
 					});
 				});
 			} else {
-				self.areas.forEach(area => {
-					area.collectables.forEach(collectable => {
+				self.areas.forEach((area) => {
+					area.collectables.forEach((collectable) => {
 						collectable.setQty(collectable.maxQty);
 					});
-				})
+				});
 			}
 			// TODO add dungeon reset logic
 		};
@@ -651,7 +653,5 @@ const LocationStore = types
 			toggleComplete,
 			setComplete,
 		};
-	})
-;
-
+	});
 export default LocationStore;

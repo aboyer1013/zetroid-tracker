@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
-import ItemIconList from 'components/ItemIconList';
-import {get} from 'lodash';
+import React, { Component } from 'react';
+import { get } from 'lodash';
 import classNames from 'classnames';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import LocationNotes from 'components/LocationNotes';
-import Item from 'components/Item';
 import { randomId } from 'utilities/util';
 import Area from 'components/Area';
 
@@ -13,6 +11,7 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		super(props);
 		this.onProgressionClickHandler = this.onProgressionClickHandler.bind(this);
 	}
+
 	onProgressionClickHandler(event) {
 		const selectedLocation = get(this, 'props.store.locationDetail.selectedLocation');
 		const quickMarkMode = get(this, 'props.store.config.quickMarkMode');
@@ -26,9 +25,10 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 			selectedLocation.toggleComplete();
 		}
 	}
+
 	render() {
 		const store = get(this, 'props.store.locationDetail');
-		const selectedLocation = store.selectedLocation;
+		const { selectedLocation } = store;
 		const details = get(selectedLocation, 'details');
 		let longName = get(details, 'longName');
 		let notes = get(details, 'notes');
@@ -54,11 +54,18 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					</div>
 					<div className="details-controls">
 						<div className="buttons">
-							<button onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)}
-							        className={favoriteClasses}>
+							<button
+								type="button"
+								onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)}
+								className={favoriteClasses}
+							>
 								<span className="icon"><i className="fas fa-star" /></span>
 							</button>
-							<button onClick={this.onProgressionClickHandler} className={`button ${store.progBtnClass}`}>
+							<button
+								type="button"
+								onClick={this.onProgressionClickHandler}
+								className={`button ${store.progBtnClass}`}
+							>
 								<span className="icon"><i className={`fas ${store.progBtnIcon}`} /></span>
 								<span>{store.progBtnText}</span>
 							</button>

@@ -1,23 +1,22 @@
 import React, { Component, createRef } from 'react';
 import { observer, inject } from 'mobx-react';
 import { get } from 'lodash';
+import { randomId } from 'utilities/util';
 
 class FileImportModal extends Component {
 	constructor() {
 		super();
 		this.snapshotRef = createRef();
 	}
-	state = {
-		snapshot: '',
-	}
+
 	render() {
-		const validationMessages = get(this, "props.store.validationMessages", []);
+		const validationMessages = get(this, 'props.store.validationMessages', []);
 
 		return (
 			<div className="modal-card">
 				<header className="modal-card-head">
 					<p className="modal-card-title">Import generated JSON</p>
-					<button className="delete" aria-label="close" onClick={this.props.store.closeModal} />
+					<button type="button" className="delete" aria-label="close" onClick={this.props.store.closeModal} />
 				</header>
 				<section className="modal-card-body">
 					<p>Paste JSON to load a previously saved state of the application.</p>
@@ -31,12 +30,12 @@ class FileImportModal extends Component {
 						</div>
 					</div>
 					<div className="validation-error is-danger">
-						{validationMessages.map((message, i) => <p className="has-text-danger" key={`message-${i}`}>{message}</p>)}
+						{validationMessages.map(message => <p className="has-text-danger" key={`message-${randomId()}`}>{message}</p>)}
 					</div>
 				</section>
 				<footer className="modal-card-foot">
-					<button className="button is-success" onClick={() => this.props.store.loadSnapshot(this.snapshotRef.current.value)}>Load</button>
-					<button className="button" onClick={this.props.store.closeModal}>Cancel</button>
+					<button type="button" className="button is-success" onClick={() => this.props.store.loadSnapshot(this.snapshotRef.current.value)}>Load</button>
+					<button type="button" className="button" onClick={this.props.store.closeModal}>Cancel</button>
 				</footer>
 			</div>
 		);

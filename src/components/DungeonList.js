@@ -1,15 +1,15 @@
 import React from 'react';
-import {inject, observer} from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import Dungeon from 'components/Dungeon';
-import {find} from 'lodash';
+import { find } from 'lodash';
 
-const DungeonList = ({items, store, itemListStore }) => {
+const DungeonList = ({ items, store, itemListStore }) => {
 	const result = [];
 	// I'd move all these brains into a computed
-	items.forEach((item, i) => {
+	items.forEach((item) => {
 		const dungeonLocation = find(
 			store.dungeonLocations,
-			loc => loc.boss.name === item.name
+			loc => loc.boss.name === item.name,
 		);
 
 		if (dungeonLocation) {
@@ -18,12 +18,12 @@ const DungeonList = ({items, store, itemListStore }) => {
 					key={item.id}
 					loc={dungeonLocation}
 					itemListStore={itemListStore}
-				/>
+				/>,
 			);
 		}
 	});
 	return (
-		<div className='item-list-container dungeon-list-container is-draggable-disabled'>
+		<div className="item-list-container dungeon-list-container is-draggable-disabled">
 			{result}
 		</div>
 	);

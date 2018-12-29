@@ -34,39 +34,39 @@ const AreaStore = types
 		}),
 	})
 	.views(self => ({
-		isVisible: (item) => {
+		isVisible: () => {
 			return true;
 		},
 		get colorClass() {
 			switch (self.currentProgression) {
-				case self.PROGRESSION.COMPLETE:
-					return 'is-dark';
-				case self.PROGRESSION.AVAILABLE:
-					return 'is-success';
-				case self.PROGRESSION.VIEWABLE:
-					return 'is-info';
+			case self.PROGRESSION.COMPLETE:
+				return 'is-dark';
+			case self.PROGRESSION.AVAILABLE:
+				return 'is-success';
+			case self.PROGRESSION.VIEWABLE:
+				return 'is-info';
 				// case self.PROGRESSION.AGAHNIM:
 				// 	return 'is-info';
-				case self.PROGRESSION.POSSIBLE:
-					return 'is-success';
-				default:
-					return 'is-danger';
+			case self.PROGRESSION.POSSIBLE:
+				return 'is-success';
+			default:
+				return 'is-danger';
 			}
 		},
 		get iconClass() {
 			switch (self.currentProgression) {
-				case self.PROGRESSION.COMPLETE:
-					return 'fa-check-circle';
-				case self.PROGRESSION.AVAILABLE:
-					return 'fa-exclamation-circle';
-				case self.PROGRESSION.VIEWABLE:
-					return 'fa-question-circle';
+			case self.PROGRESSION.COMPLETE:
+				return 'fa-check-circle';
+			case self.PROGRESSION.AVAILABLE:
+				return 'fa-exclamation-circle';
+			case self.PROGRESSION.VIEWABLE:
+				return 'fa-question-circle';
 				// case self.PROGRESSION.AGAHNIM:
 				// 	return 'fa-times-circle';
-				case self.PROGRESSION.POSSIBLE:
-					return 'fa-dot-circle';
-				default:
-					return 'fa-times-circle';
+			case self.PROGRESSION.POSSIBLE:
+				return 'fa-dot-circle';
+			default:
+				return 'fa-times-circle';
 			}
 		},
 		get acquired() {
@@ -80,7 +80,7 @@ const AreaStore = types
 		get isComplete() {
 			let result = true;
 
-			self.collectables.forEach(collectable => {
+			self.collectables.forEach((collectable) => {
 				if (collectable.qty > 0) {
 					result = false;
 				}
@@ -102,6 +102,7 @@ const AreaStore = types
 			if (isFunction(parent.availability[parent.name][self.name])) {
 				return parent.availability[parent.name][self.name]();
 			}
+			return false;
 		},
 		get isPossible() {
 			const parent = getParentOfType(self, LocationStore);
@@ -118,6 +119,7 @@ const AreaStore = types
 			if (has(parent, `possibility[${parent.name}]`) && isFunction(parent, `possibility[${parent.name}]`)) {
 				return parent.possibility[parent.name]();
 			}
+			return false;
 		},
 		get isViewable() {
 			const parent = getParentOfType(self, LocationStore);
@@ -137,6 +139,7 @@ const AreaStore = types
 			if (isFunction(parent.viewability[parent.name])) {
 				return parent.viewability[parent.name]();
 			}
+			return false;
 		},
 		get mustDefeatAgahnimFirst() {
 			const parent = getParentOfType(self, LocationStore);
@@ -153,6 +156,7 @@ const AreaStore = types
 			if (isFunction(parent.mustDefeatAgahnimFirst[parent.name][self.name])) {
 				return parent.mustDefeatAgahnimFirst[parent.name][self.name]();
 			}
+			return false;
 		},
 		get currentProgression() {
 			if (self.isDungeonComplete || self.isComplete) {
@@ -173,7 +177,7 @@ const AreaStore = types
 			return self.PROGRESSION.UNAVAILABLE;
 		},
 	}))
-	.actions(self => {
+	.actions((self) => {
 		const setComplete = () => {
 			getParentOfType(self, LocationStore).setComplete();
 		};
@@ -184,8 +188,6 @@ const AreaStore = types
 		return {
 			setComplete,
 			selectItem,
-		}
-	})
-;
-
+		};
+	});
 export default AreaStore;

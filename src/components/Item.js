@@ -1,5 +1,5 @@
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import classNames from 'classnames';
 import { get } from 'lodash';
 
@@ -20,9 +20,9 @@ const Item = ({
 		'is-read-only': isReadOnly,
 		'is-unselectable': isReadOnly,
 		'is-select-mode': isSelectMode,
-		'is-selected': isSelectMode && selectedItemName === item.name
+		'is-selected': isSelectMode && selectedItemName === item.name,
 	});
-	let imageSrc = item.imageSrc;
+	let { imageSrc } = item;
 
 	if (item.isChest && item.qty < 1) {
 		imageSrc = item.imageEmptySrc;
@@ -31,7 +31,7 @@ const Item = ({
 	return (
 		<div
 			data-qty={item.qty}
-			onClick={event => {
+			onClick={(event) => {
 				if (isReadOnly) {
 					return;
 				}
@@ -50,7 +50,7 @@ const Item = ({
 			key={item.id}
 			className={itemClasses}
 		>
-			<img src={imageSrc} alt={item.longName} title={item.longName}/>
+			<img src={imageSrc} alt={item.longName} title={item.longName} />
 		</div>
 	);
 };

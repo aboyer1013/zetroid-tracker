@@ -10,7 +10,7 @@ const ConfigStore = types
 		// Standard is vanilla intro: Stormy beginning with access to only sewer passage to meet Uncle.
 		// Open is equivalent to vanilla intro only you start the game like you just exited the church.
 		gameState: types.optional(types.enumeration('Game state', ['standard', 'open']), 'standard'),
-		splitterSize: types.optional(types.refinement(types.number, val => {
+		splitterSize: types.optional(types.refinement(types.number, (val) => {
 			return val >= 10 && val <= 20;
 		}), 10),
 		quickMarkMode: false,
@@ -24,7 +24,7 @@ const ConfigStore = types
 		},
 		get minorGlitches() {
 			return self.mode === 'regions';
-		}
+		},
 	}))
 	.actions((self) => {
 		const setSelected = (state) => {
@@ -46,7 +46,5 @@ const ConfigStore = types
 			setQuickMarkMode,
 			setGameState,
 		};
-	})
-;
-
+	});
 export default ConfigStore;

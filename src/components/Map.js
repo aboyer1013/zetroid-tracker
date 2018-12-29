@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import {autorun} from 'mobx';
-import {observer, inject} from 'mobx-react';
-import {debounce, camelCase, pick, get, every, filter} from 'lodash';
+import React, { Component } from 'react';
+import { autorun } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import {
+	debounce, camelCase, pick, get, every, filter,
+} from 'lodash';
 import classNames from 'classnames';
 
 /**
@@ -22,29 +24,31 @@ import classNames from 'classnames';
  * "★": Favorited
  */
 
-const L = window.L;
+const { L } = window;
 const Map = class Map extends Component {
+	markers = {};
+
+	mapBounds = [[0, 0], [-4256, 4096]];
+
+	mapInitialized = false;
+
 	constructor(props) {
 		super(props);
 		this.resize = debounce(this.resize, 1000);
 		this.addMarker = this.addMarker.bind(this);
 		this.onResizeHandler = this.onResizeHandler.bind(this);
 		this.sizeToFit = this.sizeToFit.bind(this);
-		this.props.layoutNode.setEventListener('resize', function (data) {
+		this.props.layoutNode.setEventListener('resize', (data) => {
 			this.onResizeHandler(pick(data.rect, ['width', 'height']), !this.mapInitialized);
 			this.mapInitialized = true;
-		}.bind(this));
-		this.props.layoutNode.setEventListener('close', function (data) {
+		});
+		this.props.layoutNode.setEventListener('close', () => {
 			this.resize();
-		}.bind(this));
-		this.props.layoutNode.setEventListener('visibility', function (data) {
+		});
+		this.props.layoutNode.setEventListener('visibility', () => {
 			this.resize();
-		}.bind(this));
+		});
 	}
-
-	markers = {};
-	mapBounds = [[0, 0], [-4256, 4096]];
-	mapInitialized = false;
 
 	componentDidMount() {
 		// I may not need this.
@@ -53,71 +57,78 @@ const Map = class Map extends Component {
 		this.initReactions();
 	}
 
-	initMap() {
-		const self = this;
+	onResizeHandler(data, onInit = false) {
+		const { width: newWidth, height: newHeight } = data;
 
-		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
-			crs: L.CRS.Simple,
-			center: [-2128, 2048],
-			zoom: this.props.mapStore.zoom,
-			maxBounds: this.mapBounds,
-			maxBoundsViscosity: 1,
-			attributionControl: false,
-			zoomControl: false,
-			zoomSnap: 0.001,
-		}, this.props.mapOptions));
-		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, {
-			minZoom: -4,
-			maxZoom: 2,
-			nativeZooms: [0],
-			tileSize: L.point(256, 224),
-			bounds: [[0, 0], [-4256, 4096]],
-		}, this.props.tileLayerOptions)).addTo(this.map);
-		this.map.setZoom(this.props.mapStore.zoom);
-		this.markerCluster = L.markerClusterGroup({
-			showCoverageOnHover: false,
-			zoomToBoundsOnClick: false,
-			spiderfyOnMaxZoom: true,
-			disableClusteringAtZoom: -2,
-			iconCreateFunction: cluster => {
-				const childMarkers = cluster.getAllChildMarkers();
-				const markerClasses = [
-					'leaflet-marker-icon',
-					'custom-marker-cluster',
-					'marker-cluster',
-					'marker-cluster-small',
-					'leaflet-zoom-animated',
-					'leaflet-interactive',
-				];
-				if (childMarkers.length) {
-					if (self.areAllMarkersUnavailable(childMarkers)) {
-						markerClasses.push('are-unavailable')
-					} else if (self.areAllMarkersAvailable(childMarkers)) {
-						markerClasses.push('are-available');
-					} else if (self.areSomeMarkersAvailable(childMarkers)) {
-						markerClasses.push('are-partially-available');
-					}
-				}
-				const html = `
-					<div
-						class="${markerClasses.join(' ')}"
-						tabIndex="0"
-					>
-						<div><span>${cluster.getChildCount()}</span></div>
-					</div>
-				`;
-				return L.divIcon({ html });
+		this.props.mapStore.setWidth(newWidth);
+		this.props.mapStore.setHeight(newHeight);
+		this.resize(onInit);
+	}
+
+	setProgression(marker, loc) {
+		const markerColor = {
+			AGAHNIM_ONLY_REQUIREMENT: 'blue',
+			VIEWABLE: 'blue',
+			POSSIBLE: 'green',
+			UNAVAILABLE: 'red',
+			PARTIALLY_AVAILABLE: 'orange',
+			AVAILABLE: 'green',
+			COMPLETE: 'black',
+			FAVORITE: 'pink',
+		};
+		const icon = {
+			VIEWABLE: 'question-circle',
+			UNAVAILABLE: 'times-circle',
+			AVAILABLE: 'exclamation-circle',
+			PARTIALLY_AVAILABLE: 'dot-circle',
+			POSSIBLE: 'dot-circle',
+			AGAHNIM_ONLY_REQUIREMENT: 'times-circle',
+			COMPLETE: 'check-circle',
+			FAVORITE: 'star',
+			DUNGEON: 'skull',
+		};
+		const markerOptions = {
+			icon: 'times-circle',
+			markerColor: 'red',
+			prefix: 'fa',
+			className: 'awesome-marker icon',
+			extraClasses: 'fas',
+			tooltipAnchor: L.point(20, -25),
+		};
+
+		if (loc.isFavorite) {
+			markerOptions.markerColor = markerColor.FAVORITE;
+			markerOptions.icon = icon.FAVORITE;
+		} else if (loc.isComplete) {
+			markerOptions.markerColor = markerColor.COMPLETE;
+			markerOptions.icon = icon.COMPLETE;
+		} else if (loc.isAvailable) {
+			markerOptions.markerColor = markerColor.AVAILABLE;
+			markerOptions.icon = icon.AVAILABLE;
+		} else if (loc.isPartiallyAvailable) {
+			markerOptions.markerColor = markerColor.PARTIALLY_AVAILABLE;
+			markerOptions.icon = icon.PARTIALLY_AVAILABLE;
+		} else if (loc.isAgahnimTheOnlyRemainingRequirement) {
+			markerOptions.markerColor = markerColor.AGAHNIM_ONLY_REQUIREMENT;
+			markerOptions.icon = icon.AGAHNIM_ONLY_REQUIREMENT;
+		} else if (loc.isViewable) {
+			markerOptions.markerColor = markerColor.VIEWABLE;
+			markerOptions.icon = icon.VIEWABLE;
+		} else if (loc.isPossible) {
+			markerOptions.markerColor = markerColor.POSSIBLE;
+			markerOptions.icon = icon.POSSIBLE;
+		}
+		if (loc.isDungeon && !loc.isFavorite) {
+			if (loc.isDungeonComplete) {
+				markerOptions.markerColor = markerColor.COMPLETE;
+				markerOptions.icon = icon.COMPLETE;
+			} else if (loc.boss.acquired) {
+				markerOptions.icon = icon.AVAILABLE;
+			} else {
+				markerOptions.icon = icon.DUNGEON;
 			}
-		});
-		this.props.locations.forEach(loc => {
-			this.addMarker(loc);
-		});
-		Object.keys(this.markers).forEach(function (key) {
-			this.markerCluster.addLayer(this.markers[key]);
-		}.bind(this));
-		this.map.addLayer(this.markerCluster);
-		// For debugging.
-		window[camelCase(this.props.mapStore.name)] = this.map;
+		}
+		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}
 
 	initReactions() {
@@ -172,7 +183,7 @@ const Map = class Map extends Component {
 
 	areSomeMarkersAvailable(markers) {
 		const locations = markers.map(marker => this.props.mapStore.locations.get(marker.options.locationId));
-		const filteredLocs = filter(locations, loc => {
+		const filteredLocs = filter(locations, (loc) => {
 			return (
 				loc.currentProgression === loc.PROGRESSION.AVAILABLE
 				|| loc.currentProgression === loc.PROGRESSION.UNAVAILABLE
@@ -199,7 +210,9 @@ const Map = class Map extends Component {
 	resize(sizeToFit = false) {
 		// Why not just call it outright? Because it's flakey and we need a timeout.
 		this.map.invalidateSize();
-		sizeToFit && this.sizeToFit();
+		if (sizeToFit) {
+			this.sizeToFit();
+		}
 	}
 
 	markerClickHandler(options) {
@@ -212,8 +225,8 @@ const Map = class Map extends Component {
 		} = options;
 
 		if (
-			(quickMarkMode && !ctrlKeyPressed) ||
-			(!quickMarkMode && ctrlKeyPressed)
+			(quickMarkMode && !ctrlKeyPressed)
+			|| (!quickMarkMode && ctrlKeyPressed)
 		) {
 			theLocation.toggleComplete();
 		}
@@ -227,7 +240,7 @@ const Map = class Map extends Component {
 			markerColor: 'red',
 			prefix: 'fa',
 			className: 'awesome-marker icon',
-			extraClasses: 'fas'
+			extraClasses: 'fas',
 		});
 
 		this.markers[loc.id] = L
@@ -239,7 +252,7 @@ const Map = class Map extends Component {
 			.on('click', (event) => {
 				const marker = self.markers[loc.id];
 				const ctrlKeyPressed = get(event, 'originalEvent.ctrlKey');
-				const quickMarkMode = self.props.store.config.quickMarkMode;
+				const { quickMarkMode } = self.props.store.config;
 
 				self.markerClickHandler({
 					event,
@@ -248,84 +261,76 @@ const Map = class Map extends Component {
 					ctrlKeyPressed,
 					quickMarkMode,
 				});
-			})
-		;
+			});
 		this.markerCluster.addLayer(this.markers[loc.id]);
 		this.setProgression(this.markers[loc.id], loc);
 	}
 
-	setProgression(marker, loc) {
-		const markerColor = {
-			AGAHNIM_ONLY_REQUIREMENT: 'blue',
-			VIEWABLE: 'blue',
-			POSSIBLE: 'green',
-			UNAVAILABLE: 'red',
-			PARTIALLY_AVAILABLE: 'orange',
-			AVAILABLE: 'green',
-			COMPLETE: 'black',
-			FAVORITE: 'pink',
-		};
-		const icon = {
-			VIEWABLE: 'question-circle',
-			UNAVAILABLE: 'times-circle',
-			AVAILABLE: 'exclamation-circle',
-			PARTIALLY_AVAILABLE: 'dot-circle',
-			POSSIBLE: 'dot-circle',
-			AGAHNIM_ONLY_REQUIREMENT: 'times-circle',
-			COMPLETE: 'check-circle',
-			FAVORITE: 'star',
-			DUNGEON: 'skull'
-		}
-		const markerOptions = {
-			icon: 'times-circle',
-			markerColor: 'red',
-			prefix: 'fa',
-			className: 'awesome-marker icon',
-			extraClasses: 'fas',
-			tooltipAnchor: L.point(20, -25),
-		};
+	initMap() {
+		const self = this;
 
-		if (loc.isFavorite) {
-			markerOptions.markerColor = markerColor.FAVORITE;
-			markerOptions.icon = icon.FAVORITE;
-		} else if (loc.isComplete) {
-			markerOptions.markerColor = markerColor.COMPLETE;
-			markerOptions.icon = icon.COMPLETE;
-		} else if (loc.isAvailable) {
-			markerOptions.markerColor = markerColor.AVAILABLE;
-			markerOptions.icon = icon.AVAILABLE;
-		} else if (loc.isPartiallyAvailable) {
-			markerOptions.markerColor = markerColor.PARTIALLY_AVAILABLE;
-			markerOptions.icon = icon.PARTIALLY_AVAILABLE;
-		} else if (loc.isAgahnimTheOnlyRemainingRequirement) {
-			markerOptions.markerColor = markerColor.AGAHNIM_ONLY_REQUIREMENT;
-			markerOptions.icon = icon.AGAHNIM_ONLY_REQUIREMENT;
-		} else if (loc.isViewable) {
-			markerOptions.markerColor = markerColor.VIEWABLE;
-			markerOptions.icon = icon.VIEWABLE;
-		} else if (loc.isPossible) {
-			markerOptions.markerColor = markerColor.POSSIBLE;
-			markerOptions.icon = icon.POSSIBLE;
-		}
-		if (loc.isDungeon && !loc.isFavorite) {
-			if (loc.isDungeonComplete) {
-				markerOptions.markerColor = markerColor.COMPLETE;
-				markerOptions.icon = icon.COMPLETE;
-			} else if (loc.boss.acquired) {
-				markerOptions.icon = icon.AVAILABLE;
-			} else {
-				markerOptions.icon = icon.DUNGEON;
-			}
-		}
-		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
-	}
-
-	onResizeHandler(data, onInit = false) {
-		const {width: newWidth, height: newHeight} = data;
-
-		this.props.mapStore.setWidth(newWidth);
-		this.props.mapStore.setHeight(newHeight);
-		this.resize(onInit);
+		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
+			crs: L.CRS.Simple,
+			center: [-2128, 2048],
+			zoom: this.props.mapStore.zoom,
+			maxBounds: this.mapBounds,
+			maxBoundsViscosity: 1,
+			attributionControl: false,
+			zoomControl: false,
+			zoomSnap: 0.001,
+		}, this.props.mapOptions));
+		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, {
+			minZoom: -4,
+			maxZoom: 2,
+			nativeZooms: [0],
+			tileSize: L.point(256, 224),
+			bounds: [[0, 0], [-4256, 4096]],
+		}, this.props.tileLayerOptions)).addTo(this.map);
+		this.map.setZoom(this.props.mapStore.zoom);
+		this.markerCluster = L.markerClusterGroup({
+			showCoverageOnHover: false,
+			zoomToBoundsOnClick: false,
+			spiderfyOnMaxZoom: true,
+			disableClusteringAtZoom: -2,
+			iconCreateFunction: (cluster) => {
+				const childMarkers = cluster.getAllChildMarkers();
+				const markerClasses = [
+					'leaflet-marker-icon',
+					'custom-marker-cluster',
+					'marker-cluster',
+					'marker-cluster-small',
+					'leaflet-zoom-animated',
+					'leaflet-interactive',
+				];
+				if (childMarkers.length) {
+					if (self.areAllMarkersUnavailable(childMarkers)) {
+						markerClasses.push('are-unavailable');
+					} else if (self.areAllMarkersAvailable(childMarkers)) {
+						markerClasses.push('are-available');
+					} else if (self.areSomeMarkersAvailable(childMarkers)) {
+						markerClasses.push('are-partially-available');
+					}
+				}
+				const html = `
+					<div
+						class="${markerClasses.join(' ')}"
+						tabIndex="0"
+					>
+						<div><span>${cluster.getChildCount()}</span></div>
+					</div>
+				`;
+				return L.divIcon({ html });
+			},
+		});
+		this.props.locations.forEach((loc) => {
+			this.addMarker(loc);
+		});
+		Object.keys(this.markers).forEach((key) => {
+			this.markerCluster.addLayer(this.markers[key]);
+		});
+		this.map.addLayer(this.markerCluster);
+		// For debugging.
+		window[camelCase(this.props.mapStore.name)] = this.map;
 	}
 
 	sizeToFit() {
@@ -361,7 +366,7 @@ const Map = class Map extends Component {
 				<div className="map-toolbar">
 					<div className="field has-addons">
 						<div className="control">
-							<button className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
+							<button type="button" className="button is-small" onClick={this.props.mapStore.toggleZoomLock}>
 								<span className="icon">
 									<i className={zoomLockClasses} />
 								</span>
@@ -369,7 +374,7 @@ const Map = class Map extends Component {
 							</button>
 						</div>
 						<div className="control">
-							<button className="button is-small" onClick={this.sizeToFit}>
+							<button type="button" className="button is-small" onClick={this.sizeToFit}>
 								<span className="icon">
 									<i className="fas fa-compress" />
 								</span>
@@ -377,7 +382,7 @@ const Map = class Map extends Component {
 							</button>
 						</div>
 						<div className="control">
-							<button className="button is-small" onClick={this.props.mapStore.toggleHideCompleted}>
+							<button type="button" className="button is-small" onClick={this.props.mapStore.toggleHideCompleted}>
 								<span className="icon">
 									<i className={hideCompletedClasses} />
 								</span>
@@ -385,7 +390,7 @@ const Map = class Map extends Component {
 							</button>
 						</div>
 						<div className="control">
-							<button className="button is-small" onClick={this.props.mapStore.toggleHideUnavailable}>
+							<button type="button" className="button is-small" onClick={this.props.mapStore.toggleHideUnavailable}>
 								<span className="icon">
 									<i className={hideUnavailableClasses} />
 								</span>
@@ -395,7 +400,7 @@ const Map = class Map extends Component {
 					</div>
 					<div className="field has-addons">
 						<div className="control">
-							<button className="button is-small" onClick={() => this.props.store.openModal('HELP')}>
+							<button type="button" className="button is-small" onClick={() => this.props.store.openModal('HELP')}>
 								<span className="icon">
 									<i className="fas fa-question-circle" />
 								</span>

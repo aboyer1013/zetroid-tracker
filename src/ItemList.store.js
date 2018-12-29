@@ -4,12 +4,12 @@ import ItemListUtil from 'ItemListUtil';
 import move from 'lodash-move';
 
 const ItemListStore = types.compose(ItemListUtil, types.model({
-		id: types.identifier,
-		items: types.array(ItemStore),
-		sortOrder: types.optional(types.array(types.integer), []),
-		droppableId: types.optional(types.string, ''),
-	})
-	.actions(self => {
+	id: types.identifier,
+	items: types.array(ItemStore),
+	sortOrder: types.optional(types.array(types.integer), []),
+	droppableId: types.optional(types.string, ''),
+})
+	.actions((self) => {
 		const updateOrder = (sourceItem, destItem) => {
 			const sourceItemIndex = sourceItem.index;
 			const destItemIndex = destItem.index;
@@ -25,7 +25,7 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 			if (!itemToAdd) {
 				return;
 			}
-			const sortedItems = self.sortedItems;
+			const { sortedItems } = self;
 			const sourceItemList = getParentOfType(itemToAdd, ItemListStore);
 
 			// Add source item to destination list.
@@ -47,8 +47,6 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 			updateOrder,
 			moveItem,
 			updateIndices,
-		}
-	}))
-;
-
+		};
+	}));
 export default ItemListStore;

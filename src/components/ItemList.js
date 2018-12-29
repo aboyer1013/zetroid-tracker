@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {inject, observer} from 'mobx-react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import Item from 'components/Item';
-import {Droppable, Draggable} from 'react-beautiful-dnd';
-import {find,} from 'lodash';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { find } from 'lodash';
 import classNames from 'classnames';
+import { randomId } from 'utilities/util';
 
 const ItemList = class ItemList extends Component {
 	constructor() {
@@ -15,9 +16,9 @@ const ItemList = class ItemList extends Component {
 		if (!result.destination) {
 			return;
 		}
-		const items = this.props.items;
-		const sourceItem = find(items, {index: result.source.index});
-		const destItem = find(items, {index: result.destination.index});
+		const { items } = this.props;
+		const sourceItem = find(items, { index: result.source.index });
+		const destItem = find(items, { index: result.destination.index });
 
 		this.props.itemListStore.updateOrder(sourceItem, destItem);
 	}
@@ -56,24 +57,27 @@ const ItemList = class ItemList extends Component {
 			}
 			if (!this.props.draggableEnabled) {
 				dragElems.push(
-					<div key={`item-${i}`} className='item-container'>
+					<div key={`item-${randomId()}`} className="item-container">
 						{itemElem}
-					</div>
+					</div>,
 				);
 			} else {
 				dragElems.push(
-					<Draggable key={`draggable-${i}`}
-					           draggableId={`${this.props.itemListStore.droppableId}-draggable-${i}`} index={i}>
-						{(provided, snapshot) => {
+					<Draggable
+						key={`draggable-${randomId()}`}
+						draggableId={`${this.props.itemListStore.droppableId}-draggable-${i}`}
+						index={i}
+					>
+						{(provided) => {
 							return (
 								<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-									<div className='item-container'>
+									<div className="item-container">
 										{itemElem}
 									</div>
 								</div>
 							);
 						}}
-					</Draggable>
+					</Draggable>,
 				);
 			}
 		});
@@ -85,8 +89,8 @@ const ItemList = class ItemList extends Component {
 			);
 		}
 		return (
-			<Droppable droppableId={this.props.itemListStore.droppableId || 'droppable'} direction='horizontal'>
-				{(provided, snapshot) => {
+			<Droppable droppableId={this.props.itemListStore.droppableId || 'droppable'} direction="horizontal">
+				{(provided) => {
 					return (
 						<div ref={provided.innerRef} className={containerClasses}>
 							{dragElems}

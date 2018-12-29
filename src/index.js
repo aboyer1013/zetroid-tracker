@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import { unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent, getType } from 'mobx-state-tree';
+import {
+	unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent,
+} from 'mobx-state-tree';
 import { randomId } from 'utilities/util';
 import AppStore from 'App.store';
 import MapStore from 'Map.store';
@@ -18,7 +20,9 @@ import ConfigStore from 'Config.store';
 import AbilitiesStore from 'Abilities.store';
 import AreaStore from 'Area.store';
 import * as serviceWorker from 'serviceWorker';
-import { isUndefined, find, includes, isEmpty } from 'lodash';
+import {
+	isUndefined, find, includes, isEmpty,
+} from 'lodash';
 import { createStorage } from 'persistme';
 
 const shouldSync = false;
@@ -56,7 +60,7 @@ const inactiveDungeonItemListStore = ItemListStore.create({
 const appStore = AppStore.create({
 	id: randomId(),
 	version: 1,
-	configStore: configStore,
+	configStore,
 	config: configStore,
 	abilities: AbilitiesStore.create({
 		id: randomId(),
@@ -117,7 +121,7 @@ const itemDataFactory = (item, index = 0) => {
 	const isItemGroup = !!(item.group && item.items.length);
 
 	const itemData = {
-		id: id,
+		id,
 		index: isUndefined(item.index) ? index : item.index,
 		name: item.name,
 		game: appStore.getGameByName(item.game),
@@ -127,7 +131,7 @@ const itemDataFactory = (item, index = 0) => {
 		acquired: item.acquired,
 		imageEmpty: item.imageEmpty,
 		tier: item.tier || null,
-	}
+	};
 
 	if (isItemGroup) {
 		itemData.isDefault = item.isDefault || false;
@@ -139,7 +143,7 @@ const itemDataFactory = (item, index = 0) => {
 		itemData.autoAcquire = item.autoAcquire;
 	}
 
-	const subItemData = isItemGroup && item.items.map(data => {
+	const subItemData = isItemGroup && item.items.map((data) => {
 		return ItemStore.create(Object.assign({}, itemData, data, {
 			id: randomId(),
 			game: appStore.getGameByName(data.game),
@@ -171,18 +175,18 @@ gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-it
 	appStore.activeDungeonItemList.items.push(ItemStore.create(itemData));
 });
 // Create location models.
-locationsData.forEach(loc => {
+locationsData.forEach((loc) => {
 	const selectedMap = appStore.getMapByName(loc.map);
 	let bossId = loc.boss && find(appStore.activeDungeonItemList.items, { name: loc.boss });
 	let prizeId = find(appStore.activeDungeonItemList.items, { group: 'prize' });
-	let chestItem = null;
+	const chestItem = null;
 	const areas = [];
 
-	loc.areas.forEach(area => {
+	loc.areas.forEach((area) => {
 		const collectables = [];
 		const itemSelectStore = area.canBeViewable ? appStore.itemSelectStore : null;
 
-		area.collectables.forEach(collectable => {
+		area.collectables.forEach((collectable) => {
 			const chestItemData = find(gameItemsData, { name: 'closedchest' });
 			const type = chestItemData.type.slice(0);
 
@@ -200,7 +204,7 @@ locationsData.forEach(loc => {
 			name: area.name,
 			longName: area.longName,
 			abilities: appStore.abilities,
-			collectables: collectables,
+			collectables,
 			canBeViewable: area.canBeViewable || false,
 			itemSelectStore,
 			selectedItem: area.selectedItem || null,
@@ -228,9 +232,8 @@ locationsData.forEach(loc => {
 		prize: prizeId,
 		map: selectedMap,
 		abilities: appStore.abilities,
-		areas: areas,
+		areas,
 	}));
-
 });
 // Globals to help with debugging.
 // appStore.games.set(zelda1.id, zelda1);
@@ -251,7 +254,7 @@ window.getParent = getParent;
 if (appStore.shouldSync) {
 	const gameStorage = appStore.getGameStorage('tree');
 
-	onSnapshot(appStore, model => {
+	onSnapshot(appStore, (model) => {
 		appStore.updateGameTreeStorage(model);
 	});
 	if (!isEmpty(gameStorage)) {

@@ -56,13 +56,13 @@ const ItemStore = types
 		},
 		get isCollectableChest() {
 			return self.isChest && self.isCollectable;
-		}
+		},
 	}))
-	.actions(self => {
+	.actions((self) => {
 		const acquire = (newAcquired) => {
 			if (self.group) {
 				const itemListStore = getParentOfType(self, ItemListStore);
-				itemListStore.getItemsByGroup(self.group).forEach(item => {
+				itemListStore.getItemsByGroup(self.group).forEach((item) => {
 					item.acquired = false;
 				});
 			}
@@ -90,7 +90,7 @@ const ItemStore = types
 			}
 			if (!currentSubItem) {
 				// Sensible fallback to the first item.
-				currentSubItem = subItems[0];
+				[currentSubItem] = subItems;
 			}
 			let nextGroupIndex = forwardDirection ? currentSubItem.groupIndex + 1 : currentSubItem.groupIndex - 1;
 
@@ -123,12 +123,12 @@ const ItemStore = types
 		};
 		const toggleAcquisition = () => {
 			self.acquire(!self.acquired);
-		}
-		const setIndex = newIndex => {
+		};
+		const setIndex = (newIndex) => {
 			self.index = newIndex;
 		};
 		const activateNextQty = (forwardDirection = true, collectAll = false) => {
-			let nextQty = forwardDirection ? self.qty + 1 : self.qty - 1;
+			const nextQty = forwardDirection ? self.qty + 1 : self.qty - 1;
 
 			if (collectAll && forwardDirection) {
 				if (self.qty < self.maxQty) {
@@ -177,7 +177,5 @@ const ItemStore = types
 			activateNextQty,
 			setQty,
 		};
-	})
-;
-
+	});
 export default ItemStore;
