@@ -91,7 +91,7 @@ const LocationStore = types
 					// return items.every(item => item && item.acquired);
 				},
 				zoraArea: {
-					ledge: () => true,
+					ledge: () => self.abilities.canLiftRocks,
 				},
 				lumberjacks: () => true,
 				library: () => true,
@@ -100,17 +100,21 @@ const LocationStore = types
 				desertLedge: () => true,
 				bumperCave: () => self.abilities.canEnterNorthWestDarkWorld(),
 			},
+			// TODO Probably can scrap this since "possible" is most likely the same as "viewable".
 			possibility: {
-				zoraArea: {
-					ledge: () => self.abilities.canLiftRocks,
-				},
 			},
 			/*
 			=== Not sure why there's the distinction between can/may ===
-			hasMedallion = Checks the medallion gate for the dungeon and has the same medallion acquired.
-			mayHaveMedallion = Checks the medallion gate for the dungeon but does not have it acquired.
-			canEnter = All the necessary acquired items to enter dungeon (w/hasMedallion - you know what medallion you need to enter, and have the medallion equipped)
-			mayEnter = All the necessary acquired items to enter dungeon (w/mayHaveMedallion - you know what the medallion you need to enter, but do not have it in possesion)
+			hasMedallion
+				Checks the medallion gate for the dungeon and has the same medallion acquired.
+			mayHaveMedallion
+				Checks the medallion gate for the dungeon but does not have it acquired.
+			canEnter
+				All the necessary acquired items to enter dungeon
+				(w/hasMedallion - you know what medallion you need to enter, and have the medallion equipped)
+			mayEnter
+				All the necessary acquired items to enter dungeon
+				(w/mayHaveMedallion - you know what the medallion you need to enter, but do not have it in possesion)
 			 */
 			canEnterDungeon: {
 				turtleRock: () => {
@@ -505,10 +509,14 @@ const LocationStore = types
 			return self.longName;
 		},
 		get hidden() {
-			if (!self.isFavorite) {
-				if ((self.map.hideCompleted && self.isComplete) || (self.map.hideUnavailable && self.isUnavailable)) {
-					return true;
-				}
+			if (self.isFavorite) {
+				return false;
+			}
+			if (self.map.hideCompleted && self.isComplete) {
+				return true;
+			}
+			if (self.map.hideUnavailable && self.isUnavailable) {
+				return true;
 			}
 			return false;
 		},
@@ -517,7 +525,7 @@ const LocationStore = types
 				!self.isAvailable
 				&& !self.isViewable
 				&& !self.isComplete
-				&& !self.mustDefeatAgahnimFirst
+				&& !self.isAgahnimTheOnlyRemainingRequirement
 				&& !self.isPossible
 			);
 		},
