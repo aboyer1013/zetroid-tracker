@@ -183,6 +183,8 @@ const LocationStore = types
 				},
 				pyramidLedge: () => self.abilities.canEnterNorthEastDarkWorld(true),
 				diggingGame: () => self.abilities.canEnterSouthDarkWorld(true),
+				smiths: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(true),
+				treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(true),
 			},
 			availability: {
 				kingsTomb: () => {
@@ -398,7 +400,78 @@ const LocationStore = types
 				},
 				pyramidLedge: () => self.abilities.canEnterNorthEastDarkWorld(),
 				diggingGame: () => self.abilities.canEnterSouthDarkWorld(),
-				digSpot: () => self.abilities.hasItem('shovel')
+				digSpot: () => self.abilities.hasItem('shovel'),
+				northwestTombstone: () => {
+					return (
+						getRoot(self).config.gameState !== 'open'
+						|| self.abilities.hasItem('lantern')
+						|| self.abilities.canLiftRocks
+					);
+				},
+				castleSecretEntrance: () => true,
+				hyruleCastle: {
+					castleEntrance: () => true,
+					sewerDarkCross: () => getRoot(self).config.gameState !== 'open' || self.abilities.hasItem('lantern'),
+				},
+				sanctuaryEntrance: () => true,
+				magicBat: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('powder')) {
+						return false;
+					}
+					if (abl.hasItem('hammer')) {
+						return true;
+					}
+					if (abl.hasItem('moonPearl') && abl.hasItem('mirror') && abl.canLiftDarkRocks) {
+						return true;
+					}
+					return false;
+				},
+				smiths: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(),
+				// TODO complete once dungeons are finished.
+				fatFairy: () => {
+					// // Crystal check
+					// let crystalCount = 0;
+					// for (let k = 0; k < 10; k++) {
+					// 	if (trackerData.zelda3 && trackerData.zelda3.prizes && trackerData.zelda3.prizes[k] === OJCRYSTAL && trackerData.zelda3.items["boss" + k] === 2) {
+					// 		crystalCount++;
+					// 		if (crystalCount === 2) {
+					// 			break;
+					// 		}
+					// 	}
+					// }
+					// if (crystalCount === 2 && has("moonpearl")) {
+					// 	if (canEnterSouthDarkWorld('glitchless', false, false)
+					// 		&& (has("hammer") || (has("mirror") && has("agahnim")))) {
+					// 		availability.glitchless = 'available';
+					// 	} else if (canEnterSouthDarkWorld('glitchless', true, false)
+					// 		&& (has("hammer") || (has("mirror") && canGoBeatAgahnim1(false)))) {
+					// 		availability.glitchless = 'agahnim';
+					// 	}
+					// }
+				},
+				// TODO complete after dungeons are finished.
+				masterSwordPedestal: () => {
+					// const availability = new Availability();
+					// let pendantCount = 0;
+					// for (let k = 0; k < 10; k++) {
+					// 	if (((trackerData.zelda3 && trackerData.zelda3.prizes && trackerData.zelda3.prizes[k] === OFFPENDANT) || (trackerData.zelda3 && trackerData.zelda3.prizes && trackerData.zelda3.prizes[k] === GREENPENDANT)) && trackerData.zelda3.items["boss" + k] === 2) {
+					// 		pendantCount++;
+					// 		if (pendantCount === 3) {
+					// 			break;
+					// 		}
+					// 	}
+					// }
+					// if (pendantCount === 3) {
+					// 	availability.glitchless = 'available';
+					// }
+					// else if (canRead()) {
+					// 	availability.glitchless = 'possible';
+					// }
+				},
+				waterfallFairy: () => self.abilities.canSwim,
+				treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(),
 			},
 		};
 	})

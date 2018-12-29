@@ -36,11 +36,15 @@ const ConfigStore = types
 		const setQuickMarkMode = (newValue) => {
 			self.quickMarkMode = newValue;
 		};
+		const setGameState = (newGameState) => {
+			self.gameState = newGameState;
+		};
 
 		return {
 			setSelected,
 			setSplitterSize,
 			setQuickMarkMode,
+			setGameState,
 		};
 	})
 ;

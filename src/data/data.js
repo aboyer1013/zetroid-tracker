@@ -507,6 +507,96 @@ let z3LwLocationsData = [
 	        },
 	    ],
 	},
+	{
+	    coords: [-1200,2127],
+	    name: 'northwestTombstone',
+	    longName: 'Northwest Tombstone',
+	    areas: [
+	        {
+	            name: 'sewerCrackedWall',
+	            longName: 'Sewer Cracked Wall',
+	            collectables: [{ numChests: 3 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-1705,2440],
+	    name: 'castleSecretEntrance',
+	    longName: 'Castle Secret Entrance',
+	    areas: [
+	        {
+	            name: 'uncleHallway',
+	            longName: 'Uncle & Hallway',
+	            collectables: [{ numChests: 2 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-1796,2047],
+	    name: 'hyruleCastle',
+	    longName: 'Hyrule Castle',
+	    areas: [
+	        {
+	            name: 'castleEntrance',
+	            longName: 'Castle Entrance',
+	            collectables: [{ numChests: 3 }],
+	        },
+		    {
+		        name: 'sewerDarkCross',
+		        longName: 'Sewer Dark Cross',
+		        collectables: [{ numChests: 1 }],
+		    },
+	    ],
+	},
+	{
+	    coords: [-1095,1887],
+	    name: 'sanctuaryEntrance',
+	    longName: 'Sanctuary Entrance',
+	    areas: [
+	        {
+	            name: 'sanctuary',
+	            longName: 'Sanctuary',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-2300,1327],
+	    name: 'magicBat',
+	    longName: 'Magic Bat',
+	    areas: [
+	        {
+	            name: 'magicBowl',
+	            longName: 'Magic Bowl',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-200,167],
+	    name: 'masterSwordPedestal',
+	    longName: 'Master Sword Pedestal',
+	    areas: [
+	        {
+	            name: 'pedestal',
+	            longName: 'Pedestal',
+	            collectables: [{ numChests: 1 }],
+		        canBeViewable: true,
+	        },
+	    ],
+	},
+	{
+	    coords: [-550,3688],
+	    name: 'waterfallFairy',
+	    longName: 'Waterfall Fairy',
+	    areas: [
+	        {
+	            name: 'waterfallCave',
+	            longName: 'Waterfall Cave',
+	            collectables: [{ numChests: 2 }],
+	        },
+	    ],
+	},
 ];
 let z3DwLocationsData = [
 	{
@@ -670,6 +760,54 @@ let z3DwLocationsData = [
 	            collectables: [{ numChests: 1 }],
 	        },
 	    ],
+	},
+	{
+	    coords: [-2715,615],
+	    name: 'smiths',
+	    longName: 'Smiths',
+	    areas: [
+	        {
+	            name: 'bringHimHome',
+	            longName: 'Bring Him Home',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-1990,1920],
+	    name: 'fatFairy',
+	    longName: 'Fat Fairy',
+	    areas: [
+	        {
+	            name: 'bigBombSpot',
+	            longName: 'Big Bomb Spot',
+	            collectables: [{ numChests: 2 }],
+	        },
+	    ],
+	},
+	{
+	    coords: [-1910,208],
+	    name: 'treasureChestMiniGame',
+	    longName: 'Treasure Chest Mini-Game',
+	    areas: [
+	        {
+	            name: 'prizes',
+	            longName: 'Prizes',
+	            collectables: [{ numChests: 1 }],
+	        },
+	    ],
+	},
+	{
+		coords: [-2180,1248],
+		name: 'purpleChest',
+		longName: 'Purple Chest',
+		areas: [
+			{
+				name: 'showToGary',
+				longName: 'Show To Gary',
+				collectables: [{ numChests: 1 }],
+			},
+		],
 	},
 ];
 z3LwLocationsData = z3LwLocationsData.map(loc => {
