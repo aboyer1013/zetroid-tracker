@@ -347,7 +347,7 @@ let z3LwLocationsData = [
 		],
 	},
 	{
-		coords: [-300, 1232],
+		coords: [-130, 1360],
 		name: 'lumberjacks',
 		longName: 'Lumberjacks',
 		areas: [

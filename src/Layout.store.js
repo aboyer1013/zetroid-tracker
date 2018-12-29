@@ -31,11 +31,147 @@ const LayoutStore = types
 		showBorderLeft: true,
 	})
 	.volatile(() => ({
-		// layoutModel: null,
-		// Actions: null,
 		layoutPresets: {
 			zelda3: {
 				current: {},
+				DEV_TOOLS: {
+					global: {
+						splitterSize: 10,
+						tabEnableRename: false,
+						tabClassName: null,
+						tabIcon: null,
+						tabSetClassNameTabStrip: null,
+						tabSetClassNameHeader: null,
+						tabSetHeaderHeight: 30,
+						tabSetTabStripHeight: 35,
+						borderBarSize: 40,
+						borderClassName: null,
+					},
+					layout: {
+						type: 'row',
+						id: '#4',
+						children: [
+							{
+								type: 'row',
+								id: '#32',
+								weight: 9.082397003745319,
+								children: [
+									{
+										type: 'tabset',
+										id: '#15',
+										weight: 41.1144578313253,
+										children: [
+											{
+												type: 'tab',
+												id: '#3',
+												name: 'Items',
+												component: 'ItemList',
+												config: {},
+												enableClose: false,
+											},
+										],
+									},
+									{
+										type: 'tabset',
+										id: '#31',
+										weight: 58.8855421686747,
+										children: [
+											{
+												type: 'tab',
+												id: '#2',
+												name: 'Dungeons',
+												component: 'ItemList',
+												config: {
+													listType: 'dungeon',
+												},
+												enableClose: false,
+											},
+										],
+										active: true,
+									},
+								],
+							},
+							{
+								type: 'row',
+								id: '#23',
+								weight: 24.25093632958802,
+								children: [
+									{
+										type: 'tabset',
+										id: '#22',
+										weight: 65.36164424263319,
+										children: [
+											{
+												type: 'tab',
+												id: '#24',
+												name: 'Light World',
+												component: 'Map',
+												config: {
+													mapName: 'zelda3-lw',
+												},
+												enableClose: false,
+											},
+											{
+												type: 'tab',
+												id: '#6',
+												name: 'Dark World',
+												component: 'Map',
+												config: {
+													mapName: 'zelda3-dw',
+												},
+												enableClose: false,
+											},
+										],
+									},
+									{
+										type: 'tabset',
+										id: '#27',
+										weight: 21.874801540499348,
+										children: [
+											{
+												type: 'tab',
+												id: '#1',
+												name: 'Details',
+												component: 'LocationDetail',
+												config: {
+													id: '1',
+												},
+												enableClose: false,
+											},
+										],
+									},
+								],
+							},
+						],
+					},
+					borders: [
+						{
+							type: 'border',
+							size: 257,
+							show: false,
+							location: 'left',
+							children: [],
+						},
+						{
+							type: 'border',
+							show: false,
+							location: 'right',
+							children: [],
+						},
+						{
+							type: 'border',
+							show: false,
+							location: 'bottom',
+							children: [],
+						},
+						{
+							type: 'border',
+							show: false,
+							location: 'top',
+							children: [],
+						},
+					],
+				},
 				STANDARD: {
 					global: {},
 					layout: {
@@ -122,9 +258,7 @@ const LayoutStore = types
 									id: '#3',
 									name: 'Items',
 									component: 'ItemList',
-									config: {
-
-									},
+									config: {},
 									enableClose: false,
 								},
 								{
@@ -199,7 +333,8 @@ const LayoutStore = types
 
 			result = root.getGameStorage('layout');
 			if (isEmpty(result)) {
-				result = self.layoutPresets[root.selectedGame.name].STANDARD;
+				// result = self.layoutPresets[root.selectedGame.name].STANDARD;
+				result = self.layoutPresets[root.selectedGame.name].DEV_TOOLS;
 			}
 			result = self.normalize(result);
 			return result;

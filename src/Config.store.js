@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, getRoot } from 'mobx-state-tree';
 
 // TODO Config for Zelda3 for now. Break this out into its own respective game configs when adding Metroid.
 const ConfigStore = types
@@ -31,7 +31,11 @@ const ConfigStore = types
 			self.selected = state;
 		};
 		const setSplitterSize = (newSize) => {
+			const root = getRoot(self);
+
 			self.splitterSize = newSize;
+			const layoutJson = root.layout.layoutModel.toJson();
+			root.layout.saveToLocalStorage(layoutJson);
 		};
 		const setQuickMarkMode = (newValue) => {
 			self.quickMarkMode = newValue;

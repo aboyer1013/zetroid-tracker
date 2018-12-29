@@ -20,6 +20,8 @@ const Layout = class Layout extends Component {
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_right', { show: this.props.layoutStore.showBorderRight }));
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_bottom', { show: this.props.layoutStore.showBorderBottom }));
 			this.state.model.doAction(FlexLayout.Actions.updateNodeAttributes('border_left', { show: this.props.layoutStore.showBorderLeft }));
+
+			this.props.layoutStore.saveToLocalStorage(this.state.model.toJson());
 		});
 	}
 

@@ -17,13 +17,14 @@
 		text-rendering: auto;
 		-webkit-font-smoothing: antialiased;
 		font-size: 15px;
-		content: '\f58d';
+		content: '\f58d\f58d\f58d';
+		word-break: break-word;
 		position: absolute;
 		text-shadow: 1px 1px 0 #fff;
 		color: rgba(0,0,0,.5);
 		font-weight: bold;
 		top: -3px;
-		left: calc(50% - 6px);
+		left: calc(50% - 22.5px);
 	}
 	// I know. Don't ask. This is what happens when you're backed into a corner.
 	&[style*='height: 13px']::after {
@@ -41,9 +42,10 @@
 	&[style*='ew-resize'] {
 		&::after {
 			@extend .fa-grip-vertical;
-			content: '\f58e';
-			top: 50%;
+			content: '\f58e\f58e\f58e';
+			top: calc(50% - 22.5px);
 			left: 0;
+			word-break: break-word;
 		}
 		&[style*='width: 13px']::after {
 			left: 1px;

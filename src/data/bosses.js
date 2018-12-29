@@ -1,3 +1,4 @@
+/* eslint-disable */
 const bossData = [
 	{ name: 'armos', longName: 'Armos Knights', game: 'zelda3', image: 'boss02', type: ['boss'], },
 	{ name: 'lanmolas', longName: 'Lanmolas', game: 'zelda3', image: 'boss12', type: ['boss'], },
