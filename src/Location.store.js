@@ -1,9 +1,9 @@
 import { types, getRoot } from 'mobx-state-tree';
-import GameStore from 'Game.store';
-import ItemStore from 'Item.store';
-import MapStore from 'Map.store';
-import AbilitiesStore from 'Abilities.store';
-import AreaStore from 'Area.store';
+import GameStore from '~/Game.store';
+import ItemStore from '~/Item.store';
+import MapStore from '~/Map.store';
+import AbilitiesStore from '~/Abilities.store';
+import AreaStore from '~/Area.store';
 import {
 	isBoolean,
 	isFunction,
@@ -584,7 +584,7 @@ const LocationStore = types
 			return self.possibility[self.name]();
 		},
 		get isDungeonComplete() {
-			return self.isDungeon && self.boss.acquired && self.chest.qty < 1;
+			return self.isDungeon && self.boss.acquired && self.areAllAreasComplete;
 		},
 		get isAnyAreaViewable() {
 			return some(self.areas, { canBeViewable: true });

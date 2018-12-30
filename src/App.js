@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
-import Map from 'components/Map';
-import NavBar from 'components/NavBar';
-import Modal from 'components/Modal';
-import FileImportModal from 'components/FileImportModal';
-import FileExportModal from 'components/FileExportModal';
-import HelpModal from 'components/HelpModal';
-import EditItemListModal from 'components/EditItemListModal';
-import ItemSelectModal from 'components/ItemSelectModal';
-import ConfigModal from 'components/ConfigModal';
-import { randomId } from 'utilities/util';
+import Map from '~/components/Map';
+import NavBar from '~/components/NavBar';
+import Modal from '~/components/Modal';
+import FileImportModal from '~/components/FileImportModal';
+import FileExportModal from '~/components/FileExportModal';
+import HelpModal from '~/components/HelpModal';
+import EditItemListModal from '~/components/EditItemListModal';
+import ItemSelectModal from '~/components/ItemSelectModal';
+import ConfigModal from '~/components/ConfigModal';
+import { randomId } from '~/utilities/util';
 import { find, get } from 'lodash';
-import 'scss/App.scss';
-import LocationDetail from 'components/LocationDetail';
-import ItemList from 'components/ItemList';
-import Layout from 'components/Layout';
-import DungeonList from 'components/DungeonList';
+import '~/scss/App.scss';
+import LocationDetail from '~/components/LocationDetail';
+import ItemList from '~/components/ItemList';
+import Layout from '~/components/Layout';
+import DungeonList from '~/components/DungeonList';
 import 'inobounce';
 
 class App extends Component {

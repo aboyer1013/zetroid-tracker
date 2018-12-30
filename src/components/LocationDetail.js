@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { get } from 'lodash';
 import classNames from 'classnames';
 import { observer, inject } from 'mobx-react';
-import LocationNotes from 'components/LocationNotes';
-import { randomId } from 'utilities/util';
-import Area from 'components/Area';
+import LocationNotes from '~/components/LocationNotes';
+import { randomId } from '~/utilities/util';
+import Area from '~/components/Area';
 
 const LocationDetail = inject('store')(observer(class LocationDetail extends Component {
 	constructor(props) {

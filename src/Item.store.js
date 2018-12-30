@@ -1,7 +1,7 @@
 import { types, getParentOfType, getRoot } from 'mobx-state-tree';
 import { find, includes } from 'lodash';
-import GameStore from 'Game.store';
-import ItemListStore from 'ItemList.store';
+import GameStore from '~/Game.store';
+import ItemListStore from '~/ItemList.store';
 
 const ItemStore = types
 	.model({

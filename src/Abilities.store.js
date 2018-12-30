@@ -1,8 +1,8 @@
 /* eslint-disable */
 import { types, getRoot } from 'mobx-state-tree';
 import { find } from 'lodash';
-import ItemListUtil from 'ItemListUtil';
-import ConfigStore from 'Config.store';
+import ItemListUtil from '~/ItemListUtil';
+import ConfigStore from '~/Config.store';
 
 /**
  * Helper views to assist with map logic.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import ItemList from 'components/ItemList';
+import ItemList from '~/components/ItemList';
 
 const ItemSelectModal = ({ store }) => {
 	return (

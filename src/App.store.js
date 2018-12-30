@@ -1,13 +1,13 @@
 import { types, applySnapshot } from 'mobx-state-tree';
-import GameStore from 'Game.store';
-import ItemListStore from 'ItemList.store';
-import MapStore from 'Map.store';
-import LocationDetailStore from 'LocationDetail.store';
-import ItemListUtil from 'ItemListUtil';
-import LayoutStore from 'Layout.store';
-import ConfigStore from 'Config.store';
-import AbilitiesStore from 'Abilities.store';
-import AreaStore from 'Area.store';
+import GameStore from '~/Game.store';
+import ItemListStore from '~/ItemList.store';
+import MapStore from '~/Map.store';
+import LocationDetailStore from '~/LocationDetail.store';
+import ItemListUtil from '~/ItemListUtil';
+import LayoutStore from '~/Layout.store';
+import ConfigStore from '~/Config.store';
+import AbilitiesStore from '~/Abilities.store';
+import AreaStore from '~/Area.store';
 import { find } from 'lodash';
 import { createStorage } from 'persistme';
 

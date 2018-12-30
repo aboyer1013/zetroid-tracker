@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
-import GameStore from 'Game.store';
-import LocationStore from 'Location.store';
-import LocationDetailStore from 'LocationDetail.store';
+import GameStore from '~/Game.store';
+import LocationStore from '~/Location.store';
+import LocationDetailStore from '~/LocationDetail.store';
 
 const MapStore = types
 	.model({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import Dungeon from 'components/Dungeon';
+import Dungeon from '~/components/Dungeon';
 import { find } from 'lodash';
 
 const DungeonList = ({ items, store, itemListStore }) => {

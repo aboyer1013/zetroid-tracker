@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { find, sortBy } from 'lodash';
-import ConfigStore from 'Config.store';
+import ConfigStore from '~/Config.store';
 
 /**
  * Utilities to assist in item retrieval targeted against the associated store's "items" property.

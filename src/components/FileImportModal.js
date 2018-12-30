@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { observer, inject } from 'mobx-react';
 import { get } from 'lodash';
-import { randomId } from 'utilities/util';
+import { randomId } from '~/utilities/util';
 
 class FileImportModal extends Component {
 	constructor() {

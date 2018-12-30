@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import Item from 'components/Item';
+import Item from '~/components/Item';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { find } from 'lodash';
 import classNames from 'classnames';
-import { randomId } from 'utilities/util';
+import { randomId } from '~/utilities/util';
 
 const ItemList = class ItemList extends Component {
 	constructor() {

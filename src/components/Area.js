@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Item from 'components/Item';
-import ItemSelect from 'components/ItemSelect';
-import { randomId } from 'utilities/util';
+import Item from '~/components/Item';
+import ItemSelect from '~/components/ItemSelect';
+import { randomId } from '~/utilities/util';
 
 const Area = ({ areaStore, selectedLocation }) => {
 	return (

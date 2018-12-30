@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { getSnapshot, applySnapshot } from 'mobx-state-tree';
-import ItemList from 'components/ItemList';
+import ItemList from '~/components/ItemList';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { find } from 'lodash';
 

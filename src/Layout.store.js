@@ -1,5 +1,5 @@
-import { types, getRoot } from 'mobx-state-tree';
-import { pick, isEmpty } from 'lodash';
+import {types, getRoot} from 'mobx-state-tree';
+import {pick, isEmpty} from 'lodash';
 
 const LayoutStore = types
 	.model({
@@ -35,142 +35,138 @@ const LayoutStore = types
 			zelda3: {
 				current: {},
 				DEV_TOOLS: {
-					global: {
-						splitterSize: 10,
-						tabEnableRename: false,
-						tabClassName: null,
-						tabIcon: null,
-						tabSetClassNameTabStrip: null,
-						tabSetClassNameHeader: null,
-						tabSetHeaderHeight: 30,
-						tabSetTabStripHeight: 35,
-						borderBarSize: 40,
-						borderClassName: null,
+					"global": {
+						"splitterSize": 10,
+						"tabEnableRename": false,
+						"tabClassName": null,
+						"tabIcon": null,
+						"tabSetClassNameTabStrip": null,
+						"tabSetClassNameHeader": null,
+						"tabSetHeaderHeight": 30,
+						"tabSetTabStripHeight": 35,
+						"borderBarSize": 40,
+						"borderClassName": null
 					},
-					layout: {
-						type: 'row',
-						id: '#4',
-						children: [
+					"layout": {
+						"type": "row",
+						"id": "#4",
+						"children": [
 							{
-								type: 'row',
-								id: '#32',
-								weight: 9.082397003745319,
-								children: [
+								"type": "row",
+								"id": "#32",
+								"weight": 9.98702983138781,
+								"children": [
 									{
-										type: 'tabset',
-										id: '#15',
-										weight: 41.1144578313253,
-										children: [
+										"type": "tabset",
+										"id": "#15",
+										"weight": 43.669871794871796,
+										"children": [
 											{
-												type: 'tab',
-												id: '#3',
-												name: 'Items',
-												component: 'ItemList',
-												config: {},
-												enableClose: false,
-											},
-										],
+												"type": "tab",
+												"id": "#3",
+												"name": "Items",
+												"component": "ItemList",
+												"config": {},
+												"enableClose": false
+											}
+										]
 									},
 									{
-										type: 'tabset',
-										id: '#31',
-										weight: 58.8855421686747,
-										children: [
+										"type": "tabset",
+										"id": "#31",
+										"weight": 56.330128205128204,
+										"children": [
 											{
-												type: 'tab',
-												id: '#2',
-												name: 'Dungeons',
-												component: 'ItemList',
-												config: {
-													listType: 'dungeon',
+												"type": "tab",
+												"id": "#2",
+												"name": "Dungeons",
+												"component": "ItemList",
+												"config": {
+													"listType": "dungeon"
 												},
-												enableClose: false,
-											},
+												"enableClose": false
+											}
 										],
-										active: true,
-									},
-								],
+										"active": true
+									}
+								]
 							},
 							{
-								type: 'row',
-								id: '#23',
-								weight: 24.25093632958802,
-								children: [
+								"type": "row",
+								"id": "#23",
+								"weight": 23.346303501945524,
+								"children": [
 									{
-										type: 'tabset',
-										id: '#22',
-										weight: 65.36164424263319,
-										children: [
+										"type": "tabset",
+										"id": "#22",
+										"weight": 65.36164424263319,
+										"children": [
 											{
-												type: 'tab',
-												id: '#24',
-												name: 'Light World',
-												component: 'Map',
-												config: {
-													mapName: 'zelda3-lw',
+												"type": "tab",
+												"id": "#24",
+												"name": "Light World",
+												"component": "Map",
+												"config": {
+													"mapName": "zelda3-lw"
 												},
-												enableClose: false,
+												"enableClose": false
 											},
 											{
-												type: 'tab',
-												id: '#6',
-												name: 'Dark World',
-												component: 'Map',
-												config: {
-													mapName: 'zelda3-dw',
+												"type": "tab",
+												"id": "#6",
+												"name": "Dark World",
+												"component": "Map",
+												"config": {
+													"mapName": "zelda3-dw"
 												},
-												enableClose: false,
-											},
-										],
+												"enableClose": false
+											}
+										]
 									},
 									{
-										type: 'tabset',
-										id: '#27',
-										weight: 21.874801540499348,
-										children: [
+										"type": "tabset",
+										"id": "#27",
+										"weight": 21.874801540499348,
+										"children": [
 											{
-												type: 'tab',
-												id: '#1',
-												name: 'Details',
-												component: 'LocationDetail',
-												config: {
-													id: '1',
+												"type": "tab",
+												"id": "#1",
+												"name": "Details",
+												"component": "LocationDetail",
+												"config": {
+													"id": "1"
 												},
-												enableClose: false,
-											},
-										],
-									},
-								],
-							},
-						],
+												"enableClose": false
+											}
+										]
+									}
+								]
+							}
+						]
 					},
-					borders: [
+					"borders": [
 						{
-							type: 'border',
-							size: 257,
-							show: false,
-							location: 'left',
-							children: [],
+							"type": "border",
+							"size": 257,
+							"location": "left",
+							"children": []
 						},
 						{
-							type: 'border',
-							show: false,
-							location: 'right',
-							children: [],
+							"type": "border",
+							"location": "right",
+							"children": []
 						},
 						{
-							type: 'border',
-							show: false,
-							location: 'bottom',
-							children: [],
+							"type": "border",
+							"location": "bottom",
+							"children": []
 						},
 						{
-							type: 'border',
-							show: false,
-							location: 'top',
-							children: [],
-						},
-					],
+							"type": "border",
+							"location": "top",
+							"children": []
+						}
+					]
 				},
 				STANDARD: {
 					global: {},

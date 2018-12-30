@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Item from 'components/Item';
+import Item from '~/components/Item';
 
 const ItemSelect = ({ store, areaStore }) => {
 	let itemElem = (

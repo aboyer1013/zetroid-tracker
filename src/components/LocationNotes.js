@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import ItemIcon from 'components/ItemIcon';
-import { randomId } from 'utilities/util';
+import ItemIcon from '~/components/ItemIcon';
+import { randomId } from '~/utilities/util';
 
 const LocationNotes = (props) => {
 	const content = {

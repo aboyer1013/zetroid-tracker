@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import LocationStore from 'Location.store';
+import LocationStore from '~/Location.store';
 
 const LocationDetailStore = types
 	.model({

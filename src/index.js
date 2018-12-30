@@ -1,31 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'App';
+import App from '~/App';
 import {
 	unprotect, applySnapshot, getSnapshot, destroy, onSnapshot, detach, getParentOfType, getParent,
 } from 'mobx-state-tree';
-import { randomId } from 'utilities/util';
-import AppStore from 'App.store';
-import MapStore from 'Map.store';
-import GameStore from 'Game.store';
-import { gamesData, locationsData } from 'data/data';
-import ItemStore from 'Item.store';
-import itemsData from 'data/items';
-import bossData from 'data/bosses';
-import LocationStore from 'Location.store';
-import LocationDetailStore from 'LocationDetail.store';
-import ItemListStore from 'ItemList.store';
-import LayoutStore from 'Layout.store';
-import ConfigStore from 'Config.store';
-import AbilitiesStore from 'Abilities.store';
-import AreaStore from 'Area.store';
-import * as serviceWorker from 'serviceWorker';
+import { randomId } from '~/utilities/util';
+import AppStore from '~/App.store';
+import MapStore from '~/Map.store';
+import GameStore from '~/Game.store';
+import ItemStore from '~/Item.store';
+import itemsData from '~/data/items';
+import bossData from '~/data/bosses';
+import { gamesData, locationsData } from '~/data/data';
+import LocationStore from '~/Location.store';
+import LocationDetailStore from '~/LocationDetail.store';
+import ItemListStore from '~/ItemList.store';
+import LayoutStore from '~/Layout.store';
+import ConfigStore from '~/Config.store';
+import AbilitiesStore from '~/Abilities.store';
+import AreaStore from '~/Area.store';
+import * as serviceWorker from '~/serviceWorker';
 import {
 	isUndefined, find, includes, isEmpty,
 } from 'lodash';
 import { createStorage } from 'persistme';
 
-const shouldSync = true;
+const shouldSync = false;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });
@@ -182,6 +182,16 @@ locationsData.forEach((loc) => {
 	const chestItem = null;
 	const areas = [];
 
+	// Create the boss area
+	if (loc.isDungeon) {
+		const assignedBoss = find(bossData, { name: loc.boss });
+
+		loc.areas.push({
+			name: assignedBoss.name,
+			longName: assignedBoss.longName,
+			collectables: [{ numChests: 1 }],
+		});
+	}
 	loc.areas.forEach((area) => {
 		const collectables = [];
 		const itemSelectStore = area.canBeViewable ? appStore.itemSelectStore : null;

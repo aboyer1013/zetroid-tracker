@@ -1,9 +1,9 @@
 import React from 'react';
-import ItemIcon from 'components/ItemIcon';
+import ItemIcon from '~/components/ItemIcon';
 import { get } from 'lodash';
 import classNames from 'classnames';
 import { observer, inject } from 'mobx-react';
-import { randomId } from 'utilities/util';
+import { randomId } from '~/utilities/util';
 
 const ItemIconList = ({ items }) => {
 	if (!items) {
