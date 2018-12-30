@@ -11,7 +11,7 @@ const Item = ({
 	store,
 }) => {
 	const isVisible = itemListStore.isVisible(item);
-	const isAcquired = (!item.isChest && item.acquired) || (item.isCollectableChest && itemListStore.acquired);
+	const isAcquired = (!item.isChest && item.acquired) || (item.isCollectableChest && !isReadOnly);
 	const selectedItemName = get(store, 'selectedAreaStore.selectedItem.name');
 	const itemClasses = classNames('item', {
 		'is-not-acquired': !isAcquired,
@@ -35,11 +35,12 @@ const Item = ({
 				if (isReadOnly) {
 					return;
 				}
+				const collectAll = item.isCollectableChest && !item.isDungeonItem;
 				if (isSelectMode) {
 					store.selectedAreaStore.selectItem(item);
 					store.closeModal();
 				} else if (item.isCollectableChest) {
-					item.activateNext(event.shiftKey, true);
+					item.activateNext(event.shiftKey, collectAll);
 					itemListStore.setComplete();
 				} else if (item.isChest && item.isDungeonItem) {
 					item.activateNext(event.shiftKey);

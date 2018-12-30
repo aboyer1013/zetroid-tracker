@@ -22,6 +22,8 @@ const AreaStore = types
 			COMPLETE: 'COMPLETE',
 			// All items are obtainable without glitches.
 			AVAILABLE: 'AVAILABLE',
+			// Some items, but not all, are obtainable without glitches.
+			PARTIAL: 'PARTIAL',
 			// The only remaining requirement to obtain all items is to defeat Agahnim.
 			// AGAHNIM: 'AGAHNIM',
 			// Items can be obtained but include dark rooms (user does not have lantern) to get to chest.
@@ -48,6 +50,8 @@ const AreaStore = types
 				return 'is-info';
 			// case self.PROGRESSION.AGAHNIM:
 			// 	return 'is-info';
+			case self.PROGRESSION.PARTIAL:
+				return 'is-warning';
 			case self.PROGRESSION.POSSIBLE:
 				return 'is-success';
 			default:
@@ -66,6 +70,9 @@ const AreaStore = types
 				break;
 			case self.PROGRESSION.VIEWABLE:
 				result = 'fa-question-circle';
+				break;
+			case self.PROGRESSION.PARTIAL:
+				result = 'fa-dot-circle';
 				break;
 			// case self.PROGRESSION.AGAHNIM:
 			// 	result = 'fa-times-circle';
@@ -111,11 +118,28 @@ const AreaStore = types
 			if (!parent.availability[parent.name]) {
 				return false;
 			}
+			if (isFunction(parent.availability[parent.name][self.name])) {
+				return parent.availability[parent.name][self.name](self);
+			}
 			if (isFunction(parent.availability[parent.name])) {
 				return parent.availability[parent.name]();
 			}
-			if (isFunction(parent.availability[parent.name][self.name])) {
-				return parent.availability[parent.name][self.name]();
+			return false;
+		},
+		get isPartiallyAvailable() {
+			const parent = getParentOfType(self, LocationStore);
+
+			if (!parent) {
+				return false;
+			}
+			if (!parent.partialAvailability[parent.name]) {
+				return false;
+			}
+			if (isFunction(parent.partialAvailability[parent.name][self.name])) {
+				return parent.partialAvailability[parent.name][self.name](self);
+			}
+			if (isFunction(parent.partialAvailability[parent.name])) {
+				return parent.partialAvailability[parent.name]();
 			}
 			return false;
 		},
@@ -173,6 +197,9 @@ const AreaStore = types
 			}
 			return false;
 		},
+		get isUnavailable() {
+			return self.currentProgression === self.PROGRESSION.UNAVAILABLE
+		},
 		get currentProgression() {
 			if (self.isDungeonComplete || self.isComplete) {
 				return self.PROGRESSION.COMPLETE;
@@ -185,6 +212,9 @@ const AreaStore = types
 			// }
 			if (self.isViewable) {
 				return self.PROGRESSION.VIEWABLE;
+			}
+			if (self.isPartiallyAvailable) {
+				return self.PROGRESSION.PARTIAL;
 			}
 			if (self.isPossible) {
 				return self.PROGRESSION.POSSIBLE;

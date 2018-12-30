@@ -17,7 +17,7 @@ const Area = ({ areaStore, selectedLocation, store }) => {
 			<div className="details-area-collectables">
 				{areaStore.canBeViewable && <ItemSelect areaStore={areaStore} />}
 				{areaStore.collectables.map((collectable) => {
-					const isReadOnly = !selectedLocation.isAvailable && !selectedLocation.isComplete
+					const isReadOnly = !areaStore.isAvailable && !areaStore.isComplete && !areaStore.isPartiallyAvailable;
 
 					if (collectable.group) {
 						return (

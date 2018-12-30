@@ -292,7 +292,7 @@ const Map = class Map extends Component {
 			zoomToBoundsOnClick: false,
 			spiderfyOnMaxZoom: true,
 			disableClusteringAtZoom: -2,
-			maxClusterRadius: 60,
+			maxClusterRadius: 30,
 			iconCreateFunction: (cluster) => {
 				const childMarkers = cluster.getAllChildMarkers();
 				const markerClasses = [
@@ -313,10 +313,7 @@ const Map = class Map extends Component {
 					}
 				}
 				const html = `
-					<div
-						class="${markerClasses.join(' ')}"
-						tabIndex="0"
-					>
+					<div class="${markerClasses.join(' ')}" tabIndex="0">
 						<div><span>${cluster.getChildCount()}</span></div>
 					</div>
 				`;

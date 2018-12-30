@@ -7,11 +7,12 @@ import AreaStore from '~/Area.store';
 import {
 	isBoolean,
 	isFunction,
+	some,
 	every,
 	reject,
-	some,
 	isNull,
 	includes,
+	head,
 } from 'lodash';
 
 const LocationStore = types
@@ -101,8 +102,42 @@ const LocationStore = types
 				desertLedge: () => true,
 				bumperCave: () => self.abilities.canEnterNorthWestDarkWorld(),
 			},
-			// TODO Probably can scrap this since "possible" is most likely the same as "viewable".
 			possibility: {
+			},
+			partialAvailability: {
+				easternPalace: {
+					dungeon: area => {
+						const abl = self.abilities;
+						const chests = head([...area.collectables.values()]);
+
+						if (abl.hasItem('lantern') && !abl.hasItem('bow') && chests.qty < 2) {
+							return true;
+						}
+						if (chests.qty !== chests.maxQty) {
+							return true;
+						}
+						return false;
+						/*
+						if (has("lantern")) {
+							if (has("bow")) {
+								availability.glitchless = 'available';
+							}
+							else if (trackerData.zelda3.dungeonchests[0] >= 2) {
+								availability.glitchless = 'available';
+							}
+							else {
+								availability.glitchless = 'partial';
+							}
+						}
+						else if (trackerData.zelda3 && trackerData.zelda3.dungeonchests && trackerData.zelda3.dungeonchests[0] === 3) {
+							availability.glitchless = 'available';
+						}
+						else {
+							availability.glitchless = 'partial';
+						}
+						*/
+					},
+				},
 			},
 			/*
 			=== Not sure why there's the distinction between can/may ===
@@ -192,6 +227,42 @@ const LocationStore = types
 				treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(true),
 			},
 			availability: {
+				easternPalace: {
+					dungeon: area => {
+						const abl = self.abilities;
+						const chests = head([...area.collectables.values()]);
+
+						if (abl.hasItem('lantern') && abl.hasItem('bow')) {
+							return true;
+						}
+						if (abl.hasItem('lantern') && chests.qty >= 2) {
+							return true;
+						}
+						if (chests.qty === chests.maxQty) {
+							return true;
+						}
+						return false;
+						/*
+						if (has("lantern")) {
+							if (has("bow")) {
+								availability.glitchless = 'available';
+							}
+							else if (trackerData.zelda3.dungeonchests[0] >= 2) {
+								availability.glitchless = 'available';
+							}
+							else {
+								availability.glitchless = 'partial';
+							}
+						}
+						else if (trackerData.zelda3 && trackerData.zelda3.dungeonchests && trackerData.zelda3.dungeonchests[0] === 3) {
+							availability.glitchless = 'available';
+						}
+						else {
+							availability.glitchless = 'partial';
+						}
+						*/
+					},
+				},
 				kingsTomb: () => {
 					const abl = self.abilities;
 
@@ -528,6 +599,7 @@ const LocationStore = types
 				&& !self.isComplete
 				&& !self.isAgahnimTheOnlyRemainingRequirement
 				&& !self.isPossible
+				&& !self.isPartiallyAvailable
 			);
 		},
 		get isAgahnimTheOnlyRemainingRequirement() {
@@ -543,7 +615,7 @@ const LocationStore = types
 			}
 			// Dealing with multiple areas that have separate availability logic.
 			if (!isFunction(self.availability[self.name])) {
-				return every([...self.areas.values()], area => area.isAvailable);
+				return every([...self.areas.values()], area => area.isAvailable || area.isComplete);
 			}
 			return self.availability[self.name]();
 		},
@@ -555,9 +627,15 @@ const LocationStore = types
 			// Dealing with multiple areas that have separate availability logic.
 			if (!isFunction(self.availability[self.name])) {
 				const areas = [...self.areas.values()];
-				const numUnavailAreas = reject(areas, area => area.isAvailable).length;
+				const nonCompleteAreas = reject(areas, area => area.isComplete);
 
-				return numUnavailAreas > 0 && areas.length !== numUnavailAreas;
+				if (every(areas, area => area.isUnavailable)) {
+					return false;
+				}
+				return (
+					some(nonCompleteAreas, area => area.isAvailable || area.isPartiallyAvailable)
+					&& !every(nonCompleteAreas, area => area.isAvailable)
+				);
 			}
 			return false;
 		},
