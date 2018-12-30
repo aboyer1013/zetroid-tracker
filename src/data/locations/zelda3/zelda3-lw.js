@@ -7,7 +7,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'theCrypt',
 				longName: 'The Crypt',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -19,12 +19,12 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'inside',
 				longName: 'Inside',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 			{
 				name: 'outside',
 				longName: 'Outside',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 
@@ -37,7 +37,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'byTheDoor',
 				longName: 'By the Door',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -49,7 +49,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -61,7 +61,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -73,7 +73,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'backRoom',
 				longName: 'Back Room',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -85,7 +85,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'bombableWall',
 				longName: 'Bombable Wall',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -97,7 +97,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -109,12 +109,12 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 3 }],
+				chests: [{ numChests: 3 }],
 			},
 			{
 				name: 'sahasrahla',
 				longName: 'Sahasrahla',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -126,12 +126,12 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 4 }],
+				chests: [{ numChests: 4 }],
 			},
 			{
 				name: 'bomb',
 				longName: 'Bomb',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -143,12 +143,12 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'main',
 				longName: 'Main',
-				collectables: [{ numChests: 4 }],
+				chests: [{ numChests: 4 }],
 			},
 			{
 				name: 'bomb',
 				longName: 'Bomb',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -160,7 +160,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'top',
 				longName: 'Top',
-				collectables: [{ numChests: 5 }],
+				chests: [{ numChests: 5 }],
 			},
 		],
 	},
@@ -172,7 +172,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'bottom',
 				longName: 'Bottom',
-				collectables: [{ numChests: 2 }],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},
@@ -184,7 +184,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -196,7 +196,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 5 }],
+				chests: [{ numChests: 5 }],
 			},
 		],
 	},
@@ -208,7 +208,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -220,7 +220,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'vendor',
 				longName: 'Vendor',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -232,7 +232,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'byTheBed',
 				longName: 'By The Bed',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -244,7 +244,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'showToGary',
 				longName: 'Show to Gary',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -256,7 +256,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'underTheBridge',
 				longName: 'Under the Bridge',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -268,7 +268,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'tablet',
 				longName: 'Tablet',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -281,7 +281,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'tablet',
 				longName: 'Tablet',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -294,12 +294,12 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'kingZora',
 				longName: 'King Zora',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 			{
 				name: 'ledge',
 				longName: 'Ledge',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -312,7 +312,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'bringHimHome',
 				longName: 'Bring Him Home',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -324,7 +324,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'assistant',
 				longName: 'Assistant',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -336,7 +336,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'hideout',
 				longName: 'Hideout',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -348,7 +348,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -361,7 +361,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -373,7 +373,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'circleOfBushes',
 				longName: 'Circle of Bushes',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -385,7 +385,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -397,7 +397,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -409,7 +409,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'onTheShelf',
 				longName: 'On the Shelf',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -422,7 +422,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'mushroom',
 				longName: 'Mushroom',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -434,7 +434,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'upOnTop',
 				longName: 'Up On Top',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -446,7 +446,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'island',
 				longName: 'Island',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -459,7 +459,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'minigame',
 				longName: 'Mini-game',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -471,7 +471,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'ledge',
 				longName: 'Ledge',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -484,7 +484,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'island',
 				longName: 'Island',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -497,7 +497,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'hiddenTreasure',
 				longName: 'Hidden Treasure',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -509,7 +509,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'sewerCrackedWall',
 				longName: 'Sewer Cracked Wall',
-				collectables: [{ numChests: 3 }],
+				chests: [{ numChests: 3 }],
 			},
 		],
 	},
@@ -521,7 +521,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'uncleHallway',
 				longName: 'Uncle & Hallway',
-				collectables: [{ numChests: 2 }],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},
@@ -533,12 +533,12 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'castleEntrance',
 				longName: 'Castle Entrance',
-				collectables: [{ numChests: 3 }],
+				chests: [{ numChests: 3 }],
 			},
 			{
 				name: 'sewerDarkCross',
 				longName: 'Sewer Dark Cross',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -550,7 +550,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'sanctuary',
 				longName: 'Sanctuary',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -562,7 +562,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'magicBowl',
 				longName: 'Magic Bowl',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -574,7 +574,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'pedestal',
 				longName: 'Pedestal',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -587,7 +587,7 @@ const zelda3LightWorldLocations = [
 			{
 				name: 'waterfallCave',
 				longName: 'Waterfall Cave',
-				collectables: [{ numChests: 2 }],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},

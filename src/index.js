@@ -188,14 +188,14 @@ locationsData.forEach((loc) => {
 			isBoss: true,
 			name: boss.name,
 			longName: boss.longName,
-			collectables: [{ numChests: 1 }],
+			chests: [],
 		});
 	}
 	loc.areas.forEach((area) => {
-		const collectables = [];
+		const chests = [];
 		const itemSelectStore = area.canBeViewable ? appStore.itemSelectStore : null;
 
-		area.collectables.forEach((collectable) => {
+		area.chests.forEach((collectable) => {
 			const chestItemData = find(gameItemsData, { name: 'closedchest' });
 			const type = chestItemData.type.slice(0);
 
@@ -206,7 +206,7 @@ locationsData.forEach((loc) => {
 			chestItemData.qty = collectable.numChests;
 			chestItemData.maxQty = collectable.numChests;
 			chestItemData.type = type;
-			collectables.push(ItemStore.create(itemDataFactory(chestItemData)));
+			chests.push(ItemStore.create(itemDataFactory(chestItemData)));
 		});
 		areas.push(AreaStore.create({
 			id: randomId(),
@@ -214,7 +214,7 @@ locationsData.forEach((loc) => {
 			name: area.name,
 			longName: area.longName,
 			abilities: appStore.abilities,
-			collectables,
+			chests,
 			canBeViewable: area.canBeViewable || false,
 			itemSelectStore,
 			selectedItem: area.selectedItem || null,

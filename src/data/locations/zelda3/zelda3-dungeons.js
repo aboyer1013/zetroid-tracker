@@ -10,7 +10,7 @@ let zelda3LightWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				collectables: [
+				chests: [
 					{numChests: 3},
 				],
 			},
@@ -27,7 +27,7 @@ let zelda3LightWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				collectables: [
+				chests: [
 					{numChests: 2},
 				],
 				canBeViewable: true,

@@ -2,7 +2,7 @@ import { types, getParentOfType, getRoot } from 'mobx-state-tree';
 import ItemStore from '~/Item.store';
 import AbilitiesStore from '~/Abilities.store';
 import LocationStore from '~/Location.store';
-import { isFunction, has, every } from 'lodash';
+import { isFunction, has, every, includes } from 'lodash';
 import ItemListStore from '~/ItemList.store';
 
 const AreaStore = types
@@ -10,7 +10,7 @@ const AreaStore = types
 		id: types.identifier,
 		name: types.string,
 		longName: types.string,
-		collectables: types.array(ItemStore),
+		chests: types.array(ItemStore),
 		abilities: types.reference(AbilitiesStore),
 		// If true, has the potential to be viewable. Different than if the item is CURRENTLY viewable.
 		canBeViewable: false,
@@ -94,7 +94,9 @@ const AreaStore = types
 				return getParentOfType(self, LocationStore).boss.acquired;
 			}
 			self.collectables.forEach((collectable) => {
-				if (collectable.qty > 0) {
+				if (includes(collectable.type, 'boss') && !collectable.acquired) {
+					result = false;
+				} else if (collectable.qty > 0) {
 					result = false;
 				}
 			});
@@ -189,7 +191,7 @@ const AreaStore = types
 			}
 			return self.PROGRESSION.UNAVAILABLE;
 		},
-		get allCollectables() {
+		get collectables() {
 			if (self.isBoss) {
 				const loc = getParentOfType(self, LocationStore);
 
@@ -199,7 +201,7 @@ const AreaStore = types
 					return [loc.boss, prize];
 				}
 			}
-			return self.collectables;
+			return self.chests;
 		},
 	}))
 	.actions((self) => {

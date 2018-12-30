@@ -7,7 +7,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'downstairs',
 				longName: 'Downstairs',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -19,7 +19,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'house',
 				longName: 'House',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -31,7 +31,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'shack',
 				longName: 'Shack',
-				collectables: [{ numChests: 2 }],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},
@@ -43,7 +43,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 2 }],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},
@@ -55,7 +55,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -67,7 +67,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 5 }],
+				chests: [{ numChests: 5 }],
 			},
 		],
 	},
@@ -79,12 +79,12 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'front',
 				longName: 'Front',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 			{
 				name: 'back',
 				longName: 'Back',
-				collectables: [{ numChests: 3 }],
+				chests: [{ numChests: 3 }],
 			},
 		],
 	},
@@ -96,7 +96,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'stumpy',
 				longName: 'Stumpy',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -108,7 +108,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'ringOfStones',
 				longName: 'Ring of Stones',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -120,7 +120,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'cave',
 				longName: 'Cave',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -132,7 +132,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'ledge',
 				longName: 'Ledge',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 				canBeViewable: true,
 			},
 		],
@@ -145,7 +145,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'ledge',
 				longName: 'Ledge',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -157,7 +157,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'digForTreasure',
 				longName: 'Dig for Treasure',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -169,7 +169,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'bringHimHome',
 				longName: 'Bring Him Home',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -181,7 +181,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'bigBombSpot',
 				longName: 'Big Bomb Spot',
-				collectables: [{ numChests: 2 }],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},
@@ -193,7 +193,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'prizes',
 				longName: 'Prizes',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},
@@ -205,7 +205,7 @@ const zelda3DarkWorldLocations = [
 			{
 				name: 'showToGary',
 				longName: 'Show To Gary',
-				collectables: [{ numChests: 1 }],
+				chests: [{ numChests: 1 }],
 			},
 		],
 	},

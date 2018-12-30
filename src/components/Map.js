@@ -58,20 +58,20 @@ const Map = class Map extends Component {
 	}
 
 	onResizeHandler(data, onInit = false) {
-		const { width: newWidth, height: newHeight } = data;
+		const { width, height } = data;
 
-		this.props.mapStore.setWidth(newWidth);
-		this.props.mapStore.setHeight(newHeight);
+		this.props.mapStore.setWidth(width);
+		this.props.mapStore.setHeight(height);
 		this.resize(onInit);
 	}
 
 	setProgression(marker, loc) {
 		const markerColor = {
-			AGAHNIM_ONLY_REQUIREMENT: 'blue',
+			AGAHNIM: 'blue',
 			VIEWABLE: 'blue',
 			POSSIBLE: 'green',
 			UNAVAILABLE: 'red',
-			PARTIALLY_AVAILABLE: 'orange',
+			PARTIAL: 'orange',
 			AVAILABLE: 'green',
 			COMPLETE: 'black',
 			FAVORITE: 'pink',
@@ -80,9 +80,9 @@ const Map = class Map extends Component {
 			VIEWABLE: 'question-circle',
 			UNAVAILABLE: 'times-circle',
 			AVAILABLE: 'exclamation-circle',
-			PARTIALLY_AVAILABLE: 'dot-circle',
+			PARTIAL: 'dot-circle',
 			POSSIBLE: 'dot-circle',
-			AGAHNIM_ONLY_REQUIREMENT: 'times-circle',
+			AGAHNIM: 'times-circle',
 			COMPLETE: 'check-circle',
 			FAVORITE: 'star',
 			DUNGEON: 'skull',
@@ -106,11 +106,11 @@ const Map = class Map extends Component {
 			markerOptions.markerColor = markerColor.AVAILABLE;
 			markerOptions.icon = icon.AVAILABLE;
 		} else if (loc.isPartiallyAvailable) {
-			markerOptions.markerColor = markerColor.PARTIALLY_AVAILABLE;
-			markerOptions.icon = icon.PARTIALLY_AVAILABLE;
+			markerOptions.markerColor = markerColor.PARTIAL;
+			markerOptions.icon = icon.PARTIAL;
 		} else if (loc.isAgahnimTheOnlyRemainingRequirement) {
-			markerOptions.markerColor = markerColor.AGAHNIM_ONLY_REQUIREMENT;
-			markerOptions.icon = icon.AGAHNIM_ONLY_REQUIREMENT;
+			markerOptions.markerColor = markerColor.AGAHNIM;
+			markerOptions.icon = icon.AGAHNIM;
 		} else if (loc.isViewable) {
 			markerOptions.markerColor = markerColor.VIEWABLE;
 			markerOptions.icon = icon.VIEWABLE;
@@ -292,6 +292,7 @@ const Map = class Map extends Component {
 			zoomToBoundsOnClick: false,
 			spiderfyOnMaxZoom: true,
 			disableClusteringAtZoom: -2,
+			maxClusterRadius: 60,
 			iconCreateFunction: (cluster) => {
 				const childMarkers = cluster.getAllChildMarkers();
 				const markerClasses = [

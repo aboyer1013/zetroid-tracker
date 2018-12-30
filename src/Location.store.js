@@ -11,6 +11,7 @@ import {
 	reject,
 	some,
 	isNull,
+	includes,
 } from 'lodash';
 
 const LocationStore = types
@@ -636,17 +637,24 @@ const LocationStore = types
 			if (self.isComplete) {
 				self.areas.forEach((area) => {
 					area.collectables.forEach((collectable) => {
-						collectable.setQty(0);
+						if (includes(collectable.type, 'boss')) {
+							collectable.acquire(true);
+						} else {
+							collectable.setQty(0);
+						}
 					});
 				});
 			} else {
 				self.areas.forEach((area) => {
 					area.collectables.forEach((collectable) => {
-						collectable.setQty(collectable.maxQty);
+						if (includes(collectable.type, 'boss')) {
+							collectable.acquire(false);
+						} else {
+							collectable.setQty(collectable.maxQty);
+						}
 					});
 				});
 			}
-			// TODO add dungeon reset logic
 		};
 		const setComplete = (override = null) => {
 			if (isBoolean(override)) {
