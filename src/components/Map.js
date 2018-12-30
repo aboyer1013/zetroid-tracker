@@ -122,9 +122,7 @@ const Map = class Map extends Component {
 			if (loc.isDungeonComplete) {
 				markerOptions.markerColor = markerColor.COMPLETE;
 				markerOptions.icon = icon.COMPLETE;
-			} else if (loc.boss.acquired) {
-				markerOptions.icon = icon.AVAILABLE;
-			} else {
+			} else if (!loc.boss.acquired) {
 				markerOptions.icon = icon.DUNGEON;
 			}
 		}

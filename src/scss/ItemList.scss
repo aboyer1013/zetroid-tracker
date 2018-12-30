@@ -27,18 +27,20 @@
 		content: attr(data-qty);
 		position: absolute;
 		color: $black;
-		font-size: 14px;
-		bottom: 6px;
+		font-size: 16px;
+		bottom: 0;
 		right: 0;
 		background: #eadba2;
-		padding: 1px;
-		line-height: 0.8;
+		padding: 3px;
+		line-height: 0.7;
 		font-weight: bold;
 		outline: 1px solid $white-bis;
 		border: 1px solid $black;
+		text-shadow: 1px 1px 0 #fff;
 	}
 	&.is-not-acquired::after {
 		filter: saturate(0);
+		color: #666
 	}
 	&.is-selected::before {
 		content: ' ';
