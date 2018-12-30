@@ -28,7 +28,7 @@ const LocationStore = types
 		isFavorite: false,
 		isDungeon: false,
 		chest: types.maybeNull(ItemStore),
-		boss: types.maybe(types.reference(ItemStore)),
+		boss: types.maybeNull(types.reference(ItemStore)),
 		prize: types.maybeNull(types.reference(ItemStore)),
 		medallion: types.maybe(types.reference(ItemStore)),
 		map: types.reference(types.late(() => MapStore)),

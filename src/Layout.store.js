@@ -149,22 +149,26 @@ const LayoutStore = types
 							"type": "border",
 							"size": 257,
 							"location": "left",
-							"children": []
+							"children": [],
+							"show": false,
 						},
 						{
 							"type": "border",
 							"location": "right",
-							"children": []
+							"children": [],
+							"show": false,
 						},
 						{
 							"type": "border",
 							"location": "bottom",
-							"children": []
+							"children": [],
+							"show": false,
 						},
 						{
 							"type": "border",
 							"location": "top",
-							"children": []
+							"children": [],
+							"show": false,
 						}
 					]
 				},

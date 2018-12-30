@@ -1,5 +1,5 @@
 import { types, getParentOfType, getRoot } from 'mobx-state-tree';
-import { find, includes } from 'lodash';
+import { find, includes, get } from 'lodash';
 import GameStore from '~/Game.store';
 import ItemListStore from '~/ItemList.store';
 
@@ -56,6 +56,9 @@ const ItemStore = types
 		},
 		get isCollectableChest() {
 			return self.isChest && self.isCollectable;
+		},
+		get dungeonLocation() {
+			return find(getRoot(self).dungeonLocations, loc => get(loc, 'boss.name') === self.name);
 		},
 	}))
 	.actions((self) => {

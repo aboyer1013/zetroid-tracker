@@ -1,8 +1,8 @@
-import { types, getParentOfType } from 'mobx-state-tree';
+import { types, getParentOfType, getRoot } from 'mobx-state-tree';
 import ItemStore from '~/Item.store';
 import AbilitiesStore from '~/Abilities.store';
 import LocationStore from '~/Location.store';
-import { isFunction, has } from 'lodash';
+import { isFunction, has, every } from 'lodash';
 import ItemListStore from '~/ItemList.store';
 
 const AreaStore = types
@@ -32,6 +32,7 @@ const AreaStore = types
 			// All items are not obtainable.
 			UNAVAILABLE: 'UNAVAILABLE',
 		}),
+		isBoss: false,
 	})
 	.views(self => ({
 		isVisible: () => {
@@ -45,8 +46,8 @@ const AreaStore = types
 				return 'is-success';
 			case self.PROGRESSION.VIEWABLE:
 				return 'is-info';
-				// case self.PROGRESSION.AGAHNIM:
-				// 	return 'is-info';
+			// case self.PROGRESSION.AGAHNIM:
+			// 	return 'is-info';
 			case self.PROGRESSION.POSSIBLE:
 				return 'is-success';
 			default:
@@ -54,20 +55,29 @@ const AreaStore = types
 			}
 		},
 		get iconClass() {
+			let result = '';
+
 			switch (self.currentProgression) {
 			case self.PROGRESSION.COMPLETE:
-				return 'fa-check-circle';
+				result = 'fa-check-circle';
+				break;
 			case self.PROGRESSION.AVAILABLE:
-				return 'fa-exclamation-circle';
+				result = 'fa-exclamation-circle';
+				break;
 			case self.PROGRESSION.VIEWABLE:
-				return 'fa-question-circle';
-				// case self.PROGRESSION.AGAHNIM:
-				// 	return 'fa-times-circle';
+				result = 'fa-question-circle';
+				break;
+			// case self.PROGRESSION.AGAHNIM:
+			// 	result = 'fa-times-circle';
+			// 		break;
 			case self.PROGRESSION.POSSIBLE:
-				return 'fa-dot-circle';
+				result = 'fa-dot-circle';
+				break;
 			default:
-				return 'fa-times-circle';
+				result = self.isBoss ? 'fa-skull' : 'fa-times-circle';
+				break;
 			}
+			return result;
 		},
 		get acquired() {
 			const parent = getParentOfType(self, LocationStore);
@@ -80,6 +90,9 @@ const AreaStore = types
 		get isComplete() {
 			let result = true;
 
+			if (self.isBoss) {
+				return getParentOfType(self, LocationStore).boss.acquired;
+			}
 			self.collectables.forEach((collectable) => {
 				if (collectable.qty > 0) {
 					result = false;
@@ -175,6 +188,18 @@ const AreaStore = types
 				return self.PROGRESSION.POSSIBLE;
 			}
 			return self.PROGRESSION.UNAVAILABLE;
+		},
+		get allCollectables() {
+			if (self.isBoss) {
+				const loc = getParentOfType(self, LocationStore);
+
+				if (loc) {
+					const prize = loc.prize;
+
+					return [loc.boss, prize];
+				}
+			}
+			return self.collectables;
 		},
 	}))
 	.actions((self) => {

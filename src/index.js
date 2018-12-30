@@ -13,12 +13,12 @@ import itemsData from '~/data/items';
 import bossData from '~/data/bosses';
 import { gamesData, locationsData } from '~/data/data';
 import LocationStore from '~/Location.store';
-import LocationDetailStore from '~/LocationDetail.store';
 import ItemListStore from '~/ItemList.store';
 import LayoutStore from '~/Layout.store';
 import ConfigStore from '~/Config.store';
 import AbilitiesStore from '~/Abilities.store';
 import AreaStore from '~/Area.store';
+import LocationDetailStore from '~/LocationDetail.store';
 import * as serviceWorker from '~/serviceWorker';
 import {
 	isUndefined, find, includes, isEmpty,
@@ -166,8 +166,6 @@ gameItemsData.filter(item => includes(item.type, 'item')).forEach((item, i) => {
 // Add the dungeon items for a separate list.
 // FIXME I'm calling it bosses, but it should really be dungeons.
 const gameBossData = bossData.filter(item => item.game === appStore.selectedGame.name);
-// When constructing boss items - include in the other items collection but only if they are of "dungeon-item" type.
-// This is driven by the fact that green pendant is an item, but also used in boss item lists as well.
 gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-item'))).forEach((item, i) => {
 	const itemData = itemDataFactory(item, i);
 
@@ -176,19 +174,20 @@ gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-it
 });
 // Create location models.
 locationsData.forEach((loc) => {
+	let boss = null;
+	let prize = null;
 	const selectedMap = appStore.getMapByName(loc.map);
-	let bossId = loc.boss && find(appStore.activeDungeonItemList.items, { name: loc.boss });
-	let prizeId = find(appStore.activeDungeonItemList.items, { group: 'prize' });
 	const chestItem = null;
 	const areas = [];
 
 	// Create the boss area
 	if (loc.isDungeon) {
-		const assignedBoss = find(bossData, { name: loc.boss });
-
+		boss = appStore.getItemByName(loc.boss);
+		prize = appStore.getItemGroupByName(`prize-${loc.name}`);
 		loc.areas.push({
-			name: assignedBoss.name,
-			longName: assignedBoss.longName,
+			isBoss: true,
+			name: boss.name,
+			longName: boss.longName,
 			collectables: [{ numChests: 1 }],
 		});
 	}
@@ -211,6 +210,7 @@ locationsData.forEach((loc) => {
 		});
 		areas.push(AreaStore.create({
 			id: randomId(),
+			isBoss: area.isBoss || false,
 			name: area.name,
 			longName: area.longName,
 			abilities: appStore.abilities,
@@ -220,9 +220,6 @@ locationsData.forEach((loc) => {
 			selectedItem: area.selectedItem || null,
 		}));
 	});
-
-	bossId = bossId && bossId.id;
-	prizeId = prizeId && prizeId.id;
 
 	selectedMap.locations.put(LocationStore.create({
 		id: `loc-${randomId()}`,
@@ -238,8 +235,8 @@ locationsData.forEach((loc) => {
 		// TODO remove chest
 		chest: chestItem,
 		numChests: loc.numChests,
-		boss: bossId,
-		prize: prizeId,
+		boss,
+		prize,
 		map: selectedMap,
 		abilities: appStore.abilities,
 		areas,

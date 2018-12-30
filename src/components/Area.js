@@ -3,8 +3,9 @@ import { observer, inject } from 'mobx-react';
 import Item from '~/components/Item';
 import ItemSelect from '~/components/ItemSelect';
 import { randomId } from '~/utilities/util';
+import { includes } from 'lodash';
 
-const Area = ({ areaStore, selectedLocation }) => {
+const Area = ({ areaStore, selectedLocation, store }) => {
 	return (
 		<div className="details-area" key={randomId()}>
 			<div className="details-area-title tags has-addons is-marginless">
@@ -15,13 +16,29 @@ const Area = ({ areaStore, selectedLocation }) => {
 			</div>
 			<div className="details-area-collectables">
 				{areaStore.canBeViewable && <ItemSelect areaStore={areaStore} />}
-				{areaStore.collectables.map((collectable) => {
+				{areaStore.allCollectables.map((collectable) => {
+					const isReadOnly = !selectedLocation.isAvailable && !selectedLocation.isComplete
+
+					if (collectable.group) {
+						return (
+							<div className="item-container" key={randomId()}>
+								{collectable.items.map(subItem => (
+									<Item
+										key={randomId()}
+										itemListStore={store}
+										item={subItem}
+										isReadOnly={isReadOnly && !includes(subItem.type, 'prize')}
+									/>
+								))}
+							</div>
+						);
+					}
 					return (
 						<Item
 							key={randomId()}
 							itemListStore={areaStore}
 							item={collectable}
-							isReadOnly={!selectedLocation.isAvailable && !selectedLocation.isComplete}
+							isReadOnly={isReadOnly}
 						/>
 					);
 				})}

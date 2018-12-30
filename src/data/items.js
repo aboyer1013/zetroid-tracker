@@ -1,4 +1,5 @@
-/* eslint-disable */
+import zelda3Dungeons from '~/data/locations/zelda3/zelda3-dungeons';
+
 const itemsData = [
 	{
 		group: 'medallion',
@@ -12,17 +13,6 @@ const itemsData = [
 		],
 	},
 	{ type: ['chest'], name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', imageEmpty: 'chest-open', acquired: true, },
-	{
-		group: 'prize',
-		game: 'zelda3',
-		type: ['dungeon-item'],
-		items: [
-			{ group: 'prize', type: ['dungeon-item'], name: 'crystal',   longName: 'Crystal', game: 'zelda3', image: 'dungeon0', groupIndex: 0, isDefault: true, acquired: true, },
-			{ group: 'prize', type: ['dungeon-item'], name: 'crystal56',   longName: '5th/6th Crystal ', game: 'zelda3', image: 'dungeon1', groupIndex: 1, },
-			{ group: 'prize', type: ['dungeon-item'], name: 'blueredpendant',   longName: 'Pendant of Power / Wisdom', game: 'zelda3', image: 'dungeon2', groupIndex: 2, },
-			{ group: 'prize', type: ['dungeon-item'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', groupIndex: 3, },
-		],
-	},
 	{
 		group: 'mpUpgrade',
 		game: 'zelda3',
@@ -179,5 +169,26 @@ const itemsData = [
 	{ type: ['item'], name: 'kraidtotem', longName: 'Kraid Totem', game: 'metroid1', },
 	{ type: ['item'], name: 'ridleytotem', longName: 'Ridley Totem', game: 'metroid1', },
 ];
+
+zelda3Dungeons.forEach(dungeon => {
+	if (!dungeon.hasPrize) {
+		return true;
+	}
+	const group = `prize-${dungeon.name}`;
+	itemsData.push(
+		{
+			group,
+			game: 'zelda3',
+			type: ['dungeon-item', 'prize'],
+			items: [
+				{ group, type: ['dungeon-item', 'prize'], name: 'crystal',   longName: 'Crystal', game: 'zelda3', image: 'dungeon0', groupIndex: 0, isDefault: true, autoAcquire: true, },
+				{ group, type: ['dungeon-item', 'prize'], name: 'crystal56',   longName: '5th/6th Crystal ', game: 'zelda3', image: 'dungeon1', groupIndex: 1, },
+				{ group, type: ['dungeon-item', 'prize'], name: 'blueredpendant',   longName: 'Pendant of Power / Wisdom', game: 'zelda3', image: 'dungeon2', groupIndex: 2, },
+				{ group, type: ['dungeon-item', 'prize'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', groupIndex: 3, },
+			],
+		},
+	);
+	return true;
+});
 
 export default itemsData;

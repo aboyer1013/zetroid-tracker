@@ -4,12 +4,15 @@ let zelda3LightWorldDungeons = [
 		name: 'easternPalace',
 		longName: 'Eastern Palace',
 		isDungeon: true,
+		hasPrize: true,
 		boss: 'armos',
 		areas: [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				collectables: [{ numChests: 3 }],
+				collectables: [
+					{numChests: 3},
+				],
 			},
 		],
 	},
@@ -18,12 +21,15 @@ let zelda3LightWorldDungeons = [
 		name: 'desertPalace',
 		longName: 'Desert Palace',
 		isDungeon: true,
+		hasPrize: true,
 		boss: 'lanmolas',
 		areas: [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				collectables: [{numChests: 2}],
+				collectables: [
+					{numChests: 2},
+				],
 				canBeViewable: true,
 			},
 		],
