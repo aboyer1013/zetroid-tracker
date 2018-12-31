@@ -67,8 +67,12 @@ const LocationStore = types.compose(
 		// All the logic to determine if the location is viewable goes here
 		return {
 			possibility: {
+				easternPalace: {
+					armos: () => self.enterability.easternPalace() && self.abilities.hasItem('bow'),
+				},
 			},
 			/*
+			TODO Will keep separate for now but may consider putting enterability into availability.
 			=== Not sure why there's the distinction between can/may ===
 			hasMedallion
 				Checks the medallion gate for the dungeon and has the same medallion acquired.
@@ -81,10 +85,12 @@ const LocationStore = types.compose(
 				All the necessary acquired items to enter dungeon
 				(w/mayHaveMedallion - you know what the medallion you need to enter, but do not have it in possesion)
 			 */
-			canEnterDungeon: {
-				turtleRock: () => {
+			enterability: {
+				easternPalace: () => true,
+			},
+			// Not used for now - putting into availability since it seems to be the same thing.
+			beatability: {
 
-				},
 			},
 		};
 	})
@@ -190,13 +196,13 @@ const LocationStore = types.compose(
 			return result;
 		},
 		get isPossible() {
-			if (!isFunction(self.possibility[self.name])) {
-				return false;
+			if (isFunction(self.possibility[self.name])) {
+				return self.possibility[self.name]();
 			}
 			if (self.areAllAreasPossible) {
 				return true;
 			}
-			return self.possibility[self.name]();
+			return false;
 		},
 		get isDungeonComplete() {
 			return self.isDungeon && self.boss.acquired && self.areAllAreasComplete;
@@ -205,7 +211,7 @@ const LocationStore = types.compose(
 			return some(self.areas, { canBeViewable: true });
 		},
 		get areAllAreasPossible() {
-			return every(self.areas, { isPossible: true });
+			return every(self.areas, area => area.isPossible || area.isComplete);
 		},
 		get doAllAreasHaveSelectedItems() {
 			return every(self.areas, area => !isNull(area.selectedItem));

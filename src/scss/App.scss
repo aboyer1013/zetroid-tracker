@@ -162,6 +162,14 @@ button {
 }
 .awesome-marker i {
 	font-size: 20px;
+	// Skull with circle dot below it, indicating boss is still alive with possible progression
+	&.is-dungeon-possible::after {
+		content: '\f192';
+		position: absolute;
+		bottom: 9px;
+		left: 14px;
+		font-size: 6px;
+	}
 }
 .custom-marker-cluster {
 	margin-left: -20px;

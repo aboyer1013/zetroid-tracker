@@ -20,6 +20,8 @@ const LogicAvailability = types.model().volatile(self => {
 					}
 					return false;
 				},
+				armos: () => self.enterability.easternPalace() && self.abilities.hasItem('bow') && self.abilities.hasItem('lantern'),
+
 			},
 			kingsTomb: () => {
 				const abl = self.abilities;

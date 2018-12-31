@@ -125,6 +125,9 @@ const Map = class Map extends Component {
 			} else if (!loc.boss.acquired) {
 				markerOptions.icon = icon.DUNGEON;
 			}
+			if (loc.isPossible) {
+				markerOptions.extraClasses += ' is-dungeon-possible'
+			}
 		}
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));
 	}
