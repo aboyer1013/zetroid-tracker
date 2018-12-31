@@ -1,4 +1,4 @@
-import { types, getRoot } from 'mobx-state-tree';
+import { types } from 'mobx-state-tree';
 import { head } from 'lodash';
 
 const LogicPartialAvailability = types.model().volatile(self => {

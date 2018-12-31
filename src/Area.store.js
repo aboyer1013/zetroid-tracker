@@ -1,8 +1,8 @@
-import { types, getParentOfType, getRoot } from 'mobx-state-tree';
+import { types, getParentOfType } from 'mobx-state-tree';
 import ItemStore from '~/Item.store';
 import AbilitiesStore from '~/Abilities.store';
 import LocationStore from '~/Location.store';
-import { isFunction, has, every, includes } from 'lodash';
+import { isFunction, has, includes } from 'lodash';
 import ItemListStore from '~/ItemList.store';
 
 const AreaStore = types

@@ -1,5 +1,4 @@
-import { types, getRoot } from 'mobx-state-tree';
-import { head } from 'lodash';
+import { types } from 'mobx-state-tree';
 
 const LogicAgahnim = types.model().volatile(self => {
 	return {
@@ -73,9 +72,6 @@ const LogicAgahnim = types.model().volatile(self => {
 			treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(true),
 			palaceOfDarkness: {
 				dungeon: area => {
-					const abl = self.abilities;
-					const chests = head([...area.collectables.values()]);
-
 					if (self.enterability.palaceOfDarkness(true)) {
 						return true;
 					}

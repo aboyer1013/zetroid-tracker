@@ -25,7 +25,7 @@ import {
 } from 'lodash';
 import { createStorage } from 'persistme';
 
-const shouldSync = false;
+const shouldSync = true;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });

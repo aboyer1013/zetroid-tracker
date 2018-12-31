@@ -1,5 +1,4 @@
-import { types, getRoot } from 'mobx-state-tree';
-import { head } from 'lodash';
+import { types } from 'mobx-state-tree';
 
 const LogicViewability = types.model().volatile(self => {
 	return {
