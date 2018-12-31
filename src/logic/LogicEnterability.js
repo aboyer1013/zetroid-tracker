@@ -45,7 +45,8 @@ const LogicEnterability = types.model().volatile(self => {
 					return true;
 				}
 				return false;
-			}
+			},
+			palaceOfDarkness: (agahnimCheck = false) => self.abilities.canEnterNorthEastDarkWorld(agahnimCheck) && self.abilities.hasItem('moonPearl'),
 		},
 	};
 });

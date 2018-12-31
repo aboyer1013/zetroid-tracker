@@ -94,6 +94,37 @@ const LogicAvailability = types.model().volatile(self => {
 					return false;
 				},
 			},
+			palaceOfDarkness: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.palaceOfDarkness()) {
+						return false;
+					}
+					if (!abl.hasItem('bow')) {
+						return false;
+					}
+					if (chests.qty > 2 && !abl.hasItem('hammer')) {
+						return false;
+					}
+					if (abl.hasItem('lantern')) {
+						return true;
+					}
+					return false;
+				},
+				helmasaur: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('hammer') || !abl.hasItem('bow')) {
+						return false;
+					}
+					if (self.enterability.palaceOfDarkness() && abl.hasItem('lantern')) {
+						return true;
+					}
+					return false;
+				},
+			},
 			kingsTomb: () => {
 				const abl = self.abilities;
 

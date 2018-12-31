@@ -25,7 +25,7 @@ const AreaStore = types
 			// Some items, but not all, are obtainable without glitches.
 			PARTIAL: 'PARTIAL',
 			// The only remaining requirement to obtain all items is to defeat Agahnim.
-			// AGAHNIM: 'AGAHNIM',
+			AGAHNIM: 'AGAHNIM',
 			// Items can be obtained but include dark rooms (user does not have lantern) to get to chest.
 			// There may be more scenarios where this applies.
 			POSSIBLE: 'POSSIBLE',
@@ -48,10 +48,10 @@ const AreaStore = types
 				return 'is-success';
 			case self.PROGRESSION.VIEWABLE:
 				return 'is-info';
-			// case self.PROGRESSION.AGAHNIM:
-			// 	return 'is-info';
 			case self.PROGRESSION.PARTIAL:
 				return 'is-warning';
+			case self.PROGRESSION.AGAHNIM:
+				return 'is-info';
 			case self.PROGRESSION.POSSIBLE:
 				return 'is-success';
 			default:
@@ -74,9 +74,9 @@ const AreaStore = types
 			case self.PROGRESSION.PARTIAL:
 				result = 'fa-dot-circle';
 				break;
-			// case self.PROGRESSION.AGAHNIM:
-			// 	result = 'fa-times-circle';
-			// 		break;
+			case self.PROGRESSION.AGAHNIM:
+				result = 'fa-times-circle';
+				break;
 			case self.PROGRESSION.POSSIBLE:
 				result = 'fa-dot-circle';
 				break;
@@ -189,11 +189,11 @@ const AreaStore = types
 			if (!parent.mustDefeatAgahnimFirst[parent.name]) {
 				return false;
 			}
+			if (isFunction(parent.mustDefeatAgahnimFirst[parent.name][self.name])) {
+				return parent.mustDefeatAgahnimFirst[parent.name][self.name](self);
+			}
 			if (isFunction(parent.mustDefeatAgahnimFirst[parent.name])) {
 				return parent.mustDefeatAgahnimFirst[parent.name]();
-			}
-			if (isFunction(parent.mustDefeatAgahnimFirst[parent.name][self.name])) {
-				return parent.mustDefeatAgahnimFirst[parent.name][self.name]();
 			}
 			return false;
 		},
@@ -207,14 +207,14 @@ const AreaStore = types
 			if (self.isAvailable) {
 				return self.PROGRESSION.AVAILABLE;
 			}
-			// if (self.isAgahnimTheOnlyRemainingRequirement) {
-			// 	return self.PROGRESSION.AGAHNIM;
-			// }
 			if (self.isViewable) {
 				return self.PROGRESSION.VIEWABLE;
 			}
 			if (self.isPartiallyAvailable) {
 				return self.PROGRESSION.PARTIAL;
+			}
+			if (self.mustDefeatAgahnimFirst) {
+				return self.PROGRESSION.AGAHNIM;
 			}
 			if (self.isPossible) {
 				return self.PROGRESSION.POSSIBLE;

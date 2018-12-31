@@ -71,6 +71,28 @@ const LogicAgahnim = types.model().volatile(self => {
 			diggingGame: () => self.abilities.canEnterSouthDarkWorld(true),
 			smiths: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(true),
 			treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(true),
+			palaceOfDarkness: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (self.enterability.palaceOfDarkness(true)) {
+						return true;
+					}
+					return false;
+				},
+				helmasaur: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('hammer') || !abl.hasItem('bow')) {
+						return false;
+					}
+					if (self.enterability.palaceOfDarkness(true) && abl.hasItem('lantern')) {
+						return true;
+					}
+					return false;
+				},
+			},
 		},
 	};
 });

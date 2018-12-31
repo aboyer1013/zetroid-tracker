@@ -58,6 +58,26 @@ const LogicPartialAvailability = types.model().volatile(self => {
 					return false;
 				},
 			},
+			palaceOfDarkness: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.palaceOfDarkness()) {
+						return false;
+					}
+					if (!abl.hasItem('bow')) {
+						return true;
+					}
+					if (chests.qty < 2 && !abl.hasItem('hammer')) {
+						return true;
+					}
+					if (!abl.hasItem('lantern')) {
+						return true;
+					}
+					return false;
+				},
+			},
 		},
 	};
 });

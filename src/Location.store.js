@@ -124,7 +124,10 @@ const LocationStore = types.compose(
 			if (!self.mustDefeatAgahnimFirst[self.name]) {
 				return false;
 			}
-			return self.mustDefeatAgahnimFirst[self.name]();
+			if (isFunction(self.mustDefeatAgahnimFirst[self.name])) {
+				return self.mustDefeatAgahnimFirst[self.name]();
+			}
+			return some(self.areas, area => area.mustDefeatAgahnimFirst);
 		},
 		// Returns true if the location's items are ALL acquirable in ALL areas.
 		get isAvailable() {

@@ -86,8 +86,7 @@ const LayoutStore = types
 												},
 												"enableClose": false
 											}
-										],
-										"active": true
+										]
 									}
 								]
 							},
@@ -100,6 +99,7 @@ const LayoutStore = types
 										"type": "tabset",
 										"id": "#22",
 										"weight": 73.95525612063639,
+										"selected": 1,
 										"children": [
 											{
 												"type": "tab",
@@ -121,7 +121,8 @@ const LayoutStore = types
 												},
 												"enableClose": false
 											}
-										]
+										],
+										"active": true
 									},
 									{
 										"type": "tabset",

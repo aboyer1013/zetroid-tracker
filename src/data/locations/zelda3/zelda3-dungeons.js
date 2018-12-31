@@ -51,12 +51,32 @@ let zelda3LightWorldDungeons = [
 	},
 ];
 let zelda3DarkWorldDungeons = [
-
+	{
+		coords: [-1600, 3930],
+		name: 'palaceOfDarkness',
+		longName: 'Palace of Darkness',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'helmasaur',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{numChests: 5}],
+			},
+		],
+	},
 ];
 
 zelda3LightWorldDungeons = zelda3LightWorldDungeons.map(dungeon => {
 	return Object.assign(dungeon, {
 		map: 'zelda3-lw',
+		game: 'zelda3',
+	});
+});
+zelda3DarkWorldDungeons = zelda3DarkWorldDungeons.map(dungeon => {
+	return Object.assign(dungeon, {
+		map: 'zelda3-dw',
 		game: 'zelda3',
 	});
 });
