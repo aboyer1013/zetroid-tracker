@@ -34,6 +34,21 @@ let zelda3LightWorldDungeons = [
 			},
 		],
 	},
+	{
+		coords: [-130, 2295],
+		name: 'towerOfHera',
+		longName: 'Tower of Hera',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'moldorm',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{numChests: 2}],
+			},
+		],
+	},
 ];
 let zelda3DarkWorldDungeons = [
 

@@ -30,6 +30,21 @@ const LogicEnterability = types.model().volatile(self => {
 				if (abl.canAccessMiseryMirePortal() && abl.hasItem('mirror')) {
 					return true;
 				}
+				return false;
+			},
+			towerOfHera: () => {
+				const abl = self.abilities;
+
+				if (!abl.canEnterWestDeathMountain()) {
+					return false;
+				}
+				if (abl.hasItem('mirror')) {
+					return true;
+				}
+				if (abl.canGrapple && abl.hasItem('hammer')) {
+					return true;
+				}
+				return false;
 			}
 		},
 	};

@@ -25,10 +25,10 @@ const LayoutStore = types
 		borderBarSize: 40,
 		borderEnableDrop: true,
 		borderClassName: types.maybeNull(types.string),
-		showBorderTop: true,
-		showBorderRight: true,
-		showBorderBottom: true,
-		showBorderLeft: true,
+		showBorderTop: false,
+		showBorderRight: false,
+		showBorderBottom: false,
+		showBorderLeft: false,
 	})
 	.volatile(() => ({
 		layoutPresets: {
@@ -54,12 +54,12 @@ const LayoutStore = types
 							{
 								"type": "row",
 								"id": "#32",
-								"weight": 9.98702983138781,
+								"weight": 10.078219013237065,
 								"children": [
 									{
 										"type": "tabset",
 										"id": "#15",
-										"weight": 43.669871794871796,
+										"weight": 36.21987951807229,
 										"children": [
 											{
 												"type": "tab",
@@ -74,7 +74,7 @@ const LayoutStore = types
 									{
 										"type": "tabset",
 										"id": "#31",
-										"weight": 56.330128205128204,
+										"weight": 63.78012048192771,
 										"children": [
 											{
 												"type": "tab",
@@ -94,12 +94,12 @@ const LayoutStore = types
 							{
 								"type": "row",
 								"id": "#23",
-								"weight": 23.346303501945524,
+								"weight": 23.255114320096272,
 								"children": [
 									{
 										"type": "tabset",
 										"id": "#22",
-										"weight": 65.36164424263319,
+										"weight": 73.95525612063639,
 										"children": [
 											{
 												"type": "tab",
@@ -126,7 +126,7 @@ const LayoutStore = types
 									{
 										"type": "tabset",
 										"id": "#27",
-										"weight": 21.874801540499348,
+										"weight": 13.28118966249614,
 										"children": [
 											{
 												"type": "tab",
@@ -148,27 +148,27 @@ const LayoutStore = types
 						{
 							"type": "border",
 							"size": 257,
+							"show": false,
 							"location": "left",
-							"children": [],
-							"show": false,
+							"children": []
 						},
 						{
 							"type": "border",
+							"show": false,
 							"location": "right",
-							"children": [],
-							"show": false,
+							"children": []
 						},
 						{
 							"type": "border",
+							"show": false,
 							"location": "bottom",
-							"children": [],
-							"show": false,
+							"children": []
 						},
 						{
 							"type": "border",
-							"location": "top",
-							"children": [],
 							"show": false,
+							"location": "top",
+							"children": []
 						}
 					]
 				},

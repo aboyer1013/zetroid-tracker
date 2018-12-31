@@ -49,8 +49,9 @@ const LogicAvailability = types.model().volatile(self => {
 					if (self.beatability.lanmolas() && abl.canLightTorches && abl.canLiftRocks) {
 						return true;
 					}
+					return false;
 				},
-				lanmolas: area => {
+				lanmolas: () => {
 					const abl = self.abilities;
 
 					if (!abl.canLiftRocks || !abl.canLightTorches || !self.enterability.desertPalace()) {
@@ -59,6 +60,38 @@ const LogicAvailability = types.model().volatile(self => {
 					if (abl.canDash && self.beatability.lanmolas()) {
 						return true;
 					}
+					return false;
+				},
+			},
+			towerOfHera: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.towerOfHera()) {
+						return false;
+					}
+					if (!abl.canLightTorches) {
+						return false;
+					}
+					if (chests.qty === chests.maxQty || abl.hasSwordTier >= 1 || abl.hasItem('hammer')) {
+						return true;
+					}
+					return false;
+				},
+				moldorm: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasSwordTier === 0 && !abl.hasItem('hammer')) {
+						return false;
+					}
+					if (!self.enterability.towerOfHera()) {
+						return false;
+					}
+					if (abl.canLightTorches) {
+						return true;
+					}
+					return false;
 				},
 			},
 			kingsTomb: () => {

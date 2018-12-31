@@ -19,6 +19,22 @@ const LogicPossibility = types.model().volatile(self => {
 					}
 				},
 			},
+			towerOfHera: {
+				moldorm: area => {
+					const abl = self.abilities;
+
+					if (abl.hasSwordTier === 0 && !abl.hasItem('hammer')) {
+						return false;
+					}
+					if (!self.enterability.towerOfHera()) {
+						return false;
+					}
+					if (!abl.canLightTorches) {
+						return true;
+					}
+					return false;
+				},
+			},
 		},
 	};
 });

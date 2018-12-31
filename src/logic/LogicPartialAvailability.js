@@ -39,11 +39,25 @@ const LogicPartialAvailability = types.model().volatile(self => {
 					) {
 						return true;
 					}
+				},
+			},
+			towerOfHera: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
 
-
-					// if (!canDash() || (trackerData.zelda3.dungeonchests[1] !== 2 && (!this.canHurtBoss() || !canLightTorches() || !canLiftRocks()))) {}
-				}
-			}
+					if (!self.enterability.towerOfHera()) {
+						return false;
+					}
+					if (!abl.canLightTorches) {
+						return true;
+					}
+					if (chests.qty !== chests.maxQty && abl.hasSwordTier === 0 && !abl.hasItem('hammer')) {
+						return true;
+					}
+					return false;
+				},
+			},
 		},
 	};
 });

@@ -102,6 +102,11 @@
 // Dungeon List
 .item-list-container.dungeon-list-container {
 	display: flex;
+	flex-wrap: wrap;
+	padding: 5px;
+	.dungeon-container {
+		padding: 5px;
+	}
 	.dungeon-title {
 		//text-transform: uppercase;
 	}
