@@ -7,6 +7,9 @@ import LogicAvailability from '~/logic/LogicAvailability';
 import LogicViewability from '~/logic/LogicViewability';
 import LogicPartialAvailability from '~/logic/LogicPartialAvailability';
 import LogicAgahnim from '~/logic/LogicAgahnim';
+import LogicEnterability from '~/logic/LogicEnterability';
+import LogicPossibility from '~/logic/LogicPossibility';
+import LogicBeatability from '~/logic/LogicBeatability';
 import AreaStore from '~/Area.store';
 import {
 	isBoolean,
@@ -24,6 +27,9 @@ const LocationStore = types.compose(
 	LogicViewability,
 	LogicPartialAvailability,
 	LogicAgahnim,
+	LogicEnterability,
+	LogicPossibility,
+	LogicBeatability,
 	types.model({
 		id: types.identifier,
 		name: types.string,
@@ -63,37 +69,7 @@ const LocationStore = types.compose(
 			UNAVAILABLE: 'UNAVAILABLE',
 		}),
 	})
-	.volatile((self) => {
-		// All the logic to determine if the location is viewable goes here
-		return {
-			possibility: {
-				easternPalace: {
-					armos: () => self.enterability.easternPalace() && self.abilities.hasItem('bow'),
-				},
-			},
-			/*
-			TODO Will keep separate for now but may consider putting enterability into availability.
-			=== Not sure why there's the distinction between can/may ===
-			hasMedallion
-				Checks the medallion gate for the dungeon and has the same medallion acquired.
-			mayHaveMedallion
-				Checks the medallion gate for the dungeon but does not have it acquired.
-			canEnter
-				All the necessary acquired items to enter dungeon
-				(w/hasMedallion - you know what medallion you need to enter, and have the medallion equipped)
-			mayEnter
-				All the necessary acquired items to enter dungeon
-				(w/mayHaveMedallion - you know what the medallion you need to enter, but do not have it in possesion)
-			 */
-			enterability: {
-				easternPalace: () => true,
-			},
-			// Not used for now - putting into availability since it seems to be the same thing.
-			beatability: {
 
-			},
-		};
-	})
 	.views(self => ({
 		get details() {
 			return {

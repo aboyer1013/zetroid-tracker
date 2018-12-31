@@ -28,7 +28,7 @@ const MapLogicHelpers = types
 			return result ? result.tier : 0;
 		},
 		get canActivateTablets() {
-			return self.canRead && self.hasSwordTier >= 1;
+			return self.canRead && self.hasSwordTier >= 2;
 		},
 		get canActivateMedallions() {
 			return self.hasSwordTier >= 1;

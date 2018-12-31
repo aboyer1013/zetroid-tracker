@@ -18,6 +18,32 @@ const LogicPartialAvailability = types.model().volatile(self => {
 					return false;
 				},
 			},
+			desertPalace: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.desertPalace()) {
+						return false;
+					}
+					if (!abl.canDash) {
+						return true;
+					}
+					if (chests.qty === chests.maxQty) {
+						return false;
+					}
+					if (
+						!self.beatability.lanmolas()
+						|| !abl.canLightTorches
+						|| !abl.canLiftRocks
+					) {
+						return true;
+					}
+
+
+					// if (!canDash() || (trackerData.zelda3.dungeonchests[1] !== 2 && (!this.canHurtBoss() || !canLightTorches() || !canLiftRocks()))) {}
+				}
+			}
 		},
 	};
 });

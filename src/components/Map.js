@@ -125,7 +125,7 @@ const Map = class Map extends Component {
 			} else if (!loc.boss.acquired) {
 				markerOptions.icon = icon.DUNGEON;
 			}
-			if (loc.isPossible) {
+			if (loc.isPossible && !loc.isDungeonComplete && !loc.isAvailable) {
 				markerOptions.extraClasses += ' is-dungeon-possible'
 			}
 		}

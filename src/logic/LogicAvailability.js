@@ -1,6 +1,19 @@
 import { types, getRoot } from 'mobx-state-tree';
 import { head } from 'lodash';
 
+/*
+=== DUNGEONS ONLY ===
+location.dungeon:
+	Only checks if you can enter the dungeon.
+	You may not be able to do collect anything inside, but you can at least enter.
+	AKA "canGetChest"
+
+location[BOSS_NAME]:
+	If you are able to enter the dungeon and have the ability to kill the boss.
+	You could still not have the ability to open any chests.
+	AKA "isBeatable"
+*/
+
 const LogicAvailability = types.model().volatile(self => {
 	return {
 		availability: {
@@ -21,7 +34,32 @@ const LogicAvailability = types.model().volatile(self => {
 					return false;
 				},
 				armos: () => self.enterability.easternPalace() && self.abilities.hasItem('bow') && self.abilities.hasItem('lantern'),
+			},
+			desertPalace: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
 
+					if (!self.enterability.desertPalace() || !abl.canDash) {
+						return false;
+					}
+					if (chests.qty === chests.maxQty) {
+						return true;
+					}
+					if (self.beatability.lanmolas() && abl.canLightTorches && abl.canLiftRocks) {
+						return true;
+					}
+				},
+				lanmolas: area => {
+					const abl = self.abilities;
+
+					if (!abl.canLiftRocks || !abl.canLightTorches || !self.enterability.desertPalace()) {
+						return false;
+					}
+					if (abl.canDash && self.beatability.lanmolas()) {
+						return true;
+					}
+				},
 			},
 			kingsTomb: () => {
 				const abl = self.abilities;
