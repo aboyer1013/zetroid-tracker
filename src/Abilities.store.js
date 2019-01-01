@@ -86,86 +86,34 @@ const MapLogicHelpers = types
 			return self.hasItem('moonPearl') || self.hasItem('bottle');
 		},
 		canDefeatAgahnim: (allowOutOfLogicGlitches = false) => {
-			return (
-				!self.hasItem('agahnim')
-				&& (self.hasItem('lantern') || allowOutOfLogicGlitches)
-				&& (self.hasItem('cape') || self.hasSwordTier >= 2)
-				&& (self.hasSwordTier >= 1)
-			);
-		},
-		canEnterNorthEastDarkWorld: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
-			switch (self.config.MAP_LOGIC) {
-			case 'majorGlitches':
-				if (self.hasItem('agahnim')) {
-					return true;
-				}
-				if (agahnimCheck && self.canDefeatAgahnim(allowOutOfLogicGlitches)) {
-					return true;
-				}
-				if (
-					self.hasItem('moonPearl')
-						&& (
-							(self.canLiftDarkRocks && (self.canDash || self.canSwim))
-							|| (self.hasItem('hammer') && self.canLiftRocks)
-						)
-				) {
-					return true;
-				}
-				if (
-					self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches)
-						&& (
-							self.hasItem('bottle')
-							|| (self.hasItem('mirror') && self.canSpinSpeed)
-							|| (self.hasItem('moonPearl') && (self.hasItem('mirror') || self.canDash))
-						)
-				) {
-					return true;
-				}
-				return false;
-			case 'owGlitches':
-				if (self.hasItem('agahnim')) {
-					return true;
-				}
-				if (agahnimCheck && self.canDefeatAgahnim(allowOutOfLogicGlitches)) {
-					return true;
-				}
-				if (
-					self.hasItem('moonPearl')
-						&& (
-							(self.canLiftDarkRocks && (self.canDash || self.canSwim))
-							|| (self.hasItem('hammer') && self.canLiftRocks)
-						)
-				) {
-					return true;
-				}
-				if (
-					self.canEnterWestDeathMountain('owGlitches', allowOutOfLogicGlitches)
-						&& (
-							(self.hasItem('mirror') && self.canSpinSpeed)
-							|| (self.hasItem('moonPearl') && (self.hasItem('mirror') || self.canDash))
-						)
-				) {
-					return true;
-				}
-				return false;
-			default:
-				if (self.hasItem('agahnim')) {
-					return true;
-				}
-				if (agahnimCheck && self.canDefeatAgahnim(allowOutOfLogicGlitches)) {
-					return true;
-				}
-				if (self.hasItem('hammer') && self.canLiftRocks && self.hasItem('moonPearl')) {
-					return true;
-				}
-				if (self.canLiftDarkRocks && self.canSwim && self.hasItem('moonPearl')) {
-					return true;
-				}
-				if (self.canAccessDarkWorldPortal() && self.canSwim && self.hasItem('moonPearl')) {
-					return true;
-				}
+			if (self.hasItem('agahnim')) {
 				return false;
 			}
+			if (!self.hasItem('cape') && self.hasSwordTier <= 1) {
+				return false;
+			}
+			if (self.hasSwordTier <= 0) {
+				return false;
+			}
+			return self.hasItem('lantern');
+		},
+		canEnterNorthEastDarkWorld: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
+			if (self.hasItem('agahnim')) {
+				return true;
+			}
+			if (agahnimCheck && self.canDefeatAgahnim(allowOutOfLogicGlitches)) {
+				return true;
+			}
+			if (self.hasItem('hammer') && self.canLiftRocks && self.hasItem('moonPearl')) {
+				return true;
+			}
+			if (self.canLiftDarkRocks && self.canSwim && self.hasItem('moonPearl')) {
+				return true;
+			}
+			if (self.canAccessDarkWorldPortal() && self.canSwim && self.hasItem('moonPearl')) {
+				return true;
+			}
+			return false;
 		},
 		canEnterNorthWestDarkWorld: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
 			switch (self.config.MAP_LOGIC) {
@@ -230,73 +178,28 @@ const MapLogicHelpers = types
 			}
 		},
 		canEnterSouthDarkWorld: (agahnimCheck, allowOutOfLogicGlitches) => {
-			switch (self.config.MAP_LOGIC) {
-			case 'majorGlithces':
-				if (self.canEnterWestDeathMountain(allowOutOfLogicGlitches)) {
-					return true;
-				}
-				if (
-					(
-						self.hasItem('moonPearl')
-							&& (
-								self.canLiftDarkRocks
-								|| (self.hasItem('hammer') && self.canLiftRocks)
-								|| (
-									(self.hasItem('agahnim') || (agahnimCheck && self.canDefeatAgahnim(allowOutOfLogicGlitches)))
-									&& (self.hasItem('hammer') || (self.canGrapple && (self.canSwim || self.canLiftRocks)))
-								)
-							)
-					)
-				) {
-					return true;
-				}
-				return false;
-			case 'owGlitches':
-				if (
-					(
-						(
-							self.hasItem('moonPearl')
-								&& (
-									self.canLiftDarkRocks
-									|| (self.hasItem('hammer') && self.canLiftRocks)
-									|| (
-										self.hasItem('agahnim')
-										&& (
-											self.hasItem('hammer')
-											|| (self.canGrapple && (self.canLiftRocks || self.canSwim))
-										)
-									)
-								)
-						)
-							|| (
-								(self.hasItem('mirror') || (self.canDash && self.hasItem('moonPearl')))
-								&& self.canEnterWestDeathMountain(allowOutOfLogicGlitches)
-							)
-							|| (self.canAccessDarkWorldPortal() && self.canSwim)
-					)
-				) {
-					return true;
-				}
-				return false;
-			default:
-				if (
-					self.hasItem('moonPearl')
-						&& (
-							self.canLiftDarkRocks
-							|| (self.hasItem('hammer') && self.canLiftRocks)
-							|| (
-								self.canEnterNorthEastDarkWorld(agahnimCheck, allowOutOfLogicGlitches)
-								&& (
-									self.hasItem('hammer')
-									|| (self.canGrapple && (self.canSwim || self.canLiftRocks))
-								)
-							)
-						)
-				) {
-					return true;
-				}
+			if (!self.hasItem('moonPearl')) {
 				return false;
 			}
+			if (self.canLiftDarkRocks) {
+				return true;
+			}
+			if (self.hasItem('hammer') && self.canLiftRocks) {
+				return true;
+			}
+			if (!self.canEnterNorthEastDarkWorld()) {
+				return false;
+			}
+			if (self.hasItem('hammer')) {
+				return true;
+			}
+			if (!self.canGrapple) {
+				return false;
+			}
+			if (self.canSwim || self.canLiftRocks) {
+				return true;
+			}
+			return false;
 		},
 		canEnterMireArea: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
 			switch (self.config.MAP_LOGIC) {

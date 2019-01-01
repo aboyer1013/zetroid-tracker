@@ -17,6 +17,28 @@ location[BOSS_NAME]:
 const LogicAvailability = types.model().volatile(self => {
 	return {
 		availability: {
+			swampPalace: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.swampPalace()) {
+						return false;
+					}
+					if (!abl.hasItem('hammer')) {
+						return false;
+					}
+					return abl.canGrapple || chests.qty >= 5;
+				},
+				arrghus: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('hammer') || !abl.canGrapple) {
+						return false;
+					}
+					return self.enterability.swampPalace();
+				},
+			},
 			easternPalace: {
 				dungeon: area => {
 					const abl = self.abilities;

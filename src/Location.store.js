@@ -210,17 +210,17 @@ const LocationStore = types.compose(
 				if (self.isAvailable) {
 					return self.PROGRESSION.AVAILABLE;
 				}
-				if (self.isPartiallyAvailable) {
-					return self.PROGRESSION.PARTIAL;
+				if (self.isViewable) {
+					return self.PROGRESSION.VIEWABLE;
 				}
 				if (self.isAgahnimTheOnlyRemainingRequirement) {
 					return self.PROGRESSION.AGAHNIM;
 				}
+				if (self.isPartiallyAvailable) {
+					return self.PROGRESSION.PARTIAL;
+				}
 				if (self.isPossible) {
 					return self.PROGRESSION.POSSIBLE;
-				}
-				if (self.isViewable) {
-					return self.PROGRESSION.VIEWABLE;
 				}
 				return self.PROGRESSION.UNAVAILABLE;
 			},

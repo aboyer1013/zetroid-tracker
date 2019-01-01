@@ -66,6 +66,21 @@ let zelda3DarkWorldDungeons = [
 			},
 		],
 	},
+	{
+		coords: [-3830, 1920],
+		name: 'swampPalace',
+		longName: 'Swamp Palace',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'arrghus',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{numChests: 6}],
+			},
+		],
+	},
 ];
 
 zelda3LightWorldDungeons = zelda3LightWorldDungeons.map(dungeon => {

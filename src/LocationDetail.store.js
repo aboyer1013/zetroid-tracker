@@ -23,10 +23,10 @@ const LocationDetailStore = types
 				return 'is-success';
 			case loc.PROGRESSION.VIEWABLE:
 				return 'is-info';
-			case loc.PROGRESSION.PARTIAL:
-				return 'is-warning';
 			case loc.PROGRESSION.AGAHNIM:
 				return 'is-info';
+			case loc.PROGRESSION.PARTIAL:
+				return 'is-warning';
 			case loc.PROGRESSION.POSSIBLE:
 				return 'is-success';
 			default:
@@ -46,10 +46,10 @@ const LocationDetailStore = types
 				return 'fa-exclamation-circle';
 			case loc.PROGRESSION.VIEWABLE:
 				return 'fa-question-circle';
-			case loc.PROGRESSION.PARTIAL:
-				return 'fa-dot-circle';
 			case loc.PROGRESSION.AGAHNIM:
 				return 'fa-times-circle';
+			case loc.PROGRESSION.PARTIAL:
+				return 'fa-dot-circle';
 			case loc.PROGRESSION.POSSIBLE:
 				return 'fa-dot-circle';
 			default:
@@ -69,10 +69,10 @@ const LocationDetailStore = types
 				return 'Available';
 			case loc.PROGRESSION.VIEWABLE:
 				return 'Viewable';
-			case loc.PROGRESSION.PARTIAL:
-				return 'Partially Available';
 			case loc.PROGRESSION.AGAHNIM:
 				return 'Agahnim Must Be Defeated';
+			case loc.PROGRESSION.PARTIAL:
+				return 'Partially Available';
 			case loc.PROGRESSION.POSSIBLE:
 				return 'Possible';
 			default:

@@ -4,6 +4,36 @@ import { head } from 'lodash';
 const LogicPartialAvailability = types.model().volatile(self => {
 	return {
 		partialAvailability: {
+			swampPalace: {
+				dungeon: area => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.swampPalace()) {
+						return false;
+					}
+					if (!abl.hasItem('hammer') && chests.qty === chests.maxQty) {
+						return true;
+					}
+					if (abl.hasItem('hammer') && !self.canGrapple && chests.qty >= 3) {
+						return true;
+					}
+					/*
+					if (this.canEnter('glitchless', false, false)) {
+						if (has("hammer")) {
+							if (canGrapple() || trackerData.zelda3.dungeonchests[4] >= 5) {
+								availability.glitchless = 'available';
+							} else if (trackerData.zelda3.dungeonchests[4] >= 3) {
+								availability.glitchless = 'partial';
+							}
+						} else if (trackerData.zelda3.dungeonchests[4] === 6) {
+							availability.glitchless = 'partial';
+						}
+					}
+					*/
+					return false;
+				},
+			},
 			easternPalace: {
 				dungeon: area => {
 					const abl = self.abilities;

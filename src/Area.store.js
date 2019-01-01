@@ -48,10 +48,10 @@ const AreaStore = types
 				return 'is-success';
 			case self.PROGRESSION.VIEWABLE:
 				return 'is-info';
-			case self.PROGRESSION.PARTIAL:
-				return 'is-warning';
 			case self.PROGRESSION.AGAHNIM:
 				return 'is-info';
+			case self.PROGRESSION.PARTIAL:
+				return 'is-warning';
 			case self.PROGRESSION.POSSIBLE:
 				return 'is-success';
 			default:
@@ -71,11 +71,11 @@ const AreaStore = types
 			case self.PROGRESSION.VIEWABLE:
 				result = 'fa-question-circle';
 				break;
-			case self.PROGRESSION.PARTIAL:
-				result = 'fa-dot-circle';
-				break;
 			case self.PROGRESSION.AGAHNIM:
 				result = 'fa-times-circle';
+				break;
+			case self.PROGRESSION.PARTIAL:
+				result = 'fa-dot-circle';
 				break;
 			case self.PROGRESSION.POSSIBLE:
 				result = 'fa-dot-circle';
@@ -210,11 +210,11 @@ const AreaStore = types
 			if (self.isViewable) {
 				return self.PROGRESSION.VIEWABLE;
 			}
-			if (self.isPartiallyAvailable) {
-				return self.PROGRESSION.PARTIAL;
-			}
 			if (self.mustDefeatAgahnimFirst) {
 				return self.PROGRESSION.AGAHNIM;
+			}
+			if (self.isPartiallyAvailable) {
+				return self.PROGRESSION.PARTIAL;
 			}
 			if (self.isPossible) {
 				return self.PROGRESSION.POSSIBLE;
