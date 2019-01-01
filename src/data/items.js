@@ -1,3 +1,4 @@
+/* eslint-disable */
 import zelda3Dungeons from '~/data/locations/zelda3/zelda3-dungeons';
 
 const itemsData = [

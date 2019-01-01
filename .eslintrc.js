@@ -2,12 +2,13 @@ const path = require('path');
 
 module.exports = {
 	env: {
-		browser: true
+		browser: true,
+		'jest/globals': true,
 	},
-	extends: 'react-app',
-	globals: {
-		it: false,
-	},
+	extends: 'eslint-config-airbnb',
+	plugins: [
+		'jest'
+	],
 	parser: 'babel-eslint',
 	rules: {
 		'arrow-body-style': 'off',
@@ -17,7 +18,7 @@ module.exports = {
 		'import/named': 'off',
 		'import/no-named-as-default': 'off',
 		'import/no-named-as-default-member': 'off',
-		'indent': ['error', 'tab'],
+		'indent': [2, 'tab', {'SwitchCase': 1}],
 		'jsx-a11y/anchor-is-valid': 'off',
 		'jsx-a11y/label-has-associated-control': 'off',
 		'jsx-a11y/label-has-for': 'off',
@@ -41,15 +42,15 @@ module.exports = {
 	},
 	settings: {
 		'import/resolver': {
-			node: {
-				paths: [path.resolve(__dirname, 'src')],
-			},
-			// alias: {
-			// 	map: [
-			// 		['', './src'],
-			// 	],
-			// 	extensions: ['.js', '.jsx'],
-			// }
+			// node: {
+			// 	paths: [path.resolve(__dirname, './src')],
+			// },
+			alias: {
+				map: [
+					['~', './src'],
+				],
+				extensions: ['.js', '.jsx'],
+			}
 		}
 	}
 };
