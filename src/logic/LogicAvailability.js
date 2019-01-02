@@ -173,7 +173,7 @@ const LogicAvailability = types.model().volatile(self => {
 				// if (abl.canEnterEastDeathMountain() && self.hasItem('mirror') && self.)
 				//
 				// if (abl.canEnterEastDeathMountain() && self.hasItem("mirror") && dungeons.zelda3[9].mayEnter("glitchless", false)) {
-				// 	if (has("firerod") && dungeons.zelda3[9].canEnter("glitchless", false)) {
+				// 	if (has("fireRod") && dungeons.zelda3[9].canEnter("glitchless", false)) {
 				// 		availability.glitchless = "available";
 				// 	}
 				// 	else {

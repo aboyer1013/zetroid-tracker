@@ -75,7 +75,7 @@ const itemsData = [
 		items: [
 			{ type: ['item'], name: 'shield',         longName: 'Fighter’s Shield',  game: 'zelda3', image: 'shield1', group: 'shield', groupIndex: 0, isDefault: true, tier: 1, },
 			{ type: ['item'], name: 'red-shield',     longName: 'Red Shield',        game: 'zelda3', image: 'shield2', group: 'shield', groupIndex: 1, tier: 2, },
-			{ type: ['item'], name: 'mirror-shield',  longName: 'Mirror Shield',     game: 'zelda3', image: 'shield3', group: 'shield', groupIndex: 2, tier: 3, },
+			{ type: ['item'], name: 'mirrorShield',  longName: 'Mirror Shield',     game: 'zelda3', image: 'shield3', group: 'shield', groupIndex: 2, tier: 3, },
 		],
 	},
 	{
@@ -84,7 +84,7 @@ const itemsData = [
 		type: ['item'],
 		items: [
 			{ type: ['item'], name: 'glove',          longName: 'Power Glove',       game: 'zelda3', image: 'glove1', group: 'glove', groupIndex: 0, isDefault: true, tier: 1, },
-			{ type: ['item'], name: 'titan-mitt',     longName: 'Titan’s Mitt',      game: 'zelda3', image: 'glove2', group: 'glove', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'titanMitt',     longName: 'Titan’s Mitt',      game: 'zelda3', image: 'glove2', group: 'glove', groupIndex: 1, tier: 2, },
 		],
 	},
 	{ type: ['item'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', },

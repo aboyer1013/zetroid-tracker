@@ -45,16 +45,16 @@ const MapLogicHelpers = types
 			return self.hasItem('flippers');
 		},
 		get canLiftRocks() {
-			return self.hasItem('glove') || self.hasItem('titan-mitt');
+			return self.hasItem('glove') || self.hasItem('titanMitt');
 		},
 		get canLiftDarkRocks() {
-			return self.hasItem('titan-mitt');
+			return self.hasItem('titanMitt');
 		},
 		get canLightTorches() {
-			return self.hasItem('firerod') || self.hasItem('lantern');
+			return self.hasItem('fireRod') || self.hasItem('lantern');
 		},
 		get canMeltThings() {
-			return self.hasItem('firerod') || (self.hasItem('bombos') || self.canActivateMedallions);
+			return self.hasItem('fireRod') || (self.hasItem('bombos') || self.canActivateMedallions);
 		},
 		get canFly() {
 			return self.hasItem('flute');
@@ -66,7 +66,7 @@ const MapLogicHelpers = types
 			return self.hasItem('bow');
 		},
 		get canBlockLasers() {
-			return self.hasItem('mirror-shield');
+			return self.hasItem('mirrorShield');
 		},
 		get canExtendMagic() {
 			const mpUpgrade = self.getItemsByGroup('mpUpgrade');

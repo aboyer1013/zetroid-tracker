@@ -33,7 +33,7 @@ const LogicViewability = types.model().volatile(self => {
 				// if (book.acquired) {
 				// 	return true;
 				// }
-				// const items = ['titan-mitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
+				// const items = ['titanMitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
 				// return items.every(item => item && item.acquired);
 			},
 			zoraArea: {
