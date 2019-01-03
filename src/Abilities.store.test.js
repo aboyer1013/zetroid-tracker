@@ -450,5 +450,721 @@ describe('Abilities:', () => {
 				expect(store.canDefeatAgahnim()).toBe(expected);
 			});
 		});
+		describe('Ability to enter northeast Dark World:', () => {
+			test.each`
+				agahnimCheck | agahnim | canDefeatAgahnim | hammer | canLiftRocks | moonPearl | canLiftDarkRocks | canSwim | canAccessDarkWorldPortal | expected 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} 
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} 
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} 
+			`('returns $expected when agahnimCheck is $agahnimCheck and agahnim is $agahnim and canDefeatAgahnim is $canDefeatAgahnim and hammer is $hammer and canLiftRocks is $canLiftRocks and moonPearl is $moonPearl and canLiftDarkRocks is $canLiftDarkRocks and canSwim is $canSwim and canAccessDarkWorldPortal is $canAccessDarkWorldPortal.', ({
+				agahnimCheck,
+				agahnim,
+				canDefeatAgahnim,
+				hammer,
+				canLiftRocks,
+				moonPearl,
+				canLiftDarkRocks,
+				canSwim,
+				canAccessDarkWorldPortal,
+				expected,
+			}) => {
+				items.agahnim = agahnim;
+				items.hammer = hammer;
+				items.moonPearl = moonPearl;
+
+				jest.spyOn(store, 'canLiftRocks', 'get').mockReturnValue(canLiftRocks);
+				jest.spyOn(store, 'canLiftDarkRocks', 'get').mockReturnValue(canLiftDarkRocks);
+				jest.spyOn(store, 'canSwim', 'get').mockReturnValue(canSwim);
+				store.canDefeatAgahnim = jest.fn().mockReturnValue(canDefeatAgahnim);
+				store.canAccessDarkWorldPortal = jest.fn().mockReturnValue(canAccessDarkWorldPortal);
+
+				expect(store.canEnterNorthEastDarkWorld(agahnimCheck)).toBe(expected);
+			});
+		});
+		describe('Ability to enter northwest Dark World:', () => {
+			test.each`
+				canLiftRocks | moonPearl | canLiftDarkRocks | hammer | canEnterNorthEastDarkWorld | canGrapple | canSwim | expected
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true}
+			`('returns $expected when canLiftRocks is $canLiftRocks and moonPearl is $moonPearl and canLiftDarkRocks is $canLiftDarkRocks and hammer is $hammer and canEnterNorthEastDarkWorld is $canEnterNorthEastDarkWorld and canGrapple is $canGrapple and canSwim is $canSwim.', ({
+				canLiftRocks,
+				moonPearl,
+				canLiftDarkRocks,
+				hammer,
+				canEnterNorthEastDarkWorld,
+				canGrapple,
+				canSwim,
+				expected,
+			}) => {
+				items.moonPearl = moonPearl;
+				items.hammer = hammer;
+				jest.spyOn(store, 'canLiftDarkRocks', 'get').mockReturnValue(canLiftDarkRocks);
+				jest.spyOn(store, 'canLiftRocks', 'get').mockReturnValue(canLiftRocks);
+				jest.spyOn(store, 'canGrapple', 'get').mockReturnValue(canGrapple);
+				jest.spyOn(store, 'canSwim', 'get').mockReturnValue(canSwim);
+				store.canEnterNorthEastDarkWorld = jest.fn().mockReturnValue(canEnterNorthEastDarkWorld);
+
+				expect(store.canEnterNorthWestDarkWorld()).toBe(expected);
+			});
+		});
+		describe('Ability to enter south Dark World:', () => {
+			test.each`
+				canLiftRocks | moonPearl | canLiftDarkRocks | hammer | canEnterNorthEastDarkWorld | canGrapple | canSwim | expected
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${false} | ${false}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${false} | ${false} | ${false} | ${true}
+			`('returns $expected when canLiftRocks is $canLiftRocks and moonPearl is $moonPearl and canLiftDarkRocks is $canLiftDarkRocks and hammer is $hammer and canEnterNorthEastDarkWorld is $canEnterNorthEastDarkWorld and canGrapple is $canGrapple and canSwim is $canSwim.', ({
+				canLiftRocks,
+				moonPearl,
+				canLiftDarkRocks,
+				hammer,
+				canEnterNorthEastDarkWorld,
+				canGrapple,
+				canSwim,
+				expected,
+			}) => {
+				items.moonPearl = moonPearl;
+				items.hammer = hammer;
+				jest.spyOn(store, 'canLiftDarkRocks', 'get').mockReturnValue(canLiftDarkRocks);
+				jest.spyOn(store, 'canLiftRocks', 'get').mockReturnValue(canLiftRocks);
+				jest.spyOn(store, 'canGrapple', 'get').mockReturnValue(canGrapple);
+				jest.spyOn(store, 'canSwim', 'get').mockReturnValue(canSwim);
+				store.canEnterNorthEastDarkWorld = jest.fn().mockReturnValue(canEnterNorthEastDarkWorld);
+
+				expect(store.canEnterSouthDarkWorld()).toBe(expected);
+			});
+		});
 	});
 });
