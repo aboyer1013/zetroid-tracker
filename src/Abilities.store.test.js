@@ -1166,5 +1166,63 @@ describe('Abilities:', () => {
 				expect(store.canEnterSouthDarkWorld()).toBe(expected);
 			});
 		});
+		describe('Ability to enter Mire area:', () => {
+			test.each`
+				canAccessMiseryMirePortal | canFly | canLiftDarkRocks | expected
+				${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${true}
+				${true} | ${false} | ${true} | ${true}
+				${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${false}
+				${false} | ${false} | ${true} | ${false}
+				${false} | ${false} | ${false} | ${false}
+			`('returns $expected when canAccessMiseryMirePortal is $canAccessMiseryMirePortal and canFly is $canFly and canLiftDarkRocks is $canLiftDarkRocks.', ({
+				canAccessMiseryMirePortal,
+				canFly,
+				canLiftDarkRocks,
+				expected,
+              }) => {
+				store.canAccessMiseryMirePortal = jest.fn().mockReturnValue(canAccessMiseryMirePortal);
+				jest.spyOn(store, 'canFly', 'get').mockReturnValue(canFly);
+				jest.spyOn(store, 'canLiftDarkRocks', 'get').mockReturnValue(canLiftDarkRocks);
+
+				expect(store.canEnterMireArea()).toBe(expected);
+			});
+		});
+		describe('Ability to enter west Death Mountain:', () => {
+			test.each`
+				canFly | canLiftRocks | lantern | canAccessDeathMountainPortal | expected
+				${false} | ${false} | ${false} | ${true} | ${true}
+				${false} | ${false} | ${false} | ${false} | ${false}
+				${true} | ${false} | ${false} | ${true} | ${true}
+				${true} | ${false} | ${false} | ${false} | ${true}
+				${false} | ${false} | ${true} | ${true} | ${true}
+				${false} | ${false} | ${true} | ${false} | ${false}
+				${true} | ${false} | ${true} | ${true} | ${true}
+				${true} | ${false} | ${true} | ${false} | ${true}
+				${false} | ${true} | ${false} | ${true} | ${true}
+				${false} | ${true} | ${false} | ${false} | ${false}
+				${true} | ${true} | ${false} | ${true} | ${true}
+				${true} | ${true} | ${false} | ${false} | ${true}
+				${false} | ${true} | ${true} | ${true} | ${true}
+				${false} | ${true} | ${true} | ${false} | ${true}
+				${true} | ${true} | ${true} | ${true} | ${true}
+				${true} | ${true} | ${true} | ${false} | ${true}
+			`('returns $expected when canFly is $canFly and canLiftRocks is $canLiftRocks and lantern is $lantern and canAccessDeathMountainPortal is $canAccessDeathMountainPortal', ({
+				canFly,
+				canLiftRocks,
+				lantern,
+				canAccessDeathMountainPortal,
+				expected,
+			}) => {
+				items.lantern = lantern;
+				jest.spyOn(store, 'canFly', 'get').mockReturnValue(canFly);
+				jest.spyOn(store, 'canLiftRocks', 'get').mockReturnValue(canLiftRocks);
+				store.canAccessDeathMountainPortal = jest.fn().mockReturnValue(canAccessDeathMountainPortal);
+
+				expect(store.canEnterWestDeathMountain()).toBe(expected);
+			});
+		});
 	});
 });

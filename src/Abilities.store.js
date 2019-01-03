@@ -156,65 +156,20 @@ const MapLogicHelpers = types
 			}
 			return false;
 		},
-		canEnterMireArea: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
-			switch (self.config.MAP_LOGIC) {
-			case 'majorGlitches':
-				if (
-					self.hasItem('bottle') && self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches)
-						|| (self.canLiftDarkRocks && (self.canFly || self.has('bottle') || self.canDash))
-						|| (self.glitchedLinkInDarkWorld && self.canDash && self.canEnterSouthDarkWorld('majorGlitches', agahnimCheck, allowOutOfLogicGlitches))
-				) {
-					return true;
-				}
-				return false;
-			case 'owGlitches':
-				if (
-					(self.canLiftDarkRocks && (self.canFly || self.canDash))
-						|| (self.hasItem('moonPearl') && self.canDash && self.canEnterSouthDarkWorld('owGlitches', agahnimCheck, allowOutOfLogicGlitches))
-				) {
-					return true;
-				}
-				return false;
-			default:
-				if (
-					(self.canFly && self.canLiftDarkRocks) || self.canAccessMiseryMirePortal()
-				) {
-					return true;
-				}
-				return false;
+		canEnterMireArea: () => {
+			if (self.canAccessMiseryMirePortal()) {
+				return true;
 			}
+			return self.canFly && self.canLiftDarkRocks;
 		},
-		canEnterWestDeathMountain: (allowOutOfLogicGlitches = false) => {
-			switch (self.config.MAP_LOGIC) {
-			case 'majorGlitches':
-				if (
-					self.canDash
-						|| self.has('bottle')
-						|| self.canFly
-						|| (self.canLiftRocks && (self.hasItem('lantern') || allowOutOfLogicGlitches))
-				) {
-					return true;
-				}
-				return false;
-			case 'owGlitches':
-				if (
-					self.canDash
-						|| self.canFly
-						|| (self.canLiftRocks && (self.hasItem('lantern')) || allowOutOfLogicGlitches)
-				) {
-					return true;
-				}
-				return false;
-			default:
-				if (
-					self.canFly
-						|| (self.canLiftRocks && (self.hasItem('lantern') || allowOutOfLogicGlitches))
-						|| self.canAccessDeathMountainPortal()
-				) {
-					return true;
-				}
-				return false;
+		canEnterWestDeathMountain: () => {
+			if (self.canFly) {
+				return true;
 			}
+			if (self.canLiftRocks && self.hasItem('lantern')) {
+				return true;
+			}
+			return self.canAccessDeathMountainPortal();
 		},
 		canEnterEastDeathMountain: (allowOutOfLogicGlitches = false) => {
 			switch (self.config.MAP_LOGIC) {
