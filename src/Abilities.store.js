@@ -171,65 +171,17 @@ const MapLogicHelpers = types
 			}
 			return self.canAccessDeathMountainPortal();
 		},
-		canEnterEastDeathMountain: (allowOutOfLogicGlitches = false) => {
-			switch (self.config.MAP_LOGIC) {
-			case 'majorGlitches':
-				if (
-					self.canDash
-						|| (self.canEnterWestDeathMountain(allowOutOfLogicGlitches) && (self.canGrapple || self.hasItem('mirror')))
-				) {
-					return true;
-				}
-				return false;
-			case 'owGlitches':
-				if (
-					self.canDash
-						|| (self.canEnterWestDeathMountain(allowOutOfLogicGlitches) && (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer'))))
-				) {
-					return true;
-				}
-				return false;
-			default:
-				if (
-					self.canEnterWestDeathMountain(allowOutOfLogicGlitches)
-						&& (self.canGrapple || (self.hasItem('mirror') && self.hasItem('hammer')))
-				) {
-					return true;
-				}
+		canEnterEastDeathMountain: () => {
+			if (!self.canEnterWestDeathMountain()) {
 				return false;
 			}
+			if (self.canGrapple) {
+				return true;
+			}
+			return self.hasItem('mirror') && self.hasItem('hammer');
 		},
-		canEnterEastDarkWorldDeathMountain: (agahnimCheck = false, allowOutOfLogicGlitches = false) => {
-			switch (self.config.MAP_LOGIC) {
-			case 'majorGlitches':
-				if (
-					self.hasItem('moonPearl')
-						|| (self.hasItem('bottle') && self.canDash)
-						|| ((self.canLiftDarkRocks || (self.hasItem('hammer') && self.canDash)) && self.canEnterEastDeathMountain('majorGlitches', allowOutOfLogicGlitches))
-						|| (self.hasItem('mirror') && self.canEnterWestDeathMountain('majorGlitches', allowOutOfLogicGlitches))
-				) {
-					return true;
-				}
-				return false;
-			case 'owGlitches':
-				if (
-					(self.hasItem('moonPearl') || self.canDash)
-						|| (
-							(self.canLiftDarkRocks || (self.hasItem('hammer') && self.canDash))
-							&& self.canEnterEastDeathMountain('owGlitches', allowOutOfLogicGlitches)
-						)
-				) {
-					return true;
-				}
-				return false;
-			default:
-				if (
-					self.canLiftDarkRocks && self.canEnterEastDeathMountain(allowOutOfLogicGlitches)
-				) {
-					return true;
-				}
-				return false;
-			}
+		canEnterEastDarkWorldDeathMountain: () => {
+			return self.canLiftDarkRocks && self.canEnterEastDeathMountain();
 		},
 		// TODO - Flesh portals out once SM is created. Finish each game rando first, then figure out combining the two.
 		// SM -> ALttP portals
