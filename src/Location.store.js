@@ -12,13 +12,17 @@ import LogicPossibility from '~/logic/LogicPossibility';
 import LogicBeatability from '~/logic/LogicBeatability';
 import AreaStore from '~/Area.store';
 import {
-	isBoolean,
-	isFunction,
-	some,
 	every,
-	reject,
-	isNull,
+	filter,
+	find,
+	get,
 	includes,
+	isBoolean,
+	isEmpty,
+	isFunction,
+	isNull,
+	reject,
+	some,
 } from 'lodash';
 
 const LocationStore = types.compose(
@@ -223,6 +227,46 @@ const LocationStore = types.compose(
 					return self.PROGRESSION.POSSIBLE;
 				}
 				return self.PROGRESSION.UNAVAILABLE;
+			},
+			get medallionGateKnown() {
+				if (!self.medallion) {
+					return false;
+				}
+				return self.selectedMedallionGate.name !== 'unknownMedallion';
+			},
+			get selectedMedallionGate() {
+				if (!self.medallion) {
+					return false;
+				}
+				return find(self.medallion.items, item => item.acquired);
+			},
+			get maybeHasMedallionGate() {
+				if (!self.medallion) {
+					return false;
+				}
+				return !isEmpty(self.acquiredMedallions);
+			},
+			get hasMedallionGate() {
+				if (!self.medallion || !self.medallionGateKnown || isEmpty(self.acquiredMedallions)) {
+					return false;
+				}
+				let medallionFound = false;
+				self.acquiredMedallions.forEach((acquiredMedallion) => {
+					if (acquiredMedallion.name === get(self, 'selectedMedallionGate.name')) {
+						medallionFound = true;
+						return false;
+					}
+					return true;
+				});
+				return medallionFound;
+			},
+			get acquiredMedallions() {
+				const root = getRoot(self);
+				const bombos = root.getItemByName('bombos').acquired ? root.getItemByName('bombos') : null;
+				const ether = root.getItemByName('ether').acquired ? root.getItemByName('ether') : null;
+				const quake = root.getItemByName('quake').acquired ? root.getItemByName('quake') : null;
+
+				return filter([bombos, ether, quake]);
 			},
 		}))
 		.actions((self) => {

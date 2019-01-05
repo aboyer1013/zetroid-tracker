@@ -4,6 +4,23 @@ import { head } from 'lodash';
 const LogicPartialAvailability = types.model().volatile((self) => {
 	return {
 		partialAvailability: {
+			miseryMire: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.miseryMire() || !self.hasMedallionGate) {
+						return false;
+					}
+					if (!abl.canLightTorches) {
+						return true;
+					}
+					if (chests.qty !== chests.maxQty && chests.qty !== 1) {
+						return true;
+					}
+					return false;
+				},
+			},
 			icePalace: {
 				dungeon: (area) => {
 					const abl = self.abilities;

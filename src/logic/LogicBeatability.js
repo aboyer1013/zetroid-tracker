@@ -4,6 +4,11 @@ const LogicBeatability = types.model().volatile((self) => {
 	return {
 		// AKA canHurtBoss
 		beatability: {
+			vitreous: () => {
+				const abl = self.abilities;
+
+				return abl.hasSwordTier >= 1 || abl.hasItem('hammer') || abl.hasItem('bow');
+			},
 			lanmolas: () => {
 				const abl = self.abilities;
 

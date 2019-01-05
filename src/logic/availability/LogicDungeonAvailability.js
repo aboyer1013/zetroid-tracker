@@ -17,6 +17,40 @@ location[BOSS_NAME]:
 const LogicDungeonAvailability = types.model().volatile((self) => {
 	return {
 		dungeonAvailability: {
+			miseryMire: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.miseryMire() || !self.hasMedallionGate) {
+						return false;
+					}
+					if (!abl.canLightTorches) {
+						return false;
+					}
+					if (chests.qty !== chests.maxQty && chests.qty !== 1) {
+						return false;
+					}
+					if (abl.canBeInvulnerable) {
+						return true;
+					}
+					if (abl.hasItem('somaria') && self.beatability.vitreous()) {
+						return true;
+					}
+					return false;
+				},
+				vitreous: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('somaria') || !self.beatability.vitreous() || !abl.hasItem('lantern')) {
+						return false;
+					}
+					if (self.hasMedallionGate && abl.canBeInvulnerable) {
+						return true;
+					}
+					return false;
+				},
+			},
 			icePalace: {
 				dungeon: (area) => {
 					const abl = self.abilities;

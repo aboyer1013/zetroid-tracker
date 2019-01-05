@@ -188,7 +188,7 @@ zelda3Dungeons.forEach(dungeon => {
 				game: 'zelda3',
 				type: ['dungeon-item'],
 				items: [
-					{ group, type: ['dungeon-item'], name: 'unknownmedallion', longName: 'Unknown Medallion', game: 'zelda3', image: 'medallion0', isDefault: true, autoAcquire: true, groupIndex: 0, },
+					{ group, type: ['dungeon-item'], name: 'unknownMedallion', longName: 'Unknown Medallion', game: 'zelda3', image: 'medallion0', isDefault: true, autoAcquire: true, groupIndex: 0, },
 					{ group, type: ['dungeon-item'], name: 'bombos',         longName: 'Bombos Medallion',  game: 'zelda3', image: 'bombos', groupIndex: 1, },
 					{ group, type: ['dungeon-item'], name: 'ether',          longName: 'Ether Medallion',   game: 'zelda3', image: 'ether', groupIndex: 2, },
 					{ group, type: ['dungeon-item'], name: 'quake',          longName: 'Quake Medallion',   game: 'zelda3', image: 'quake', groupIndex: 3, },

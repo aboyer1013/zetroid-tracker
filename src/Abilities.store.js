@@ -213,7 +213,7 @@ const MapLogicHelpers = types
 			// 	&& (canOpenGreenDoors() && canMorph()));
 		},
 		canAccessMiseryMirePortal: () => { // Lower Norfair (Golden Torizo Energy Refill) -> Mire (Great Fairy, east "Entrance")
-			return true;
+			return false;
 			// if(trackerData.metroid3.mapLogic == "casualLogic") {
 			// 	return heatProof()
 			// 		&& canOpenGreenDoors()
