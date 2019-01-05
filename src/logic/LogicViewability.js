@@ -1,22 +1,24 @@
 import { types } from 'mobx-state-tree';
 
-const LogicViewability = types.model().volatile(self => {
+const LogicViewability = types.model().volatile((self) => {
 	return {
 		viewability: {
 			etherTablet: () => {
 				const abl = self.abilities;
 
-				if (!abl.canRead || !abl.canEnterWestDeathMountain()) {
+				if (!abl.canRead) {
 					return false;
 				}
-				if (
-					abl.hasItem('mirror')
-					&& abl.hasItem('hammer')
-					&& abl.canGrapple
-				) {
+				if (!abl.canEnterWestDeathMountain()) {
+					return false;
+				}
+				if (!abl.hasSwordTier >= 2) {
+					return false;
+				}
+				if (abl.hasItem('mirror')) {
 					return true;
 				}
-				return false;
+				return abl.hasItem('hammer') && abl.canGrapple;
 			},
 			bombosTablet: () => {
 				const abl = self.abilities;

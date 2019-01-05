@@ -128,6 +128,7 @@ let zelda3DarkWorldDungeons = [
 		longName: 'Misery Mire',
 		isDungeon: true,
 		hasPrize: true,
+		hasMedallion: true,
 		boss: 'vitreous',
 		areas: [
 			{

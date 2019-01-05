@@ -45,7 +45,7 @@ const LocationStore = types.compose(
 		chest: types.maybeNull(ItemStore),
 		boss: types.maybeNull(types.reference(ItemStore)),
 		prize: types.maybeNull(types.reference(ItemStore)),
-		medallion: types.maybe(types.reference(ItemStore)),
+		medallion: types.maybeNull(types.reference(ItemStore)),
 		map: types.reference(types.late(() => MapStore)),
 		abilities: types.reference(AbilitiesStore),
 		areas: types.array(AreaStore),

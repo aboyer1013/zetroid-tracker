@@ -224,11 +224,16 @@ const AreaStore = types
 		get collectables() {
 			if (self.isBoss) {
 				const loc = getParentOfType(self, LocationStore);
+				const result = [];
 
 				if (loc) {
-					const { prize } = loc;
+					const { prize, medallion } = loc;
 
-					return [loc.boss, prize];
+					result.push(loc.boss, prize);
+					if (medallion) {
+						result.push(medallion);
+					}
+					return result;
 				}
 			}
 			return self.chests;

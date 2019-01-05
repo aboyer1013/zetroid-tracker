@@ -2,17 +2,6 @@
 import zelda3Dungeons from '~/data/locations/zelda3/zelda3-dungeons';
 
 const itemsData = [
-	{
-		group: 'medallion',
-		game: 'zelda3',
-		type: ['dungeon-item'],
-		items: [
-			{ group: 'medallion', type: ['dungeon-item'], name: 'unknownmedallion', longName: 'Unknown Medallion', game: 'zelda3', image: 'medallion0', isDefault: true, acquired: true, groupIndex: 0, },
-			{ group: 'medallion', type: ['dungeon-item'], name: 'bombos',         longName: 'Bombos Medallion',  game: 'zelda3', image: 'bombos', groupIndex: 1, },
-			{ group: 'medallion', type: ['dungeon-item'], name: 'ether',          longName: 'Ether Medallion',   game: 'zelda3', image: 'ether', groupIndex: 2, },
-			{ group: 'medallion', type: ['dungeon-item'], name: 'quake',          longName: 'Quake Medallion',   game: 'zelda3', image: 'quake', groupIndex: 3, },
-		],
-	},
 	{ type: ['chest'], name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', imageEmpty: 'chest-open', acquired: true, },
 	{
 		group: 'mpUpgrade',
@@ -172,23 +161,41 @@ const itemsData = [
 ];
 
 zelda3Dungeons.forEach(dungeon => {
-	if (!dungeon.hasPrize) {
+	if (!dungeon.hasPrize && !dungeon.hasMedallion) {
 		return true;
 	}
-	const group = `prize-${dungeon.name}`;
-	itemsData.push(
-		{
-			group,
-			game: 'zelda3',
-			type: ['dungeon-item', 'prize'],
-			items: [
-				{ group, type: ['dungeon-item', 'prize'], name: 'crystal',   longName: 'Crystal', game: 'zelda3', image: 'dungeon0', groupIndex: 0, isDefault: true, autoAcquire: true, },
-				{ group, type: ['dungeon-item', 'prize'], name: 'crystal56',   longName: '5th/6th Crystal ', game: 'zelda3', image: 'dungeon1', groupIndex: 1, },
-				{ group, type: ['dungeon-item', 'prize'], name: 'blueredpendant',   longName: 'Pendant of Power / Wisdom', game: 'zelda3', image: 'dungeon2', groupIndex: 2, },
-				{ group, type: ['dungeon-item', 'prize'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', groupIndex: 3, },
-			],
-		},
-	);
+	if (dungeon.hasPrize) {
+		const group = `prize-${dungeon.name}`;
+		itemsData.push(
+			{
+				group,
+				game: 'zelda3',
+				type: ['dungeon-item', 'prize'],
+				items: [
+					{ group, type: ['dungeon-item', 'prize'], name: 'crystal',   longName: 'Crystal', game: 'zelda3', image: 'dungeon0', groupIndex: 0, isDefault: true, autoAcquire: true, },
+					{ group, type: ['dungeon-item', 'prize'], name: 'crystal56',   longName: '5th/6th Crystal ', game: 'zelda3', image: 'dungeon1', groupIndex: 1, },
+					{ group, type: ['dungeon-item', 'prize'], name: 'blueredpendant',   longName: 'Pendant of Power / Wisdom', game: 'zelda3', image: 'dungeon2', groupIndex: 2, },
+					{ group, type: ['dungeon-item', 'prize'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', groupIndex: 3, },
+				],
+			},
+		);
+	}
+	if (dungeon.hasMedallion) {
+		const group = `medallion-${dungeon.name}`;
+		itemsData.push(
+			{
+				group,
+				game: 'zelda3',
+				type: ['dungeon-item'],
+				items: [
+					{ group, type: ['dungeon-item'], name: 'unknownmedallion', longName: 'Unknown Medallion', game: 'zelda3', image: 'medallion0', isDefault: true, autoAcquire: true, groupIndex: 0, },
+					{ group, type: ['dungeon-item'], name: 'bombos',         longName: 'Bombos Medallion',  game: 'zelda3', image: 'bombos', groupIndex: 1, },
+					{ group, type: ['dungeon-item'], name: 'ether',          longName: 'Ether Medallion',   game: 'zelda3', image: 'ether', groupIndex: 2, },
+					{ group, type: ['dungeon-item'], name: 'quake',          longName: 'Quake Medallion',   game: 'zelda3', image: 'quake', groupIndex: 3, },
+				],
+			},
+		)
+	}
 	return true;
 });
 

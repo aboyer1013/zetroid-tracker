@@ -5,7 +5,7 @@ import ItemSelect from '~/components/ItemSelect';
 import { randomId } from '~/utilities/util';
 import { includes } from 'lodash';
 
-const Area = ({ areaStore, selectedLocation, store }) => {
+const Area = ({ areaStore, store }) => {
 	return (
 		<div className="details-area" key={randomId()}>
 			<div className="details-area-title tags has-addons is-marginless">

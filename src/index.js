@@ -176,6 +176,7 @@ gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-it
 locationsData.forEach((loc) => {
 	let boss = null;
 	let prize = null;
+	let medallion = null;
 	const selectedMap = appStore.getMapByName(loc.map);
 	const chestItem = null;
 	const areas = [];
@@ -190,6 +191,9 @@ locationsData.forEach((loc) => {
 			longName: boss.longName,
 			chests: [],
 		});
+		if (loc.hasMedallion) {
+			medallion = appStore.getItemGroupByName(`medallion-${loc.name}`);
+		}
 	}
 	loc.areas.forEach((area) => {
 		const chests = [];
@@ -237,6 +241,7 @@ locationsData.forEach((loc) => {
 		numChests: loc.numChests,
 		boss,
 		prize,
+		medallion,
 		map: selectedMap,
 		abilities: appStore.abilities,
 		areas,
