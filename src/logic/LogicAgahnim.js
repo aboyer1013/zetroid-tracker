@@ -108,6 +108,10 @@ const LogicAgahnim = types.model().volatile((self) => {
 					);
 				},
 			},
+			thievesTown: {
+				dungeon: () => self.enterability.thievesTown(true),
+				blindTheThief: () => self.beatability.blindTheThief() && self.enterability.thievesTown(true),
+			},
 		},
 	};
 });

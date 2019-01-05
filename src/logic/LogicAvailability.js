@@ -17,6 +17,21 @@ location[BOSS_NAME]:
 const LogicAvailability = types.model().volatile((self) => {
 	return {
 		availability: {
+			thievesTown: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.thievesTown()) {
+						return false;
+					}
+					if (abl.hasItem('hammer') || chests.qty >= 3) {
+						return true;
+					}
+					return self.beatability.blindTheThief() && chests.qty >= 2;
+				},
+				blindTheThief: () => self.beatability.blindTheThief() && self.enterability.thievesTown(),
+			},
 			skullWoods: {
 				dungeon: (area) => {
 					const abl = self.abilities;

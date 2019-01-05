@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 
-const LogicBeatability = types.model().volatile(self => {
+const LogicBeatability = types.model().volatile((self) => {
 	return {
 		// AKA canHurtBoss
 		beatability: {
@@ -15,6 +15,16 @@ const LogicBeatability = types.model().volatile(self => {
 					|| abl.hasItem('iceRod')
 					|| abl.hasItem('byrna')
 					|| abl.hasItem('somaria')
+				);
+			},
+			blindTheThief: () => {
+				const abl = self.abilities;
+
+				return (
+					abl.hasSwordTier >= 1
+					|| abl.hasItem('hammer')
+					|| abl.hasItem('somaria')
+					|| abl.hasItem('byrna')
 				);
 			},
 		},
