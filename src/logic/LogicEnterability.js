@@ -58,6 +58,17 @@ const LogicEnterability = types.model().volatile((self) => {
 			},
 			skullWoods: (agahnimCheck = false) => self.abilities.hasItem('moonPearl') && self.abilities.canEnterNorthWestDarkWorld(agahnimCheck),
 			thievesTown: (agahnimCheck = false) => self.abilities.hasItem('moonPearl') && self.abilities.canEnterNorthWestDarkWorld(agahnimCheck),
+			icePalace: () => {
+				const abl = self.abilities;
+
+				if (!abl.canLiftDarkRocks) {
+					return false;
+				}
+				if (!abl.canMeltThings) {
+					return false;
+				}
+				return abl.hasItem('moonPearl') && abl.canSwim;
+			},
 		},
 	};
 });

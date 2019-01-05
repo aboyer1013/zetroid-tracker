@@ -4,6 +4,26 @@ import { head } from 'lodash';
 const LogicPartialAvailability = types.model().volatile((self) => {
 	return {
 		partialAvailability: {
+			icePalace: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.icePalace()) {
+						return false;
+					}
+					if (!abl.hasItem('hammer') || !abl.canLiftRocks) {
+						return true;
+					}
+					if (abl.canGrapple) {
+						return false;
+					}
+					if (abl.canBeInvulnerable && chests.qty < 2) {
+						return true;
+					}
+					return !abl.canBeInvulnerable;
+				},
+			},
 			thievesTown: {
 				dungeon: (area) => {
 					const abl = self.abilities;

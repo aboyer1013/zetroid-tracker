@@ -17,6 +17,32 @@ location[BOSS_NAME]:
 const LogicAvailability = types.model().volatile((self) => {
 	return {
 		availability: {
+			icePalace: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.icePalace() || !abl.hasItem('hammer') || !abl.canLiftRocks) {
+						return false;
+					}
+					if (abl.canGrapple) {
+						return true;
+					}
+					return abl.canBeInvulnerable && chests.qty >= 2;
+				},
+				kholdstare: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.canMeltThings
+						&& abl.canLiftRocks
+						&& abl.hasItem('hammer')
+						&& self.enterability.icePalace()
+						&& abl.canGrapple
+						&& abl.hasItem('somaria')
+					);
+				},
+			},
 			thievesTown: {
 				dungeon: (area) => {
 					const abl = self.abilities;
