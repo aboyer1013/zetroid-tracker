@@ -3,7 +3,7 @@ import GameStore from '~/Game.store';
 import ItemStore from '~/Item.store';
 import MapStore from '~/Map.store';
 import AbilitiesStore from '~/Abilities.store';
-import LogicAvailability from '~/logic/LogicAvailability';
+import LogicAvailability from '~/logic/availability/LogicAvailability';
 import LogicViewability from '~/logic/LogicViewability';
 import LogicPartialAvailability from '~/logic/LogicPartialAvailability';
 import LogicAgahnim from '~/logic/LogicAgahnim';

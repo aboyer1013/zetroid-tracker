@@ -3,7 +3,6 @@ import { types } from 'mobx-state-tree';
 const LogicAgahnim = types.model().volatile((self) => {
 	return {
 		// This will be true if the only thing preventing the location from becoming available is to defeat Agahnim.
-		// TODO Not sure if I want to keep this state. Probably useful though.
 		mustDefeatAgahnimFirst: {
 			bombableShack: () => self.abilities.canEnterNorthWestDarkWorld(true),
 			cShapedHouse: () => self.abilities.canEnterNorthWestDarkWorld(true),
