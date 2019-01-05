@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 
-const LogicEnterability = types.model().volatile(self => {
+const LogicEnterability = types.model().volatile((self) => {
 	return {
 		/*
 			=== Not sure why there's the distinction between can/may ===
@@ -55,7 +55,7 @@ const LogicEnterability = types.model().volatile(self => {
 					&& abl.canSwim
 					&& abl.canEnterSouthDarkWorld(agahnimCheck)
 				);
-			}
+			},
 		},
 	};
 });

@@ -108,12 +108,12 @@ const Map = class Map extends Component {
 		} else if (loc.isViewable) {
 			markerOptions.markerColor = markerColor.VIEWABLE;
 			markerOptions.icon = icon.VIEWABLE;
-		} else if (loc.isAgahnimTheOnlyRemainingRequirement) {
-			markerOptions.markerColor = markerColor.AGAHNIM;
-			markerOptions.icon = icon.AGAHNIM;
 		} else if (loc.isPartiallyAvailable) {
 			markerOptions.markerColor = markerColor.PARTIAL;
 			markerOptions.icon = icon.PARTIAL;
+		} else if (loc.isAgahnimTheOnlyRemainingRequirement) {
+			markerOptions.markerColor = markerColor.AGAHNIM;
+			markerOptions.icon = icon.AGAHNIM;
 		} else if (loc.isPossible) {
 			markerOptions.markerColor = markerColor.POSSIBLE;
 			markerOptions.icon = icon.POSSIBLE;
@@ -126,7 +126,7 @@ const Map = class Map extends Component {
 				markerOptions.icon = icon.DUNGEON;
 			}
 			if (loc.isPossible && !loc.isDungeonComplete && !loc.isAvailable) {
-				markerOptions.extraClasses += ' is-dungeon-possible'
+				markerOptions.extraClasses += ' is-dungeon-possible';
 			}
 		}
 		marker.setIcon(L.AwesomeMarkers.icon(markerOptions));

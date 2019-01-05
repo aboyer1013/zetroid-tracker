@@ -213,11 +213,11 @@ const LocationStore = types.compose(
 				if (self.isViewable) {
 					return self.PROGRESSION.VIEWABLE;
 				}
-				if (self.isAgahnimTheOnlyRemainingRequirement) {
-					return self.PROGRESSION.AGAHNIM;
-				}
 				if (self.isPartiallyAvailable) {
 					return self.PROGRESSION.PARTIAL;
+				}
+				if (self.isAgahnimTheOnlyRemainingRequirement) {
+					return self.PROGRESSION.AGAHNIM;
 				}
 				if (self.isPossible) {
 					return self.PROGRESSION.POSSIBLE;
@@ -266,6 +266,6 @@ const LocationStore = types.compose(
 				toggleComplete,
 				setComplete,
 			};
-		})
+		}),
 );
 export default LocationStore;

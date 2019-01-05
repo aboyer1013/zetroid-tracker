@@ -42,47 +42,47 @@ const AreaStore = types
 		},
 		get colorClass() {
 			switch (self.currentProgression) {
-			case self.PROGRESSION.COMPLETE:
-				return 'is-dark';
-			case self.PROGRESSION.AVAILABLE:
-				return 'is-success';
-			case self.PROGRESSION.VIEWABLE:
-				return 'is-info';
-			case self.PROGRESSION.AGAHNIM:
-				return 'is-info';
-			case self.PROGRESSION.PARTIAL:
-				return 'is-warning';
-			case self.PROGRESSION.POSSIBLE:
-				return 'is-success';
-			default:
-				return 'is-danger';
+				case self.PROGRESSION.COMPLETE:
+					return 'is-dark';
+				case self.PROGRESSION.AVAILABLE:
+					return 'is-success';
+				case self.PROGRESSION.VIEWABLE:
+					return 'is-info';
+				case self.PROGRESSION.PARTIAL:
+					return 'is-warning';
+				case self.PROGRESSION.AGAHNIM:
+					return 'is-info';
+				case self.PROGRESSION.POSSIBLE:
+					return 'is-success';
+				default:
+					return 'is-danger';
 			}
 		},
 		get iconClass() {
 			let result = '';
 
 			switch (self.currentProgression) {
-			case self.PROGRESSION.COMPLETE:
-				result = 'fa-check-circle';
-				break;
-			case self.PROGRESSION.AVAILABLE:
-				result = 'fa-exclamation-circle';
-				break;
-			case self.PROGRESSION.VIEWABLE:
-				result = 'fa-question-circle';
-				break;
-			case self.PROGRESSION.AGAHNIM:
-				result = 'fa-times-circle';
-				break;
-			case self.PROGRESSION.PARTIAL:
-				result = 'fa-dot-circle';
-				break;
-			case self.PROGRESSION.POSSIBLE:
-				result = 'fa-dot-circle';
-				break;
-			default:
-				result = self.isBoss ? 'fa-skull' : 'fa-times-circle';
-				break;
+				case self.PROGRESSION.COMPLETE:
+					result = 'fa-check-circle';
+					break;
+				case self.PROGRESSION.AVAILABLE:
+					result = 'fa-exclamation-circle';
+					break;
+				case self.PROGRESSION.VIEWABLE:
+					result = 'fa-question-circle';
+					break;
+				case self.PROGRESSION.PARTIAL:
+					result = 'fa-dot-circle';
+					break;
+				case self.PROGRESSION.AGAHNIM:
+					result = 'fa-times-circle';
+					break;
+				case self.PROGRESSION.POSSIBLE:
+					result = 'fa-dot-circle';
+					break;
+				default:
+					result = self.isBoss ? 'fa-skull' : 'fa-times-circle';
+					break;
 			}
 			return result;
 		},
@@ -198,7 +198,7 @@ const AreaStore = types
 			return false;
 		},
 		get isUnavailable() {
-			return self.currentProgression === self.PROGRESSION.UNAVAILABLE
+			return self.currentProgression === self.PROGRESSION.UNAVAILABLE;
 		},
 		get currentProgression() {
 			if (self.isDungeonComplete || self.isComplete) {
@@ -210,11 +210,11 @@ const AreaStore = types
 			if (self.isViewable) {
 				return self.PROGRESSION.VIEWABLE;
 			}
-			if (self.mustDefeatAgahnimFirst) {
-				return self.PROGRESSION.AGAHNIM;
-			}
 			if (self.isPartiallyAvailable) {
 				return self.PROGRESSION.PARTIAL;
+			}
+			if (self.mustDefeatAgahnimFirst) {
+				return self.PROGRESSION.AGAHNIM;
 			}
 			if (self.isPossible) {
 				return self.PROGRESSION.POSSIBLE;
@@ -226,7 +226,7 @@ const AreaStore = types
 				const loc = getParentOfType(self, LocationStore);
 
 				if (loc) {
-					const prize = loc.prize;
+					const { prize } = loc;
 
 					return [loc.boss, prize];
 				}

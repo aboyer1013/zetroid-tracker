@@ -84,7 +84,7 @@ const MapLogicHelpers = types
 		get glitchedLinkInDarkWorld() {
 			return self.hasItem('moonPearl') || self.hasItem('bottle');
 		},
-		canDefeatAgahnim: (allowOutOfLogicGlitches = false) => {
+		canDefeatAgahnim: () => {
 			if (self.hasItem('agahnim')) {
 				return false;
 			}
@@ -109,10 +109,7 @@ const MapLogicHelpers = types
 			if (self.canLiftDarkRocks && self.canSwim && self.hasItem('moonPearl')) {
 				return true;
 			}
-			if (self.canAccessDarkWorldPortal() && self.canSwim && self.hasItem('moonPearl')) {
-				return true;
-			}
-			return false;
+			return self.canAccessDarkWorldPortal() && self.canSwim && self.hasItem('moonPearl');
 		},
 		canEnterNorthWestDarkWorld: (agahnimCheck = false) => {
 			if (!self.hasItem('moonPearl')) {
@@ -132,7 +129,7 @@ const MapLogicHelpers = types
 			}
 			return self.canSwim || self.canLiftRocks || self.hasItem('hammer');
 		},
-		canEnterSouthDarkWorld: () => {
+		canEnterSouthDarkWorld: (agahnimCheck = false) => {
 			if (!self.hasItem('moonPearl')) {
 				return false;
 			}
@@ -142,7 +139,7 @@ const MapLogicHelpers = types
 			if (self.hasItem('hammer') && self.canLiftRocks) {
 				return true;
 			}
-			if (!self.canEnterNorthEastDarkWorld()) {
+			if (!self.canEnterNorthEastDarkWorld(agahnimCheck)) {
 				return false;
 			}
 			if (self.hasItem('hammer')) {
@@ -151,10 +148,7 @@ const MapLogicHelpers = types
 			if (!self.canGrapple) {
 				return false;
 			}
-			if (self.canSwim || self.canLiftRocks) {
-				return true;
-			}
-			return false;
+			return self.canSwim || self.canLiftRocks;
 		},
 		canEnterMireArea: () => {
 			if (self.canAccessMiseryMirePortal()) {
@@ -208,7 +202,7 @@ const MapLogicHelpers = types
 			// }
 		},
 		canAccessDarkWorldPortal: () => { // Maridia Missile Refill -> DW (DW Ice Rod Right)
-			return true;
+			return false;
 			// if(trackerData.metroid3.mapLogic == "casualLogic") {
 			// 	return canUsePowerBombs() && canOpenGreenDoors() && canSwimSM() && canDashSM();
 			// } else if(trackerData.metroid3.mapLogic == "tourneyLogic") {

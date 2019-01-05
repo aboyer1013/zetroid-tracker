@@ -1,11 +1,11 @@
 import { types } from 'mobx-state-tree';
 import { head } from 'lodash';
 
-const LogicPartialAvailability = types.model().volatile(self => {
+const LogicPartialAvailability = types.model().volatile((self) => {
 	return {
 		partialAvailability: {
 			swampPalace: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -18,24 +18,11 @@ const LogicPartialAvailability = types.model().volatile(self => {
 					if (abl.hasItem('hammer') && !self.canGrapple && chests.qty >= 3) {
 						return true;
 					}
-					/*
-					if (this.canEnter('glitchless', false, false)) {
-						if (has("hammer")) {
-							if (canGrapple() || trackerData.zelda3.dungeonchests[4] >= 5) {
-								availability.glitchless = 'available';
-							} else if (trackerData.zelda3.dungeonchests[4] >= 3) {
-								availability.glitchless = 'partial';
-							}
-						} else if (trackerData.zelda3.dungeonchests[4] === 6) {
-							availability.glitchless = 'partial';
-						}
-					}
-					*/
 					return false;
 				},
 			},
 			easternPalace: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -49,7 +36,7 @@ const LogicPartialAvailability = types.model().volatile(self => {
 				},
 			},
 			desertPalace: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -62,17 +49,11 @@ const LogicPartialAvailability = types.model().volatile(self => {
 					if (chests.qty === chests.maxQty) {
 						return false;
 					}
-					if (
-						!self.beatability.lanmolas()
-						|| !abl.canLightTorches
-						|| !abl.canLiftRocks
-					) {
-						return true;
-					}
+					return !self.beatability.lanmolas() || !abl.canLightTorches || !abl.canLiftRocks;
 				},
 			},
 			towerOfHera: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -89,7 +70,7 @@ const LogicPartialAvailability = types.model().volatile(self => {
 				},
 			},
 			palaceOfDarkness: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 

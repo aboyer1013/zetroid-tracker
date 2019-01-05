@@ -14,11 +14,11 @@ location[BOSS_NAME]:
 	AKA "isBeatable"
 */
 
-const LogicAvailability = types.model().volatile(self => {
+const LogicAvailability = types.model().volatile((self) => {
 	return {
 		availability: {
 			swampPalace: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -40,7 +40,7 @@ const LogicAvailability = types.model().volatile(self => {
 				},
 			},
 			easternPalace: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -58,7 +58,7 @@ const LogicAvailability = types.model().volatile(self => {
 				armos: () => self.enterability.easternPalace() && self.abilities.hasItem('bow') && self.abilities.hasItem('lantern'),
 			},
 			desertPalace: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -86,7 +86,7 @@ const LogicAvailability = types.model().volatile(self => {
 				},
 			},
 			towerOfHera: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
@@ -117,7 +117,7 @@ const LogicAvailability = types.model().volatile(self => {
 				},
 			},
 			palaceOfDarkness: {
-				dungeon: area => {
+				dungeon: (area) => {
 					const abl = self.abilities;
 					const chests = head([...area.collectables.values()]);
 
