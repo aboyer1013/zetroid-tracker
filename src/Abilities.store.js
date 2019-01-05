@@ -110,6 +110,15 @@ const MapLogicHelpers = types
 				return true;
 			}
 			return self.canAccessDarkWorldPortal() && self.canSwim && self.hasItem('moonPearl');
+
+			// keep for reference
+			// return (
+			// 	has("agahnim")
+			// 	|| (agahnimCheck && canGoBeatAgahnim1(allowOutOfLogicGlitches))
+			// 	|| (has("hammer") && canLiftRocks() && has("moonpearl"))
+			// 	|| (canLiftDarkRocks() && canSwim() && has("moonpearl"))
+			// 	|| (canAccessDarkWorldPortal() && canSwim() && has("moonpearl"))
+			// );
 		},
 		canEnterNorthWestDarkWorld: (agahnimCheck = false) => {
 			if (!self.hasItem('moonPearl')) {
@@ -149,6 +158,22 @@ const MapLogicHelpers = types
 				return false;
 			}
 			return self.canSwim || self.canLiftRocks;
+
+			// keep for reference
+			// return (
+			// 	has("moonpearl")
+			// 	&& (
+			// 		canLiftDarkRocks()
+			// 		|| (has("hammer") && canLiftRocks())
+			// 		|| (
+			// 			canEnterNorthEastDarkWorld('glitchless', agahnimCheck, allowOutOfLogicGlitches)
+			// 			&& (
+			// 				has("hammer")
+			// 				|| (canGrapple() && (canSwim() || canLiftRocks()))
+			// 			)
+			// 		)
+			// 	)
+			// );
 		},
 		canEnterMireArea: () => {
 			if (self.canAccessMiseryMirePortal()) {
