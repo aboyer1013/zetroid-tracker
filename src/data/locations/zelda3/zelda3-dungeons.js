@@ -10,9 +10,7 @@ let zelda3LightWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				chests: [
-					{numChests: 3},
-				],
+				chests: [{ numChests: 3 }],
 			},
 		],
 	},
@@ -27,9 +25,7 @@ let zelda3LightWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				chests: [
-					{numChests: 2},
-				],
+				chests: [{ numChests: 2 }],
 				canBeViewable: true,
 			},
 		],
@@ -45,7 +41,7 @@ let zelda3LightWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				chests: [{numChests: 2}],
+				chests: [{ numChests: 2 }],
 			},
 		],
 	},
@@ -62,7 +58,7 @@ let zelda3DarkWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				chests: [{numChests: 5}],
+				chests: [{ numChests: 5 }],
 			},
 		],
 	},
@@ -77,19 +73,106 @@ let zelda3DarkWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				chests: [{numChests: 6}],
+				chests: [{ numChests: 6 }],
+			},
+		],
+	},
+	{
+		coords: [-200, 160],
+		name: 'skullWoods',
+		longName: 'Skull Woods',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'mothula',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{ numChests: 2 }],
+			},
+		],
+	},
+	{
+		coords: [-1990, 512],
+		name: 'thievesTown',
+		longName: 'Thieves’ Town',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'blindTheThief',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{ numChests: 4 }],
+			},
+		],
+	},
+	{
+		coords: [-3530, 3263],
+		name: 'icePalace',
+		longName: 'Ice Palace',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'kholdstare',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{ numChests: 3 }],
+			},
+		],
+	},
+	{
+		coords: [-3290, 305],
+		name: 'miseryMire',
+		longName: 'Misery Mire',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'vitreous',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{ numChests: 2 }],
+			},
+		],
+	},
+	{
+		coords: [-330, 3855],
+		name: 'turtleRock',
+		longName: 'Turtle Rock',
+		isDungeon: true,
+		hasPrize: true,
+		boss: 'trinexx',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{ numChests: 5 }],
+			},
+		],
+	},
+	{
+		coords: [-70, 2303],
+		name: 'ganonsTower',
+		longName: 'Ganon’s Tower',
+		areas: [
+			{
+				name: 'dungeon',
+				longName: 'Dungeon',
+				chests: [{ numChests: 5 }],
 			},
 		],
 	},
 ];
 
-zelda3LightWorldDungeons = zelda3LightWorldDungeons.map(dungeon => {
+zelda3LightWorldDungeons = zelda3LightWorldDungeons.map((dungeon) => {
 	return Object.assign(dungeon, {
 		map: 'zelda3-lw',
 		game: 'zelda3',
 	});
 });
-zelda3DarkWorldDungeons = zelda3DarkWorldDungeons.map(dungeon => {
+zelda3DarkWorldDungeons = zelda3DarkWorldDungeons.map((dungeon) => {
 	return Object.assign(dungeon, {
 		map: 'zelda3-dw',
 		game: 'zelda3',

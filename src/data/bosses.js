@@ -6,7 +6,7 @@ const bossData = [
 	{ name: 'helmasaur', longName: 'Helmasaur', game: 'zelda3', image: 'boss32', type: ['boss'], },
 	{ name: 'arrghus', longName: 'Arrghus', game: 'zelda3', image: 'boss42', type: ['boss'], },
 	{ name: 'mothula', longName: 'Mothula', game: 'zelda3', image: 'boss52', type: ['boss'], },
-	{ name: 'blindthief', longName: 'Blind the Thief', game: 'zelda3', image: 'boss62', type: ['boss'], },
+	{ name: 'blindTheThief', longName: 'Blind the Thief', game: 'zelda3', image: 'boss62', type: ['boss'], },
 	{ name: 'kholdstare', longName: 'Kholdstare', game: 'zelda3', image: 'boss72', type: ['boss'], },
 	{ name: 'vitreous', longName: 'Vitreous', game: 'zelda3', image: 'boss82', type: ['boss'], },
 	{ name: 'trinexx', longName: 'Trinexx', game: 'zelda3', image: 'boss92', type: ['boss'], },
