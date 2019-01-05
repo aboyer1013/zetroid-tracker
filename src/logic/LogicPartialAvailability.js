@@ -15,10 +15,7 @@ const LogicPartialAvailability = types.model().volatile((self) => {
 					if (!abl.hasItem('hammer') && chests.qty === chests.maxQty) {
 						return true;
 					}
-					if (abl.hasItem('hammer') && !self.canGrapple && chests.qty >= 3) {
-						return true;
-					}
-					return false;
+					return abl.hasItem('hammer') && !self.canGrapple && chests.qty >= 3;
 				},
 			},
 			easternPalace: {
@@ -29,10 +26,7 @@ const LogicPartialAvailability = types.model().volatile((self) => {
 					if (abl.hasItem('lantern') && !abl.hasItem('bow') && chests.qty < 2) {
 						return true;
 					}
-					if (chests.qty !== chests.maxQty) {
-						return true;
-					}
-					return false;
+					return chests.qty !== chests.maxQty;
 				},
 			},
 			desertPalace: {
@@ -63,10 +57,7 @@ const LogicPartialAvailability = types.model().volatile((self) => {
 					if (!abl.canLightTorches) {
 						return true;
 					}
-					if (chests.qty !== chests.maxQty && abl.hasSwordTier === 0 && !abl.hasItem('hammer')) {
-						return true;
-					}
-					return false;
+					return chests.qty !== chests.maxQty && abl.hasSwordTier === 0 && !abl.hasItem('hammer');
 				},
 			},
 			palaceOfDarkness: {
@@ -83,10 +74,24 @@ const LogicPartialAvailability = types.model().volatile((self) => {
 					if (chests.qty < 2 && !abl.hasItem('hammer')) {
 						return true;
 					}
-					if (!abl.hasItem('lantern')) {
+					return !abl.hasItem('lantern');
+				},
+			},
+			skullWoods: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.skullWoods()) {
+						return false;
+					}
+					if (!abl.hasItem('moonPearl')) {
 						return true;
 					}
-					return false;
+					if (!abl.hasItem('fireRod')) {
+						return true;
+					}
+					return !abl.hasSwordTier === 0 && chests.qty !== chests.maxQty;
 				},
 			},
 		},

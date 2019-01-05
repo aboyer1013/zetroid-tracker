@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 
-const LogicAgahnim = types.model().volatile(self => {
+const LogicAgahnim = types.model().volatile((self) => {
 	return {
 		// This will be true if the only thing preventing the location from becoming available is to defeat Agahnim.
 		// TODO Not sure if I want to keep this state. Probably useful though.
@@ -93,6 +93,19 @@ const LogicAgahnim = types.model().volatile(self => {
 						return false;
 					}
 					return self.enterability.swampPalace(true);
+				},
+			},
+			skullWoods: {
+				dungeon: () => self.enterability.skullWoods(true),
+				mothula: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.hasItem('moonPearl')
+						&& abl.hasItem('fireRod')
+						&& abl.hasSwordTier >= 1
+						&& self.enterability.skullWoods(true)
+					);
 				},
 			},
 		},

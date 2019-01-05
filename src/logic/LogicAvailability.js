@@ -17,6 +17,27 @@ location[BOSS_NAME]:
 const LogicAvailability = types.model().volatile((self) => {
 	return {
 		availability: {
+			skullWoods: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.skullWoods() || !abl.hasItem('moonPearl') || !abl.hasItem('fireRod')) {
+						return false;
+					}
+					return abl.hasSwordTier >= 1 || chests.qty === chests.maxQty;
+				},
+				mothula: () => {
+					const abl = self.abilities;
+
+					return (
+						abl.hasItem('moonPearl')
+						&& abl.hasItem('fireRod')
+						&& abl.hasSwordTier >= 1
+						&& self.enterability.skullWoods()
+					);
+				},
+			},
 			swampPalace: {
 				dungeon: (area) => {
 					const abl = self.abilities;
