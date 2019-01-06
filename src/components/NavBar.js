@@ -169,7 +169,7 @@ const NavBar = class NavBar extends Component {
 							<div className="is-hideable-navbar-item navbar-item">
 								<a
 									className="navbar-item"
-									onClick={() => this.props.store.openModal('HELP')}
+									onClick={() => this.props.store.openModal('MAP_HELP')}
 								>
 									Help
 								</a>

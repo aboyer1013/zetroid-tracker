@@ -405,7 +405,7 @@ const Map = class Map extends Component {
 					</div>
 					<div className="field has-addons">
 						<div className="control">
-							<button type="button" className="button is-small" onClick={() => this.props.store.openModal('HELP')}>
+							<button type="button" className="button is-small" onClick={() => this.props.store.openModal('MAP_HELP')}>
 								<span className="icon">
 									<i className="fas fa-question-circle" />
 								</span>

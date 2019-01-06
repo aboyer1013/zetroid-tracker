@@ -25,7 +25,7 @@ const AppStore = types.compose(ItemListUtil, types.model({
 	activeModal: types.maybeNull(types.enumeration('Modals', [
 		'FILE_IMPORT',
 		'FILE_EXPORT',
-		'HELP',
+		'MAP_HELP',
 		'EDIT_ITEM_LIST',
 		'CONFIG',
 		'ITEM_SELECT',

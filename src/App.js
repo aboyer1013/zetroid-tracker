@@ -5,7 +5,7 @@ import NavBar from '~/components/NavBar';
 import Modal from '~/components/Modal';
 import FileImportModal from '~/components/FileImportModal';
 import FileExportModal from '~/components/FileExportModal';
-import HelpModal from '~/components/HelpModal';
+import MapHelpModal from '~/components/MapHelpModal';
 import EditItemListModal from '~/components/EditItemListModal';
 import ItemSelectModal from '~/components/ItemSelectModal';
 import ConfigModal from '~/components/ConfigModal';
@@ -113,8 +113,8 @@ class App extends Component {
 				case 'FILE_EXPORT':
 					modal = <FileExportModal />;
 					break;
-				case 'HELP':
-					modal = <HelpModal />;
+				case 'MAP_HELP':
+					modal = <MapHelpModal />;
 					break;
 				case 'EDIT_ITEM_LIST':
 					modal = <EditItemListModal />;
