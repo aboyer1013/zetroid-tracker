@@ -100,6 +100,9 @@ const AreaStore = types
 			if (self.isBoss) {
 				return getParentOfType(self, LocationStore).boss.acquired;
 			}
+			if (!self.collectables.length) {
+				return false;
+			}
 			self.collectables.forEach((collectable) => {
 				if (includes(collectable.type, 'boss') && !collectable.acquired) {
 					result = false;

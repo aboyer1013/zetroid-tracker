@@ -228,6 +228,7 @@ const MapLogicHelpers = types
 		},
 		canAccessDarkWorldPortal: () => { // Maridia Missile Refill -> DW (DW Ice Rod Right)
 			return false;
+			// TODO Finish once SM map is complete.
 			// if(trackerData.metroid3.mapLogic == "casualLogic") {
 			// 	return canUsePowerBombs() && canOpenGreenDoors() && canSwimSM() && canDashSM();
 			// } else if(trackerData.metroid3.mapLogic == "tourneyLogic") {

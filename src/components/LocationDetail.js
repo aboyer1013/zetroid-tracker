@@ -19,6 +19,9 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 		if (!selectedLocation) {
 			return;
 		}
+		if (selectedLocation.isPortal) {
+			return;
+		}
 		if (quickMarkMode && !event.ctrlKey) {
 			selectedLocation.toggleComplete();
 		} else if (!quickMarkMode && event.ctrlKey) {
@@ -54,13 +57,16 @@ const LocationDetail = inject('store')(observer(class LocationDetail extends Com
 					</div>
 					<div className="details-controls">
 						<div className="buttons">
-							<button
-								type="button"
-								onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)}
-								className={favoriteClasses}
-							>
-								<span className="icon"><i className="fas fa-star" /></span>
-							</button>
+							{!selectedLocation.isPortal
+							&& (
+								<button
+									type="button"
+									onClick={() => selectedLocation.setFavorite(!selectedLocation.isFavorite)}
+									className={favoriteClasses}
+								>
+									<span className="icon"><i className="fas fa-star" /></span>
+								</button>
+							)}
 							<button
 								type="button"
 								onClick={this.onProgressionClickHandler}

@@ -180,6 +180,8 @@ const LogicLightWorldAvailability = types.model().volatile((self) => {
 				return acquiredPendants.length === 3;
 			},
 			waterfallFairy: () => self.abilities.canSwim,
+			smPortalCrateria: () => self.abilities.canAccessLightWorldPortal() || self.abilities.canAccessCrateriaPortal(),
+			smPortalNorfair: () => self.abilities.canAccessDeathMountainPortal() || self.abilities.canAccessNorfairPortal(),
 		},
 	};
 });

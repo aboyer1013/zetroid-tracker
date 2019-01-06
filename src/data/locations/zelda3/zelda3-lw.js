@@ -591,6 +591,30 @@ const zelda3LightWorldLocations = [
 			},
 		],
 	},
+	{
+		coords: [-3285, 2655],
+		name: 'smPortalCrateria',
+		longName: 'Super Metroid Portal',
+		isPortal: true,
+		areas: [
+			{
+				name: 'crateriaMapRoom',
+				longName: 'Crateria Map Room',
+			},
+		],
+	},
+	{
+		coords: [-655, 2192],
+		name: 'smPortalNorfair',
+		longName: 'Super Metroid Portal',
+		isPortal: true,
+		areas: [
+			{
+				name: 'norfairMapRoom',
+				longName: 'Norfair Map Room',
+			},
+		],
+	},
 ];
 
 export default zelda3LightWorldLocations;

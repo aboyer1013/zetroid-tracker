@@ -90,6 +90,7 @@ const Map = class Map extends Component {
 			COMPLETE: 'check-circle',
 			FAVORITE: 'star',
 			DUNGEON: 'skull',
+			PORTAL: 'haykal',
 		};
 		const markerOptions = {
 			icon: 'times-circle',
@@ -103,6 +104,12 @@ const Map = class Map extends Component {
 		if (loc.isFavorite) {
 			markerOptions.markerColor = markerColor.FAVORITE;
 			markerOptions.icon = icon.FAVORITE;
+		} else if (loc.isPortal && loc.isAvailable) {
+			markerOptions.markerColor = markerColor.AVAILABLE;
+			markerOptions.icon = icon.PORTAL;
+		} else if (loc.isPortal && !loc.isAvailable) {
+			markerOptions.markerColor = markerColor.UNAVAILABLE;
+			markerOptions.icon = icon.PORTAL;
 		} else if (loc.isComplete) {
 			markerOptions.markerColor = markerColor.COMPLETE;
 			markerOptions.icon = icon.COMPLETE;
@@ -229,11 +236,10 @@ const Map = class Map extends Component {
 			quickMarkMode,
 		} = options;
 
-		if (
-			(quickMarkMode && !ctrlKeyPressed)
-			|| (!quickMarkMode && ctrlKeyPressed)
-		) {
-			theLocation.toggleComplete();
+		if (!theLocation.isPortal) {
+			if ((quickMarkMode && !ctrlKeyPressed) || (!quickMarkMode && ctrlKeyPressed)) {
+				theLocation.toggleComplete();
+			}
 		}
 		this.props.mapStore.locationDetail.setSelectedLocation(event, marker, theLocation);
 	}

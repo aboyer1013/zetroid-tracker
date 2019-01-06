@@ -209,6 +209,30 @@ const zelda3DarkWorldLocations = [
 			},
 		],
 	},
+	{
+		coords: [-3377, 815],
+		name: 'smPortalLowerNorfair',
+		longName: 'Super Metroid Portal',
+		isPortal: true,
+		areas: [
+			{
+				name: 'lowerNorfair',
+				longName: 'Lower Norfair / Golden Torizo / Energy Refill',
+			},
+		],
+	},
+	{
+		coords: [-3150, 3745],
+		name: 'smPortalMaridia',
+		longName: 'Super Metroid Portal',
+		isPortal: true,
+		areas: [
+			{
+				name: 'maridia',
+				longName: 'Maridia Missile Refill',
+			},
+		],
+	},
 ];
 
 export default zelda3DarkWorldLocations;

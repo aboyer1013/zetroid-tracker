@@ -46,6 +46,7 @@ const LocationStore = types.compose(
 		isComplete: false,
 		isFavorite: false,
 		isDungeon: false,
+		isPortal: false,
 		chest: types.maybeNull(ItemStore),
 		boss: types.maybeNull(types.reference(ItemStore)),
 		prize: types.maybeNull(types.reference(ItemStore)),

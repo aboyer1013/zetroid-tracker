@@ -95,6 +95,8 @@ const LogicDarkWorldAvailability = types.model().volatile((self) => {
 			},
 			treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(),
 			purpleChest: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(),
+			smPortalLowerNorfair: () => self.abilities.canAccessMiseryMirePortal() || self.abilities.canAccessLowerNorfairPortal(),
+			smPortalMaridia: () => self.abilities.canAccessDarkWorldPortal() || self.abilities.canAccessMaridiaPortal(),
 		},
 	};
 });

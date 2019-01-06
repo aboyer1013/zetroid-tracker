@@ -25,7 +25,7 @@ import {
 } from 'lodash';
 import { createStorage } from 'persistme';
 
-const shouldSync = true;
+const shouldSync = false;
 const configStore = ConfigStore.create({
 	id: randomId(),
 });
@@ -198,35 +198,39 @@ locationsData.forEach((loc) => {
 			medallion = appStore.getItemGroupByName(`medallion-${loc.name}`);
 		}
 	}
-	loc.areas.forEach((area) => {
-		const chests = [];
-		const itemSelectStore = area.canBeViewable ? appStore.itemSelectStore : null;
+	if (loc.areas) {
+		loc.areas.forEach((area) => {
+			const chests = [];
+			const itemSelectStore = area.canBeViewable ? appStore.itemSelectStore : null;
 
-		area.chests.forEach((collectable) => {
-			const chestItemData = find(gameItemsData, { name: 'closedchest' });
-			const type = chestItemData.type.slice(0);
+			if (area.chests) {
+				area.chests.forEach((collectable) => {
+					const chestItemData = find(gameItemsData, { name: 'closedchest' });
+					const type = chestItemData.type.slice(0);
 
-			type.push('collectable');
-			if (loc.isDungeon) {
-				type.push('dungeon-item');
+					type.push('collectable');
+					if (loc.isDungeon) {
+						type.push('dungeon-item');
+					}
+					chestItemData.qty = collectable.numChests;
+					chestItemData.maxQty = collectable.numChests;
+					chestItemData.type = type;
+					chests.push(ItemStore.create(itemDataFactory(chestItemData)));
+				});
 			}
-			chestItemData.qty = collectable.numChests;
-			chestItemData.maxQty = collectable.numChests;
-			chestItemData.type = type;
-			chests.push(ItemStore.create(itemDataFactory(chestItemData)));
+			areas.push(AreaStore.create({
+				id: randomId(),
+				isBoss: area.isBoss || false,
+				name: area.name,
+				longName: area.longName,
+				abilities: appStore.abilities,
+				chests,
+				canBeViewable: area.canBeViewable || false,
+				itemSelectStore,
+				selectedItem: area.selectedItem || null,
+			}));
 		});
-		areas.push(AreaStore.create({
-			id: randomId(),
-			isBoss: area.isBoss || false,
-			name: area.name,
-			longName: area.longName,
-			abilities: appStore.abilities,
-			chests,
-			canBeViewable: area.canBeViewable || false,
-			itemSelectStore,
-			selectedItem: area.selectedItem || null,
-		}));
-	});
+	}
 
 	selectedMap.locations.put(LocationStore.create({
 		id: `loc-${randomId()}`,
@@ -239,6 +243,7 @@ locationsData.forEach((loc) => {
 		itemRequirements: loc.itemRequirements,
 		viewableRequirements: loc.viewableRequirements,
 		isDungeon: !!loc.isDungeon,
+		isPortal: !!loc.isPortal,
 		numChests: loc.numChests,
 		boss,
 		prize,

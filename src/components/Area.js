@@ -14,35 +14,38 @@ const Area = ({ areaStore, store }) => {
 				</span>
 				<span className="tag">{areaStore.longName}</span>
 			</div>
-			<div className="details-area-collectables">
-				{areaStore.canBeViewable && <ItemSelect areaStore={areaStore} />}
-				{areaStore.collectables.map((collectable) => {
-					const isReadOnly = !areaStore.isAvailable && !areaStore.isComplete && !areaStore.isPartiallyAvailable;
+			{!!areaStore.collectables.length
+			&& (
+				<div className="details-area-collectables">
+					{areaStore.canBeViewable && <ItemSelect areaStore={areaStore} />}
+					{areaStore.collectables.map((collectable) => {
+						const isReadOnly = !areaStore.isAvailable && !areaStore.isComplete && !areaStore.isPartiallyAvailable;
 
-					if (collectable.group) {
+						if (collectable.group) {
+							return (
+								<div className="item-container" key={randomId()}>
+									{collectable.items.map(subItem => (
+										<Item
+											key={randomId()}
+											itemListStore={store}
+											item={subItem}
+											isReadOnly={isReadOnly && (includes(subItem.type, 'prize') || includes(subItem.type, 'medallion'))}
+										/>
+									))}
+								</div>
+							);
+						}
 						return (
-							<div className="item-container" key={randomId()}>
-								{collectable.items.map(subItem => (
-									<Item
-										key={randomId()}
-										itemListStore={store}
-										item={subItem}
-										isReadOnly={isReadOnly && (includes(subItem.type, 'prize') || includes(subItem.type, 'medallion'))}
-									/>
-								))}
-							</div>
+							<Item
+								key={randomId()}
+								itemListStore={areaStore}
+								item={collectable}
+								isReadOnly={isReadOnly}
+							/>
 						);
-					}
-					return (
-						<Item
-							key={randomId()}
-							itemListStore={areaStore}
-							item={collectable}
-							isReadOnly={isReadOnly}
-						/>
-					);
-				})}
-			</div>
+					})}
+				</div>
+			)}
 		</div>
 	);
 };
