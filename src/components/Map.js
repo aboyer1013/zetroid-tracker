@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import {
-	debounce, camelCase, pick, get, every, filter,
+	debounce,
+	every,
+	filter,
+	get,
+	pick,
 } from 'lodash';
 import classNames from 'classnames';
 
@@ -270,16 +274,20 @@ const Map = class Map extends Component {
 	initMap() {
 		const self = this;
 
-		this.map = L.map(`map-${this.props.id}`, Object.assign({}, {
-			crs: L.CRS.Simple,
-			center: [-2128, 2048],
-			zoom: this.props.mapStore.zoom,
-			maxBounds: this.mapBounds,
-			maxBoundsViscosity: 1,
-			attributionControl: false,
-			zoomControl: false,
-			zoomSnap: 0.001,
-		}, this.props.mapOptions));
+		this.map = L
+			.map(`map-${this.props.id}`, Object.assign({}, {
+				crs: L.CRS.Simple,
+				center: [-2128, 2048],
+				zoom: this.props.mapStore.zoom,
+				maxBounds: this.mapBounds,
+				maxBoundsViscosity: 1,
+				attributionControl: false,
+				zoomControl: false,
+				zoomSnap: 0.001,
+			}, this.props.mapOptions))
+			.on('zoomend ', () => {
+				this.props.mapStore.setZoom(this.map.getZoom());
+			});
 		L.tileLayer(this.props.tileLayerTemplate, Object.assign({}, {
 			minZoom: -4,
 			maxZoom: 2,
@@ -328,8 +336,6 @@ const Map = class Map extends Component {
 			this.markerCluster.addLayer(this.markers[key]);
 		});
 		this.map.addLayer(this.markerCluster);
-		// For debugging.
-		window[camelCase(this.props.mapStore.name)] = this.map;
 	}
 
 	sizeToFit() {

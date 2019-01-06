@@ -31,6 +31,7 @@ module.exports = {
 		'no-restricted-syntax': 'off',
 		'no-tabs': 'off',
 		'no-use-before-define': 'off',
+		'prefer-arrow-callback': 'off',
 		'react/destructuring-assignment': 'off',
 		'react/jsx-indent': [true, 'tab'],
 		'react/jsx-indent-props': [2, 'tab'],
