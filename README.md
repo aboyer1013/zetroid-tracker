@@ -1,6 +1,6 @@
 # Zetroid Tracker
 
-An item tracker for The Legend of Zelda: A Link to the Past (ALttP) and Super Metroid (SM).
+An item tracker for The Legend of Zelda: A Link to the Past (ALttP) and Super Metroid (SM) [crossover randomizer](https://smalttp.speedga.me/).
 
 Currently hosted here:
 https://zetroid-tracker.tenxiii.com 
