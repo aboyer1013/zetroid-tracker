@@ -1,5 +1,10 @@
 import { types } from 'mobx-state-tree';
-import { filter, find, sortBy } from 'lodash';
+import {
+	filter,
+	find,
+	includes,
+	sortBy,
+} from 'lodash';
 import ConfigStore from '~/Config.store';
 
 /**
@@ -106,6 +111,9 @@ const ItemListUtil = types.model({
 			}));
 
 			return prizes.map(prize => self.getAcquiredItemFromGroup(prize.group));
+		},
+		get acquiredCrystals() {
+			return filter(self.acquiredPrizes, prize => includes(prize.type, 'crystal'));
 		},
 		isVisible: (item) => {
 			let result = false;

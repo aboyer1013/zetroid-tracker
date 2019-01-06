@@ -6,17 +6,100 @@ import { head } from 'lodash';
 location.dungeon:
 	Only checks if you can enter the dungeon.
 	You may not be able to do collect anything inside, but you can at least enter.
-	AKA "canGetChest"
+	AKA 'canGetChest'
 
 location[BOSS_NAME]:
 	If you are able to enter the dungeon and have the ability to kill the boss.
 	You could still not have the ability to open any chests.
-	AKA "isBeatable"
+	AKA 'isBeatable'
 */
 
 const LogicDungeonAvailability = types.model().volatile((self) => {
 	return {
 		dungeonAvailability: {
+			ganonsTower: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+					let bigKeyGuaranteed = false;
+					// Hope Room x2
+					let minAvailableChests = 2;
+
+					// Bob's Torch
+					if (abl.canDash) {
+						minAvailableChests += 1;
+					}
+					// DMs Room x4 + Randomizer Room x4 + Firesnake Room
+					if (abl.hasItem('hammer') && abl.canGrapple) {
+						minAvailableChests += 9;
+					}
+					// Map Chest
+					if (abl.hasItem('hammer') && (abl.canDash || abl.canGrapple)) {
+						minAvailableChests += 1;
+					}
+					// Bob's Chest + Big Key Room x3
+					if (
+						(abl.hasItem('hammer') && abl.canGrapple)
+						|| (abl.hasItem('firerod') && abl.hasItem('somaria'))
+					) {
+						minAvailableChests += 4;
+					}
+					// Tile Room
+					if (abl.hasItem('somaria')) {
+						minAvailableChests += 1;
+					}
+					// Compass Room x4
+					if (abl.hasItem('firerod') && abl.hasItem('somaria')) {
+						minAvailableChests += 4;
+					}
+					// Big Chest
+					if (
+						abl.canDash
+						&& abl.canGrapple
+						&& abl.hasItem('hammer')
+						&& abl.hasItem('somaria')
+						&& abl.hasItem('firerod')
+					) {
+						minAvailableChests += 1;
+						bigKeyGuaranteed = true;
+					}
+					// Mini Helmasaur Room x2 + Pre-Moldorm Chest
+					if (abl.hasItem('bow') && abl.canLightTorches && bigKeyGuaranteed) {
+						minAvailableChests += 3;
+					}
+					// Moldorm Chest
+					if (
+						bigKeyGuaranteed
+						&& abl.canGrapple
+						&& abl.canLightTorches
+						&& abl.hasItem('bow')
+						&& (abl.hasItem('hammer') || abl.hasSwordTier >= 1)
+					) {
+						minAvailableChests += 1;
+					}
+					// 4 keys + big key + map + compass
+					const minItemsAvailable = Math.max(0, minAvailableChests - 7);
+
+					return self.enterability.ganonsTower() && chests.maxQty > (chests.maxQty - minItemsAvailable);
+				},
+				agahnim: () => {
+					const abl = self.abilities;
+
+					if (!abl.canGrapple || !abl.hasItem('bow') || !abl.canLightTorches) {
+						return false;
+					}
+					if (!abl.hasItem('hammer') && !abl.hasSwordTier === 0) {
+						return false;
+					}
+					return (
+						self.enterability.ganonsTower()
+						&& abl.canDash
+						&& abl.hasItem('hammer')
+						&& abl.hasItem('fireRod')
+						&& abl.hasItem('somaria')
+					);
+				},
+			},
 			turtleRock: {
 				dungeon: (area) => {
 					const abl = self.abilities;

@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, getRoot } from 'mobx-state-tree';
 
 const LogicEnterability = types.model().volatile((self) => {
 	return {
@@ -16,6 +16,15 @@ const LogicEnterability = types.model().volatile((self) => {
 				(w/mayHaveMedallion - you know what the medallion you need to enter, but do not have it in possesion)
 			 */
 		enterability: {
+			ganonsTower: () => {
+				const abl = self.abilities;
+
+				return (
+					getRoot(self).acquiredCrystals.length === 7
+					&& abl.hasItem('moonPearl')
+					&& abl.canEnterEastDarkWorldDeathMountain()
+				);
+			},
 			turtleRock: () => {
 				const abl = self.abilities;
 

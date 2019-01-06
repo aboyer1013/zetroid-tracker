@@ -1,5 +1,5 @@
-import {types, getRoot} from 'mobx-state-tree';
-import {pick, isEmpty} from 'lodash';
+import { types, getRoot } from 'mobx-state-tree';
+import { pick, isEmpty } from 'lodash';
 
 const LayoutStore = types
 	.model({
@@ -35,143 +35,143 @@ const LayoutStore = types
 			zelda3: {
 				current: {},
 				DEV_TOOLS: {
-					"global": {
-						"splitterSize": 10,
-						"tabEnableRename": false,
-						"tabClassName": null,
-						"tabIcon": null,
-						"tabSetClassNameTabStrip": null,
-						"tabSetClassNameHeader": null,
-						"tabSetHeaderHeight": 30,
-						"tabSetTabStripHeight": 35,
-						"borderBarSize": 40,
-						"borderClassName": null
+					global: {
+						splitterSize: 10,
+						tabEnableRename: false,
+						tabClassName: null,
+						tabIcon: null,
+						tabSetClassNameTabStrip: null,
+						tabSetClassNameHeader: null,
+						tabSetHeaderHeight: 30,
+						tabSetTabStripHeight: 35,
+						borderBarSize: 40,
+						borderClassName: null,
 					},
-					"layout": {
-						"type": "row",
-						"id": "#4",
-						"children": [
+					layout: {
+						type: 'row',
+						id: '#4',
+						children: [
 							{
-								"type": "row",
-								"id": "#32",
-								"weight": 10.078219013237065,
-								"children": [
+								type: 'row',
+								id: '#32',
+								weight: 8.333333333333334,
+								children: [
 									{
-										"type": "tabset",
-										"id": "#15",
-										"weight": 36.21987951807229,
-										"children": [
+										type: 'tabset',
+										id: '#15',
+										weight: 36.44578313253012,
+										children: [
 											{
-												"type": "tab",
-												"id": "#3",
-												"name": "Items",
-												"component": "ItemList",
-												"config": {},
-												"enableClose": false
-											}
-										]
+												type: 'tab',
+												id: '#3',
+												name: 'Items',
+												component: 'ItemList',
+												config: {},
+												enableClose: false,
+											},
+										],
 									},
 									{
-										"type": "tabset",
-										"id": "#31",
-										"weight": 63.78012048192771,
-										"children": [
+										type: 'tabset',
+										id: '#31',
+										weight: 63.55421686746988,
+										children: [
 											{
-												"type": "tab",
-												"id": "#2",
-												"name": "Dungeons",
-												"component": "ItemList",
-												"config": {
-													"listType": "dungeon"
+												type: 'tab',
+												id: '#2',
+												name: 'Dungeons',
+												component: 'ItemList',
+												config: {
+													listType: 'dungeon',
 												},
-												"enableClose": false
-											}
-										]
-									}
-								]
+												enableClose: false,
+											},
+										],
+									},
+								],
 							},
 							{
-								"type": "row",
-								"id": "#23",
-								"weight": 23.255114320096272,
-								"children": [
+								type: 'row',
+								id: '#23',
+								weight: 25.000000000000004,
+								children: [
 									{
-										"type": "tabset",
-										"id": "#22",
-										"weight": 73.95525612063639,
-										"selected": 1,
-										"children": [
+										type: 'tabset',
+										id: '#22',
+										weight: 77.05448110211931,
+										selected: 1,
+										children: [
 											{
-												"type": "tab",
-												"id": "#24",
-												"name": "Light World",
-												"component": "Map",
-												"config": {
-													"mapName": "zelda3-lw"
+												type: 'tab',
+												id: '#24',
+												name: 'Light World',
+												component: 'Map',
+												config: {
+													mapName: 'zelda3-lw',
 												},
-												"enableClose": false
+												enableClose: false,
 											},
 											{
-												"type": "tab",
-												"id": "#6",
-												"name": "Dark World",
-												"component": "Map",
-												"config": {
-													"mapName": "zelda3-dw"
+												type: 'tab',
+												id: '#6',
+												name: 'Dark World',
+												component: 'Map',
+												config: {
+													mapName: 'zelda3-dw',
 												},
-												"enableClose": false
-											}
+												enableClose: false,
+											},
 										],
-										"active": true
+										active: true,
 									},
 									{
-										"type": "tabset",
-										"id": "#27",
-										"weight": 13.28118966249614,
-										"children": [
+										type: 'tabset',
+										id: '#27',
+										weight: 10.18196468101321,
+										children: [
 											{
-												"type": "tab",
-												"id": "#1",
-												"name": "Details",
-												"component": "LocationDetail",
-												"config": {
-													"id": "1"
+												type: 'tab',
+												id: '#1',
+												name: 'Details',
+												component: 'LocationDetail',
+												config: {
+													id: '1',
 												},
-												"enableClose": false
-											}
-										]
-									}
-								]
-							}
-						]
+												enableClose: false,
+											},
+										],
+									},
+								],
+							},
+						],
 					},
-					"borders": [
+					borders: [
 						{
-							"type": "border",
-							"size": 257,
-							"show": false,
-							"location": "left",
-							"children": []
+							type: 'border',
+							size: 257,
+							show: false,
+							location: 'left',
+							children: [],
 						},
 						{
-							"type": "border",
-							"show": false,
-							"location": "right",
-							"children": []
+							type: 'border',
+							show: false,
+							location: 'right',
+							children: [],
 						},
 						{
-							"type": "border",
-							"show": false,
-							"location": "bottom",
-							"children": []
+							type: 'border',
+							show: false,
+							location: 'bottom',
+							children: [],
 						},
 						{
-							"type": "border",
-							"show": false,
-							"location": "top",
-							"children": []
-						}
-					]
+							type: 'border',
+							show: false,
+							location: 'top',
+							children: [],
+						},
+					],
 				},
 				STANDARD: {
 					global: {},

@@ -69,29 +69,33 @@ class App extends Component {
 			let draggableEnabled;
 
 			switch (config.listType) {
-			case 'dungeon':
-				itemListStore = this.props.store.activeDungeonItemList;
-				items = this.props.store.activeDungeonItemList.bosses;
-				return (
-					<DungeonList
-						itemListStore={itemListStore}
-						items={items}
-					/>
-				);
-			default:
-				itemListStore = this.props.store.activeItemList;
-				items = this.props.store.activeItemList.sortedItems;
-				direction = this.props.store.activeItemList.direction; // eslint-disable-line prefer-destructuring
-				draggableEnabled = false;
-				break;
+				case 'dungeon':
+					itemListStore = this.props.store.activeDungeonItemList;
+					items = this.props.store.activeDungeonItemList.bosses;
+					return (
+						<div className="panel-container panel-gray">
+							<DungeonList
+								itemListStore={itemListStore}
+								items={items}
+							/>
+						</div>
+					);
+				default:
+					itemListStore = this.props.store.activeItemList;
+					items = this.props.store.activeItemList.sortedItems;
+					direction = this.props.store.activeItemList.direction; // eslint-disable-line prefer-destructuring
+					draggableEnabled = false;
+					break;
 			}
 			return (
-				<ItemList
-					itemListStore={itemListStore}
-					items={items}
-					direction={direction}
-					draggableEnabled={draggableEnabled}
-				/>
+				<div className="panel-container panel-gray">
+					<ItemList
+						itemListStore={itemListStore}
+						items={items}
+						direction={direction}
+						draggableEnabled={draggableEnabled}
+					/>
+				</div>
 			);
 		}
 		return null;
@@ -103,26 +107,26 @@ class App extends Component {
 
 		if (store.isModalOpen) {
 			switch (store.activeModal) {
-			case 'FILE_IMPORT':
-				modal = <FileImportModal />;
-				break;
-			case 'FILE_EXPORT':
-				modal = <FileExportModal />;
-				break;
-			case 'HELP':
-				modal = <HelpModal />;
-				break;
-			case 'EDIT_ITEM_LIST':
-				modal = <EditItemListModal />;
-				break;
-			case 'CONFIG':
-				modal = <ConfigModal />;
-				break;
-			case 'ITEM_SELECT':
-				modal = <ItemSelectModal />;
-				break;
-			default:
-				break;
+				case 'FILE_IMPORT':
+					modal = <FileImportModal />;
+					break;
+				case 'FILE_EXPORT':
+					modal = <FileExportModal />;
+					break;
+				case 'HELP':
+					modal = <HelpModal />;
+					break;
+				case 'EDIT_ITEM_LIST':
+					modal = <EditItemListModal />;
+					break;
+				case 'CONFIG':
+					modal = <ConfigModal />;
+					break;
+				case 'ITEM_SELECT':
+					modal = <ItemSelectModal />;
+					break;
+				default:
+					break;
 			}
 		}
 		return (

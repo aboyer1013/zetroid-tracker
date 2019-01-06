@@ -4,6 +4,78 @@ import { head } from 'lodash';
 const LogicPartialAvailability = types.model().volatile((self) => {
 	return {
 		partialAvailability: {
+			ganonsTower: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+					let smallKeysNeeded = 0;
+					let bigKeyNeeded = 0;
+					// Hope Room x2
+					let maxAvailableChests = 2;
+
+					// Bob's Torch
+					if (abl.canDash) {
+						maxAvailableChests += 1;
+					}
+					// DMs Room x4 + Randomizer Room x4 + Firesnake Room
+					if (abl.hasItem('hammer') && abl.canGrapple) {
+						maxAvailableChests += 9;
+						smallKeysNeeded = 4;
+					}
+					// Map Chest
+					if (abl.hasItem('hammer') && (abl.canDash || abl.canGrapple)) {
+						maxAvailableChests += 1;
+					}
+					// Bob's Chest + Big Key Room x3
+					if (
+						(abl.hasItem('hammer') && abl.canGrapple)
+						|| (abl.hasItem('firerod') && abl.hasItem('somaria'))
+					) {
+						maxAvailableChests += 4;
+						smallKeysNeeded = Math.max(3, smallKeysNeeded);
+					}
+					// Tile Room
+					if (abl.hasItem('somaria')) {
+						maxAvailableChests += 1;
+					}
+					// Compass Room x4
+					if (abl.hasItem('firerod') && abl.hasItem('somaria')) {
+						maxAvailableChests += 4;
+						smallKeysNeeded = Math.max(4, smallKeysNeeded);
+					}
+					// Big Chest
+					if (
+						abl.hasItem('hammer')
+						&& abl.canDash
+						&& abl.canGrapple
+						&& abl.hasItem('somaria')
+						&& abl.hasItem('firerod')
+					) {
+						maxAvailableChests += 1;
+						bigKeyNeeded = 1;
+					}
+					// Mini Helmasaur Room x2 + Pre-Moldorm Chest
+					if (abl.hasItem('bow') && abl.canLightTorches) {
+						maxAvailableChests += 3;
+						smallKeysNeeded = Math.max(3, smallKeysNeeded);
+						bigKeyNeeded = 1;
+					}
+					// Moldorm Chest
+					if (
+						abl.canGrapple
+						&& abl.hasItem('bow')
+						&& abl.canLightTorches
+						&& (abl.hasItem('hammer') || abl.hasSwordTier >= 1)
+					) {
+						maxAvailableChests += 1;
+						smallKeysNeeded = Math.max(4, smallKeysNeeded);
+						bigKeyNeeded = 1;
+					}
+					const maxItemsAvailable = Math.min(chests.maxQty, maxAvailableChests - smallKeysNeeded - bigKeyNeeded);
+
+					return self.enterability.ganonsTower() && chests.maxQty > (chests.maxQty - maxItemsAvailable);
+				},
+			},
 			turtleRock: {
 				dungeon: (area) => {
 					const abl = self.abilities;

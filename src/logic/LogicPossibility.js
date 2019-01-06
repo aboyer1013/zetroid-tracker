@@ -4,6 +4,27 @@ import { head } from 'lodash';
 const LogicPossibility = types.model().volatile((self) => {
 	return {
 		possibility: {
+			ganonsTower: {
+				agahnim: () => {
+					const abl = self.abilities;
+
+					if (!abl.canGrapple || !abl.hasItem('bow') || !abl.canLightTorches) {
+						return false;
+					}
+					if (!abl.hasItem('hammer') && !abl.hasSwordTier === 0) {
+						return false;
+					}
+					if (!self.enterability.ganonsTower()) {
+						return false;
+					}
+					return (
+						!abl.canDash
+						|| !abl.hasItem('hammer')
+						|| !abl.hasItem('fireRod')
+						|| !abl.hasItem('somaria')
+					);
+				},
+			},
 			turtleRock: {
 				dungeon: (area) => {
 					const abl = self.abilities;

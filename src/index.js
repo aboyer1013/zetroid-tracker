@@ -185,12 +185,14 @@ locationsData.forEach((loc) => {
 	if (loc.isDungeon) {
 		boss = appStore.getItemByName(loc.boss);
 		prize = appStore.getItemGroupByName(`prize-${loc.name}`);
-		loc.areas.push({
-			isBoss: true,
-			name: boss.name,
-			longName: boss.longName,
-			chests: [],
-		});
+		if (boss) {
+			loc.areas.push({
+				isBoss: true,
+				name: boss.name,
+				longName: boss.longName,
+				chests: [],
+			});
+		}
 		if (loc.hasMedallion) {
 			medallion = appStore.getItemGroupByName(`medallion-${loc.name}`);
 		}
