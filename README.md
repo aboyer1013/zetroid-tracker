@@ -1,44 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Zetroid Tracker
 
-## Available Scripts
+An item tracker for The Legend of Zelda: A Link to the Past (ALttP) and Super Metroid (SM).
 
-In the project directory, you can run:
+Currently hosted here:
+https://zetroid-tracker.tenxiii.com 
 
-### `npm start`
+## Table of Contents
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Installation](#installation)
+- [FAQ](#FAQ)
+- [Support](#support)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+For local installation, clone the repoistory, then install all the package dependencies:
+```sh
+npm install
+```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once that is finished, run the application:
+```sh
+npm run start
+```
 
-### `npm run build`
+## FAQ
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+_The app used to work, but now nothing loads. Why?_
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Newer versions may have data changes which causes the older data to be invalid. Since the app uses your browser’s local storage to remember your settings, progress, and layout preferences, the application and the data will be out of sync. When this happens, try clearing your browser’s cache and/or cookies and reload the page. While this project is in active development (version 0.x.x), this will continue to be a problem. There are plans to make a data converter from old versions (major) to the current one.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+_Will feature XYZ be supported?_
 
-### `npm run eject`
+Please open an issue for the feature you want. Prior to verison 1.x.x, this will only support glitchless logic. Various glitch modes will come post launch.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+_Will other games be supported?_
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The plan is to have just ALttP, and SM ready for launch. Other games are planned. Namely Zelda 1 and Metroid.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Support
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Please [open an issue](https://github.com/aboyer1013/zetroid-tracker/issues/new) for support. Ideas for features or enchancements are always welcome.
 
-## Learn More
+## Contributing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/aboyer1013/zetroid-tracker/compare).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
+
+This project is licensed under the terms of the MIT license.
+
+## Acknowledgements
+
+- [miketrethewey](https://github.com/miketrethewey/)
+- [hyphen_ated](https://www.twitch.tv/hyphen_ated)
+- [pickfifteen](https://twitter.com/pickfifteen)
+- [marcmagus](https://www.twitch.tv/marcmagus)
+- [testrunner](https://www.twitch.tv/testrunner)
+- [crossproduct](https://www.twitch.tv/crossproduct)
+- Maps by [Rick N. Bruns](http://www.snesmaps.com/)

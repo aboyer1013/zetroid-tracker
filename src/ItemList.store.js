@@ -34,9 +34,6 @@ const ItemListStore = types.compose(ItemListUtil, types.model({
 			// Update indices on both sides.
 			itemToAdd.setIndex(index);
 			sourceItemList.updateIndices(sourceItemList.sortedItems);
-			// Update itemList reference on the item and any sub-items.
-			// itemToAdd.setItemList(self);
-			// itemToAdd.items.forEach(item => item.setItemList(self));
 			self.updateIndices(sortedItems);
 		};
 		const updateIndices = (items) => {

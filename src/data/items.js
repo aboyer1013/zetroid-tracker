@@ -2,37 +2,7 @@
 import zelda3Dungeons from '~/data/locations/zelda3/zelda3-dungeons';
 
 const itemsData = [
-	{ type: ['chest'], name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', imageEmpty: 'chest-open', acquired: true, },
-	{
-		group: 'mpUpgrade',
-		game: 'zelda3',
-		type: ['item'],
-		items: [
-			{ type: ['item'], name: 'mpUpgrade11',  longName: '1/1 Magic',         game: 'zelda3', image: 'mpupgrade0', group: 'mpUpgrade', groupIndex: 0, isDefault: true, tier: 1, autoAcquire: true, },
-			{ type: ['item'], name: 'mpUpgrade12',  longName: '1/2 Magic',         game: 'zelda3', image: 'mpupgrade1', group: 'mpUpgrade', groupIndex: 1, tier: 2, },
-			{ type: ['item'], name: 'mpUpgrade14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mpUpgrade', groupIndex: 2, tier: 3, },
-		]
-	},
-	// { type: ['item'], name: 'agahnim',  longName: 'Agahnim', game: 'zelda3', image: 'agahnim', },
-	// {
-	// 	group: 'agahnim',
-	// 	game: 'zelda3',
-	// 	items: [
-	// 		{ type: ['item'], name: 'agahnim-alive',  longName: 'Agahnim',           game: 'zelda3', image: 'agahnim0', group: 'agahnim', groupIndex: 0, isDefault: true, },
-	// 		{ type: ['item'], name: 'agahnim-dead',   longName: 'Agahnim Defeated',  game: 'zelda3', image: 'agahnim1', group: 'agahnim', groupIndex: 1, },
-	// 	],
-	// },
-	// { type: ['item'], name: 'arrow-upgrade',  longName: 'Arrow Upgrade',     game: 'zelda3', image: '', },
-	{
-		group: 'armor',
-		game: 'zelda3',
-		type: ['item'],
-		items: [
-			{ type: ['item'], name: 'jerkin',         longName: 'Green Jerkin',      game: 'zelda3', image: 'tunic1', group: 'armor', groupIndex: 0, isDefault: true, tier: 1, autoAcquire: true, },
-			{ type: ['item'], name: 'blue-mail',      longName: 'Blue Mail',         game: 'zelda3', image: 'tunic2', group: 'armor', groupIndex: 1, tier: 2, },
-			{ type: ['item'], name: 'red-mail',       longName: 'Red Mail',          game: 'zelda3', image: 'tunic3', group: 'armor', groupIndex: 2, tier: 3, },
-		],
-	},
+	{ type: ['item'], name: 'bow',            longName: 'Bow',               game: 'zelda3', image: 'bow',  },
 	{
 		group: 'boomerang',
 		game: 'zelda3',
@@ -44,8 +14,38 @@ const itemsData = [
 		],
 
 	},
-	{ type: ['item'], name: 'bomb',           longName: 'Bomb',              game: 'zelda3', image: 'bomb1',  },
+	{ type: ['item'], name: 'hookshot',       longName: 'Hookshot',          game: 'zelda3', image: 'hookshot',  },
+	// { type: ['item'], name: 'bomb',           longName: 'Bomb',              game: 'zelda3', image: 'bomb1',  },
 	{ type: ['item'], name: 'super-bomb',        longName: 'Super Bomb',              game: 'zelda3', image: 'super-bomb', },
+	{ type: ['item'], name: 'powder',         longName: 'Magic Powder',      game: 'zelda3', image: 'powder',  },
+	{ type: ['item'], name: 'fireRod',        longName: 'Fire Rod',          game: 'zelda3', image: 'firerod',  },
+	{ type: ['item'], name: 'iceRod',        longName: 'Ice Rod',           game: 'zelda3', image: 'icerod',  },
+	{ type: ['item'], name: 'bombos',         longName: 'Bombos Medallion',  game: 'zelda3', image: 'bombos',  },
+	{ type: ['item'], name: 'ether',          longName: 'Ether Medallion',   game: 'zelda3', image: 'ether',  },
+	{ type: ['item'], name: 'quake',          longName: 'Quake Medallion',   game: 'zelda3', image: 'quake',  },
+	{ type: ['item'], name: 'lantern',        longName: 'Lantern',           game: 'zelda3', image: 'lantern',  },
+	{ type: ['item'], name: 'hammer',         longName: 'Magic Hammer',      game: 'zelda3', image: 'hammer',  },
+	{ type: ['item'], name: 'flute',          longName: 'Flute',             game: 'zelda3', image: 'flute',  },
+	{ type: ['item'], name: 'net',            longName: 'Bug-Catching Net',  game: 'zelda3', image: 'net',  },
+	{ type: ['item'], name: 'book',           longName: 'Book of Mudora',    game: 'zelda3', image: 'book',  },
+	{ type: ['item'], name: 'bottle',         longName: 'Bottle',            game: 'zelda3', image: 'bottle0', maxQty: 4,  },
+	{ type: ['item'], name: 'somaria',        longName: 'Cane of Somaria',   game: 'zelda3', image: 'somaria',  },
+	{ type: ['item'], name: 'byrna',          longName: 'Cane of Byrna',     game: 'zelda3', image: 'byrna',  },
+	{ type: ['item'], name: 'cape',           longName: 'Magic Cape',        game: 'zelda3', image: 'cape',  },
+	{ type: ['item'], name: 'mirror',         longName: 'Magic Mirror',      game: 'zelda3', image: 'mirror',  },
+	{ type: ['item'], name: 'boots',          longName: 'Pegasus Boots',     game: 'zelda3', image: 'boots', },
+	{ type: ['chest'], name: 'closedchest', longName: 'Closed Chest', game: 'zelda3', image: 'chest-closed', imageEmpty: 'chest-open', acquired: true, },
+	{
+		group: 'glove',
+		game: 'zelda3',
+		type: ['item'],
+		items: [
+			{ type: ['item'], name: 'glove',          longName: 'Power Glove',       game: 'zelda3', image: 'glove1', group: 'glove', groupIndex: 0, isDefault: true, tier: 1, },
+			{ type: ['item'], name: 'titanMitt',     longName: 'Titan’s Mitt',      game: 'zelda3', image: 'glove2', group: 'glove', groupIndex: 1, tier: 2, },
+		],
+	},
+	{ type: ['item'], name: 'flippers',       longName: 'Zora’s Flippers',   game: 'zelda3', image: 'flippers', },
+	{ type: ['item'], name: 'moonPearl',     longName: 'Moon Pearl',        game: 'zelda3', image: 'moonpearl', },
 	{
 		group: 'sword',
 		game: 'zelda3',
@@ -68,45 +68,44 @@ const itemsData = [
 		],
 	},
 	{
-		group: 'glove',
+		group: 'armor',
 		game: 'zelda3',
 		type: ['item'],
 		items: [
-			{ type: ['item'], name: 'glove',          longName: 'Power Glove',       game: 'zelda3', image: 'glove1', group: 'glove', groupIndex: 0, isDefault: true, tier: 1, },
-			{ type: ['item'], name: 'titanMitt',     longName: 'Titan’s Mitt',      game: 'zelda3', image: 'glove2', group: 'glove', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'jerkin',         longName: 'Green Jerkin',      game: 'zelda3', image: 'tunic1', group: 'armor', groupIndex: 0, isDefault: true, tier: 1, autoAcquire: true, },
+			{ type: ['item'], name: 'blue-mail',      longName: 'Blue Mail',         game: 'zelda3', image: 'tunic2', group: 'armor', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'red-mail',       longName: 'Red Mail',          game: 'zelda3', image: 'tunic3', group: 'armor', groupIndex: 2, tier: 3, },
 		],
 	},
-	// { type: ['item'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', },
-	// { type: ['item'], name: 'bluependant',   longName: 'Pendant of Power', game: 'zelda3', image: 'bluependant', },
-	// { type: ['item'], name: 'redpendant',     longName: 'Pendant of Wisdom', game: 'zelda3', image: 'redpendant', },
-	{ type: ['item'], name: 'book',           longName: 'Book of Mudora',    game: 'zelda3', image: 'book',  },
-	{ type: ['item'], name: 'bombos',         longName: 'Bombos Medallion',  game: 'zelda3', image: 'bombos',  },
-	{ type: ['item'], name: 'bottle',         longName: 'Bottle',            game: 'zelda3', image: 'bottle0', maxQty: 4,  },
-	{ type: ['item'], name: 'bow',            longName: 'Bow',               game: 'zelda3', image: 'bow',  },
-	{ type: ['item'], name: 'net',            longName: 'Bug-Catching Net',  game: 'zelda3', image: 'net',  },
-	{ type: ['item'], name: 'somaria',        longName: 'Cane of Somaria',   game: 'zelda3', image: 'somaria',  },
-	{ type: ['item'], name: 'byrna',          longName: 'Cane of Byrna',     game: 'zelda3', image: 'byrna',  },
-	{ type: ['item'], name: 'ether',          longName: 'Ether Medallion',   game: 'zelda3', image: 'ether',  },
-	{ type: ['item'], name: 'fireRod',        longName: 'Fire Rod',          game: 'zelda3', image: 'firerod',  },
-	{ type: ['item'], name: 'flute',          longName: 'Flute',             game: 'zelda3', image: 'flute',  },
-
+	{
+		group: 'mpUpgrade',
+		game: 'zelda3',
+		type: ['item'],
+		items: [
+			{ type: ['item'], name: 'mpUpgrade11',  longName: '1/1 Magic',         game: 'zelda3', image: 'mpupgrade0', group: 'mpUpgrade', groupIndex: 0, isDefault: true, tier: 1, autoAcquire: true, },
+			{ type: ['item'], name: 'mpUpgrade12',  longName: '1/2 Magic',         game: 'zelda3', image: 'mpupgrade1', group: 'mpUpgrade', groupIndex: 1, tier: 2, },
+			{ type: ['item'], name: 'mpUpgrade14',  longName: '1/4 Magic',         game: 'zelda3', image: 'mpupgrade2', group: 'mpUpgrade', groupIndex: 2, tier: 3, },
+		]
+	},
 	{ type: ['item'], name: 'heart-c',        longName: 'Heart Container',   game: 'zelda3', image: 'heartcontainer', maxQty: 11, },
 	{ type: ['item'], name: 'heart-p',        longName: 'Heart Piece',       game: 'zelda3', image: 'heartpiece', maxQty: 24, },
-	{ type: ['item'], name: 'hookshot',       longName: 'Hookshot',          game: 'zelda3', image: 'hookshot',  },
-	{ type: ['item'], name: 'iceRod',        longName: 'Ice Rod',           game: 'zelda3', image: 'icerod',  },
-	{ type: ['item'], name: 'lantern',        longName: 'Lantern',           game: 'zelda3', image: 'lantern',  },
-	{ type: ['item'], name: 'cape',           longName: 'Magic Cape',        game: 'zelda3', image: 'cape',  },
-	{ type: ['item'], name: 'hammer',         longName: 'Magic Hammer',      game: 'zelda3', image: 'hammer',  },
-	{ type: ['item'], name: 'powder',         longName: 'Magic Powder',      game: 'zelda3', image: 'powder',  },
-	{ type: ['item'], name: 'mirror',         longName: 'Magic Mirror',      game: 'zelda3', image: 'mirror',  },
-	{ type: ['item'], name: 'moonPearl',     longName: 'Moon Pearl',        game: 'zelda3', image: 'moonpearl', },
 	{ type: ['item'], name: 'mushroom',       longName: 'Mushroom',          game: 'zelda3', image: 'mushroom', },
-	{ type: ['item'], name: 'boots',          longName: 'Pegasus Boots',     game: 'zelda3', image: 'boots', },
-	{ type: ['item'], name: 'quake',          longName: 'Quake Medallion',   game: 'zelda3', image: 'quake',  },
 
 	{ type: ['item'], name: 'shovel',         longName: 'Shovel',            game: 'zelda3', image: 'shovel', },
 	{ type: ['item'], name: 's-arrow',        longName: 'Silver Arrow',      game: 'zelda3', image: 'silvers', },
-	{ type: ['item'], name: 'flippers',       longName: 'Zora’s Flippers',   game: 'zelda3', image: 'flippers', },
+	{ type: ['item'], name: 'agahnim',  longName: 'Agahnim', game: 'zelda3', image: 'agahnim', },
+	// {
+	// 	group: 'agahnim',
+	// 	game: 'zelda3',
+	// 	items: [
+	// 		{ type: ['item'], name: 'agahnim-alive',  longName: 'Agahnim',           game: 'zelda3', image: 'agahnim0', group: 'agahnim', groupIndex: 0, isDefault: true, },
+	// 		{ type: ['item'], name: 'agahnim-dead',   longName: 'Agahnim Defeated',  game: 'zelda3', image: 'agahnim1', group: 'agahnim', groupIndex: 1, },
+	// 	],
+	// },
+	// { type: ['item'], name: 'arrow-upgrade',  longName: 'Arrow Upgrade',     game: 'zelda3', image: '', },
+	// { type: ['item'], name: 'greenPendant',   longName: 'Pendant of Courage', game: 'zelda3', image: 'greenpendant', },
+	// { type: ['item'], name: 'bluependant',   longName: 'Pendant of Power', game: 'zelda3', image: 'bluependant', },
+	// { type: ['item'], name: 'redpendant',     longName: 'Pendant of Wisdom', game: 'zelda3', image: 'redpendant', },
 
 
 

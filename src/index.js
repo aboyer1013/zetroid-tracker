@@ -119,7 +119,6 @@ appStore.maps.put(MapStore.create({
 const itemDataFactory = (item, index = 0) => {
 	const id = randomId();
 	const isItemGroup = !!(item.group && item.items.length);
-
 	const itemData = {
 		id,
 		index: isUndefined(item.index) ? index : item.index,
@@ -178,7 +177,6 @@ locationsData.forEach((loc) => {
 	let prize = null;
 	let medallion = null;
 	const selectedMap = appStore.getMapByName(loc.map);
-	const chestItem = null;
 	const areas = [];
 
 	// Create the boss area
@@ -238,8 +236,6 @@ locationsData.forEach((loc) => {
 		itemRequirements: loc.itemRequirements,
 		viewableRequirements: loc.viewableRequirements,
 		isDungeon: !!loc.isDungeon,
-		// TODO remove chest
-		chest: chestItem,
 		numChests: loc.numChests,
 		boss,
 		prize,
@@ -256,7 +252,6 @@ window.getSnapshot = getSnapshot;
 window.destroy = destroy;
 window.detach = detach;
 window.appStore = appStore;
-window.mapStore = appStore.getMapByName('zelda3-lw');
 window.activeItemList = appStore.activeItemList;
 window.inactiveItemList = appStore.inactiveItemList;
 window.createStorage = createStorage;
