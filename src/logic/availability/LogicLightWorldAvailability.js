@@ -1,4 +1,5 @@
 import { types, getRoot } from 'mobx-state-tree';
+import { find } from 'lodash';
 
 const LogicLightWorldAvailability = types.model().volatile((self) => {
 	return {
@@ -22,20 +23,24 @@ const LogicLightWorldAvailability = types.model().volatile((self) => {
 			dam: () => true,
 			linksHouse: () => true,
 			spiralCave: () => self.abilities.canEnterEastDeathMountain(),
-			mimicCave: () => {
-				// TODO Finish this after dungeons.
+			mimicCave: {
+				cave: () => {
+					const abl = self.abilities;
+					const dwMap = getRoot(self).getMapByName('zelda3-dw');
+					const turtleRockLoc = find(dwMap.dungeonLocations, { name: 'turtleRock' });
 
-				// 	const abl = self.abilities;
-				// if (abl.canEnterEastDeathMountain() && self.hasItem('mirror') && self.)
-				//
-				// if (abl.canEnterEastDeathMountain() && self.hasItem("mirror") && dungeons.zelda3[9].mayEnter("glitchless", false)) {
-				// 	if (has("fireRod") && dungeons.zelda3[9].canEnter("glitchless", false)) {
-				// 		availability.glitchless = "available";
-				// 	}
-				// 	else {
-				// 		availability.glitchless = "possible";
-				// 	}
-				// }
+					if (!abl.canEnterEastDeathMountain() || !abl.hasItem('mirror')) {
+						return false;
+					}
+					if (!self.enterability.turtleRock() && !turtleRockLoc.maybeHasMedallionGate) {
+						return false;
+					}
+					return (
+						abl.hasItem('fireRod')
+						&& self.enterability.turtleRock()
+						&& turtleRockLoc.hasMedallionGate
+					);
+				},
 			},
 			tavern: () => true,
 			chickenHouse: () => true,
@@ -127,10 +132,7 @@ const LogicLightWorldAvailability = types.model().volatile((self) => {
 			},
 			race: () => true,
 			desertLedge: () => {
-				// TODO complete once dungeons are finished
-				// if (dungeons.zelda3[1].canEnter('glitchless', false, false)) {
-				// 	availability.glitchless = 'available';
-				// }
+				return self.enterability.desertPalace();
 			},
 			lakeHyliaIsland: () => {
 				const abl = self.abilities;
@@ -172,24 +174,10 @@ const LogicLightWorldAvailability = types.model().volatile((self) => {
 				}
 				return false;
 			},
-			// TODO complete after dungeons are finished.
 			masterSwordPedestal: () => {
-				// const availability = new Availability();
-				// let pendantCount = 0;
-				// for (let k = 0; k < 10; k++) {
-				// 	if (((trackerData.zelda3 && trackerData.zelda3.prizes && trackerData.zelda3.prizes[k] === OFFPENDANT) || (trackerData.zelda3 && trackerData.zelda3.prizes && trackerData.zelda3.prizes[k] === GREENPENDANT)) && trackerData.zelda3.items["boss" + k] === 2) {
-				// 		pendantCount++;
-				// 		if (pendantCount === 3) {
-				// 			break;
-				// 		}
-				// 	}
-				// }
-				// if (pendantCount === 3) {
-				// 	availability.glitchless = 'available';
-				// }
-				// else if (canRead()) {
-				// 	availability.glitchless = 'possible';
-				// }
+				const { acquiredPendants } = getRoot(self);
+
+				return acquiredPendants.length === 3;
 			},
 			waterfallFairy: () => self.abilities.canSwim,
 		},

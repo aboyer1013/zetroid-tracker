@@ -53,7 +53,7 @@ const LocationStore = types.compose(
 		map: types.reference(types.late(() => MapStore)),
 		abilities: types.reference(AbilitiesStore),
 		areas: types.array(AreaStore),
-		// TODO This needs to be shareable between multiple stores
+		// TODO This needs to be shareable between multiple stores #23
 		PROGRESSION: types.frozen({
 			// All items are acquired.
 			COMPLETE: 'COMPLETE',

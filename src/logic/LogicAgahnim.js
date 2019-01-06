@@ -1,4 +1,5 @@
-import { types } from 'mobx-state-tree';
+import { getRoot, types } from 'mobx-state-tree';
+import { filter, includes } from 'lodash';
 
 const LogicAgahnim = types.model().volatile((self) => {
 	return {
@@ -110,6 +111,22 @@ const LogicAgahnim = types.model().volatile((self) => {
 			thievesTown: {
 				dungeon: () => self.enterability.thievesTown(true),
 				blindTheThief: () => self.beatability.blindTheThief() && self.enterability.thievesTown(true),
+			},
+			fatFairy: () => {
+				const abl = self.abilities;
+				const { acquiredCrystals } = getRoot(self);
+				const orangeCrystals = filter(acquiredCrystals, crystal => includes(crystal.type, 'orangeCrystal'));
+
+				if (orangeCrystals.length !== 2 || !abl.hasItem('moonPearl')) {
+					return false;
+				}
+				if (!abl.canEnterSouthDarkWorld(true)) {
+					return false;
+				}
+				if (abl.hasItem('hammer')) {
+					return true;
+				}
+				return abl.hasItem('mirror') && abl.canDefeatAgahnim();
 			},
 		},
 	};

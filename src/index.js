@@ -115,7 +115,7 @@ appStore.maps.put(MapStore.create({
 	locationDetail: appStore.locationDetail,
 }));
 // Create item models.
-// TODO Consider not cherry-picking item fields and just apply all the data at once - or use defaults
+// TODO Consider not cherry-picking item fields and just apply all the data at once - or use defaults #24
 const itemDataFactory = (item, index = 0) => {
 	const id = randomId();
 	const isItemGroup = !!(item.group && item.items.length);

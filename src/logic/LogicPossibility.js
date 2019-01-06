@@ -1,5 +1,5 @@
-import { types } from 'mobx-state-tree';
-import { head } from 'lodash';
+import { getRoot, types } from 'mobx-state-tree';
+import { find, head } from 'lodash';
 
 const LogicPossibility = types.model().volatile((self) => {
 	return {
@@ -111,6 +111,25 @@ const LogicPossibility = types.model().volatile((self) => {
 						return true;
 					}
 					return false;
+				},
+			},
+			mimicCave: {
+				cave: () => {
+					const abl = self.abilities;
+					const dwMap = getRoot(self).getMapByName('zelda3-dw');
+					const turtleRockLoc = find(dwMap.dungeonLocations, { name: 'turtleRock' });
+
+					if (!abl.canEnterEastDeathMountain() || !abl.hasItem('mirror')) {
+						return false;
+					}
+					if (!self.enterability.turtleRock() && !turtleRockLoc.maybeHasMedallionGate) {
+						return false;
+					}
+					return (
+						!abl.hasItem('fireRod')
+						|| !self.enterability.turtleRock()
+						|| !turtleRockLoc.hasMedallionGate
+					);
 				},
 			},
 		},

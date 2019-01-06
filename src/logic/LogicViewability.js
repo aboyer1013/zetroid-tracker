@@ -29,15 +29,7 @@ const LogicViewability = types.model().volatile((self) => {
 					&& abl.canEnterSouthDarkWorld()
 				);
 			},
-			desertpalace: () => {
-				// const book = getRoot(self).getItemByName('book');
-				//
-				// if (book.acquired) {
-				// 	return true;
-				// }
-				// const items = ['titanMitt', 'flute', 'mirror'].map(item => getRoot(self).getItemByName(item));
-				// return items.every(item => item && item.acquired);
-			},
+			masterSwordPedestal: () => self.abilities.canRead,
 			zoraArea: {
 				ledge: () => self.abilities.canLiftRocks,
 			},

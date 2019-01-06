@@ -115,6 +115,9 @@ const ItemListUtil = types.model({
 		get acquiredCrystals() {
 			return filter(self.acquiredPrizes, prize => includes(prize.type, 'crystal'));
 		},
+		get acquiredPendants() {
+			return filter(self.acquiredPrizes, prize => includes(prize.type, 'pendant'));
+		},
 		isVisible: (item) => {
 			let result = false;
 

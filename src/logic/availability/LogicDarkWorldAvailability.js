@@ -1,4 +1,5 @@
-import { types } from 'mobx-state-tree';
+import { getRoot, types } from 'mobx-state-tree';
+import { filter, includes } from 'lodash';
 
 const LogicDarkWorldAvailability = types.model().volatile((self) => {
 	return {
@@ -76,27 +77,21 @@ const LogicDarkWorldAvailability = types.model().volatile((self) => {
 			pyramidLedge: () => self.abilities.canEnterNorthEastDarkWorld(),
 			diggingGame: () => self.abilities.canEnterSouthDarkWorld(),
 			smiths: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(),
-			// TODO complete once dungeons are finished.
 			fatFairy: () => {
-				// // Crystal check
-				// let crystalCount = 0;
-				// for (let k = 0; k < 10; k++) {
-				// 	if (trackerData.zelda3 && trackerData.zelda3.prizes && trackerData.zelda3.prizes[k] === OJCRYSTAL && trackerData.zelda3.items["boss" + k] === 2) {
-				// 		crystalCount++;
-				// 		if (crystalCount === 2) {
-				// 			break;
-				// 		}
-				// 	}
-				// }
-				// if (crystalCount === 2 && has("moonpearl")) {
-				// 	if (canEnterSouthDarkWorld('glitchless', false, false)
-				// 		&& (has("hammer") || (has("mirror") && has("agahnim")))) {
-				// 		availability.glitchless = 'available';
-				// 	} else if (canEnterSouthDarkWorld('glitchless', true, false)
-				// 		&& (has("hammer") || (has("mirror") && canGoBeatAgahnim1(false)))) {
-				// 		availability.glitchless = 'agahnim';
-				// 	}
-				// }
+				const abl = self.abilities;
+				const { acquiredCrystals } = getRoot(self);
+				const orangeCrystals = filter(acquiredCrystals, crystal => includes(crystal.type, 'orangeCrystal'));
+
+				if (orangeCrystals.length !== 2 || !abl.hasItem('moonPearl')) {
+					return false;
+				}
+				if (!abl.canEnterSouthDarkWorld()) {
+					return false;
+				}
+				if (abl.hasItem('hammer')) {
+					return true;
+				}
+				return abl.hasItem('mirror') && abl.hasItem('agahnim');
 			},
 			treasureChestMiniGame: () => self.abilities.canEnterNorthWestDarkWorld(),
 			purpleChest: () => self.abilities.canLiftDarkRocks && self.abilities.canEnterNorthWestDarkWorld(),

@@ -16,7 +16,7 @@ const AreaStore = types
 		canBeViewable: false,
 		itemSelectStore: types.maybeNull(types.reference(ItemListStore)),
 		selectedItem: types.maybeNull(types.reference(ItemStore)),
-		// TODO This needs to be shareable between multiple stores
+		// TODO This needs to be shareable between multiple stores #23
 		PROGRESSION: types.frozen({
 			// All items are acquired.
 			COMPLETE: 'COMPLETE',
