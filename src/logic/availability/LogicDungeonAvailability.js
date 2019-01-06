@@ -17,6 +17,49 @@ location[BOSS_NAME]:
 const LogicDungeonAvailability = types.model().volatile((self) => {
 	return {
 		dungeonAvailability: {
+			turtleRock: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.turtleRock() || !self.hasMedallionGate) {
+						return false;
+					}
+					if (!abl.hasItem('fireRod')) {
+						return false;
+					}
+					if (!abl.hasItem('lantern')) {
+						return false;
+					}
+					if (!abl.canBeInvulnerable && !abl.canBlockLasers) {
+						return false;
+					}
+					if (chests.qty >= 2 || self.availability.turtleRock.beatability.trinexx()) {
+						return true;
+					}
+					return false;
+				},
+				trinexx: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('fireRod') || !abl.hasItem('iceRod') || !abl.hasItem('somaria')) {
+						return false;
+					}
+					if (!self.enterability.turtleRock() || !self.hasMedallionGate) {
+						return false;
+					}
+					if (!abl.hasItem('lantern')) {
+						return false;
+					}
+					if (!abl.hasItem('hammer') && !abl.hasSwordTier < 2) {
+						return false;
+					}
+					if (abl.canBeInvulnerable || abl.canBlockLasers) {
+						return true;
+					}
+					return false;
+				},
+			},
 			miseryMire: {
 				dungeon: (area) => {
 					const abl = self.abilities;

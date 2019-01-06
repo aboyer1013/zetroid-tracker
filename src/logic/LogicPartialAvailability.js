@@ -4,6 +4,32 @@ import { head } from 'lodash';
 const LogicPartialAvailability = types.model().volatile((self) => {
 	return {
 		partialAvailability: {
+			turtleRock: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.turtleRock() || !self.hasMedallionGate) {
+						return false;
+					}
+					if (abl.hasItem('fireRod') && chests.qty >= 2) {
+						return true;
+					}
+					if (chests.qty >= 4) {
+						return true;
+					}
+					if (!abl.canBeInvulnerable && !abl.canBlockLasers) {
+						return false;
+					}
+					if (!abl.hasItem('fireRod') && abl.hasItem('lantern')) {
+						return true;
+					}
+					if (abl.hasItem('fireRod') && abl.hasItem('lantern') && chests.qty < 2 && !self.availability.beatability.vitreous()) {
+						return true;
+					}
+					return false;
+				},
+			},
 			miseryMire: {
 				dungeon: (area) => {
 					const abl = self.abilities;

@@ -144,6 +144,7 @@ let zelda3DarkWorldDungeons = [
 		longName: 'Turtle Rock',
 		isDungeon: true,
 		hasPrize: true,
+		hasMedallion: true,
 		boss: 'trinexx',
 		areas: [
 			{

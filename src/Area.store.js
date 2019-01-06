@@ -153,7 +153,7 @@ const AreaStore = types
 				return false;
 			}
 			if (has(parent, `possibility[${parent.name}][${self.name}]`)) {
-				return parent.possibility[parent.name][self.name]();
+				return parent.possibility[parent.name][self.name](self);
 			}
 			if (has(parent, `possibility[${parent.name}]`) && isFunction(parent, `possibility[${parent.name}]`)) {
 				return parent.possibility[parent.name]();

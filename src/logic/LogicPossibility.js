@@ -1,8 +1,43 @@
 import { types } from 'mobx-state-tree';
+import { head } from 'lodash';
 
 const LogicPossibility = types.model().volatile((self) => {
 	return {
 		possibility: {
+			turtleRock: {
+				dungeon: (area) => {
+					const abl = self.abilities;
+					const chests = head([...area.collectables.values()]);
+
+					if (!self.enterability.turtleRock() || !self.maybeHasMedallionGate) {
+						return false;
+					}
+					if (chests.qty >= 4) {
+						return true;
+					}
+					if (abl.hasItem('fireRod') && chests.qty >= 2) {
+						return true;
+					}
+					if (!abl.canBeInvulnerable && !abl.canBlockLasers) {
+						return false;
+					}
+					if (abl.hasItem('fireRod') || abl.hasItem('lantern')) {
+						return true;
+					}
+					return false;
+				},
+				trinexx: () => {
+					const abl = self.abilities;
+
+					if (!abl.hasItem('fireRod') || !abl.hasItem('iceRod') || !abl.hasItem('somaria')) {
+						return false;
+					}
+					if (self.enterability.turtleRock() && self.maybeHasMedallionGate) {
+						return true;
+					}
+					return false;
+				},
+			},
 			miseryMire: {
 				dungeon: () => {
 					if (self.enterability.miseryMire() && self.maybeHasMedallionGate) {

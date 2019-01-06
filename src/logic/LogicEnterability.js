@@ -16,6 +16,18 @@ const LogicEnterability = types.model().volatile((self) => {
 				(w/mayHaveMedallion - you know what the medallion you need to enter, but do not have it in possesion)
 			 */
 		enterability: {
+			turtleRock: () => {
+				const abl = self.abilities;
+
+				return (
+					abl.hasSwordTier >= 1
+					&& abl.hasItem('moonPearl')
+					&& abl.hasItem('somaria')
+					&& abl.hasItem('hammer')
+					&& abl.canLiftDarkRocks
+					&& abl.canEnterEastDeathMountain()
+				);
+			},
 			miseryMire: (agahnimCheck = false) => {
 				const abl = self.abilities;
 
