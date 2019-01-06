@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import { find, sortBy } from 'lodash';
+import { filter, find, sortBy } from 'lodash';
 import ConfigStore from '~/Config.store';
 
 /**
@@ -10,6 +10,15 @@ const ItemListUtil = types.model({
 	config: types.reference(ConfigStore),
 })
 	.views(self => ({
+		// Finds the first sub item that is acquired in a given group.
+		getAcquiredItemFromGroup: (group) => {
+			if (!self.hasAcquiredAnyItemsInGroup(group)) {
+				return false;
+			}
+			const itemGroup = self.getItemsByGroup(group);
+
+			return find(itemGroup, { acquired: true });
+		},
 		// Returns the item group
 		getItemGroupByName: (group) => {
 			return find([...self.items.values()], { group });
@@ -87,6 +96,16 @@ const ItemListUtil = types.model({
 		},
 		get bosses() {
 			return self.sortedItems.filter(item => item.isBoss);
+		},
+		get acquiredPrizes() {
+			const prizes = filter(self.bosses.map((boss) => {
+				if (!boss.acquired || !boss.dungeonLocation) {
+					return false;
+				}
+				return boss.dungeonLocation.prize;
+			}));
+
+			return prizes.map(prize => self.getAcquiredItemFromGroup(prize.group));
 		},
 		isVisible: (item) => {
 			let result = false;

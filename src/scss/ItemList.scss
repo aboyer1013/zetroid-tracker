@@ -115,12 +115,12 @@
 		margin: 10px 0 0;
 		//grid-template-columns: repeat(4, 32px);
 		//grid-template-rows: repeat(3, 32px);
-		grid-template-columns: 32px 32px 10px 32px 10px 32px;
+		grid-template-columns: 32px 32px 10px 32px;
 		grid-template-rows: 32px 32px;
 		//grid-gap: 10px;
 		grid-template-areas:
-			"boss boss . prize . ."
-			"boss boss . chests . medallion"
+			"boss boss . prize"
+			"boss boss . medallion"
 		;
 		.boss {
 			width: 64px;

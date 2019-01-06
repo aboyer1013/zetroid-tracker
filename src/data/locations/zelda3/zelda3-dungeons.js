@@ -162,7 +162,7 @@ let zelda3DarkWorldDungeons = [
 			{
 				name: 'dungeon',
 				longName: 'Dungeon',
-				chests: [{ numChests: 5 }],
+				chests: [{ numChests: 20 }],
 			},
 		],
 	},

@@ -27,7 +27,7 @@ const Area = ({ areaStore, store }) => {
 										key={randomId()}
 										itemListStore={store}
 										item={subItem}
-										isReadOnly={isReadOnly && !includes(subItem.type, 'prize')}
+										isReadOnly={isReadOnly && (includes(subItem.type, 'prize') || includes(subItem.type, 'medallion'))}
 									/>
 								))}
 							</div>
