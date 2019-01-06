@@ -159,11 +159,14 @@ const gameItemsData = itemsData.filter(item => item.game === appStore.selectedGa
 gameItemsData.filter(item => includes(item.type, 'item')).forEach((item, i) => {
 	const itemData = itemDataFactory(item, i);
 
+	if (item.name === 'junk') {
+		appStore.inactiveItemList.items.push(ItemStore.create(itemData));
+	} else {
+		appStore.activeItemList.items.push(ItemStore.create(itemData));
+	}
 	appStore.activeItemList.sortOrder.push(i);
-	appStore.activeItemList.items.push(ItemStore.create(itemData));
 });
 // Add the dungeon items for a separate list.
-// FIXME I'm calling it bosses, but it should really be dungeons.
 const gameBossData = bossData.filter(item => item.game === appStore.selectedGame.name);
 gameBossData.concat(gameItemsData.filter(item => includes(item.type, 'dungeon-item'))).forEach((item, i) => {
 	const itemData = itemDataFactory(item, i);

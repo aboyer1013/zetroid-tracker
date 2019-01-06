@@ -3,7 +3,7 @@
   "description": "An item tracker for Zelda: A Link to the Past + Super Metroid Randomizer.",
   "license": "MIT",
   "tags": "rom hacks, emulation, utilities, map, zelda, metroid, super metroid, alttp, randomizer",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "homepage": "https://zetroid-tracker.tenxiii.com",
   "private": true,
   "dependencies": {
@@ -34,9 +34,8 @@
     "test": "craco test",
     "test:debug": "craco --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
-    "now-build": "craco build && now",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "now-deploy": "npm run build && now && now alias zetroid-tracker.tenxiii.com",
+    "predeploy": "npm run build"
   },
   "browserslist": [
     ">0.2%",

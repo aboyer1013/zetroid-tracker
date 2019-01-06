@@ -94,6 +94,7 @@ const itemsData = [
 	{ type: ['item'], name: 'shovel',         longName: 'Shovel',            game: 'zelda3', image: 'shovel', },
 	{ type: ['item'], name: 's-arrow',        longName: 'Silver Arrow',      game: 'zelda3', image: 'silvers', },
 	{ type: ['item'], name: 'agahnim',  longName: 'Agahnim', game: 'zelda3', image: 'agahnim', },
+	{ type: ['item'], name: 'junk',  longName: 'Junk', game: 'zelda3', image: 'junk', hidden: true, },
 	// {
 	// 	group: 'agahnim',
 	// 	game: 'zelda3',

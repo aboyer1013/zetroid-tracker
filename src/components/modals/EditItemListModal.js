@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { getSnapshot, applySnapshot } from 'mobx-state-tree';
 import ItemList from '~/components/ItemList';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { find } from 'lodash';
+import { find, reject } from 'lodash';
 
 class EditItemListModal extends Component {
 	constructor(props) {
@@ -66,7 +66,7 @@ class EditItemListModal extends Component {
 									<h5 className="item-list-group-subtitle">Inactive</h5>
 									<ItemList
 										itemListStore={store.inactiveItemList}
-										items={store.inactiveItemList.sortedItems}
+										items={reject(store.inactiveItemList.sortedItems, item => item.name === 'junk')}
 										isReadOnly
 										direction={itemListStore.direction}
 										draggableEnabled
