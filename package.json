@@ -34,8 +34,7 @@
     "test": "craco test",
     "test:debug": "craco --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
-    "now-deploy": "npm run build && now && now alias zetroid-tracker.tenxiii.com",
-    "predeploy": "npm run build"
+    "deploy": "gh-pages -d build"
   },
   "browserslist": [
     ">0.2%",
@@ -49,6 +48,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-jest": "^22.1.2",
+    "gh-pages": "^2.0.1",
     "move-file": "^1.0.0",
     "prettier": "1.15.3"
   }
