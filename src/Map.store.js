@@ -21,6 +21,8 @@ const MapStore = types
 		zoomLock: false,
 		hideCompleted: false,
 		hideUnavailable: false,
+		width: types.number,
+		height: types.number,
 	})
 	.volatile(() => ({
 		component: {},
@@ -31,6 +33,12 @@ const MapStore = types
 		},
 		get dungeonLocations() {
 			return [...self.locations.values()].filter(loc => loc.isDungeon);
+		},
+		get bounds() {
+			return [[0, 0], [self.height * -1, self.width]];
+		},
+		get center() {
+			return [(self.height / 2) * -1, self.width / 2];
 		},
 	}))
 	.actions((self) => {

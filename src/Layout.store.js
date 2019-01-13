@@ -99,7 +99,7 @@ const LayoutStore = types
 										type: 'tabset',
 										id: '#22',
 										weight: 77.05448110211931,
-										selected: 1,
+										selected: 2,
 										children: [
 											{
 												type: 'tab',
@@ -118,6 +118,16 @@ const LayoutStore = types
 												component: 'Map',
 												config: {
 													mapName: 'zelda3-dw',
+												},
+												enableClose: false,
+											},
+											{
+												type: 'tab',
+												id: 'metroid3-zebes',
+												name: 'Zebes',
+												component: 'Map',
+												config: {
+													mapName: 'metroid3-zebes',
 												},
 												enableClose: false,
 											},

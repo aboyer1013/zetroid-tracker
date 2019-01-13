@@ -32,7 +32,7 @@ const { L } = window;
 const Map = class Map extends Component {
 	markers = {};
 
-	mapBounds = [[0, 0], [-4256, 4096]];
+	mapBounds = this.props.mapStore.bounds;
 
 	mapInitialized = false;
 
@@ -283,7 +283,7 @@ const Map = class Map extends Component {
 		this.map = L
 			.map(`map-${this.props.id}`, Object.assign({}, {
 				crs: L.CRS.Simple,
-				center: [-2128, 2048],
+				center: this.props.mapStore.center,
 				zoom: this.props.mapStore.zoom,
 				maxBounds: this.mapBounds,
 				maxBoundsViscosity: 1,
@@ -299,7 +299,7 @@ const Map = class Map extends Component {
 			maxZoom: 2,
 			nativeZooms: [0],
 			tileSize: L.point(256, 224),
-			bounds: [[0, 0], [-4256, 4096]],
+			bounds: this.props.mapStore.bounds,
 		}, this.props.tileLayerOptions)).addTo(this.map);
 		this.map.setZoom(this.props.mapStore.zoom);
 		this.markerCluster = L.markerClusterGroup({
@@ -346,7 +346,7 @@ const Map = class Map extends Component {
 
 	sizeToFit() {
 		this.map.setView(this.map.getCenter());
-		this.map.fitBounds([[0, 0], [-4256, 4096]]);
+		this.map.fitBounds(this.mapBounds);
 	}
 
 	removeMarker(markerId) {

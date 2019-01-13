@@ -9,7 +9,7 @@ import AppStore from '~/App.store';
 import MapStore from '~/Map.store';
 import GameStore from '~/Game.store';
 import ItemStore from '~/Item.store';
-import itemsData from '~/data/items';
+import itemsData from '~/data/items/zelda3/items';
 import bossData from '~/data/bosses';
 import { gamesData, locationsData } from '~/data/data';
 import LocationStore from '~/Location.store';
@@ -104,6 +104,8 @@ appStore.maps.put(MapStore.create({
 	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/lw/{z}/zelda3-lw.{x}.{y}.png`,
 	locations: {},
 	locationDetail: appStore.locationDetail,
+	width: 4096,
+	height: 4256,
 }));
 appStore.maps.put(MapStore.create({
 	id: randomId(),
@@ -113,6 +115,19 @@ appStore.maps.put(MapStore.create({
 	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/zelda3/dw/{z}/zelda3-dw.{x}.{y}.png`,
 	locations: {},
 	locationDetail: appStore.locationDetail,
+	width: 4096,
+	height: 4256,
+}));
+appStore.maps.put(MapStore.create({
+	id: randomId(),
+	name: 'metroid3-zebes',
+	longName: 'Zebes',
+	game: appStore.getGameByName('metroid3'),
+	tileLayerTemplate: `${process.env.PUBLIC_URL}/img/maps/metroid3/zebes/{z}/metroid3-zebes.{x}.{y}.png`,
+	locations: {},
+	locationDetail: appStore.locationDetail,
+	width: 1792,
+	height: 1568,
 }));
 // Create item models.
 // TODO Consider not cherry-picking item fields and just apply all the data at once - or use defaults #24
